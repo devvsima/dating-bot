@@ -1,0 +1,9 @@
+.idea
+.fleet
+.vscode
+.venv
+
+**/__pycache__
+
+**/.env
+**/logs

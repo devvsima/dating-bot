@@ -7,12 +7,11 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
-from bd import db_start, create_profile, edit_profile
-
 # импорт скриптов
-from config import token_api
-from keyboard import base_kb, cancel_kb
-
+from database import *
+from app import *
+from config import *
+from utils import *
 
 storage = MemoryStorage()
 bot = Bot(token_api)
@@ -43,7 +42,7 @@ class Test(BaseMiddleware):
 async def start_command(message: types.Message):
     await message.answer(
         text="Здраствуйте, для того чтобы начать нужно написать команду '/create'.",
-        reply_markup=base_kb,
+        reply_markup=base_kb(),
     )
     await message.delete()
     await create_profile(user_id=message.from_user.id)
@@ -62,7 +61,7 @@ async def com_cancel(message: types.message, state: FSMContext):
 @dp.message_handler(commands="create")
 async def photo(message: types.message):
     await message.reply(
-        "Давай создадим тебе профиль! Пришли свое фото.", reply_markup=cancel_kb
+        "Давай создадим тебе профиль! Пришли свое фото.", reply_markup=cancel_kb()
     )
     await ProfileStatesGroup.photo.set()
 
