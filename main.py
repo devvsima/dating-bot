@@ -41,7 +41,16 @@ class Test(BaseMiddleware):
 @dp.message_handler(commands="start")
 async def start_command(message: types.Message):
     await message.answer(
-        text="Здраствуйте, для того чтобы начать нужно написать команду '/create'.",
+        text="Выбери язык: ",
+        reply_markup=start_kb(),
+    )
+    await message.delete()
+
+
+@dp.message_handler(text=("🏳️Русский", "🇺🇦Українська", "🇬🇧English"))
+async def start_command(message: types.Message):
+    await message.answer(
+        text="Привет, теперь давай создадим тебе профиль! Для создание нажми или напиши '/create'",
         reply_markup=base_kb(),
     )
     await message.delete()
@@ -60,9 +69,7 @@ async def com_cancel(message: types.message, state: FSMContext):
 # создание профиля
 @dp.message_handler(commands="create")
 async def photo(message: types.message):
-    await message.reply(
-        "Давай создадим тебе профиль! Пришли свое фото.", reply_markup=cancel_kb()
-    )
+    await message.reply("Пришли свое фото.", reply_markup=cancel_kb())
     await ProfileStatesGroup.photo.set()
 
 
