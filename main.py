@@ -84,7 +84,7 @@ async def load_photo(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["photo"] = message.photo[0].file_id
 
-    await message.reply("Теперь введи свое имя.\n(до 70 символов)")
+    await message.reply("Как тебя зовут?")
     await ProfileStatesGroup.next()
 
 
@@ -102,7 +102,7 @@ async def load_name(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["name"] = message.text
 
-    await message.reply("Теперь введи свой возраст.")
+    await message.reply("Сколько тебе лет?")
     await ProfileStatesGroup.next()
 
 
@@ -123,7 +123,7 @@ async def load_age(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["age"] = message.text
 
-        await message.reply("Теперь введи свой город.\n(до 70 символов)")
+        await message.reply("Теперь введи свой город.")
         await ProfileStatesGroup.next()
 
 
@@ -141,7 +141,7 @@ async def load_city(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["city"] = message.text
 
-    await message.reply("Теперь напиши о себе.")
+    await message.reply("Раскжи о себе.")
     await ProfileStatesGroup.next()
 
 
