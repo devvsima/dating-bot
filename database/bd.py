@@ -1,10 +1,11 @@
 import sqlite3 as sq
+from pathlib import Path
 
 
 async def db_start():
     global db, cur
-    db = sq.connect(r"D:\010101010\python\tg-bots\michelangelo-bot\database\new.db")
-    # db = sq.connect("database/new.db")
+    # path = rf"{Path(__file__).parents[0]}\new.db"
+    db = sq.connect(rf"{Path(__file__).parents[0]}\new.db")
     cur = db.cursor()
 
     cur.execute(
