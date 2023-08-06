@@ -25,6 +25,8 @@ async def start_up(_):
 
 # список ипорт данных от пользователя
 class ProfileStatesGroup(StatesGroup):
+    gender = State()
+    find_gender = State()
     photo = State()
     name = State()
     age = State()
@@ -54,7 +56,6 @@ async def start_command(message: types.Message):
         reply_markup=base_kb(),
     )
     await message.delete()
-    await create_profile(user_id=message.from_user.id)
 
 
 # выключение машины состояний
@@ -69,8 +70,47 @@ async def com_cancel(message: types.message, state: FSMContext):
 # создание профиля
 @dp.message_handler(commands="create")
 async def photo(message: types.message):
-    await message.reply("Пришли свое фото.", reply_markup=cancel_kb())
-    await ProfileStatesGroup.photo.set()
+    await ProfileStatesGroup.gender.set()
+    await create_profile(user_id=message.from_user.id)
+    reply_markup = cancel_kb()
+    await message.reply("Выберете свой пол:", reply_markup=gender_kb())
+
+
+# пол
+@dp.message_handler(
+    lambda message: len(message.text) > 70,
+    state=ProfileStatesGroup.gender,
+)
+async def gender(message: types.Message):
+    await message.answer("Превышен лимит символов.")
+
+
+@dp.message_handler(state=ProfileStatesGroup.gender)
+async def load_gender(message: types.Message, state=FSMContext):
+    async with state.proxy() as data:
+        data["gender"] = message.text
+        await message.reply("Кто тебе интересен", reply_markup=find_gender_kb())
+
+    await ProfileStatesGroup.find_gender.set()
+    # await ProfileStatesGroup.next()
+
+
+# интересующий пол
+@dp.message_handler(
+    lambda message: len(message.text) > 70,
+    state=ProfileStatesGroup.find_gender,
+)
+async def find_gender(message: types.Message):
+    await message.answer("Превышен лимит символов.")
+
+
+@dp.message_handler(state=ProfileStatesGroup.find_gender)
+async def load_find_gender(message: types.Message, state=FSMContext):
+    async with state.proxy() as data:
+        data["find_gender"] = message.text
+        await message.reply("Пришли свое фото!")
+
+    await ProfileStatesGroup.next()
 
 
 # фото
@@ -157,7 +197,7 @@ async def load_desc(message: types.Message, state=FSMContext):
         )
     await edit_profile(state, user_id=message.from_user.id)
     await message.reply("Ну ты и урод сукааааа.")
-    await ProfileStatesGroup.next()
+    # await ProfileStatesGroup.next()
 
 
 # старт скрипта
