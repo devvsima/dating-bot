@@ -53,7 +53,7 @@ def gender_kb():
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
-            [KeyboardButton(text="Я парень"), KeyboardButton(text="я Девушка")],
+            [KeyboardButton(text="Я парень"), KeyboardButton(text="я девушка")],
         ],
     )
     return kb

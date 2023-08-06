@@ -92,14 +92,20 @@ async def load_gender(message: types.Message, state=FSMContext):
         await message.reply("Кто тебе интересен", reply_markup=find_gender_kb())
 
     await ProfileStatesGroup.find_gender.set()
-    # await ProfileStatesGroup.next()
 
 
 # интересующий пол
 @dp.message_handler(
     lambda message: len(message.text) > 70,
+    lambda message: len(message.text) == "Парни" and "Девушки",
     state=ProfileStatesGroup.find_gender,
 )
+# @dp.message_handler(
+#     lambda message: len(message.text) == "Парни" and "Девушки",
+#     state=ProfileStatesGroup.find_gender,
+# )
+
+
 async def find_gender(message: types.Message):
     await message.answer("Превышен лимит символов.")
 
