@@ -78,11 +78,13 @@ async def photo(message: types.message):
 
 # пол
 @dp.message_handler(
-    lambda message: len(message.text) > 70,
-    state=ProfileStatesGroup.gender,
+    lambda message: len(message.text) != "Я парень" or "Я девушка",
+    state=ProfileStatesGroup.find_gender,
 )
-async def gender(message: types.Message):
-    await message.answer("Превышен лимит символов.")
+async def find_gender(message: types.Message):
+    await message.answer(
+        "Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."
+    )
 
 
 @dp.message_handler(state=ProfileStatesGroup.gender)
@@ -96,18 +98,13 @@ async def load_gender(message: types.Message, state=FSMContext):
 
 # интересующий пол
 @dp.message_handler(
-    lambda message: len(message.text) > 70,
-    lambda message: len(message.text) == "Парни" and "Девушки",
+    lambda message: len(message.text) != "Парни" or "Девушки",
     state=ProfileStatesGroup.find_gender,
 )
-# @dp.message_handler(
-#     lambda message: len(message.text) == "Парни" and "Девушки",
-#     state=ProfileStatesGroup.find_gender,
-# )
-
-
 async def find_gender(message: types.Message):
-    await message.answer("Превышен лимит символов.")
+    await message.answer(
+        "Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."
+    )
 
 
 @dp.message_handler(state=ProfileStatesGroup.find_gender)
@@ -203,7 +200,7 @@ async def load_desc(message: types.Message, state=FSMContext):
         )
     await edit_profile(state, user_id=message.from_user.id)
     await message.reply("Ну ты и урод сукааааа.")
-    # await ProfileStatesGroup.next()
+    await ProfileStatesGroup.next()
 
 
 # старт скрипта
