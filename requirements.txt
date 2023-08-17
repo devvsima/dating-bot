@@ -1,0 +1,4 @@
+pathlib
+aiogram
+sqlite3
+environs
