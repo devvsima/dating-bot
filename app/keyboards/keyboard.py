@@ -78,10 +78,25 @@ def base_selection():
         resize_keyboard=True,
         keyboard=[
             [
-                KeyboardButton(text="🔍"),
-                KeyboardButton(text="👤"),
-                KeyboardButton(text="❌"),
-                KeyboardButton(text="✉️"),
+                KeyboardButton(text="ㅤ🔍ㅤ"),
+                KeyboardButton(text="ㅤ👤ㅤ"),
+                KeyboardButton(text="ㅤ❌ㅤ"),
+                KeyboardButton(text="ㅤ✉️ㅤ"),
+            ],
+        ],
+    )
+    return kb
+
+
+def comm_profile():
+    kb = ReplyKeyboardMarkup(
+        resize_keyboard=True,
+        keyboard=[
+            [
+                KeyboardButton(text="🔄ㅤ"),
+                KeyboardButton(text="🖼ㅤ"),
+                KeyboardButton(text="✍️ㅤ"),
+                KeyboardButton(text="🔍ㅤ"),
             ],
         ],
     )

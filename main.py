@@ -213,15 +213,17 @@ async def load_desc(message: types.Message, state=FSMContext):
     )
 
 
-@dp.message_handler(commands="👤")
+@dp.message_handler(text="ㅤ👤ㅤ")
 async def profile_comm(message: types.Message):
+    # await message.answer
     await message.answer(
         """
-        🔄Заполнить профиль заново
-🖼Сменить фото
-✍️Сменить описание
-🔍Смотреть анкеты
-        """
+        🔄 Заполнить профиль заново
+🖼 Сменить фото
+✍️ Сменить описание
+🔍 Смотреть анкеты
+        """,
+        reply_markup=comm_profile(),
     )
 
 
