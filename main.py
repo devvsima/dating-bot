@@ -78,8 +78,8 @@ async def photo(message: types.message):
 
 # пол
 @dp.message_handler(
-    lambda message: len(message.text) != "Я парень" or "Я девушка",
-    state=ProfileStatesGroup.find_gender,
+    lambda message: message.text != "Я парень" and message.text != "Я девушка",
+    state=ProfileStatesGroup.gender,
 )
 async def find_gender(message: types.Message):
     await message.answer(
@@ -98,7 +98,7 @@ async def load_gender(message: types.Message, state=FSMContext):
 
 # интересующий пол
 @dp.message_handler(
-    lambda message: len(message.text) != "Парни" or "Девушки",
+    lambda message: message.text != "Парни" and message.text != "Девушки",
     state=ProfileStatesGroup.find_gender,
 )
 async def find_gender(message: types.Message):
@@ -201,6 +201,15 @@ async def load_desc(message: types.Message, state=FSMContext):
     await edit_profile(state, user_id=message.from_user.id)
     await message.reply("Ну ты и урод сукааааа.")
     await ProfileStatesGroup.next()
+    await message.answer(
+        """
+                         Смотреть анкеты
+                         Моя анкета
+                         Удалить анкету
+                         Пригласить друзей
+                         """
+    )
+    reply_markup = ""
 
 
 # старт скрипта
