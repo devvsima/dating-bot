@@ -78,9 +78,10 @@ def base_selection():
         resize_keyboard=True,
         keyboard=[
             [
-                KeyboardButton(text="Парни"),
-                KeyboardButton(text="Девушки"),
-                KeyboardButton(text="Все"),
+                KeyboardButton(text="🔍"),
+                KeyboardButton(text="👤"),
+                KeyboardButton(text="❌"),
+                KeyboardButton(text="✉️"),
             ],
         ],
     )

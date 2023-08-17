@@ -201,15 +201,28 @@ async def load_desc(message: types.Message, state=FSMContext):
     await edit_profile(state, user_id=message.from_user.id)
     await message.reply("Ну ты и урод сукааааа.")
     await ProfileStatesGroup.next()
+
     await message.answer(
         """
-                         Смотреть анкеты
-                         Моя анкета
-                         Удалить анкету
-                         Пригласить друзей
-                         """
+        \t🔍Смотреть анкеты
+👤Моя анкета
+❌Удалить анкету
+✉️Пригласить друзей
+        """,
+        reply_markup=base_selection(),
     )
-    reply_markup = ""
+
+
+@dp.message_handler(commands="👤")
+async def profile_comm(message: types.Message):
+    await message.answer(
+        """
+        🔄Заполнить профиль заново
+🖼Сменить фото
+✍️Сменить описание
+🔍Смотреть анкеты
+        """
+    )
 
 
 # старт скрипта
