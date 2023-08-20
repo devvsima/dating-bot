@@ -93,10 +93,10 @@ def comm_profile():
         resize_keyboard=True,
         keyboard=[
             [
-                KeyboardButton(text="🔄ㅤ"),
-                KeyboardButton(text="🖼ㅤ"),
-                KeyboardButton(text="✍️ㅤ"),
-                KeyboardButton(text="🔍ㅤ"),
+                KeyboardButton(text="ㅤ🔄ㅤ"),
+                KeyboardButton(text="ㅤ🖼ㅤ"),
+                KeyboardButton(text="ㅤ✍️ㅤ"),
+                KeyboardButton(text="ㅤ🔍ㅤ"),
             ],
         ],
     )

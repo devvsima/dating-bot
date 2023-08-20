@@ -1,5 +1,6 @@
 import sqlite3 as sq
 from pathlib import Path
+import tracemalloc
 
 
 async def db_start():
@@ -41,3 +42,20 @@ async def edit_profile(state, user_id):
             )
         )
         db.commit()
+
+
+def view_profile(user_id):
+    # tracemalloc.start()
+
+    info = cur.execute(
+        f"""SELECT * FROM profile
+    WHERE user_id = '{user_id}';
+    """
+    ).fetchone()
+    db.commit()
+    return info
+
+
+# db_start()
+# a = view_profile(743347029)
+# print(a)

@@ -18,11 +18,12 @@ class ProfileStatesGroup(StatesGroup):
 
 # создание профиля
 @dp.message_handler(commands="create")
-async def photo(message: types.message):
+async def gender(message: types.message):
     await ProfileStatesGroup.gender.set()
     await create_profile(user_id=message.from_user.id)
     reply_markup = cancel_kb()
     await message.reply("Выберете свой пол:", reply_markup=gender_kb())
+
 
 # пол
 @dp.message_handler(

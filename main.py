@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.middlewares import BaseMiddleware
 
 # from aiogram.dispatcher.filters import Text
-
+from colorama import init, Style, Fore
 
 from loader import dp, bot
 
@@ -18,12 +18,12 @@ from utils import *
 
 async def start_up(_):
     await db_start()
-    print(" [ Бот запущен ] ")
+    print(Fore.GREEN + "  [ Bot_start_up ] ")
 
 
 class Test(BaseMiddleware):
     async def on_pre_process_update(self, update: types.update, data: dict):
-        print("Действие")
+        print("Target")
 
 
 # старт скрипта
