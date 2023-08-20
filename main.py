@@ -18,7 +18,7 @@ from utils import *
 
 async def start_up(_):
     await db_start()
-    print(Fore.GREEN + "  [ Bot_start_up ] ")
+    print(Fore.GREEN + "  [ Bot_start_up ] " + Fore.WHITE)
 
 
 class Test(BaseMiddleware):
