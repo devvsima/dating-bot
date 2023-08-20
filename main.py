@@ -6,6 +6,7 @@ from aiogram.dispatcher.middlewares import BaseMiddleware
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
+from loader import dp, bot
 
 # импорт скриптов
 from database import *
@@ -13,9 +14,9 @@ from app import *
 from config import *
 from utils import *
 
-storage = MemoryStorage()
-bot = Bot(token_api)
-dp = Dispatcher(bot=bot, storage=storage)
+# storage = MemoryStorage()
+# bot = Bot(token_api)
+# dp = Dispatcher(bot=bot, storage=storage)
 
 
 async def start_up(_):
@@ -40,25 +41,6 @@ del_markup = types.ReplyKeyboardRemove()
 class Test(BaseMiddleware):
     async def on_pre_process_update(self, update: types.update, data: dict):
         print("Действие")
-
-
-# старт
-@dp.message_handler(commands="start")
-async def start_command(message: types.Message):
-    await message.answer(
-        text="Выбери язык: ",
-        reply_markup=start_kb(),
-    )
-    await message.delete()
-
-
-@dp.message_handler(text=("🏳️Русский", "🇺🇦Українська", "🇬🇧English"))
-async def start_command(message: types.Message):
-    await message.answer(
-        text="Привет, теперь давай создадим тебе профиль! Для создание нажми или напиши '/create'",
-        reply_markup=base_kb(),
-    )
-    await message.delete()
 
 
 # выключение машины состояний
