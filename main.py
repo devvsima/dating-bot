@@ -34,6 +34,9 @@ class ProfileStatesGroup(StatesGroup):
     desc = State()
 
 
+del_markup = types.ReplyKeyboardRemove()
+
+
 class Test(BaseMiddleware):
     async def on_pre_process_update(self, update: types.update, data: dict):
         print("Действие")
@@ -111,8 +114,8 @@ async def find_gender(message: types.Message):
 async def load_find_gender(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["find_gender"] = message.text
-        await message.reply("Пришли свое фото!")
 
+        await message.reply("Пришли свое фото!", reply_markup=del_markup)
     await ProfileStatesGroup.next()
 
 
@@ -199,7 +202,7 @@ async def load_desc(message: types.Message, state=FSMContext):
             caption=f'{data["name"]}, {data["age"]} | Город: {data["city"]}\n{data["desc"]}',
         )
     await edit_profile(state, user_id=message.from_user.id)
-    await message.reply("Ну ты и урод сукааааа.")
+    # await message.reply("Ну ты и урод сукааааа.")
     await ProfileStatesGroup.next()
 
     await message.answer(
