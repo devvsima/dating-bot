@@ -54,13 +54,19 @@ def view_profile(user_id):
 
 
 def search_profile(user_id):
-    inf = view_profile(user_id)
-    ret = [""]
     ret = cur.execute(
-        f"""SELECT * FROM profile WHERE city LIKE '%{inf[6]}%'"""
+        f"""SELECT * FROM profile WHERE city LIKE '%{view_profile(user_id)[6]}%'"""
     ).fetchall()
     db.commit()
     return ret
+
+
+def get_user_id(user_id):
+    all_us_id = cur.execute(
+        f"SELECT user_id FROM profile WHERE user_id LIKE '%{user_id}%'"
+    ).fetchone()
+    db.commit()
+    return all_us_id
 
 
 # ('743347029', 'Я парень', 'Девушки', 'AgACAgIAAxkBAAIEtmTh4Me_AAEQOyyWxS13tiWyI3hojAACussxG5agEEtpBoZ7y3UZvAEAAwIAA3MAAzAE', 'fff', '19', 'Київ', 'vfr')

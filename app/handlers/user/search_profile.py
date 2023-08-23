@@ -6,8 +6,8 @@ from database.bd import search_profile
 
 @dp.message_handler(text="🔍")
 async def profile_comm(message: types.Message):
-    profile = search_profile(message.from_user.id)
     p = profile[0]
+    profile = search_profile(message.from_user.id)
 
     await bot.send_photo(
         chat_id=message.from_user.id,
