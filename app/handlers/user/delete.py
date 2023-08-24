@@ -5,7 +5,7 @@ from app.keyboards import delete_profile_yes_or_not
 
 
 @dp.message_handler(text="❌")
-async def profile_comm(message: types.Message):
+async def delete_comm(message: types.Message):
     await message.answer("Вы уверены?", reply_markup=delete_profile_yes_or_not())
 
 

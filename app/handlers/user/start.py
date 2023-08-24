@@ -17,17 +17,19 @@ async def start_command(message: types.Message):
 
 @dp.message_handler(text=("🏳️Русский", "🇺🇦Українська", "🇬🇧English"))
 async def lang_command(message: types.Message):
+    db_us_id = get_user_id(str(message.from_user.id))
     print(str(message.from_user.id))
-    print(get_user_id(message.from_user.id))
-    if str(message.from_user.id) == get_user_id(message.from_user.id)[0]:
-        await message.answer(
-            text="🔍 Искать анкеты \n👤 Мой профиль \n❌ Удалить профиль \n✉️ Пригласить друзей \n",
-            reply_markup=base_selection(),
-        )
-    else:
+    print(str(db_us_id))
+    # print(str(db_us_id[0]))
+    if db_us_id == None:
         await message.answer(
             text="Привет, теперь давай создадим тебе профиль! Для создание нажми или напиши '/create'",
             reply_markup=base_kb(),
+        )
+    elif str(message.from_user.id) == db_us_id[0]:
+        await message.answer(
+            text="🔍 Искать анкеты \n👤 Мой профиль \n❌ Удалить профиль \n✉️ Пригласить друзей \n",
+            reply_markup=base_selection(),
         )
 
     mess = message.from_user
