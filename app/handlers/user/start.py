@@ -1,7 +1,6 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
 from app.keyboards import start_kb, base_selection, base_kb
-from aiogram.utils.callback_data import CallbackData
 from database.bd import get_user_id
 
 
