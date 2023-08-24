@@ -142,6 +142,14 @@ async def load_city(message: types.Message, state=FSMContext):
 
 
 # описанние
+@dp.message_handler(
+    lambda message: len(message.text) > 250,
+    state=ProfileStatesGroup.desc,
+)
+async def check_desc(message: types.Message):
+    await message.answer("Превышен лимит символов.")
+
+
 @dp.message_handler(state=ProfileStatesGroup.desc)
 async def load_desc(message: types.Message, state=FSMContext):
     async with state.proxy() as data:

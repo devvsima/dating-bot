@@ -92,8 +92,9 @@ def comm_profile():
         keyboard=[
             [
                 KeyboardButton(text="🔄"),
-                KeyboardButton(text="🖼"),
-                KeyboardButton(text="✍️"),
+                KeyboardButton(text="❌"),
+                # KeyboardButton(text="🖼"),
+                # KeyboardButton(text="✍️"),
                 KeyboardButton(text="🔍"),
             ],
         ],

@@ -74,4 +74,13 @@ def delete_profile(user_id):
     db.commit()
 
 
+def edit_desc(user_id, txt):
+    cur.execute(f"UPDATE profile SET desc = '{txt}' WHERE id = {user_id};")
+    db.commit()
+
+
+def edit_photo(user_id, photo):
+    pass
+
+
 # ('743347029', 'Я парень', 'Девушки', 'AgACAgIAAxkBAAIEtmTh4Me_AAEQOyyWxS13tiWyI3hojAACussxG5agEEtpBoZ7y3UZvAEAAwIAA3MAAzAE', 'fff', '19', 'Київ', 'vfr')
