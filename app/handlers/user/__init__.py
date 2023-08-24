@@ -1,8 +1,6 @@
 from .cancel import dp
-from .create_profile import dp
-from .profile import dp
 from .start import dp
-from .search_profile import dp
-from .delete import dp
+from .create_profile import dp
+from .base_selection import dp
 
 __all__ = ["dp"]
