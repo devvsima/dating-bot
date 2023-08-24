@@ -1,6 +1,6 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
-from app.handlers.user.create_profile import gender
+from app.handlers.user.other.create_profile import gender
 
 
 @dp.message_handler(text="🔄")
