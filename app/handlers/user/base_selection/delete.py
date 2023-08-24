@@ -3,10 +3,14 @@ from loader import dp, bot
 from database.bd import delete_profile
 from app.keyboards import delete_profile_yes_or_not
 
+# from app.handlers.user.start import lang_command
+
 
 @dp.message_handler(text="❌")
 async def delete_comm(message: types.Message):
-    await message.answer("Вы уверены?", reply_markup=delete_profile_yes_or_not())
+    await message.answer(
+        "Вы точно хотите удалить анкету?", reply_markup=delete_profile_yes_or_not()
+    )
 
 
 @dp.callback_query_handler(text=["delete_yes", "delete_no"])

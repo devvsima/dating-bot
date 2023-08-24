@@ -48,7 +48,9 @@ async def load_gender(message: types.Message, state=FSMContext):
 
 # интересующий пол
 @dp.message_handler(
-    lambda message: message.text != "Парни" and message.text != "Девушки",
+    lambda message: message.text != "Парни"
+    and message.text != "Девушки"
+    and message.text != "Все",
     state=ProfileStatesGroup.find_gender,
 )
 async def find_gender(message: types.Message):
