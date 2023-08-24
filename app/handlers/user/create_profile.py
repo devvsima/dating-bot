@@ -2,8 +2,9 @@ from aiogram import types, Dispatcher
 from loader import dp, bot
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.dispatcher import FSMContext
-from app.keyboards import *
-from database.bd import *
+from app.keyboards import cancel_kb, gender_kb, find_gender_kb
+from database.bd import create_profile, edit_profile
+from .start import lang_command
 
 
 class ProfileStatesGroup(StatesGroup):
@@ -150,4 +151,5 @@ async def load_desc(message: types.Message, state=FSMContext):
         )
     await edit_profile(state, user_id=message.from_user.id)
     # await message.reply("Ну ты и урод сукааааа.")
+    await lang_command(message)
     await ProfileStatesGroup.next()
