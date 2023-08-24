@@ -3,5 +3,6 @@ from .create_profile import dp
 from .profile import dp
 from .start import dp
 from .search_profile import dp
+from .delete import dp
 
 __all__ = ["dp"]

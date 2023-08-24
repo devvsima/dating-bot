@@ -69,4 +69,9 @@ def get_user_id(user_id):
     return all_us_id
 
 
+def delete_profile(user_id):
+    cur.execute(f"DELETE FROM profile WHERE user_id = '{user_id}'")
+    db.commit()
+
+
 # ('743347029', 'Я парень', 'Девушки', 'AgACAgIAAxkBAAIEtmTh4Me_AAEQOyyWxS13tiWyI3hojAACussxG5agEEtpBoZ7y3UZvAEAAwIAA3MAAzAE', 'fff', '19', 'Київ', 'vfr')
