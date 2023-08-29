@@ -30,6 +30,3 @@ async def lang_command(message: types.Message):
             text="🔍 Искать анкеты \n👤 Мой профиль \n❌ Удалить профиль \n✉️ Пригласить друзей \n",
             reply_markup=base_selection(),
         )
-
-    mess = message.from_user
-    await message.delete()

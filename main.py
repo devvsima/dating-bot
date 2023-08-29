@@ -7,9 +7,8 @@ from aiogram.dispatcher.middlewares import BaseMiddleware
 # from aiogram.dispatcher.filters import Text
 from colorama import init, Style, Fore
 
+# скрипты
 from loader import dp, bot
-
-# импорт скриптов
 from database import *
 from app import *
 from config import *
@@ -26,7 +25,6 @@ class Test(BaseMiddleware):
         print("Target")
 
 
-# старт скрипта
 if __name__ == "__main__":
     dp.middleware.setup(Test())
     executor.start_polling(
