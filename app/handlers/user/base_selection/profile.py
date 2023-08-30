@@ -1,6 +1,6 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
-from app.keyboards import *
+from app.keyboards import comm_profile
 from database.bd import view_profile
 
 

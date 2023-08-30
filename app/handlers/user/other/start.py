@@ -1,10 +1,12 @@
 from aiogram import types, Dispatcher
+from aiogram.dispatcher.filters import CommandStart
+
 from loader import dp, bot
 from app.keyboards import start_kb, base_selection, base_kb
 from database.bd import get_user_id
 
 
-@dp.message_handler(commands="start")
+@dp.message_handler(CommandStart())
 async def start_command(message: types.Message):
     user_language = message.from_user.id
     await message.answer(

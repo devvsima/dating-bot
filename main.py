@@ -1,17 +1,12 @@
 from aiogram import Bot, Dispatcher, executor, types
-
-# from aiogram.utils.callback_data import CallbackData
-# from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.middlewares import BaseMiddleware
 
-# from aiogram.dispatcher.filters import Text
 from colorama import init, Style, Fore
 
 # скрипты
 from loader import dp, bot
 from database import *
 from app import *
-from config import *
 from utils import *
 
 
