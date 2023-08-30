@@ -1,20 +1,10 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
-from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.dispatcher import FSMContext
 from app.keyboards import cancel_kb, gender_kb, find_gender_kb
 from database.bd import create_profile, edit_profile
 from .start import lang_command
-
-
-class ProfileStatesGroup(StatesGroup):
-    gender = State()
-    find_gender = State()
-    photo = State()
-    name = State()
-    age = State()
-    city = State()
-    desc = State()
+from app.states import ProfileStatesGroup
 
 
 # создание профиля
