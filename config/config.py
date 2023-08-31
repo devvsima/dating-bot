@@ -8,4 +8,5 @@ env.read_env()
 
 DIR = Path(__file__).absolute().parent.parent
 
-token_api = env.str("API", default=None)
+token_api = env.str("TOKEN", default=None)
+admins_id = env.str("ADMINS", default=None)
