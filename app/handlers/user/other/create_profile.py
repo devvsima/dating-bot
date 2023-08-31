@@ -150,6 +150,6 @@ async def load_desc(message: types.Message, state=FSMContext):
             caption=f'{data["name"]}, {data["age"]} | Город: {data["city"]}\n{data["desc"]}',
         )
     await edit_profile(state, user_id=message.from_user.id)
-    # await message.reply("Ну ты и урод сукааааа.")
+
     await lang_command(message)
     await ProfileStatesGroup.next()
