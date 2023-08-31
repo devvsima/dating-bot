@@ -10,13 +10,13 @@ def start_kb():
         resize_keyboard=True,
         keyboard=[
             [
-                KeyboardButton(text="🇺🇦Українська"),
+                KeyboardButton(text="Українська"),
             ],
             [
-                KeyboardButton(text="🇬🇧English"),
+                KeyboardButton(text="English"),
             ],
             [
-                KeyboardButton(text="🏳️Русский"),
+                KeyboardButton(text="Русский"),
             ],
         ],
     )

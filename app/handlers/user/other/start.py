@@ -16,7 +16,7 @@ async def start_command(message: types.Message):
     await message.delete()
 
 
-@dp.message_handler(text=("🏳️Русский", "🇺🇦Українська", "🇬🇧English"))
+@dp.message_handler(text=("Русский", "Українська", "English"))
 async def lang_command(message: types.Message):
     db_us_id = get_user_id(str(message.from_user.id))
     print(str(message.from_user.id))
