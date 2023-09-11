@@ -1,1 +1,1 @@
-from .profile_create_state import *
+from .profile_create_state import ProfileStatesGroup
