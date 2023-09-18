@@ -1,7 +1,7 @@
 from typing import Any, Optional, Tuple
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aiogram import types
-from config.config import I18N_DOMAIN, DIR
+from data.config import I18N_DOMAIN, DIR
 
 async def get_lang(user_id):
     return None

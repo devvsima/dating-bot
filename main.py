@@ -1,13 +1,12 @@
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import executor, types
 from aiogram.dispatcher.middlewares import BaseMiddleware
 
-from colorama import init, Style, Fore
+from colorama import Fore
 
-# скрипты
-from loader import dp, bot
-from database import *
-from app import *
-from utils import *
+
+from database.bd import db_start
+from app import middlewares, filters, handlers
+
 
 
 async def start_up(_):
@@ -15,13 +14,14 @@ async def start_up(_):
     print(Fore.GREEN + "  [ Bot_start_up ]  " + Fore.WHITE)
 
 
-class Test(BaseMiddleware):
+class Target(BaseMiddleware):
     async def on_pre_process_update(self, update: types.update, data: dict):
         print("Target")
 
 
 if __name__ == "__main__":
-    dp.middleware.setup(Test())
+    from loader import dp, bot
+    dp.middleware.setup(Target())
     executor.start_polling(
         dp,
         on_startup=start_up,

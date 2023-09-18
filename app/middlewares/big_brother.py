@@ -3,7 +3,7 @@ from aiogram import types
 from aiogram.dispatcher.handler import CancelHandler
 from aiogram.dispatcher.middlewares import BaseMiddleware
 
-from config.config import banned_users
+from data.config import banned_users
 
 
 class BigBrother(BaseMiddleware):
