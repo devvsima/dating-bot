@@ -92,6 +92,8 @@ async def load_name(message: types.Message, state=FSMContext):
     await ProfileStatesGroup.next()
 
 
+
+
 # возраст
 @dp.message_handler(
     lambda message: not message.text.isdigit() or float(message.text) > 100,
