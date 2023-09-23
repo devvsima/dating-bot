@@ -3,14 +3,12 @@ from aiogram.dispatcher.middlewares import BaseMiddleware
 
 from colorama import Fore
 
-
-from database.bd import db_start
 from app import middlewares, filters, handlers
 
 
 
 async def start_up(_):
-    await db_start()
+
     print(Fore.GREEN + "  [ Bot_start_up ]  " + Fore.WHITE)
 
 

@@ -1,13 +1,13 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
 from app.keyboards import yes_or_not
-from database.bd import search_profile
+from database.users import find
 
 
 @dp.message_handler(text="🔍")
 async def profile_comm(message: types.Message):
 
-    profile = search_profile(message.from_user.id)
+    profile = await find(message.from_user.id)
 
     await bot.send_photo(
         chat_id=message.from_user.id,

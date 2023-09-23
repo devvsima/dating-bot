@@ -2,7 +2,7 @@ from aiogram import types, Dispatcher
 from loader import dp, bot
 from aiogram.dispatcher import FSMContext
 from app.keyboards import cancel_kb, gender_kb, find_gender_kb
-from database.bd import create_profile, edit_profile
+from database.users import add_user, edit_profile
 from .start import lang_command
 from app.states import ProfileStatesGroup
 
@@ -11,7 +11,7 @@ from app.states import ProfileStatesGroup
 @dp.message_handler(commands="create")
 async def gender(message: types.message):
     await ProfileStatesGroup.gender.set()
-    await create_profile(user_id=message.from_user.id)
+    await add_user(user_id=message.from_user.id)
     reply_markup = cancel_kb()
     await message.reply("Выберете свой пол:", reply_markup=gender_kb())
 
@@ -25,7 +25,6 @@ async def find_gender(message: types.Message):
     await message.answer(
         "Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."
     )
-
 
 @dp.message_handler(state=ProfileStatesGroup.gender)
 async def load_gender(message: types.Message, state=FSMContext):
@@ -69,7 +68,7 @@ async def check_photo(message: types.Message):
 async def load_photo(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["photo"] = message.photo[0].file_id
-
+    print(message.photo[0].file_id)
     await message.reply("Как тебя зовут?")
     await ProfileStatesGroup.next()
 
@@ -151,7 +150,7 @@ async def load_desc(message: types.Message, state=FSMContext):
             photo=data["photo"],
             caption=f'{data["name"]}, {data["age"]} | Город: {data["city"]}\n{data["desc"]}',
         )
+    await ProfileStatesGroup.next()
+    await lang_command(message)
     await edit_profile(state, user_id=message.from_user.id)
 
-    await lang_command(message)
-    await ProfileStatesGroup.next()
