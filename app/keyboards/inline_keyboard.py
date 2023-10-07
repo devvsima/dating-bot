@@ -3,7 +3,7 @@ from aiogram.types import (
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
-
+from loader import _
 
 def base_ikb():
     ikb = InlineKeyboardMarkup(
@@ -22,8 +22,8 @@ def delete_profile_yes_or_not():
         resize_keyboard=True,
         inline_keyboard=[
             [
-                InlineKeyboardButton(text="Да", callback_data="delete_yes"),
-                InlineKeyboardButton(text="Нет", callback_data="delete_no"),
+                InlineKeyboardButton(text=_("Да"), callback_data="delete_yes"),
+                InlineKeyboardButton(text=_("Нет"), callback_data="delete_no"),
             ],
         ],
     )

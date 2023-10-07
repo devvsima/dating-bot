@@ -3,7 +3,7 @@ from aiogram.types import (
     KeyboardButton,
     ReplyKeyboardRemove,
 )
-
+from loader import _
 
 def start_kb():
     kb = ReplyKeyboardMarkup(
@@ -62,9 +62,9 @@ def find_gender_kb():
         resize_keyboard=True,
         keyboard=[
             [
-                KeyboardButton(text="Парни"),
-                KeyboardButton(text="Девушки"),
-                KeyboardButton(text="Все"),
+                KeyboardButton(text=_("Парни")),
+                KeyboardButton(text=_("Девушки")),
+                KeyboardButton(text=_("Все")),
             ],
         ],
     )

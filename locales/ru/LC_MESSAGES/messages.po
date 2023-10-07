@@ -1,0 +1,122 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-10-07 13:24+0300\n"
+"PO-Revision-Date: 2023-10-07 13:25+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/handlers/user/base_selection/delete.py:11
+msgid "Вы точно хотите удалить анкету?"
+msgstr ""
+
+#: app/handlers/user/base_selection/delete.py:20
+msgid "Ваша анкета успешно удалена."
+msgstr ""
+
+#: app/handlers/user/other/cancel.py:13
+msgid "Вы вышли с создания анкеты."
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:15
+msgid "Выберете свой пол:"
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:25
+#: app/handlers/user/other/create_profile.py:45
+msgid "Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:32
+msgid "Кто тебе интересен"
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:54
+msgid "Пришли свое фото!"
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:61
+msgid "Неверный формат фотографии!"
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:69
+msgid "Как тебя зовут?"
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:79
+#: app/handlers/user/other/create_profile.py:118
+#: app/handlers/user/other/create_profile.py:136
+msgid "Превышен лимит символов."
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:87
+msgid "Сколько тебе лет?"
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:98
+msgid "Неверный формат, возраст нужно писать цифрами."
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:100
+msgid "К сожалению вы мертвы, введите реальный отзыв."
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:108
+msgid "Теперь введи свой город."
+msgstr ""
+
+#: app/handlers/user/other/create_profile.py:126
+msgid "Раскжи о себе."
+msgstr ""
+
+#: app/handlers/user/other/start.py:13
+msgid "Выбери язык:"
+msgstr ""
+
+#: app/handlers/user/other/start.py:24
+msgid ""
+"Привет, теперь давай создадим тебе профиль! Для создание нажми или напиши"
+" '/create'"
+msgstr ""
+
+#: app/handlers/user/other/start.py:29
+msgid ""
+"🔍 Искать анкеты \n"
+"👤 Мой профиль \n"
+"❌ Удалить профиль \n"
+"✉️ Пригласить друзей \n"
+msgstr ""
+
+#: app/keyboards/inline_keyboard.py:25
+msgid "Да"
+msgstr ""
+
+#: app/keyboards/inline_keyboard.py:26
+msgid "Нет"
+msgstr ""
+
+#: app/keyboards/keyboard.py:65
+msgid "Парни"
+msgstr ""
+
+#: app/keyboards/keyboard.py:66
+msgid "Девушки"
+msgstr ""
+
+#: app/keyboards/keyboard.py:67
+msgid "Все"
+msgstr ""
+
