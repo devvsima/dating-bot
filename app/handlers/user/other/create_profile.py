@@ -9,11 +9,11 @@ from app.states import ProfileStatesGroup
 
 # создание профиля
 @dp.message_handler(commands="create")
-async def gender(message: types.message):
-    await ProfileStatesGroup.gender.set()
-    await add_user(user_id=message.from_user.id)
+async def gender(message: types.Message):
+    # await add_user(user_id=message.from_user.id)
     reply_markup = cancel_kb()
-    await message.reply("Выберете свой пол:", reply_markup=gender_kb())
+    await message.answer("Выберете свой пол:", reply_markup=gender_kb())
+    await ProfileStatesGroup.gender.set()
 
 
 # пол
@@ -25,6 +25,7 @@ async def find_gender(message: types.Message):
     await message.answer(
         "Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."
     )
+
 
 @dp.message_handler(state=ProfileStatesGroup.gender)
 async def load_gender(message: types.Message, state=FSMContext):
@@ -91,8 +92,6 @@ async def load_name(message: types.Message, state=FSMContext):
     await ProfileStatesGroup.next()
 
 
-
-
 # возраст
 @dp.message_handler(
     lambda message: not message.text.isdigit() or float(message.text) > 100,
@@ -151,6 +150,5 @@ async def load_desc(message: types.Message, state=FSMContext):
             caption=f'{data["name"]}, {data["age"]} | Город: {data["city"]}\n{data["desc"]}',
         )
     await ProfileStatesGroup.next()
-    await lang_command(message)
     await edit_profile(state, user_id=message.from_user.id)
-
+    await lang_command(message)

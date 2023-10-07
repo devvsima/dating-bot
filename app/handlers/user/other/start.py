@@ -19,9 +19,6 @@ async def start_command(message: types.Message):
 @dp.message_handler(text=("Русский", "Українська", "English"))
 async def lang_command(message: types.Message):
     db_us_id = await find_user(message.from_user.id)
-
-    print(str(db_us_id))
-    # print(str(db_us_id[0]))
     if db_us_id == None:
         await message.answer(
             text="Привет, теперь давай создадим тебе профиль! Для создание нажми или напиши '/create'",

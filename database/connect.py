@@ -8,6 +8,5 @@ db = client["michalangelo"]
 db_users = db.users
 
 
-
 async def db_close():
     client.close()

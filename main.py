@@ -8,13 +8,13 @@ from app import middlewares, filters, handlers
 
 
 async def start_up(_):
-
     print(Fore.GREEN + "  [ Bot_start_up ]  " + Fore.WHITE)
 
 
 class Target(BaseMiddleware):
     async def on_pre_process_update(self, update: types.update, data: dict):
-        print("Target")
+        # print("Target")
+        pass
 
 
 if __name__ == "__main__":

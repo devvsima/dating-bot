@@ -109,6 +109,8 @@ def yes_or_not():
             [
                 KeyboardButton(text="❤️"),
                 KeyboardButton(text="👎"),
+                KeyboardButton(text="💤"),
+
             ],
         ],
     )
