@@ -14,5 +14,5 @@ admins = env.str("ADMINS", default=None)
 mongodb_url = env.str("MONGODB_URL", default=None)
 
 I18N_DOMAIN = 'bot'
-LOCALES_DIR = f'{DIR}\config\locales'
+LOCALES_DIR = f'{DIR}\data\locales'
 
