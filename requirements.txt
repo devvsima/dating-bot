@@ -1,0 +1,4 @@
+aiogram==2.25
+colorama
+pymongo
+environs

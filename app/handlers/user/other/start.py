@@ -8,7 +8,6 @@ from database.users import find_user
 
 @dp.message_handler(CommandStart())
 async def start_command(message: types.Message):
-
     user_language = message.from_user.id
     await message.answer(
         text=_("Выбери язык:"),
