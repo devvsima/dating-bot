@@ -1,5 +1,5 @@
 from aiogram import types, Dispatcher
-from loader import dp, bot,_
+from loader import dp, bot
 
 
 @dp.message_handler(text="✉️")

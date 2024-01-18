@@ -1,5 +1,5 @@
 from aiogram import types, Dispatcher
-from loader import dp, bot, _
+from loader import dp, bot
 from aiogram.dispatcher import FSMContext
 from app.keyboards import *
 
@@ -10,7 +10,7 @@ async def com_cancel(message: types.message, state: FSMContext):
     if state is None:
         return
     await state.finish()
-    await message.answer(_("Вы вышли с создания анкеты."))
+    await message.answer(("Вы вышли с создания анкеты."))
 
     await message.answer(
         """
