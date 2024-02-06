@@ -1,6 +1,6 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
-from database.users import delete_profile
+from database.service.users import delete_profile
 from app.keyboards import delete_profile_yes_or_not
 
 # from app.handlers.user.start import lang_command

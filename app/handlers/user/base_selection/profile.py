@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
 from app.keyboards.keyboard import comm_profile
-from database.users import get_profile
+from database.service.users import get_profile
 
 
 @dp.message_handler(text="👤")

@@ -2,7 +2,7 @@ from aiogram import types, Dispatcher
 from loader import dp, bot
 from aiogram.dispatcher import FSMContext
 from app.keyboards import cancel_kb, gender_kb, find_gender_kb
-from database.users import add_user, edit_profile
+from database.service.users import add_user, edit_profile
 from .start import lang_command
 from app.states import ProfileStatesGroup
 

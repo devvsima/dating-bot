@@ -1,27 +1,22 @@
-from aiogram import executor, types
-from aiogram.dispatcher.middlewares import BaseMiddleware
-
-from colorama import Fore
-
-from app import middlewares, filters, handlers
-
-
+from aiogram import Bot, Dispatcher, executor
+from app import middlewares, handlers, filters
+from loader import dp, bot
+from database.connect import db_close
 
 async def start_up(_):
-    print(Fore.GREEN + "  [ Bot_start_up ]  " + Fore.WHITE)
+    from app.commands import set_default_commands
+    await set_default_commands()
+    print("< Bot start_up >")   
 
-
-class Target(BaseMiddleware):
-    async def on_pre_process_update(self, update: types.update, data: dict):
-        # print("Target")
-        pass
-
+async def on_shutdown(dispatcher: Dispatcher):
+    await db_close()
+    print("Shutting down...")
 
 if __name__ == "__main__":
-    from loader import dp, bot
-    dp.middleware.setup(Target())
     executor.start_polling(
         dp,
         on_startup=start_up,
+        on_shutdown=on_shutdown,
         skip_updates=True,
     )
+    

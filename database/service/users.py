@@ -1,4 +1,4 @@
-from .connect import db_users
+from ..connect import db_users
 
 
 async def add_user(user_id):

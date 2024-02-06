@@ -1,7 +1,7 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
 from app.keyboards import yes_or_not
-from database.users import find_user_id,find_user
+from database.service.users import find_user_id,find_user
 
 
 @dp.message_handler(text="🔍")

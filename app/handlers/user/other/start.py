@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters import CommandStart
 
 from loader import dp, bot
 from app.keyboards import start_kb, base_selection, base_kb
-from database.users import find_user
+from database.service.users import find_user
 
 
 # @dp.message_handler(CommandStart())
