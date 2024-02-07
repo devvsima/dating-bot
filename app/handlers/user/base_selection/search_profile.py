@@ -1,10 +1,12 @@
-from aiogram import types, Dispatcher
+from aiogram import types
+from aiogram.dispatcher.filters import Text
+
 from loader import dp, bot
 from app.keyboards import yes_or_not
 from database.service.users import find_user_id,find_user
 
 
-@dp.message_handler(text="🔍")
+@dp.message_handler(Text("🔍"))
 async def search_comm(message: types.Message):
 
     user_ids = await find_user_id(message.from_user.id)

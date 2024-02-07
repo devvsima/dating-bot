@@ -1,11 +1,13 @@
 from aiogram import types, Dispatcher
-from loader import dp, bot
 from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Command
+
+from loader import dp, bot
 from app.keyboards import *
 
 
 # выключение машины состояний
-@dp.message_handler(commands="cancel", state="*")
+@dp.message_handler(Command("cancel"), state="*")
 async def com_cancel(message: types.message, state: FSMContext):
     if state is None:
         return

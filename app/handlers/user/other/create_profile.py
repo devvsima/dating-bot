@@ -1,6 +1,8 @@
 from aiogram import types, Dispatcher
-from loader import dp, bot
 from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters import Command
+
+from loader import dp, bot
 from app.keyboards import cancel_kb, gender_kb, find_gender_kb
 from database.service.users import add_user, edit_profile
 from .start import lang_command
@@ -8,7 +10,7 @@ from app.states import ProfileStatesGroup
 
 
 # создание профиля
-@dp.message_handler(commands="create")
+@dp.message_handler(Command("create"))
 async def gender(message: types.Message):
     # await add_user(user_id=message.from_user.id)
     reply_markup = cancel_kb()

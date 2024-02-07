@@ -1,4 +1,4 @@
-from aiogram import types, Dispatcher
+from aiogram import types
 from loader import dp, bot
 from app.handlers.user.other.create_profile import gender
 

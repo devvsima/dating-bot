@@ -19,7 +19,7 @@ from database.service.users import find_user
 @dp.message_handler(CommandStart())
 async def lang_command(message: types.Message):
     db_us_id = await find_user(message.from_user.id)
-    if db_us_id == None:
+    if not db_us_id:
         await message.answer(
             text=("Привет, теперь давай создадим тебе профиль! Для создание нажми или напиши '/create'"),
             reply_markup=base_kb(),
