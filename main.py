@@ -1,7 +1,6 @@
 from aiogram import Bot, Dispatcher, executor
 from app import middlewares, handlers, filters
 from loader import dp, bot
-from database.connect import db_close
 
 async def start_up(_):
     from app.commands import set_default_commands
@@ -9,7 +8,6 @@ async def start_up(_):
     print("< Bot start_up >")   
 
 async def on_shutdown(dispatcher: Dispatcher):
-    await db_close()
     print("Shutting down...")
 
 if __name__ == "__main__":
