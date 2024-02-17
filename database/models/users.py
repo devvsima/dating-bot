@@ -1,14 +1,9 @@
-from peewee import TextField, IntegerField, Model, CharField
-from ..connect import db
-
-
-class BaseModel(Model):
-    class Meta:
-        database = db
+from peewee import TextField, IntegerField, Model, CharField, BigIntegerField
+from ..connect import db, BaseModel
 
 
 class Users (BaseModel):
-   id=IntegerField(primary_key=True)
+   id=BigIntegerField(primary_key=True)
    name=CharField(max_length=50)
    gender = CharField(choices=['male', 'female'])
    find_gender = CharField(choices=['male', 'female', 'all'])
@@ -16,3 +11,5 @@ class Users (BaseModel):
    photo=TextField()
    age=IntegerField()
    description=CharField(max_length=1000)
+
+db.create_tables([Users])

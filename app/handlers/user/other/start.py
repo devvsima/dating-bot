@@ -6,16 +6,6 @@ from app.keyboards import start_kb, base_selection, base_kb
 from database.service.users import find_user
 
 
-# @dp.message_handler(CommandStart())
-# async def start_command(message: types.Message):
-#     await message.answer(
-#         text=("Выбери язык:"),
-#         reply_markup=start_kb(),
-#     )
-#     await message.delete()
-
-
-# @dp.message_handler(text=("Русский", "Українська", "English"))
 @dp.message_handler(CommandStart())
 async def lang_command(message: types.Message):
     db_us_id = await find_user(message.from_user.id)

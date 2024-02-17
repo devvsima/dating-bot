@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
 from app.keyboards import cancel_kb, gender_kb, find_gender_kb
-from database.service.users import add_user, edit_profile
+from database.service.users import add_user, create_profile
 from .start import lang_command
 from app.states import ProfileStatesGroup
 
@@ -12,17 +12,13 @@ from app.states import ProfileStatesGroup
 # создание профиля
 @dp.message_handler(Command("create"))
 async def gender(message: types.Message):
-    # await add_user(user_id=message.from_user.id)
-    reply_markup = cancel_kb()
     await message.answer(("Выберете свой пол:"), reply_markup=gender_kb())
     await ProfileStatesGroup.gender.set()
 
 
 # пол
-@dp.message_handler(
-    lambda message: message.text != "Я парень" and message.text != "Я девушка",
-    state=ProfileStatesGroup.gender,
-)
+@dp.message_handler(lambda message: message.text != "Я парень" and message.text != "Я девушка",
+    state=ProfileStatesGroup.gender)
 async def find_gender(message: types.Message):
     await message.answer(("Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."))
 
@@ -148,5 +144,5 @@ async def load_desc(message: types.Message, state=FSMContext):
             caption=f'{data["name"]}, {data["age"]} | Город: {data["city"]}\n{data["desc"]}',
         )
     await ProfileStatesGroup.next()
-    await edit_profile(state, user_id=message.from_user.id)
+    await create_profile(state, user_id=message.from_user.id)
     await lang_command(message)
