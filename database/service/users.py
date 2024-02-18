@@ -32,13 +32,11 @@ async def create_profile(state, user_id):
             city = data["city"],
             description = data["desc"]
             )
- 
-      
-async def elastic_search_city(user_id):
-    user = await get_profile(user_id)
-    cities_in_db = [user.city for user in Users.select()]
-    matches = process.extract(user.city, cities_in_db, limit=1)
 
-    if matches and matches[0][1] >= 50:  # Процент совпадения
-        return Users.select().where(Users.city == matches[0][0])
+
+async def elastic_search_user_ids(user_id):
+    user = await get_profile(user_id)
+    users = Users.select(Users.id).where((Users.city == user.city) & (Users.id != user_id))
+    return [i.id for i in users]
+
 

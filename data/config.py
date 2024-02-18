@@ -1,6 +1,5 @@
 from pathlib import Path
 from environs import Env
-from peewee import PostgresqlDatabase
 
 DIR = Path(__file__).absolute().parent.parent
 
