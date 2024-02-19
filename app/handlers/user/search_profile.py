@@ -23,7 +23,6 @@ async def search_command(message: types.Message, state: FSMContext):
 async def search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         ids = data['ids']
-        print(ids)
 
         if data['index'] >= len(ids):
             data['index'] = 0
@@ -31,11 +30,7 @@ async def search_profile(message: types.Message, state: FSMContext):
         profile = await get_profile(ids[data['index']])
         
         if message.text == "❤️":
-            print(data["index"])
-
             index = data['index']
-            print(index)
-            print(ids)
             await bot.send_message(chat_id=ids[index-1], text="Кому-то понравилась ваша анкета")
         
         await bot.send_photo(
