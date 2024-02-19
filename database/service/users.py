@@ -1,5 +1,4 @@
 from ..models.users import Users
-from fuzzywuzzy import process
 
 
 async def add_user(user_id):

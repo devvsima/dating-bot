@@ -63,7 +63,6 @@ async def check_photo(message: types.Message):
 async def load_photo(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["photo"] = message.photo[0].file_id
-    print(message.photo[0].file_id)
     await message.reply(("Как тебя зовут?"))
     await ProfileStatesGroup.next()
 
@@ -121,7 +120,7 @@ async def load_city(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["city"] = message.text
 
-    await message.reply(("Раскжи о себе."))
+    await message.reply(("Раскажи о себе."))
     await ProfileStatesGroup.next()
 
 
