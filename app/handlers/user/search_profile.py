@@ -15,24 +15,29 @@ async def search_command(message: types.Message, state: FSMContext):
         data["ids"] = await elastic_search_user_ids(message.from_user.id)
         data["index"] = 0
 
+    await search_profile(message=message, state=state)
     await Search.search.set()
-    await search_profile()
     
 
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
-async def search_profile(message: types.Message, state=FSMContext):
-
-
+async def search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         ids = data['ids']
+        print(ids)
 
         if data['index'] >= len(ids):
             data['index'] = 0
+
         profile = await get_profile(ids[data['index']])
+        
         if message.text == "❤️":
-            index = data['index'] -1
-            
-            await bot.send_message(chat_id=ids[index], text="Кому-то понравилась ваша анкета")
+            print(data["index"])
+
+            index = data['index']
+            print(index)
+            print(ids)
+            await bot.send_message(chat_id=ids[index-1], text="Кому-то понравилась ваша анкета")
+        
         await bot.send_photo(
             chat_id=message.from_user.id,
             photo=profile.photo,
@@ -42,6 +47,6 @@ async def search_profile(message: types.Message, state=FSMContext):
 
 
 @dp.message_handler(Text("💤"), state=Search.search)
-async def search_profile(message: types.Message, state: FSMContext):
+async def exit_search_profile(message: types.Message, state: FSMContext):
     await message.answer("вы вышли")
     await state.finish()

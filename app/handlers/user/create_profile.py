@@ -24,7 +24,7 @@ async def find_gender(message: types.Message):
 
 
 @dp.message_handler(state=ProfileStatesGroup.gender)
-async def load_gender(message: types.Message, state=FSMContext):
+async def load_gender(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["gender"] = message.text
         await message.reply(("Кто тебе интересен"), reply_markup=find_gender_kb())
@@ -44,7 +44,7 @@ async def find_gender(message: types.Message):
 
 
 @dp.message_handler(state=ProfileStatesGroup.find_gender)
-async def load_find_gender(message: types.Message, state=FSMContext):
+async def load_find_gender(message: types.Message, state: FSMContext):
     del_markup = types.ReplyKeyboardRemove()
     async with state.proxy() as data:
         data["find_gender"] = message.text
@@ -60,7 +60,7 @@ async def check_photo(message: types.Message):
 
 
 @dp.message_handler(content_types=["photo"], state=ProfileStatesGroup.photo)
-async def load_photo(message: types.Message, state=FSMContext):
+async def load_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["photo"] = message.photo[0].file_id
     await message.reply(("Как тебя зовут?"))
@@ -77,7 +77,7 @@ async def check_age(message: types.Message):
 
 
 @dp.message_handler(state=ProfileStatesGroup.name)
-async def load_name(message: types.Message, state=FSMContext):
+async def load_name(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["name"] = message.text
 
@@ -98,7 +98,7 @@ async def check_age(message: types.Message):
 
 
 @dp.message_handler(state=ProfileStatesGroup.age)
-async def load_age(message: types.Message, state=FSMContext):
+async def load_age(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["age"] = message.text
 
@@ -116,7 +116,7 @@ async def check_age(message: types.Message):
 
 
 @dp.message_handler(state=ProfileStatesGroup.city)
-async def load_city(message: types.Message, state=FSMContext):
+async def load_city(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["city"] = message.text
 
