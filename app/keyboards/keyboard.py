@@ -5,24 +5,6 @@ from aiogram.types import (
 )
 from loader import _
 
-def start_kb():
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        keyboard=[
-            [
-                KeyboardButton(text="Українська"),
-            ],
-            [
-                KeyboardButton(text="English"),
-            ],
-            [
-                KeyboardButton(text="Русский"),
-            ],
-        ],
-    )
-    return kb
-
-
 def base_kb():
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
@@ -78,7 +60,6 @@ def base_selection():
             [
                 KeyboardButton(text="🔍"),
                 KeyboardButton(text="👤"),
-                KeyboardButton(text="❌"),
                 KeyboardButton(text="✉️"),
             ],
         ],
@@ -92,10 +73,13 @@ def comm_profile():
         keyboard=[
             [
                 KeyboardButton(text="🔄"),
+                KeyboardButton(text="🖼"),
+                KeyboardButton(text="✍️"),
                 KeyboardButton(text="❌"),
-                # KeyboardButton(text="🖼"),
-                # KeyboardButton(text="✍️"),
+            ],
+            [
                 KeyboardButton(text="🔍"),
+
             ],
         ],
     )

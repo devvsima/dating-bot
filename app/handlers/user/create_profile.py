@@ -5,18 +5,23 @@ from aiogram.dispatcher.filters import Command
 from loader import dp, bot
 from app.keyboards import cancel_kb, gender_kb, find_gender_kb
 from database.service.users import add_user, create_profile
-from .start import lang_command
+from .start import start_command
 from app.states import ProfileStatesGroup
 
 
-# создание профиля
+@dp.message_handler(text="🔄")
+async def retry_create_profile(message: types.Message):
+    await gender(message)
+
+
+# create profile
 @dp.message_handler(Command("create"))
 async def gender(message: types.Message):
     await message.answer(("Выберете свой пол:"), reply_markup=gender_kb())
     await ProfileStatesGroup.gender.set()
 
 
-# пол
+# gender
 @dp.message_handler(lambda message: message.text != "Я парень" and message.text != "Я девушка",
     state=ProfileStatesGroup.gender)
 async def find_gender(message: types.Message):
@@ -25,14 +30,19 @@ async def find_gender(message: types.Message):
 
 @dp.message_handler(state=ProfileStatesGroup.gender)
 async def load_gender(message: types.Message, state: FSMContext):
+    if message.text == 'Я парень':
+        gender = 'male'
+    elif message.text == 'Я девушка':
+        gender = 'female'
+
     async with state.proxy() as data:
-        data["gender"] = message.text
+        data["gender"] = gender
         await message.reply(("Кто тебе интересен"), reply_markup=find_gender_kb())
 
     await ProfileStatesGroup.find_gender.set()
 
 
-# интересующий пол
+# gender of interest
 @dp.message_handler(
     lambda message: message.text != "Парни"
     and message.text != "Девушки"
@@ -53,7 +63,7 @@ async def load_find_gender(message: types.Message, state: FSMContext):
     await ProfileStatesGroup.next()
 
 
-# фото
+# photo
 @dp.message_handler(lambda message: not message.photo, state=ProfileStatesGroup.photo)
 async def check_photo(message: types.Message):
     await message.answer(("Неверный формат фотографии!"))
@@ -67,7 +77,7 @@ async def load_photo(message: types.Message, state: FSMContext):
     await ProfileStatesGroup.next()
 
 
-# имя
+# name
 @dp.message_handler(
     lambda message: len(message.text) > 70,
     state=ProfileStatesGroup.name,
@@ -85,7 +95,7 @@ async def load_name(message: types.Message, state: FSMContext):
     await ProfileStatesGroup.next()
 
 
-# возраст
+# age
 @dp.message_handler(
     lambda message: not message.text.isdigit() or float(message.text) > 100,
     state=ProfileStatesGroup.age,
@@ -106,7 +116,7 @@ async def load_age(message: types.Message, state: FSMContext):
         await ProfileStatesGroup.next()
 
 
-# город
+# city
 @dp.message_handler(
     lambda message: len(message.text) > 70,
     state=ProfileStatesGroup.city,
@@ -144,4 +154,4 @@ async def load_desc(message: types.Message, state=FSMContext):
         )
     await ProfileStatesGroup.next()
     await create_profile(state, user_id=message.from_user.id)
-    await lang_command(message)
+    await start_command(message)
