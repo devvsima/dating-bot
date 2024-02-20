@@ -2,7 +2,7 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters import CommandStart
 
 from loader import dp, bot
-from app.keyboards import start_kb, base_selection, base_kb
+from app.keyboards import base_selection, base_kb
 from database.service.users import find_user
 
 
