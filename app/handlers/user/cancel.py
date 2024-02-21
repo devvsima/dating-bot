@@ -8,7 +8,7 @@ from app.keyboards import *
 
 # выключение машины состояний
 @dp.message_handler(Command("cancel"), state="*")
-async def com_cancel(message: types.message, state: FSMContext):
+async def _cancel_command(message: types.message, state: FSMContext):
     if state is None:
         return
     await state.finish()

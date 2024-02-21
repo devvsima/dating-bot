@@ -17,6 +17,11 @@ async def delete_profile(user_id):
     user = await get_profile(user_id)
     user.delete_instance()
 
+async def edit_profile_photo(user_id, photo):
+    Users.update(photo=photo).where(Users.id == user_id)
+
+async def edit_profile_description(user_id, description):
+    Users.update(description=description).where(Users.id == user_id)
 
 
 async def create_profile(state, user_id):

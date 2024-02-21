@@ -7,7 +7,7 @@ from database.service.users import find_user
 
 
 @dp.message_handler(CommandStart())
-async def start_command(message: types.Message):
+async def _start_command(message: types.Message):
     db_us_id = await find_user(message.from_user.id)
     if not db_us_id:
         await message.answer(

@@ -7,7 +7,7 @@ from database.service.users import get_profile
 
 
 @dp.message_handler(Text("👤"))
-async def profile_comm(message: types.Message):
+async def _profile_command(message: types.Message):
     user = await get_profile(message.from_user.id)
     await bot.send_photo(
         chat_id=message.from_user.id,

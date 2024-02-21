@@ -9,7 +9,7 @@ from app.states.search_state import Search
 
 
 @dp.message_handler(Text("🔍"))
-async def search_command(message: types.Message, state: FSMContext):
+async def _search_command(message: types.Message, state: FSMContext):
     await message.answer("Идет поиск...",reply_markup= yes_or_not())
     async with state.proxy() as data:
         data["ids"] = await elastic_search_user_ids(message.from_user.id)
