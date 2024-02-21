@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher.filters import Text
 
 from loader import dp, bot
-from app.keyboards.keyboard import comm_profile
+from app.keyboards.default.create_profile import comm_profile
 from database.service.users import get_profile
 
 

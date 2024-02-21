@@ -5,55 +5,8 @@ from aiogram.types import (
 )
 from loader import _
 
-def base_kb():
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        keyboard=[
-            [
-                KeyboardButton(text="/create"),
-            ],
-        ],
-    )
-    return kb
 
-
-def cancel_kb():
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        keyboard=[
-            [
-                KeyboardButton(text="/cancel"),
-            ],
-        ],
-    )
-    return kb
-
-
-def gender_kb():
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        keyboard=[
-            [KeyboardButton(text="Я парень"), KeyboardButton(text="Я девушка")],
-        ],
-    )
-    return kb
-
-
-def find_gender_kb():
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        keyboard=[
-            [
-                KeyboardButton(text=("Парни")),
-                KeyboardButton(text=("Девушки")),
-                KeyboardButton(text=("Все")),
-            ],
-        ],
-    )
-    return kb
-
-
-def base_selection():
+def menu_kb():
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
@@ -67,7 +20,7 @@ def base_selection():
     return kb
 
 
-def comm_profile():
+def profile_kb():
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
@@ -85,8 +38,7 @@ def comm_profile():
     )
     return kb
 
-
-def yes_or_not():
+def search_kb():
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[

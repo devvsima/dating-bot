@@ -5,19 +5,7 @@ from aiogram.types import (
 )
 from loader import _
 
-def base_ikb():
-    ikb = InlineKeyboardMarkup(
-        resize_keyboard=True,
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text="Название", callback_data="Калбек"),
-            ],
-        ],
-    )
-    return ikb
-
-
-def delete_profile_yes_or_not():
+def delete_profile_ikb():
     ikb = InlineKeyboardMarkup(
         resize_keyboard=True,
         inline_keyboard=[
