@@ -3,7 +3,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
-from app.keyboards import *
+from app.keyboards.default import menu_kb
 
 
 # выключение машины состояний
@@ -21,5 +21,5 @@ async def _cancel_command(message: types.message, state: FSMContext):
 ❌Удалить анкету
 ✉️Пригласить друзей
         """,
-        reply_markup=base_selection(),
+        reply_markup=menu_kb(),
     )

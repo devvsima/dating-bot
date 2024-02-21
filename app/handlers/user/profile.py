@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher.filters import Text
 
 from loader import dp, bot
-from app.keyboards.default.create_profile import comm_profile
+from app.keyboards.default import profile_kb
 from database.service.users import get_profile
 
 
@@ -22,7 +22,7 @@ async def _profile_command(message: types.Message):
 ❌ Удалить анкету
 🔍 Смотреть анкеты
         """,
-        reply_markup=comm_profile(),
+        reply_markup=profile_kb(),
     )
 
 

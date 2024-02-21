@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters import Text
 
 from loader import dp, bot
 from database.service.users import delete_profile
-from app.keyboards import delete_profile_yes_or_not
+from app.keyboards.inline.profile import delete_profile_ikb 
 from .profile import _profile_command
 
 @dp.message_handler(Text("🖼"))
@@ -23,7 +23,7 @@ async def _edit_profile_description_command(message: types.Message):
 async def _delete_profile_commmand(message: types.Message):
     await message.answer(
         text=("Вы точно хотите удалить анкету?"),
-        reply_markup=delete_profile_yes_or_not(),
+        reply_markup=delete_profile_ikb(),
     )
 
 

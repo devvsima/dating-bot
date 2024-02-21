@@ -3,10 +3,10 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
-from app.keyboards import cancel_kb, gender_kb, find_gender_kb
+from app.keyboards.default import cancel_kb, gender_kb, find_gender_kb
 from database.service.users import create_profile
-from .start import _start_command
 from app.states import ProfileStatesGroup
+from .start import _start_command
 
 
 @dp.message_handler(text="🔄")

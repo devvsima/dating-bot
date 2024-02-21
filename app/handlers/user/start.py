@@ -2,7 +2,7 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher.filters import CommandStart
 
 from loader import dp, bot
-from app.keyboards import base_selection, base_kb
+from app.keyboards.default import  base_kb, menu_kb
 from database.service.users import find_user
 
 
@@ -16,6 +16,6 @@ async def _start_command(message: types.Message):
         )
     else:
         await message.answer(
-            text=("🔍 Искать анкеты \n👤 Мой профиль \n❌ Удалить профиль \n✉️ Пригласить друзей \n"),
-            reply_markup=base_selection(),
+            text=("🔍 Искать анкеты \n👤 Мой профиль \n✉️ Пригласить друзей \n"),
+            reply_markup=menu_kb(),
         )

@@ -3,14 +3,14 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 
 from loader import dp, bot
-from app.keyboards import yes_or_not
+from app.keyboards import search_kb
 from database.service.users import elastic_search_user_ids, get_profile
 from app.states.search_state import Search
 
 
 @dp.message_handler(Text("🔍"))
 async def _search_command(message: types.Message, state: FSMContext):
-    await message.answer("Идет поиск...",reply_markup= yes_or_not())
+    await message.answer("Идет поиск...",reply_markup= search_kb())
     async with state.proxy() as data:
         data["ids"] = await elastic_search_user_ids(message.from_user.id)
         data["index"] = 0
