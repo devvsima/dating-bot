@@ -1,4 +1,4 @@
-Technologies stacj used: peewee, aiogram2, postgresql
+Technologies stack used: peewee, aiogram2, postgresql
 
 <hr>
 
