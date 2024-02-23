@@ -1,3 +1,3 @@
-from base import *
-from create_profile import *
-from choise import *
+from .base import *
+from .create_profile import *
+from .choise import *
