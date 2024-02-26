@@ -11,4 +11,3 @@ class Users (BaseModel):
    created_at = DateTimeField(default=lambda: datetime.utcnow())
 
 
-db.create_tables([Users])
