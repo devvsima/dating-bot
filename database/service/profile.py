@@ -6,7 +6,7 @@ from utils.misc.logging import logger
 async def get_profile(user_id):
     return Profile.get(Profile.id == user_id)
 
-async def if_profile(user_id):
+async def is_profile(user_id):
     return Profile.select().where(Profile.id == user_id).exists()
 
 async def delete_profile(user_id):
@@ -21,6 +21,9 @@ async def edit_profile_description(user_id, description):
 
 
 async def create_profile(state, user_id):
+    if await is_profile(user_id):
+        await delete_profile(user_id)
+        
     async with state.proxy() as data:
         Profile.create(      
             id = user_id,
@@ -32,6 +35,7 @@ async def create_profile(state, user_id):
             city = data["city"],
             description = data["desc"]
             )
+    logger.info(f"A new profile has been created from | {user_id}")
 
 
 async def elastic_search_user_ids(user_id):
