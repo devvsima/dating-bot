@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters import Text
 
 
 from loader import dp, bot
-from database.service.users import delete_profile
+from database.service.profile import delete_profile
 from app.keyboards.inline.profile import delete_profile_ikb 
 from .profile import _profile_command
 

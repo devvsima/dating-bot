@@ -1,17 +1,13 @@
-# import logging
+from logging import getLogger
+from data.config import DIR
+from loguru import logger
 
-# logging.basicConfig(
-#     level=logging.DEBUG,  # (может быть DEBUG, INFO, WARNING, ERROR, CRITICAL)
-#     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-#     filename="data/logs/my_app.log",
-# )
-# logger = logging.getLogger(__name__)
 
-# logger.debug("Это сообщение с уровнем DEBUG")
-# logger.info("Это информационное сообщение")
-# logger.warning("Это предупреждение")
-# logger.error("Это сообщение об ошибке")
-# logger.critical("Это критическое сообщение")
+logger.add(
+    f"{DIR}/logs/logs.log", 
+    format='[{time}] [{level}] [{file.name}:{line}]  {message}', 
+    level='DEBUG', 
+    rotation='1 week',
+    compression='zip')
 
-# console_handler = logging.StreamHandler()
-# logger.addHandler(console_handler)
+getLogger('aiogram').addFilter(lambda r: r.getMessage().find('Field \'database_user\' doesn\'t exist in') == -1)

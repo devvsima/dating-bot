@@ -1,15 +1,14 @@
-from peewee import TextField, IntegerField, Model, CharField, BigIntegerField
+from peewee import CharField, BigIntegerField, DateTimeField
+from datetime import datetime
 from ..connect import db, BaseModel
 
 
 class Users (BaseModel):
    id=BigIntegerField(primary_key=True)
-   name=CharField(max_length=50)
-   gender = CharField(choices=['male', 'female'])
-   find_gender = CharField(choices=['male', 'female', 'all'])
-   city=CharField(max_length=50)
-   photo=TextField()
-   age=IntegerField()
-   description=CharField(max_length=1000)
+   username = CharField(default=None, null=True)
+   language = CharField(default='en')
+   role=CharField(default='user')
+   created_at = DateTimeField(default=lambda: datetime.utcnow())
+
 
 db.create_tables([Users])

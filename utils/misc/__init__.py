@@ -1,2 +1,2 @@
-# from .logging import *
+from .logging import *
 from .trottling import *

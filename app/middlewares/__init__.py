@@ -1,7 +1,10 @@
-# from loader import dp
-# from .big_brother import BigBrother
-# from .throttling import TrottlingMiddleware
+from aiogram import Dispatcher
+from .user import UsersMiddleware
+from .throttling import ThrottlingMiddleware
+from .i18n import I18nMiddleware
 
-# if __name__ == "middlewares":
-#     dp.middleware.setup(TrottlingMiddleware())
-#     dp.middleware.setup(BigBrother())
+
+def setup_middlewares(dp: Dispatcher) -> None:
+    dp.middleware.setup(UsersMiddleware())
+    dp.middleware.setup(ThrottlingMiddleware())
+    # dp.middleware.setup(I18nMiddleware)

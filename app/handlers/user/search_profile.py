@@ -6,7 +6,7 @@ from loader import dp, bot
 from app.keyboards.default.choise import search_kb
 from app.keyboards.inline.search import check_like_ikb
 
-from database.service.users import elastic_search_user_ids, get_profile
+from database.service.profile import elastic_search_user_ids, get_profile
 from app.states.search_state import Search
 
 

@@ -1,46 +1,20 @@
 from ..models.users import Users
+from utils.misc.logging import logger
 
 
-async def add_user(user_id):
-    Users.create(id=user_id)
-
-
-async def find_user(user_id):
+def get_user(user_id):
     return Users.select().where(Users.id == user_id)
 
+def get_or_create_user(id: int, username: str = None, language: str = None) -> Users:
+    user = get_user(id)
 
-async def get_profile(user_id):
-    return Users.get(Users.id == user_id)
+    if user:
+        return user
 
+    return create_user(id, username, language)
 
-async def delete_profile(user_id):
-    user = await get_profile(user_id)
-    user.delete_instance()
-
-async def edit_profile_photo(user_id, photo):
-    Users.update(photo=photo).where(Users.id == user_id)
-
-async def edit_profile_description(user_id, description):
-    Users.update(description=description).where(Users.id == user_id)
-
-
-async def create_profile(state, user_id):
-    async with state.proxy() as data:
-        Users.create(      
-            id = user_id,
-            gender = data["gender"],
-            find_gender = data["find_gender"],
-            photo = data["photo"],
-            name = data["name"],
-            age = data["age"],
-            city = data["city"],
-            description = data["desc"]
-            )
-
-
-async def elastic_search_user_ids(user_id):
-    user = await get_profile(user_id)
-    users = Users.select(Users.id).where((Users.city == user.city) & (Users.id != user_id))
-    return [i.id for i in users]
-
+def create_user(id: int, username: str = None, language: str = None) -> Users:
+    logger.info(f"New user {username} | {id}")
+    new_user = Users.create(id=id, username=username, language=language)
+    return new_user
 

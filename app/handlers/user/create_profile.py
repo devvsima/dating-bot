@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
 from app.keyboards.default import cancel_kb, gender_kb, find_gender_kb
-from database.service.users import create_profile
+from database.service.profile import create_profile
 from app.states import ProfileStatesGroup
 from .start import _start_command
 
