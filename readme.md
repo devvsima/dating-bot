@@ -7,7 +7,7 @@ Technologies stack used: peewee, aiogram2, postgresql
 ### Clone
 
 ```bash
-git clone https://github.com/devSimaa/michelangelo-bot
+git clone https://github.com/devvsima/michelangelo-bot
 cd michelangelo-bot
 ```
 ### Virtual environments ".venv"
