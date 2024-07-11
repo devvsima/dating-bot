@@ -14,22 +14,25 @@ from app.states.search_state import Search
 async def _search_command(message: types.Message, state: FSMContext):
     await message.answer("Идет поиск...",reply_markup= search_kb())
     async with state.proxy() as data:
-        data["ids"] = await elastic_search_user_ids(message.from_user.id)
+        # try:
+        ids = (await elastic_search_user_ids(message.from_user.id))
+        from random import shuffle
+        shuffle(ids)
+        data["ids"] = ids
         data["index"] = 0
-
     await _search_profile(message=message, state=state)
     await Search.search.set()
-    
+        # except:
+    # await message.answer("Сейчас нет подходящих анкет")
 
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        ids = data['ids']
-
-        if data['index'] >= len(ids):
-            data['index'] = 0
-
-        profile = await get_profile(ids[data['index']])
+        if ids:
+            await message.answer('Анкеты закончились')
+        ids = data['ids']        
+        profile = await get_profile(ids[0])
+        data["ids"] = ids.pop(0)
         
         if message.text == "❤️":
             index = data['index']
@@ -39,13 +42,14 @@ async def _search_profile(message: types.Message, state: FSMContext):
                 reply_markup=check_like_ikb(message.from_user.id)
                 )
         
-        await bot.send_photo(
-            chat_id=message.from_user.id,
-            photo=profile.photo,
-            caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
-        )
-        data['index'] += 1
+        await send_profile(message, profile)
 
+async def send_profile(message: types.Message, profile):
+    await bot.send_photo(
+        chat_id=message.from_user.id,
+        photo=profile.photo,
+        caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
+    )
 
 @dp.message_handler(Text("💤"), state=Search.search)
 async def exit_search_profile(message: types.Message, state: FSMContext):
