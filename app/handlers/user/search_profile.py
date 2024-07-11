@@ -28,21 +28,25 @@ async def _search_command(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        if ids:
+        
+        ids = data['ids']      
+        
+        if not ids:
             await message.answer('Анкеты закончились')
-        ids = data['ids']        
-        profile = await get_profile(ids[0])
-        data["ids"] = ids.pop(0)
-        
-        if message.text == "❤️":
-            index = data['index']
-            await bot.send_message(
-                chat_id=ids[index-1],
-                text="Кому-то понравилась ваша анкета, хотите посмотреть?",
-                reply_markup=check_like_ikb(message.from_user.id)
-                )
-        
-        await send_profile(message, profile)
+            await state.finish()
+        else:
+            profile = await get_profile(ids[0])
+            del data["ids"][0]
+            
+            if message.text == "❤️":
+                index = data['index']
+                await bot.send_message(
+                    chat_id=profile.id,
+                    text="Кому-то понравилась ваша анкета, хотите посмотреть?",
+                    reply_markup=check_like_ikb(message.from_user.id)
+                    )
+            
+            await send_profile(message, profile)
 
 async def send_profile(message: types.Message, profile):
     await bot.send_photo(
