@@ -1,7 +1,7 @@
 from aiogram import Dispatcher, executor
 from app import middlewares ,filters, handlers
 from loader import dp, bot
-from utils.misc.logging import logger
+from utils.logging import logger
 
 
 async def on_startup(_):

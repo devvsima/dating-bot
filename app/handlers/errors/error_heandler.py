@@ -6,7 +6,7 @@ from aiogram.utils.exceptions import (
     MessageTextIsEmpty, RetryAfter,
     CantParseEntities, MessageCantBeDeleted)
 from loader import dp
-from utils.misc.logging import logger
+from utils.logging import logger
 
 
 @dp.errors_handler()
