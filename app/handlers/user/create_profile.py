@@ -3,8 +3,12 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
-from app.keyboards.default import cancel_kb, gender_kb, find_gender_kb
+
 from database.service.profile import create_profile
+
+from utils.cordinate import get_coordinates
+
+from app.keyboards.default import cancel_kb, gender_kb, find_gender_kb
 from app.states import ProfileStatesGroup
 from .start import _start_command
 
@@ -52,10 +56,17 @@ async def _find_gender_filter(message: types.Message):
 @dp.message_handler(state=ProfileStatesGroup.find_gender)
 async def _find_gender(message: types.Message, state: FSMContext):
     del_markup = types.ReplyKeyboardRemove()
-    async with state.proxy() as data:
-        data["find_gender"] = message.text
+    if message.text == 'Парни':
+        gender = 'male'
+    elif message.text == 'Девушки':
+        gender = 'female'
+    elif message.text == 'Все':
+        gender = 'all'
 
-        await message.reply(text=("Пришли свое фото!"), reply_markup=del_markup)
+    async with state.proxy() as data:
+        data["find_gender"] = gender
+
+    await message.reply(text=("Пришли свое фото!"), reply_markup=del_markup)
     await ProfileStatesGroup.next()
 
 
@@ -120,9 +131,11 @@ async def _city_filter(message: types.Message):
 async def _city(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["city"] = message.text
-
+        data['latitude'], data['longitude'] = get_coordinates(message.text)
+    
     await message.reply(("Раскажи о себе."))
     await ProfileStatesGroup.next()
+    
 
 
 # description

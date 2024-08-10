@@ -1,7 +1,5 @@
 from ..models.profile import Profile
-from utils.misc.logging import logger
-
-
+from utils.logging import logger
 
 async def get_profile(user_id):
     return Profile.get(Profile.id == user_id)
@@ -33,6 +31,8 @@ async def create_profile(state, user_id):
             name = data["name"],
             age = data["age"],
             city = data["city"],
+            latitude = data["latitude"],
+            longitude = data["longitude"],
             description = data["desc"]
             )
     logger.info(f"A new profile has been created from | {user_id}")
@@ -40,6 +40,5 @@ async def create_profile(state, user_id):
 
 async def elastic_search_user_ids(user_id):
     user = await get_profile(user_id)
-    users = Profile.select(Profile.id).where((Profile.city == user.city) & (Profile.id != user_id))
+    users = Profile.select(Profile.id).where((Profile.latitude == user.latitude) & (Profile.longitude == user.longitude) & (Profile.id != user_id))
     return [i.id for i in users]
-

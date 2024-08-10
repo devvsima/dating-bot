@@ -3,12 +3,14 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 
 from loader import dp, bot
+
+from app.states.search_state import Search
 from app.keyboards.default.choise import search_kb
 from app.keyboards.inline.search import check_like_ikb
 
 from database.service.profile import elastic_search_user_ids, get_profile
-from app.states.search_state import Search
 
+from random import shuffle
 
 @dp.message_handler(Text("🔍"))
 async def _search_command(message: types.Message, state: FSMContext):
@@ -16,7 +18,6 @@ async def _search_command(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         # try:
         ids = (await elastic_search_user_ids(message.from_user.id))
-        from random import shuffle
         shuffle(ids)
         data["ids"] = ids
         data["index"] = 0
@@ -33,7 +34,7 @@ async def _search_profile(message: types.Message, state: FSMContext):
         
         if not ids:
             await message.answer('Анкеты закончились')
-            await state.finish()
+            await exit_search_profile(message, state)
         else:
             profile = await get_profile(ids[0])
             del data["ids"][0]
