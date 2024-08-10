@@ -1,5 +1,5 @@
 from ..models.users import Users
-from utils.misc.logging import logger
+from utils.logging import logger
 
 
 def get_user(user_id):
