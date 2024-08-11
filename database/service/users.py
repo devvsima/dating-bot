@@ -19,10 +19,10 @@ def create_user(id: int, username: str = None, language: str = None) -> Users:
     return new_user
 
 def new_referral(id, inviter):
-    user = get_user(id)
-    print(user)
-    print(23123)
-    if not user.is_invited:
-        Users.update(is_invited = True).where(Users.id == id).execute()
-        Users.update(referral=Users.referral + 1).where(Users.id == inviter).execute()
+    Users.update(referral=Users.referral + 1).where(Users.id == inviter).execute()
+    
+    # user = get_user(id)
+    # if not user.is_invited:
+    #     Users.update(is_invited = True).where(Users.id == id).execute()
+    #     Users.update(referral=Users.referral + 1).where(Users.id == inviter).execute()
 
