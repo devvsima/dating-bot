@@ -1,4 +1,4 @@
-from peewee import TextField, IntegerField, Model, CharField, BigIntegerField, FloatField
+from peewee import TextField, IntegerField, Model, CharField, BigIntegerField, FloatField, BooleanField
 from ..connect import db, BaseModel
 
 class Profile(BaseModel):
@@ -12,4 +12,5 @@ class Profile(BaseModel):
    photo = TextField()
    age = IntegerField()
    description = CharField(max_length=1000)
+   active = BooleanField(default=True)
 
