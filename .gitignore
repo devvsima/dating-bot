@@ -11,3 +11,4 @@
 **.sqlite3
 **/.env
 **/logs
+**/invites_per_user.png

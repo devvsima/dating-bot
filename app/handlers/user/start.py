@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters import CommandStart
 from loader import dp, bot
 from app.keyboards.default import  base_kb, menu_kb
 from database.service.profile import is_profile
-
+from database.service.users import new_referral
 
 @dp.message_handler(CommandStart())
 async def _start_command(message: types.Message):
@@ -15,6 +15,9 @@ async def _start_command(message: types.Message):
 
         )
     else:
+        args = message.get_args()
+        if args:
+            new_referral(message.from_user.id, args)
         await message.answer(
             text=("Привет, теперь давай создадим тебе профиль! Для создание нажми или напиши '/create'"),
             reply_markup=base_kb(),
