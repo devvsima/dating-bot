@@ -3,7 +3,10 @@ from utils.logging import logger
 
 
 def get_user(id):
-    return Users.get(Users.id == id)
+    try:
+        return Users.get(Users.id == id)
+    except:
+        return None
 
 def get_or_create_user(id: int, username: str = None, language: str = None) -> Users:
     user = get_user(id)
@@ -25,4 +28,3 @@ def new_referral(id, inviter):
     # if not user.is_invited:
     #     Users.update(is_invited = True).where(Users.id == id).execute()
     #     Users.update(referral=Users.referral + 1).where(Users.id == inviter).execute()
-

@@ -41,6 +41,7 @@ async def _search_profile(message: types.Message, state: FSMContext):
             profile = await get_profile(ids[0])
             del data["ids"][0]
             
+            
             if message.text == "❤️":
                 index = data['index']
                 await bot.send_message(

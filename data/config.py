@@ -21,4 +21,3 @@ RATE_LIMIT = env.int("RATE_LIMIT", default=5)
 
 I18N_DOMAIN = 'bot'
 LOCALES_DIR = f'{DIR}\config\locales'
-
