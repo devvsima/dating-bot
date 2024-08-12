@@ -21,7 +21,7 @@ async def _retry_create_profile_command(message: types.Message):
 # create profile
 @dp.message_handler(Command("create"))
 async def _create_profile_command(message: types.Message):
-    await message.answer(("Выберете свой пол:"), reply_markup=gender_kb())
+    await message.answer("Укажи свой пол:", reply_markup=gender_kb())
     await ProfileStatesGroup.gender.set()
 
 
@@ -29,7 +29,7 @@ async def _create_profile_command(message: types.Message):
 @dp.message_handler(lambda message: message.text != "Я парень" and message.text != "Я девушка",
     state=ProfileStatesGroup.gender)
 async def _gender_filter(message: types.Message):
-    await message.answer(("Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."))
+    await message.answer("Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝")
 
 
 @dp.message_handler(state=ProfileStatesGroup.gender)
@@ -41,7 +41,7 @@ async def _gender(message: types.Message, state: FSMContext):
 
     async with state.proxy() as data:
         data["gender"] = gender
-        await message.reply(("Кто тебе интересен"), reply_markup=find_gender_kb())
+        await message.reply("Кто тебе больше интересен? Выбери пол человека: 👤", reply_markup=find_gender_kb())
 
     await ProfileStatesGroup.find_gender.set()
 
@@ -50,7 +50,7 @@ async def _gender(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: message.text != "Парни" and message.text != "Девушки" and message.text != "Все",
     state=ProfileStatesGroup.find_gender)
 async def _find_gender_filter(message: types.Message):
-    await message.answer(text=("Не коректный ответ. Выберете на клавиатуре, или напичатайте парвильно."))
+    await message.answer(text=("Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝"))
 
 
 @dp.message_handler(state=ProfileStatesGroup.find_gender)
@@ -74,14 +74,14 @@ async def _find_gender(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: not message.photo,
     state=ProfileStatesGroup.photo)
 async def _photo_filter(message: types.Message):
-    await message.answer(("Неверный формат фотографии!"))
+    await message.answer("Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном формате. 🖼️")
 
 
 @dp.message_handler(content_types=["photo"], state=ProfileStatesGroup.photo)
 async def _photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["photo"] = message.photo[0].file_id
-    await message.reply(("Как тебя зовут?"))
+    await message.reply("Как тебя зовут? Напиши своё имя, чтобы мы могли продолжить! ✍️")
     await ProfileStatesGroup.next()
 
 
@@ -89,7 +89,7 @@ async def _photo(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: len(message.text) > 70,
     state=ProfileStatesGroup.name)
 async def _name_filter(message: types.Message):
-    await message.answer(("Превышен лимит символов."))
+    await message.answer("Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️")
 
 
 @dp.message_handler(state=ProfileStatesGroup.name)
@@ -97,7 +97,8 @@ async def _name(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["name"] = message.text
 
-    await message.reply(("Сколько тебе лет?"))
+
+    await message.reply("Сколько тебе лет? Укажи свой возраст, пожалуйста! 🎂")
     await ProfileStatesGroup.next()
 
 
@@ -105,10 +106,8 @@ async def _name(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: not message.text.isdigit() or float(message.text) > 100,
     state=ProfileStatesGroup.age)
 async def _age_filter(message: types.Message):
-    if message.text != 100:
-        await message.answer(("Неверный формат, возраст нужно писать цифрами."))
-    elif float(message.text) > 100:
-        await message.answer(("К сожалению вы мертвы, введите реальный отзыв."))
+    await message.answer("Неверный формат, возраст нужно указывать цифрами. 🔢")
+    
 
 
 @dp.message_handler(state=ProfileStatesGroup.age)
@@ -116,7 +115,7 @@ async def _age(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["age"] = message.text
 
-        await message.reply(("Теперь введи свой город."))
+        await message.reply("Теперь введи свой город. 🏙️")
         await ProfileStatesGroup.next()
 
 
@@ -124,7 +123,7 @@ async def _age(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: len(message.text) > 70, 
     state=ProfileStatesGroup.city,)
 async def _city_filter(message: types.Message):
-    await message.answer(("Превышен лимит символов."))
+    await message.answer("Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️")
 
 
 @dp.message_handler(state=ProfileStatesGroup.city)
@@ -133,7 +132,7 @@ async def _city(message: types.Message, state: FSMContext):
         data["city"] = message.text
         data['latitude'], data['longitude'] = get_coordinates(message.text)
     
-    await message.reply(("Раскажи о себе."))
+    await message.reply("Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝")
     await ProfileStatesGroup.next()
     
 
@@ -142,7 +141,7 @@ async def _city(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: len(message.text) > 250, 
     state=ProfileStatesGroup.desc)
 async def _decription_filter(message: types.Message):
-    await message.answer(("Превышен лимит символов."))
+    await message.answer("Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️")
 
 
 @dp.message_handler(state=ProfileStatesGroup.desc)
