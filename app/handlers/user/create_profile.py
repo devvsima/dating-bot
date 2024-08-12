@@ -21,7 +21,7 @@ async def _retry_create_profile_command(message: types.Message):
 # create profile
 @dp.message_handler(Command("create"))
 async def _create_profile_command(message: types.Message):
-    await message.answer("Укажи свой пол:", reply_markup=gender_kb())
+    await message.answer("Укажи свой пол: 👤", reply_markup=gender_kb())
     await ProfileStatesGroup.gender.set()
 
 
@@ -66,7 +66,7 @@ async def _find_gender(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["find_gender"] = gender
 
-    await message.reply(text=("Пришли свое фото!"), reply_markup=del_markup)
+    await message.reply(text=("Пришли своё фото! 📸"), reply_markup=del_markup)
     await ProfileStatesGroup.next()
 
 
