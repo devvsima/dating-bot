@@ -1,59 +1,89 @@
-Technologies stack used: peewee, aiogram2, postgresql
 
-<hr>
+# 🚀 Getting Started
 
-# Getting start
-## How to install?
-### Clone
+## 🛠️ Technologies Stack
+- `aiogram 2`
+- `peewee`
+- `PostgreSQL \ Sqlite`
+
+---
+
+## 📥 How to Install?
+
+### 1. Clone the Repository
+First, clone the repository and navigate to its directory:
 
 ```bash
-git clone https://github.com/devvsima/michelangelo-bot
-cd michelangelo-bot
+git clone https://github.com/devvsima/dating-bot.git
+cd dating_bot
 ```
-### Virtual environments ".venv"
 
-Linux:
-pip3 install -r requirements.txt
+### 2. Setting up a virtual environment ".venv"
+
+#### Linux
+Install dependencies and activate the virtual environment:
+
 ```bash
 python3 -m venv .venv
-source .venv\bin\activate
+source .venv/bin/activate
+pip3 install -r requirements.txt
 ```
-Windows
+
+#### Windows
+Similar steps for Windows:
+
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 ```
-`.venv` you can change it to another name
 
+> 💡 Note: The name `.venv` can be changed to anything else you wish.
 
-### Configure environment variables
-Copy file `.env.dist` and rename it to `.env`
-```
-$ cp .env.dist .env
-```
-Than configure variables
+### 3. Setting environment variable
+
+First, copy the `.env.dist` file and rename it to `.env`:
+
 ```bash
-$ vim .env
-# or 
-$ nano .env
+cp .env.dist .env
 ```
-### Bot settings:
 
-`ADMINS` - administrators ids
+Then edit the environment variables file:
+
+```bash
+vim .env
+# or
+nano .env
+```
+
+### 4. Bot settings
+
+#### `ADMINS` - Admin IDs
+Add admin IDs, separating them with commas
+
 ```bash
 # example
 ADMINS=12345678,12345677,12345676
-
 ```
-`TOKEN` - bot token from [@BotFather](https://t.me/BotFather)
+
+#### `TOKEN` - Bot token from [@BotFather](https://t.me/BotFather)
+Add your bot token:
+
 ```bash
 # example
 BOT_TOKEN=123452345243:Asdfasdfasf
 ```
-Dababase postgres
-`DB_NAME` - database name
-`DB_HOST` - database host | default='localhost'
-`DB_PORT` - database port | default=5432
-`DB_USER` - user with access to the database
-`DB_PASS` - database password
+
+### 5. Configuring the PostgreSQL database
+
+Set the database connection parameters:
+
+- `DB_NAME` - database name
+- `DB_HOST` - database host (default = 'localhost')
+- `DB_PORT` - database port (default = `5432`)
+- `DB_USER` - database user
+- `DB_PASS` - database password
+
+---
+
+Now the bot is ready to run! 🎉
