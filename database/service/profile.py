@@ -40,17 +40,16 @@ async def create_profile(state, user_id):
 
 from peewee import fn
 
-async def elastic_search_user_ids(user_id):
+async def elastic_search_user_ids(user_id, age_range = 3, distance = 0.1):
     user = await get_profile(user_id)
-    age_range = 3  # диапазон в годах
-
+    
     users = Profile.select(Profile.id).where(
-        (fn.ABS(Profile.latitude - user.latitude) < 0.1) &
-        (fn.ABS(Profile.longitude - user.longitude) < 0.1) &
+        (Profile.active == True) &
+        (fn.ABS(Profile.latitude - user.latitude) < distance) &
+        (fn.ABS(Profile.longitude - user.longitude) < distance) &
         ((Profile.gender == user.find_gender) | (user.find_gender == 'all')) &  # Учет предпочтений пользователя
         ((user.gender == Profile.find_gender) | (Profile.find_gender == 'all')) &  # Учет предпочтений анкеты
-        (Profile.id != user_id) &
         (Profile.age.between(user.age - age_range, user.age + age_range)) &
-        (Profile.active == True)
+        (Profile.id != user_id)
     )
     return [i.id for i in users]
