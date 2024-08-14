@@ -4,14 +4,15 @@ from aiogram.dispatcher import FSMContext
 
 from loader import dp, bot
 
+from database.service.profile import elastic_search_user_ids, get_profile
+
 from app.states.search_state import Search
 from app.keyboards.default.choise import search_kb
 from app.keyboards.inline.search import check_like_ikb
-from .profile import _profile_command
-
-from database.service.profile import elastic_search_user_ids, get_profile
+from .cancel import _cancel_command
 
 from random import shuffle
+
 
 @dp.message_handler(Text("🔍"))
 async def _search_command(message: types.Message, state: FSMContext):
@@ -34,8 +35,8 @@ async def _search_profile(message: types.Message, state: FSMContext):
         ids = data['ids']      
         
         if not ids:
-            await message.answer('Больше анкет нет :(')
-            await exit_search_profile(message, state)
+            await message.answer('Больше анкет нет. Попробуй позже! 😊')
+            await _cancel_command(message, state)
             
         else:
             profile = await get_profile(ids[0])
@@ -46,7 +47,7 @@ async def _search_profile(message: types.Message, state: FSMContext):
                 index = data['index']
                 await bot.send_message(
                     chat_id=profile.id,
-                    text="Кому-то понравилась ваша анкета, хотите посмотреть?",
+                    text="Кому-то понравилась ваша анкета! Хотите посмотреть? 👀",
                     reply_markup=check_like_ikb(message.from_user.id)
                     )
             
@@ -59,11 +60,6 @@ async def send_profile(message: types.Message, profile):
         caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
     )
 
-@dp.message_handler(Text("💤"), state=Search.search)
-async def exit_search_profile(message: types.Message, state: FSMContext):
-    await state.finish()
-    await message.answer('Ваш профиль:')
-    await _profile_command(message)
 
 @dp.callback_query_handler(Text(startswith="check_"))
 @dp.callback_query_handler(Text(startswith="check_"), state=Search.search)

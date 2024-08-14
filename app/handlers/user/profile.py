@@ -2,14 +2,17 @@ from aiogram import types
 from aiogram.dispatcher.filters import Text
 
 from loader import dp, bot
-from app.keyboards.default import profile_kb
+
 from database.service.profile import get_profile
+
+from app.keyboards.default import profile_kb
 
 menu_text = """
 🔄 Заполнить анкету заново
 🖼 Изменить фотографию
 ✍️ Изменить описание
 ❌ Удалить анкету
+
 🔍 Смотреть анкеты
 """
 

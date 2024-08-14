@@ -1,20 +1,18 @@
-from aiogram import types, Dispatcher
+from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import Command
+from aiogram.dispatcher.filters import Command, Text
 
 from loader import dp, bot
 from app.keyboards.default import menu_kb
 
+from .menu import _menu
 
-# выключение машины состояний
+from app.states.search_state import Search
+
+@dp.message_handler(Text("💤"), state=Search.search)
 @dp.message_handler(Command("cancel"), state="*")
 async def _cancel_command(message: types.message, state: FSMContext):
     if state is None:
         return
     await state.finish()
-    await message.answer("Вы вышли из сосздания анкеты.")
-    
-    text=("🔍 Искать анкеты \n👤 Мой профиль \n\n✉️ Пригласить друзей \n"),
-    await message.answer(text,
-        reply_markup=menu_kb(),
-    )
+    await _menu(message)

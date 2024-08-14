@@ -10,7 +10,7 @@ def check_like_ikb(user_id):
         resize_keyboard=True,
         inline_keyboard=[
             [
-                InlineKeyboardButton(text=("Посмотреть"), callback_data=f"check_{user_id}"),
+                InlineKeyboardButton(text=("Посмотреть👀"), callback_data=f"check_{user_id}"),
             ],
         ],
     )

@@ -1,12 +1,15 @@
-from aiogram import types, Dispatcher
+from aiogram import types
 from aiogram.dispatcher.filters import CommandStart
 
 from loader import dp, bot
-from app.keyboards.default import  base_kb, menu_kb
+
 from database.service.profile import is_profile
 from database.service.users import new_referral
 
-hello_text = """
+from app.keyboards.default import  base_kb
+from .menu import _menu
+
+text = """
 Привет! 👋
 
 Добро пожаловать в наш Telegram-бот для знакомств! 💬 Чтобы начать, тебе нужно создать свой профиль. Напиши команду /create или просто нажми на неё. 🚀
@@ -17,11 +20,7 @@ hello_text = """
 @dp.message_handler(CommandStart())
 async def _start_command(message: types.Message):
     if await is_profile(message.from_user.id):
-        await message.answer(
-            text=("🔍 Искать анкеты \n👤 Мой профиль \n\n✉️ Пригласить друзей \n"),
-            reply_markup=menu_kb(),
-
-        )
+        await _menu(message)
     else:
         args = message.get_args()
         # if args:
@@ -31,6 +30,6 @@ async def _start_command(message: types.Message):
         
             await message.answer_photo(
                 photo=photo,
-                caption=(hello_text),
+                caption=(text),
                 reply_markup=base_kb(),
             )
