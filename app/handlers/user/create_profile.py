@@ -42,7 +42,7 @@ async def _gender(message: types.Message, state: FSMContext):
 
     async with state.proxy() as data:
         data["gender"] = gender
-        await message.reply("Кто тебе больше интересен? Выбери пол человека: 👤", reply_markup=find_gender_kb())
+        await message.reply("Кто тебе интересен? Выбери пол человека: 👤", reply_markup=find_gender_kb())
 
     await ProfileStatesGroup.find_gender.set()
 
@@ -63,7 +63,7 @@ async def _find_gender(message: types.Message, state: FSMContext):
         gender = 'female'
     elif message.text == 'Все':
         gender = 'all'
-
+    
     async with state.proxy() as data:
         data["find_gender"] = gender
 

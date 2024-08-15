@@ -9,10 +9,10 @@ from .menu import _menu
 
 from app.states.search_state import Search
 
-@dp.message_handler(Text("💤"), state=Search.search)
+@dp.message_handler(Text("💤"), state="*")
 @dp.message_handler(Command("cancel"), state="*")
-async def _cancel_command(message: types.message, state: FSMContext):
-    if state is None:
+async def _cancel_command(message: types.Message, state: FSMContext):
+    if state is None:        
         return
     await state.finish()
     await _menu(message)
