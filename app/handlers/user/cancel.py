@@ -3,11 +3,8 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command, Text
 
 from loader import dp, bot
-from app.keyboards.default import menu_kb
 
 from .menu import _menu
-
-from app.states.search_state import Search
 
 @dp.message_handler(Text("💤"), state="*")
 @dp.message_handler(Command("cancel"), state="*")

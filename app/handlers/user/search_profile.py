@@ -10,6 +10,7 @@ from app.states.search_state import Search
 from app.keyboards.default.choise import search_kb
 from app.keyboards.inline.search import check_like_ikb
 from .cancel import _cancel_command
+from .profile import _profile_command
 
 from random import shuffle
 
@@ -20,14 +21,16 @@ async def _search_command(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         # try:
         ids = (await elastic_search_user_ids(message.from_user.id))
+        if not ids:
+            await message.answer("Подходящих вам анкет нет. Вы можете попробовать указать другой город. 🌍")
+            await _profile_command(message)
+        
         shuffle(ids)
         data["ids"] = ids
         data["index"] = 0
-    await _search_profile(message=message, state=state)
-    await Search.search.set()
-        # except:
-    # await message.answer("Сейчас нет подходящих анкет")
-
+        await Search.search.set()
+        await _search_profile(message=message, state=state)
+        
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
