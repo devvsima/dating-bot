@@ -19,15 +19,18 @@ menu_text = """
 @dp.message_handler(Text("👤"))
 async def _profile_command(message: types.Message):
     user = await get_profile(message.from_user.id)
-    await bot.send_photo(
-        chat_id=message.from_user.id,
-        photo=user.photo,
-        caption=f"{user.name}, {user.age}, {user.city}\n{user.description}",
-    )
+    
+    await send_profile(message, user)
     await message.answer(
         menu_text,
         reply_markup=profile_kb(),
     )
 
 
+async def send_profile(message: types.Message, profile):
+    await bot.send_photo(
+        chat_id=message.from_user.id,
+        photo=profile.photo,
+        caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
+    )
 

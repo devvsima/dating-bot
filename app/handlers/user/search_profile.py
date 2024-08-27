@@ -11,7 +11,7 @@ from app.states.search_state import Search
 from app.keyboards.default.choise import search_kb
 from app.keyboards.inline.search import check_like_ikb
 from .cancel import _cancel_command
-from .profile import _profile_command
+from .profile import _profile_command, send_profile
 
 from random import shuffle
 
@@ -28,21 +28,15 @@ async def _search_command(message: types.Message, state: FSMContext):
             return
         
         shuffle(ids)
-        data["ids"] = ids
-        data["index"] = 0
+        await state.update_data(ids=ids, index=0)
+        
         await _search_profile(message=message, state=state)
         
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        # Проверка наличия 'ids'
-        if 'ids' not in data:
-            await message.answer('Произошла ошибка. Попробуй начать поиск заново. 😊')
-            await _cancel_command(message, state)
-            return
-        
+    
         ids = data['ids']
-        
         if not ids:
             await message.answer('Больше анкет нет. Попробуй позже! 😊')
             await _cancel_command(message, state)
@@ -59,12 +53,7 @@ async def _search_profile(message: types.Message, state: FSMContext):
                 )
             
             await send_profile(message, profile)
-async def send_profile(message: types.Message, profile):
-    await bot.send_photo(
-        chat_id=message.from_user.id,
-        photo=profile.photo,
-        caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
-    )
+            
 
 
 @dp.callback_query_handler(Text(startswith="check_"))
