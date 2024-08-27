@@ -3,6 +3,7 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 
 from loader import dp, bot
+from utils.logging import logger
 
 from database.service.profile import elastic_search_user_ids, get_profile
 
@@ -17,34 +18,37 @@ from random import shuffle
 
 @dp.message_handler(Text("🔍"))
 async def _search_command(message: types.Message, state: FSMContext):
-    await message.answer("Идет поиск...",reply_markup= search_kb())
+    await message.answer("Идет поиск...", reply_markup=search_kb())
     async with state.proxy() as data:
-        # try:
-        ids = (await elastic_search_user_ids(message.from_user.id))
+        await Search.search.set()
+        ids = await elastic_search_user_ids(message.from_user.id)
         if not ids:
             await message.answer("Подходящих вам анкет нет. Вы можете попробовать указать другой город. 🌍")
             await _profile_command(message)
+            return
         
         shuffle(ids)
         data["ids"] = ids
         data["index"] = 0
-        await Search.search.set()
         await _search_profile(message=message, state=state)
         
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
+        # Проверка наличия 'ids'
+        if 'ids' not in data:
+            await message.answer('Произошла ошибка. Попробуй начать поиск заново. 😊')
+            await _cancel_command(message, state)
+            return
         
-        ids = data['ids']      
+        ids = data['ids']
         
         if not ids:
             await message.answer('Больше анкет нет. Попробуй позже! 😊')
             await _cancel_command(message, state)
-            
         else:
             profile = await get_profile(ids[0])
             del data["ids"][0]
-            
             
             if message.text == "❤️":
                 index = data['index']
@@ -52,10 +56,9 @@ async def _search_profile(message: types.Message, state: FSMContext):
                     chat_id=profile.id,
                     text="Кому-то понравилась ваша анкета! Хотите посмотреть? 👀",
                     reply_markup=check_like_ikb(message.from_user.id)
-                    )
+                )
             
             await send_profile(message, profile)
-
 async def send_profile(message: types.Message, profile):
     await bot.send_photo(
         chat_id=message.from_user.id,
