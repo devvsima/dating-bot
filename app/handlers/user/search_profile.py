@@ -20,13 +20,13 @@ from random import shuffle
 async def _search_command(message: types.Message, state: FSMContext):
     await message.answer("Идет поиск...", reply_markup=search_kb())
     async with state.proxy() as data:
-        await Search.search.set()
         ids = await elastic_search_user_ids(message.from_user.id)
         if not ids:
             await message.answer("Подходящих вам анкет нет. Вы можете попробовать указать другой город. 🌍")
             await _profile_command(message)
             return
         
+        await Search.search.set()
         shuffle(ids)
         await state.update_data(ids=ids, index=0)
         
