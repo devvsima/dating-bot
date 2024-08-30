@@ -2,18 +2,19 @@ from aiogram import types
 from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
-
 from data.config import DIR
 
 from database.service.stats import get_profile_stats, get_users_stats
 
 from utils.graphs import create_user_invite_graph
 
+from app.filters.admin import IsAdmin
+
+
 photo_path = rf'{DIR}/photo/invites_per_user.png'
 
-
-@dp.message_handler(Command("stats"))
-async def _stats_command(message: types.Message):
+@dp.message_handler(IsAdmin(), Command("stats"))
+async def _stats_command(message: types.Message): 
 
     create_user_invite_graph(photo_path)
     user_stats = get_profile_stats()
