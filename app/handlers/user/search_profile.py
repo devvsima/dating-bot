@@ -15,14 +15,16 @@ from .profile import _profile_command, send_profile
 
 from random import shuffle
 
+from app.handlers import msg_text
 
 @dp.message_handler(Text("🔍"))
 async def _search_command(message: types.Message, state: FSMContext):
-    await message.answer("Идет поиск...", reply_markup=search_kb())
+    await message.answer(msg_text.SEARCH, reply_markup=search_kb())
     async with state.proxy() as data:
         ids = await elastic_search_user_ids(message.from_user.id)
+        
         if not ids:
-            await message.answer("Подходящих вам анкет нет. Вы можете попробовать указать другой город. 🌍")
+            await message.answer(msg_text.INVALID_PROFILE_SEARCH)
             await _profile_command(message)
             return
         
@@ -38,7 +40,7 @@ async def _search_profile(message: types.Message, state: FSMContext):
     
         ids = data['ids']
         if not ids:
-            await message.answer('Больше анкет нет. Попробуй позже! 😊')
+            await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
             await _cancel_command(message, state)
         else:
             profile = await get_profile(ids[0])
@@ -48,7 +50,7 @@ async def _search_profile(message: types.Message, state: FSMContext):
                 index = data['index']
                 await bot.send_message(
                     chat_id=profile.id,
-                    text="Кому-то понравилась ваша анкета! Хотите посмотреть? 👀",
+                    text=msg_text.LIKE_PROFILE,
                     reply_markup=check_like_ikb(message.from_user.id)
                 )
             
@@ -56,15 +58,8 @@ async def _search_profile(message: types.Message, state: FSMContext):
             
 
 
-@dp.callback_query_handler(Text(startswith="check_"))
-@dp.callback_query_handler(Text(startswith="check_"), state=Search.search)
+@dp.callback_query_handler(Text(startswith="check_"), state="*")
 async def like_profile(callback: types.CallbackQuery, state: FSMContext):
-    user_who_liked = int(callback.data.replace("check_", ""))
-    profile = await get_profile(user_who_liked)
-
+    profile = await get_profile(int(callback.data.replace("check_", "")))
+    await send_profile(callback.message, profile)
     await callback.answer('')
-    await bot.send_photo(
-        chat_id=callback.from_user.id,
-        photo=profile.photo,
-        caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}\n <a href='tg://user?id={user_who_liked}'>*телеграм</a>",
-    )

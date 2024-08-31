@@ -5,12 +5,13 @@ from aiogram.dispatcher.filters import Command
 from loader import dp, bot
 
 from database.service.profile import create_profile
-
 from utils.cordinate import get_coordinates
 
-from app.keyboards.default import cancel_kb, gender_kb, find_gender_kb
+from app.keyboards.default import gender_kb, find_gender_kb, del_kb
+
+from app.handlers.user.profile import _profile_command
 from app.states import ProfileStatesGroup
-from .start import _start_command
+from app.handlers import msg_text
 
 
 
@@ -22,28 +23,22 @@ async def _retry_create_profile_command(message: types.Message):
 # create profile
 @dp.message_handler(Command("create"))
 async def _create_profile_command(message: types.Message):
-    await message.answer("Укажи свой пол: 👤", reply_markup=gender_kb())
+    await message.answer(msg_text.GENDER, reply_markup=gender_kb())
+    
     await ProfileStatesGroup.gender.set()
 
 
 # gender
-@dp.message_handler(lambda message: message.text != "Я парень" and message.text != "Я девушка",
-    state=ProfileStatesGroup.gender)
+@dp.message_handler(lambda message: message.text != "Я парень" and message.text != "Я девушка", state=ProfileStatesGroup.gender)
 async def _gender_filter(message: types.Message):
-    await message.answer("Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝")
-
+    await message.answer(msg_text.INVALID_RESPONSE)
 
 @dp.message_handler(state=ProfileStatesGroup.gender)
 async def _gender(message: types.Message, state: FSMContext):
-    if message.text == 'Я парень':
-        gender = 'male'
-    elif message.text == 'Я девушка':
-        gender = 'female'
-
     async with state.proxy() as data:
-        data["gender"] = gender
-        await message.reply("Кто тебе интересен? Выбери пол человека: 👤", reply_markup=find_gender_kb())
-
+        data["gender"] = {'Я парень': 'male', 'Я девушка': 'female'}[message.text]
+        
+    await message.reply(msg_text.FIND_GENDER, reply_markup=find_gender_kb())
     await ProfileStatesGroup.find_gender.set()
 
 
@@ -51,23 +46,14 @@ async def _gender(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: message.text != "Парни" and message.text != "Девушки" and message.text != "Все",
     state=ProfileStatesGroup.find_gender)
 async def _find_gender_filter(message: types.Message):
-    await message.answer(text=("Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝"))
-
+    await message.answer(msg_text.INVALID_RESPONSE)
 
 @dp.message_handler(state=ProfileStatesGroup.find_gender)
 async def _find_gender(message: types.Message, state: FSMContext):
-    del_markup = types.ReplyKeyboardRemove()
-    if message.text == 'Парни':
-        gender = 'male'
-    elif message.text == 'Девушки':
-        gender = 'female'
-    elif message.text == 'Все':
-        gender = 'all'
-    
     async with state.proxy() as data:
-        data["find_gender"] = gender
+        data["find_gender"] = {'Парни': 'male', 'Девушки': 'female', 'Все': 'all'}[message.text]
 
-    await message.reply(text=("Пришли своё фото! 📸"), reply_markup=del_markup)
+    await message.reply(msg_text.PHOTO, reply_markup=del_kb)
     await ProfileStatesGroup.next()
 
 
@@ -75,14 +61,14 @@ async def _find_gender(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: not message.photo,
     state=ProfileStatesGroup.photo)
 async def _photo_filter(message: types.Message):
-    await message.answer("Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном формате. 🖼️")
-
+    await message.answer(msg_text.INVALID_PHOTO)
 
 @dp.message_handler(content_types=["photo"], state=ProfileStatesGroup.photo)
 async def _photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["photo"] = message.photo[0].file_id
-    await message.reply("Как тебя зовут? Напиши своё имя, чтобы мы могли продолжить! ✍️")
+        
+    await message.reply(msg_text.NAME)
     await ProfileStatesGroup.next()
 
 
@@ -90,7 +76,7 @@ async def _photo(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: len(message.text) > 70,
     state=ProfileStatesGroup.name)
 async def _name_filter(message: types.Message):
-    await message.answer("Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️")
+    await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
 
 @dp.message_handler(state=ProfileStatesGroup.name)
@@ -99,16 +85,14 @@ async def _name(message: types.Message, state: FSMContext):
         data["name"] = message.text
 
 
-    await message.reply("Сколько тебе лет? Укажи свой возраст, пожалуйста! 🎂")
+    await message.reply(msg_text.AGE)
     await ProfileStatesGroup.next()
 
 
 # age
-@dp.message_handler(lambda message: not message.text.isdigit() or float(message.text) > 100,
-    state=ProfileStatesGroup.age)
+@dp.message_handler(lambda message: not message.text.isdigit() or float(message.text) > 100, state=ProfileStatesGroup.age)
 async def _age_filter(message: types.Message):
-    await message.answer("Неверный формат, возраст нужно указывать цифрами. 🔢")
-    
+    await message.answer(msg_text.INVALID_AGE)
 
 
 @dp.message_handler(state=ProfileStatesGroup.age)
@@ -116,7 +100,7 @@ async def _age(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["age"] = message.text
 
-        await message.reply("Теперь введи свой город. 🏙️")
+        await message.reply(msg_text.CITY)
         await ProfileStatesGroup.next()
 
 
@@ -124,7 +108,7 @@ async def _age(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: len(message.text) > 70, 
     state=ProfileStatesGroup.city,)
 async def _city_filter(message: types.Message):
-    await message.answer("Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️")
+    await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
 
 @dp.message_handler(state=ProfileStatesGroup.city)
@@ -133,7 +117,7 @@ async def _city(message: types.Message, state: FSMContext):
         data["city"] = message.text
         data['latitude'], data['longitude'] = get_coordinates(message.text)
     
-    await message.reply("Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝")
+    await message.reply(msg_text.DESCRIPTION)
     await ProfileStatesGroup.next()
     
 
@@ -142,18 +126,13 @@ async def _city(message: types.Message, state: FSMContext):
 @dp.message_handler(lambda message: len(message.text) > 250, 
     state=ProfileStatesGroup.desc)
 async def _decription_filter(message: types.Message):
-    await message.answer("Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️")
-
+    await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
 @dp.message_handler(state=ProfileStatesGroup.desc)
 async def _decription(message: types.Message, state=FSMContext):
     async with state.proxy() as data:
         data["desc"] = message.text
-        await bot.send_photo(
-            chat_id=message.chat.id,
-            photo=data["photo"],
-            caption=f'{data["name"]}, {data["age"]} | Город: {data["city"]}\n{data["desc"]}',
-        )
-    await ProfileStatesGroup.next()
+        
     await create_profile(state, user_id=message.from_user.id)
-    await _start_command(message)
+    await ProfileStatesGroup.next()
+    await _profile_command(message)

@@ -6,25 +6,14 @@ from loader import dp, bot
 from database.service.profile import get_profile
 
 from app.keyboards.default import profile_kb
-
-menu_text = """
-🔄 Заполнить анкету заново
-🖼 Изменить фотографию
-✍️ Изменить описание
-❌ Удалить анкету
-
-🔍 Смотреть анкеты
-"""
+from app.handlers import msg_text
 
 @dp.message_handler(Text("👤"))
 async def _profile_command(message: types.Message):
     user = await get_profile(message.from_user.id)
     
     await send_profile(message, user)
-    await message.answer(
-        menu_text,
-        reply_markup=profile_kb(),
-    )
+    await message.answer(msg_text.PROFILE_MENU, reply_markup=profile_kb())
 
 
 async def send_profile(message: types.Message, profile):

@@ -8,12 +8,12 @@ from database.service.stats import get_profile_stats, get_users_stats
 
 from utils.graphs import create_user_invite_graph
 
-from app.filters.admin import IsAdmin
+from app.filters.admin import Admin
 
 
 photo_path = rf'{DIR}/photo/invites_per_user.png'
 
-@dp.message_handler(IsAdmin(), Command("stats"))
+@dp.message_handler(Admin(), Command("stats"))
 async def _stats_command(message: types.Message): 
 
     create_user_invite_graph(photo_path)

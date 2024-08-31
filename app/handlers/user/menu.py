@@ -6,13 +6,9 @@ from loader import dp, bot
 from database.service.profile import is_profile
 
 from app.keyboards.default import  menu_kb
+from app.handlers import msg_text
 
 
 @dp.message_handler(Command('menu'))
 async def _menu(message: types.Message):
-    if await is_profile(message.from_user.id):
-        await message.answer(
-            text=("🔍 Искать анкеты \n👤 Мой профиль \n\n✉️ Пригласить друзей \n"),
-            reply_markup=menu_kb(),
-
-        )
+    await message.answer(msg_text.MENU, reply_markup=menu_kb(),)
