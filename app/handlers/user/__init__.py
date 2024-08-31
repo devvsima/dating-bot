@@ -10,5 +10,7 @@ from .search_profile import dp
 from .edit_profile import dp
 from .invite import dp
 
+from .archive import dp
+
 
 __all__ = ["dp"]

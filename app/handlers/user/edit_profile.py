@@ -9,13 +9,16 @@ from app.keyboards.inline.profile import delete_profile_ikb
 from app.handlers import msg_text
 from .start import _start_command
 from .profile import _profile_command
+from app.states.profile_create_state import ProfileStatesGroupRetry
 
 @dp.message_handler(Text("🖼"))
 async def _edit_profile_photo_command(message: types.Message):
+    await ProfileStatesGroupRetry.photo.set()
     await message.answer(msg_text.PHOTO)
 
 @dp.message_handler(Text("✍️"))
 async def _edit_profile_description_command(message: types.Message):
+    await ProfileStatesGroupRetry.desc.set()
     await message.answer(msg_text.DESCRIPTION)
 
 @dp.message_handler(Text("❌"))

@@ -37,7 +37,6 @@ async def _search_command(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-    
         ids = data['ids']
         if not ids:
             await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
@@ -47,7 +46,9 @@ async def _search_profile(message: types.Message, state: FSMContext):
             del data["ids"][0]
             
             if message.text == "❤️":
-                index = data['index']
+                from database.service.likes import set_new_like
+                set_new_like(message.from_user.id, profile.id)
+                
                 await bot.send_message(
                     chat_id=profile.id,
                     text=msg_text.LIKE_PROFILE,

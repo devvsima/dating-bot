@@ -9,3 +9,7 @@ class ProfileStatesGroup(StatesGroup):
     age = State()
     city = State()
     desc = State()
+    
+class ProfileStatesGroupRetry(StatesGroup):
+    photo = State()
+    desc = State()

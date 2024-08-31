@@ -4,14 +4,17 @@ from aiogram.dispatcher.filters import Command
 
 from loader import dp, bot
 
-from database.service.profile import create_profile
+from database.service.profile import create_profile, edit_profile_photo, edit_profile_description
+
 from utils.cordinate import get_coordinates
 
 from app.keyboards.default import gender_kb, find_gender_kb, del_kb
 
+from app.states.profile_create_state import ProfileStatesGroupRetry
 from app.handlers.user.profile import _profile_command
 from app.states import ProfileStatesGroup
 from app.handlers import msg_text
+from .cancel import _cancel_command
 
 
 
@@ -56,17 +59,21 @@ async def _find_gender(message: types.Message, state: FSMContext):
     await message.reply(msg_text.PHOTO, reply_markup=del_kb)
     await ProfileStatesGroup.next()
 
-
 # photo
-@dp.message_handler(lambda message: not message.photo,
-    state=ProfileStatesGroup.photo)
+@dp.message_handler(lambda message: not message.photo, state=[ProfileStatesGroupRetry.photo, ProfileStatesGroup.photo])
 async def _photo_filter(message: types.Message):
     await message.answer(msg_text.INVALID_PHOTO)
 
-@dp.message_handler(content_types=["photo"], state=ProfileStatesGroup.photo)
+@dp.message_handler(content_types=["photo"], state=[ProfileStatesGroupRetry.photo, ProfileStatesGroup.photo])
 async def _photo(message: types.Message, state: FSMContext):
+    photo = message.photo[0].file_id
+    if await state.get_state() == ProfileStatesGroupRetry.photo.state:
+        await edit_profile_photo(message.from_user.id, photo)
+        await _profile_command(message)
+        await state.finish()
+    
     async with state.proxy() as data:
-        data["photo"] = message.photo[0].file_id
+        data["photo"] = photo
         
     await message.reply(msg_text.NAME)
     await ProfileStatesGroup.next()
@@ -83,7 +90,6 @@ async def _name_filter(message: types.Message):
 async def _name(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data["name"] = message.text
-
 
     await message.reply(msg_text.AGE)
     await ProfileStatesGroup.next()
@@ -123,13 +129,18 @@ async def _city(message: types.Message, state: FSMContext):
 
 
 # description
-@dp.message_handler(lambda message: len(message.text) > 250, 
-    state=ProfileStatesGroup.desc)
+@dp.message_handler(lambda message: len(message.text) > 250, state=[ProfileStatesGroup.desc, ProfileStatesGroupRetry.desc])
 async def _decription_filter(message: types.Message):
     await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
-@dp.message_handler(state=ProfileStatesGroup.desc)
+@dp.message_handler(state=[ProfileStatesGroup.desc, ProfileStatesGroupRetry.desc])
 async def _decription(message: types.Message, state=FSMContext):
+    if await state.get_state() == ProfileStatesGroupRetry.desc.state:
+        await edit_profile_description(message.from_user.id, message.text)
+        await _profile_command(message)
+        await state.finish()
+        return
+    
     async with state.proxy() as data:
         data["desc"] = message.text
         
