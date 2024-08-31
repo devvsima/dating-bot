@@ -1,4 +1,5 @@
 from loader import _
+
 WELCOME = _("""
 Привет! 👋
 

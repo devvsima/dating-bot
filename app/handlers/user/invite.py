@@ -5,6 +5,7 @@ from loader import dp, bot
 
 from app.handlers import msg_text
 
+
 @dp.message_handler(Text("✉️"))
 async def _invitelink_command(message: types.Message):
     bot_user = await dp.bot.me

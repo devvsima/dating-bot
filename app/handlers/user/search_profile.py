@@ -7,6 +7,7 @@ from utils.logging import logger
 
 from database.service.profile import elastic_search_user_ids, get_profile
 
+from app.handlers import msg_text
 from app.states.search_state import Search
 from app.keyboards.default.choise import search_kb
 from app.keyboards.inline.search import check_like_ikb
@@ -15,7 +16,6 @@ from .profile import _profile_command, send_profile
 
 from random import shuffle
 
-from app.handlers import msg_text
 
 @dp.message_handler(Text("🔍"))
 async def _search_command(message: types.Message, state: FSMContext):

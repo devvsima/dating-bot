@@ -11,15 +11,13 @@ async def is_profile(user_id):
     return Profile.select().where(Profile.id == user_id).exists()
 
 async def delete_profile(user_id):
-    user = await get_profile(user_id)
+    user = await get_profile(user_id).delete_instance()
     user.delete_instance()
 
 async def edit_profile_photo(user_id, photo):
-    logger.info("edit_profile_photo")
     Profile.update(photo=photo).where(Profile.id == user_id).execute()
 
 async def edit_profile_description(user_id, description):
-    logger.info("edit_profile_description")
     Profile.update(description=description).where(Profile.id == user_id).execute()
 
 

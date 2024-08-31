@@ -5,8 +5,8 @@ from loader import dp, bot
 
 from database.service.profile import get_profile
 
-from app.keyboards.default import profile_kb
 from app.handlers import msg_text
+from app.keyboards.default import profile_kb
 
 @dp.message_handler(Text("👤"))
 async def _profile_command(message: types.Message):
