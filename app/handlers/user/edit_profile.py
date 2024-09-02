@@ -7,18 +7,18 @@ from database.service.profile import delete_profile
 
 from app.keyboards.inline.profile import delete_profile_ikb 
 from app.handlers import msg_text
-from app.states.profile_create_state import ProfileStatesGroupRetry
+from app.states.profile_create_state import ProfileEdit
 from .profile import _profile_command
 
 
 @dp.message_handler(Text("🖼"))
 async def _edit_profile_photo_command(message: types.Message):
-    await ProfileStatesGroupRetry.photo.set()
+    await ProfileEdit.photo.set()
     await message.answer(msg_text.PHOTO)
 
 @dp.message_handler(Text("✍️"))
 async def _edit_profile_description_command(message: types.Message):
-    await ProfileStatesGroupRetry.desc.set()
+    await ProfileEdit.desc.set()
     await message.answer(msg_text.DESCRIPTION)
 
 @dp.message_handler(Text("❌"))

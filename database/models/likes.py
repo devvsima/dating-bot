@@ -1,9 +1,10 @@
-from peewee import BigIntegerField
+from peewee import ForeignKeyField, CharField
 from ..connect import db, BaseModel
 
+from .users import Users
 
 class Likes(BaseModel):
-   user_id = BigIntegerField()
-   liked_profile_id = BigIntegerField()
-
+   liker_id = ForeignKeyField(Users, backref='likes_given')
+   liked_id = ForeignKeyField(Users, backref='likes_received')
+   status = CharField(default='pending')  # 'pending', 'accepted', 'rejected'
 

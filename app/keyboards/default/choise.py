@@ -13,6 +13,9 @@ def menu_kb():
             [
                 KeyboardButton(text="🔍"),
                 KeyboardButton(text="👤"),
+                KeyboardButton(text="🗄"),
+            ],
+            [
                 KeyboardButton(text="✉️"),
             ],
         ],
