@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from loader import dp, bot
 from utils.logging import logger
 
-from database.service.likes import get_profile_likes, set_like_status, set_new_like
+from database.service.likes import get_profile_likes, del_like, set_new_like
 from database.service.search import elastic_search_user_ids, get_profile
 
 from app.handlers import msg_text
@@ -40,37 +40,37 @@ async def _search_command(message: types.Message, state: FSMContext):
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         ids = data['ids']
+        if message.text == "❤️":
+            set_new_like(message.from_user.id, profile.id)
+            await bot.send_message(
+                chat_id=profile.id,
+                text=msg_text.LIKE_PROFILE,
+                reply_markup=check_like_ikb(message.from_user.id)
+            )
+                
         if not ids:
             await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
             await _cancel_command(message, state)
         else:
             profile = await get_profile(ids[0])
-            del data["ids"][0]
-            
-            if message.text == "❤️":
-                set_new_like(message.from_user.id, profile.id)
-                
-                await bot.send_message(
-                    chat_id=profile.id,
-                    text=msg_text.LIKE_PROFILE,
-                    reply_markup=check_like_ikb(message.from_user.id)
-                )
-            
+            del data["ids"][0]    
             await send_profile(message, profile)
             
 
 
 @dp.callback_query_handler(Text(startswith="check_"), state="*")
 @dp.message_handler(Text("🗄"), state="*")
-async def like_profile(message: types.message, state: FSMContext):
+async def like_profile(message: types.Message, state: FSMContext):
+    await message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
     async with state.proxy() as data:
         ids = get_profile_likes(int(message.from_user.id))
         if not ids:
-            await message.answer("Тебя пока никто не лайкнул")
+            await message.answer(msg_text.LIKE_ARHIVE)
             await _cancel_command(message, state)
             return
         data['ids'] = get_profile_likes(int(message.from_user.id))
+        del data["ids"][0]
         await send_profile(message, await get_profile(data['ids'][0]))
 
 
@@ -86,7 +86,7 @@ async def _like_response(message: types.Message, state: FSMContext, user):
             del data["ids"][0]
             
             if message.text == "❤️":
-                set_like_status(message.from_user.id, profile.id, "accepted")
+                del_like(message.from_user.id, profile.id)
                                 
                 await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.id, profile.name))
                 await bot.send_message(chat_id=profile.id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))

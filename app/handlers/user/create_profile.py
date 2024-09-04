@@ -93,7 +93,7 @@ async def _name(message: types.Message, state: FSMContext):
 
 
 # age
-@dp.message_handler(lambda message: not message.text.isdigit() or float(message.text) > 100, state=ProfileCreate.age)
+@dp.message_handler(lambda message: not message.text.isdigit() or float(message.text) >= 100 or float(message.text) < 6, state=ProfileCreate.age)
 async def _age_filter(message: types.Message):
     await message.answer(msg_text.INVALID_AGE)
 
