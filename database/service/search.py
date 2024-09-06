@@ -18,5 +18,5 @@ async def elastic_search_user_ids(user_id, age_range=3, distance=0.1):
         (Profile.age.between(user.age - age_range, user.age + age_range)) &
         (Profile.id != user_id)
     ).order_by(fn.SQRT(fn.POW(Profile.latitude - user.latitude, 2) + fn.POW(Profile.longitude - user.longitude, 2)))
-
+    
     return [i.id for i in users]

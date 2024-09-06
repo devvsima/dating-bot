@@ -12,7 +12,7 @@ from app.handlers import msg_text
 from app.states.search_state import Search
 from app.states.like_responce import LikeResponse
 from app.keyboards.default.choise import search_kb
-from app.keyboards.inline.search import check_like_ikb
+# from app.keyboards.inline.search import check_like_ikb
 from .cancel import _cancel_command
 from .profile import _profile_command, send_profile
 
@@ -32,63 +32,72 @@ async def _search_command(message: types.Message, state: FSMContext):
         
         await Search.search.set()
         shuffle(ids)
-        await state.update_data(ids=ids, index=0)
-        
-        await _search_profile(message=message, state=state)
+        await state.update_data(ids=ids)
+        profile = await get_profile(ids[0])
+        logger.info(profile)
+        await send_profile(message, profile)
         
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         ids = data['ids']
+        if ids:
+            profile = await get_profile(ids[0])
+        elif not ids:
+            await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
+            await _cancel_command(message, state)
+            return
         if message.text == "❤️":
             set_new_like(message.from_user.id, profile.id)
             await bot.send_message(
                 chat_id=profile.id,
                 text=msg_text.LIKE_PROFILE,
-                reply_markup=check_like_ikb(message.from_user.id)
+                # reply_markup=check_like_ikb(message.from_user.id)
             )
-                
-        if not ids:
-            await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
-            await _cancel_command(message, state)
-        else:
-            profile = await get_profile(ids[0])
-            del data["ids"][0]    
-            await send_profile(message, profile)
+        
+        del data["ids"][0]    
+        profile = await get_profile(ids[0])
+        await send_profile(message, profile)
             
 
 
-@dp.callback_query_handler(Text(startswith="check_"), state="*")
+# @dp.callback_query_handler(Text(startswith="check_"), state="*")
 @dp.message_handler(Text("🗄"), state="*")
 async def like_profile(message: types.Message, state: FSMContext):
     await message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
-    async with state.proxy() as data:
-        ids = get_profile_likes(int(message.from_user.id))
-        if not ids:
-            await message.answer(msg_text.LIKE_ARHIVE)
-            await _cancel_command(message, state)
-            return
-        data['ids'] = get_profile_likes(int(message.from_user.id))
-        del data["ids"][0]
-        await send_profile(message, await get_profile(data['ids'][0]))
+    liker_ids = get_profile_likes(int(message.from_user.id))
+    
+    if not liker_ids:
+        await message.answer(msg_text.LIKE_ARHIVE)
+        await _cancel_command(message, state)
+        return
+    else:
+        await state.update_data(ids=liker_ids)
+        await _like_response(message, state)
 
 
-@dp.message_handler(Text(["❤️","👎"]), state=LikeResponse.response)
-async def _like_response(message: types.Message, state: FSMContext, user):
+@dp.message_handler(Text(["❤️", "👎"]), state=LikeResponse.response)
+async def _like_response(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        ids = data['ids']
+        try:
+            ids = data.get('ids')  # Используем get чтобы избежать KeyError
+        except:
+            ids = None
+            
+        if ids:
+            profile = await get_profile(ids[0])
+            
+        # logger.info(profile)
+        if message.text == "❤️":
+            del_like(message.from_user.id, profile.id)
+            await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.id, profile.name))
+            await bot.send_message(chat_id=profile.id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))
         if not ids:
+            logger.info('нету лайков 2')
             await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
             await _cancel_command(message, state)
-        else:
-            profile = await get_profile(ids)
-            del data["ids"][0]
-            
-            if message.text == "❤️":
-                del_like(message.from_user.id, profile.id)
-                                
-                await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.id, profile.name))
-                await bot.send_message(chat_id=profile.id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))
-            
-            await send_profile(message, profile)
+            return
+        
+        del data['ids'][0]  # Удаляем первый элемент из списка
+        await send_profile(message, profile)

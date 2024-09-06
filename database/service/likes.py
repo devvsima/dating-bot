@@ -15,9 +15,8 @@ def set_new_like(liker_id, liked_id) -> None:
         logger.info(f"Duplicate like attempt: {liker_id} already liked {liked_id}")
     
 def get_profile_likes(user_id) -> list:
-    logger.info(user_id)
-    users = Likes.select(Likes.liker_id).where((Likes.liked_id == user_id) & (Likes.status == "pending"))
-    return [i.liker_id for i in users]
+    ids = Likes.select(Likes).where(Likes.liked_id == user_id)
+    return [i.liker_id for i in ids]
 
 def del_like(liked_id, liker_id) -> None:
     logger.info(f"{liker_id} liked {liked_id} like delete")
