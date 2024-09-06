@@ -36,6 +36,7 @@ async def _search_command(message: types.Message, state: FSMContext):
         profile = await get_profile(ids[0])
         logger.info(profile)
         await send_profile(message, profile)
+
         
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext):
@@ -47,6 +48,7 @@ async def _search_profile(message: types.Message, state: FSMContext):
             await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
             await _cancel_command(message, state)
             return
+        
         if message.text == "❤️":
             set_new_like(message.from_user.id, profile.id)
             await bot.send_message(
@@ -59,7 +61,6 @@ async def _search_profile(message: types.Message, state: FSMContext):
         profile = await get_profile(ids[0])
         await send_profile(message, profile)
             
-
 
 # @dp.callback_query_handler(Text(startswith="check_"), state="*")
 @dp.message_handler(Text("🗄"), state="*")
@@ -74,7 +75,9 @@ async def like_profile(message: types.Message, state: FSMContext):
         return
     else:
         await state.update_data(ids=liker_ids)
-        await _like_response(message, state)
+        profile = await get_profile(liker_ids[0])
+        await send_profile(message, profile)
+        
 
 
 @dp.message_handler(Text(["❤️", "👎"]), state=LikeResponse.response)
@@ -93,6 +96,9 @@ async def _like_response(message: types.Message, state: FSMContext):
             del_like(message.from_user.id, profile.id)
             await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.id, profile.name))
             await bot.send_message(chat_id=profile.id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))
+        elif message.text == "👎":
+            del_like(message.from_user.id, profile.id)
+            
         if not ids:
             logger.info('нету лайков 2')
             await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
@@ -100,4 +106,12 @@ async def _like_response(message: types.Message, state: FSMContext):
             return
         
         del data['ids'][0]  # Удаляем первый элемент из списка
-        await send_profile(message, profile)
+        if not ids:
+            logger.info('нету лайков 2')
+            await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
+            await _cancel_command(message, state)
+            return
+        else:
+            profile = await get_profile(ids[0])
+            await send_profile(message, profile)
+        
