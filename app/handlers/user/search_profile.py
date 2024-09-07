@@ -8,7 +8,7 @@ from utils.logging import logger
 from database.service.likes import get_profile_likes, del_like, set_new_like
 from database.service.search import elastic_search_user_ids, get_profile
 
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 from app.states.search_state import Search
 from app.states.like_responce import LikeResponse
 from app.keyboards.default.choise import search_kb

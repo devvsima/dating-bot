@@ -6,7 +6,7 @@ from loader import dp, bot
 from database.service.profile import delete_profile
 
 from app.keyboards.inline.profile import delete_profile_ikb 
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 from app.states.profile_create_state import ProfileEdit
 from .profile import _profile_command
 

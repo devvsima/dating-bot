@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters import Command
 from loader import dp, bot
 
 from app.keyboards.default import  menu_kb
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 
 
 @dp.message_handler(Command('menu'))

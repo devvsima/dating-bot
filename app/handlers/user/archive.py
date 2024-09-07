@@ -5,7 +5,7 @@ from aiogram.dispatcher import FSMContext
 from loader import dp, bot
 from utils.logging import logger
 
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 
 
 @dp.message_handler(Text("🗄"))

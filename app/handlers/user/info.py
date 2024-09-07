@@ -5,7 +5,7 @@ from loader import dp, bot
 
 from data.config import DIR
 
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 
 
 @dp.message_handler(Command('info'))

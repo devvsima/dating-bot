@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters import Text
 
 from loader import dp, bot
 
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 
 
 @dp.message_handler(Text("✉️"))

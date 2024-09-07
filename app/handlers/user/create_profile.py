@@ -8,7 +8,7 @@ from database.service.profile import create_profile, edit_profile_photo, edit_pr
 
 from utils.cordinate import get_coordinates
 
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 from app.keyboards.default import gender_kb, find_gender_kb, del_kb
 from app.states.profile_create_state import ProfileEdit, ProfileCreate
 from app.handlers.user.profile import _profile_command

@@ -6,13 +6,14 @@ from data.config import DIR
 
 from database.service.profile import is_profile
 
-from app.handlers import msg_text
+from app.handlers.msg_text import msg_text
 from app.keyboards.default import  base_kb
 from .menu import _menu
 
 
 @dp.message_handler(CommandStart())
-async def _start_command(message: types.Message):
+async def _start_command(message: types.Message, user):
+    print(user)
     if await is_profile(message.from_user.id):
         await _menu(message)
     else:
