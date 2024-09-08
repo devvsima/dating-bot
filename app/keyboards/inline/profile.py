@@ -10,8 +10,8 @@ def delete_profile_ikb():
         resize_keyboard=True,
         inline_keyboard=[
             [
-                InlineKeyboardButton(text=("Да"), callback_data="delete_yes"),
-                InlineKeyboardButton(text=("Нет"), callback_data="delete_no"),
+                InlineKeyboardButton(text=_("Да"), callback_data="delete_yes"),
+                InlineKeyboardButton(text=_("Нет"), callback_data="delete_no"),
             ],
         ],
     )

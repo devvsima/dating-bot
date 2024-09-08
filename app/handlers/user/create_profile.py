@@ -27,30 +27,49 @@ async def _create_profile_command(message: types.Message):
     await ProfileCreate.gender.set()
 
 
+gender_map = {
+    "Я парень": 'male',
+    "I'm a boy": 'male',
+    "Я хлопець": 'male',
+    "Я девушка": 'female',
+    "I'm a girl": 'female',
+    "Я дівчина": 'female',
+}
+
 # gender
-@dp.message_handler(lambda message: message.text != "Я парень" and message.text != "Я девушка", state=ProfileCreate.gender)
+@dp.message_handler(lambda message: message.text not in gender_map, state=ProfileCreate.gender)
 async def _gender_filter(message: types.Message):
     await message.answer(msg_text.INVALID_RESPONSE)
 
 @dp.message_handler(state=ProfileCreate.gender)
 async def _gender(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data["gender"] = {'Я парень': 'male', 'Я девушка': 'female'}[message.text]
+        data["gender"] = gender_map[message.text]
         
     await message.reply(msg_text.FIND_GENDER, reply_markup=find_gender_kb())
     await ProfileCreate.find_gender.set()
 
+find_gender_map = {
+    "Парни": 'male',
+    "Boys": 'male',
+    "Хлопці": 'male',
+    "Девушки": 'female',
+    "Girls": 'female',
+    "Дівчата": 'female',
+    "Все": 'all',
+    "All": 'all',
+    "Всі": 'all',
+}
 
 # gender of interest
-@dp.message_handler(lambda message: message.text != "Парни" and message.text != "Девушки" and message.text != "Все",
-    state=ProfileCreate.find_gender)
+@dp.message_handler(lambda message: message.text not in find_gender_map, state=ProfileCreate.find_gender)
 async def _find_gender_filter(message: types.Message):
     await message.answer(msg_text.INVALID_RESPONSE)
 
 @dp.message_handler(state=ProfileCreate.find_gender)
 async def _find_gender(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
-        data["find_gender"] = {'Парни': 'male', 'Девушки': 'female', 'Все': 'all'}[message.text]
+        data["find_gender"] = find_gender_map[message.text]
 
     await message.reply(msg_text.PHOTO, reply_markup=del_kb)
     await ProfileCreate.next()

@@ -67,7 +67,7 @@ async def like_profile(message: types.Message, state: FSMContext):
     liker_ids = get_profile_likes(int(message.from_user.id))
     
     if not liker_ids:
-        await message.answer(msg_text.LIKE_ARHIVE)
+        await message.answer(msg_text.LIKE_ARCHIVE)
         await _cancel_command(message, state)
         return
     else:
