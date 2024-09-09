@@ -10,7 +10,7 @@ from .search_profile import dp
 from .edit_profile import dp
 from .invite import dp
 
-from .archive import dp
+from .archive_like import dp
 
 
 __all__ = ["dp"]
