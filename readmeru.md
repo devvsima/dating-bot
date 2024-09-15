@@ -3,6 +3,7 @@
 
 ## 🛠️ Стек технологий
 - `aiogram 2`
+- `i18n`
 - `peewee`
 - `PostgreSQL \ Sqlite`
 
