@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import Command
+from aiogram.dispatcher.filters import Command, Text
 
 from loader import dp
 
@@ -10,7 +10,7 @@ from app.handlers.msg_text import msg_text
 from app.keyboards.default import gender_kb, find_gender_kb, del_kb
 from app.states.profile_create_state import ProfileEdit, ProfileCreate
 from app.handlers.user.profile import _profile_command
-from app.filters.create_profile_filtres import Gender, FindGender, Photo, Name, Age, City, Description
+from app.filters.create_profile_filtres import Gender, FindGender, Photo, Name, Age, City, Description, Create
 
 
 @dp.message_handler(text="🔄")
@@ -19,7 +19,7 @@ async def _retry_create_profile_command(message: types.Message):
 
 
 # create profile
-@dp.message_handler(Command("create"))
+@dp.message_handler(Create())
 async def _create_profile_command(message: types.Message):
     await message.answer(msg_text.GENDER, reply_markup=gender_kb())
     

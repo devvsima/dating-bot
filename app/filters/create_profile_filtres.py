@@ -22,6 +22,9 @@ find_gender_map = {
     "All": 'all',
     "Всі": 'all',
 }
+class Create(BoundFilter):
+    async def check(self, message: Message):
+        return bool(message.text in ["/create", "Создать анкету", "Create a profile", "Створити анкету"])
 
 
 class Gender(BoundFilter):

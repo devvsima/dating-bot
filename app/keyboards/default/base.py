@@ -8,12 +8,12 @@ from loader import _
 
 del_kb = ReplyKeyboardRemove()
 
-def base_kb():
+def start_kb():
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
             [
-                KeyboardButton(text="/create"),
+                KeyboardButton(text=_("Создать анкету")),
             ],
         ],
     )
