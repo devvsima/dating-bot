@@ -1,3 +1,6 @@
+<picture>
+  <img src="https://pbs.twimg.com/media/GYEedBHWIAAAP02?format=jpg&name=large">
+</picture>
 
 # 🚀 Getting Started
 
