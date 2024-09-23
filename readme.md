@@ -75,11 +75,11 @@ Now you need to customize the `.env` file
 
 | Name | Description | Default |
 | -------- | -------------------------------------- | ------------ |
-| DB_NAME | DB_HOST | Database Name |
+| DB_NAME | Database Name |           |
 | DB_HOST | Database Host | localhost |
 | DB_PORT | Database Port | 5432 |
-| DB_USER | User with access to the database |
-| DB_PASS | DB_PASS | Database password |
+| DB_USER | User with access to the database ||
+| DB_PASS | Database password |  |
 
 ---
 
