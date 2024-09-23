@@ -133,5 +133,11 @@ class MsgText:
     @property
     def INVITE_FRIENDS(self):
         return _("Приглашай друзей и получай бонус к своей анкете!\n\nСсылка для друзей:\n<code>https://t.me/{}?start={}</code>")
-
+    @property
+    def ADMIN_WELCOME(self):
+        return _("Вы администратор!")
+    @property
+    def USERS_STATS(self):
+        return _("👤Users: {}\n\nProfiles: {}\n🙍‍♂️Man: {} | 🙍‍♀️Woman: {}")
+    
 msg_text = MsgText()

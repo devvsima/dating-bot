@@ -1,30 +1,17 @@
 from aiogram import types
-from aiogram.dispatcher.filters import Command
+from aiogram.dispatcher.filters import Command, Text
 
 from loader import dp, bot
-from data.config import DIR
-
-from database.service.stats import get_profile_stats, get_users_stats
-
-from utils.graphs import create_user_invite_graph
 
 from app.filters.admin import Admin
-
-
-photo_path = rf'{DIR}/photo/invites_per_user.png'
+from app.handlers.msg_text import msg_text
+from app.keyboards.inline.admin import admin_menu_ikb
 
 @dp.message_handler(Admin(), Command("admin"))
-async def _stats_command(message: types.Message): 
+async def _admin_command(message: types.Message): 
+    await message.answer(msg_text.ADMIN_WELCOME, reply_markup=admin_menu_ikb())
 
-    create_user_invite_graph(photo_path)
-    user_stats = get_profile_stats()
-
-    text = f"👤Users: {get_users_stats()}\n\nProfiles: {user_stats['total_users']}\n🙍‍♂️Man: {user_stats['male_users']} | 🙍‍♀️Woman: {user_stats['female_users']}"
-    with open(photo_path, "rb") as photo:
-        await message.answer_photo(
-            photo,
-            text
-            )
-
-
+@dp.callback_query_handler(Text("admin"))
+async def _admin_callback(callback: types.CallbackQuery): 
+    await callback.message.edit_text(msg_text.ADMIN_WELCOME, reply_markup=admin_menu_ikb())
 

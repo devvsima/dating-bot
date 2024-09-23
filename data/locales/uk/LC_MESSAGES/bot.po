@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-19 13:53+0300\n"
+"POT-Creation-Date: 2024-09-23 19:46+0300\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -203,6 +203,18 @@ msgstr ""
 "Запрошуй друзів та отримуй бонус до своєї анкети!\n"
 "Посилання для друзів:<code>https://t.me/{}?start={}</code>"
 
+#: app/handlers/msg_text.py:138
+msgid "Вы администратор!"
+msgstr "Ви адміністратор!"
+
+#: app/handlers/msg_text.py:141
+msgid ""
+"👤Users: {}\n"
+"\n"
+"Profiles: {}\n"
+"🙍‍♂️Man: {} | 🙍‍♀️Woman: {}"
+msgstr ""
+
 #: app/keyboards/default/base.py:16
 msgid "Создать анкету"
 msgstr "Створити анкету"
@@ -226,6 +238,14 @@ msgstr "Дівчата"
 #: app/keyboards/default/create_profile.py:26
 msgid "Все"
 msgstr "Всі"
+
+#: app/keyboards/inline/admin.py:13
+msgid "📊 Статистика"
+msgstr "📊 Статистика"
+
+#: app/keyboards/inline/admin.py:24
+msgid "Назад"
+msgstr "Повернутись"
 
 #: app/keyboards/inline/profile.py:13
 msgid "Да"

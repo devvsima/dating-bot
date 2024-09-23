@@ -11,13 +11,15 @@ async def is_profile(user_id):
 async def delete_profile(user_id):
     user = await get_profile(user_id)
     user.delete_instance()
-
+    logger.info(f"User | {user_id} delete profile")
+    
 async def edit_profile_photo(user_id, photo):
     Profile.update(photo=photo).where(Profile.id == user_id).execute()
+    logger.info(f"User | {user_id} edit photo")
 
 async def edit_profile_description(user_id, description):
     Profile.update(description=description).where(Profile.id == user_id).execute()
-
+    logger.info(f"User | {user_id} edit description")
 
 async def create_profile(state, user_id):
     if await is_profile(user_id):
@@ -36,4 +38,4 @@ async def create_profile(state, user_id):
             longitude = data["longitude"],
             description = data["desc"]
             )
-    logger.info(f"A new profile has been created from | {user_id}")
+    logger.info(f"User | {user_id} created new profile")

@@ -5,7 +5,7 @@ from ..models.profile import Profile
 
 from peewee import fn, Case
 
-def get_users_invite():
+def get_users_invite() -> list:
     top_users = (Users
                 .select(Users.id, Users.username, Users.referral)
                 .order_by(Users.referral.desc())
@@ -15,10 +15,10 @@ def get_users_invite():
     return users, invites
 
 
-def get_users_stats():
+def get_users_stats() -> int:
     return Users.select().count()
 
-def get_profile_stats():
+def get_profile_stats() -> dict:
     query = Profile.select(
     fn.COUNT(Profile.id).alias('total_users'),
     fn.SUM(Case(None, [(Profile.gender == 'male', 1)], 0)).alias('male_users'),
