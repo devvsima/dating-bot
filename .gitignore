@@ -12,3 +12,4 @@
 **/.env
 **/logs
 **/invites_per_user.png
+**/registration_graph.png

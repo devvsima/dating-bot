@@ -9,10 +9,19 @@ def get_users_invite() -> list:
     top_users = (Users
                 .select(Users.id, Users.username, Users.referral)
                 .order_by(Users.referral.desc())
-                .limit(10))
+                .limit(5))
     users = [user.username for user in top_users]
     invites = [user.referral for user in top_users]
     return users, invites
+
+
+def get_users_registration_data() -> list:
+    users = (Users
+                .select(Users.id, Users.username, Users.created_at)
+                .order_by(Users.referral.desc()))
+    # Формируем данные в виде списка словарей
+    registration_data = [{"username": user.username, "timestamp": user.created_at}  for user in users]
+    return registration_data
 
 
 def get_users_stats() -> int:

@@ -38,11 +38,11 @@ async def _like_response(message: types.Message, state: FSMContext):
         profile = await get_profile(ids[0])
             
         if message.text == "❤️":
-            del_like(message.from_user.id, profile.id)
             await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.id, profile.name))
             await bot.send_message(chat_id=profile.id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))
         elif message.text == "👎":
-            del_like(message.from_user.id, profile.id)
+            pass
+        del_like(message.from_user.id, profile.id)
         
         del data['ids'][0] 
         if not ids:
