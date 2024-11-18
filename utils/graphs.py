@@ -4,11 +4,11 @@ import seaborn as sns
 from datetime import datetime
 
 from database.service.stats import get_users_registration_data, get_users_invite
-from data.config import DIR
+from data.config import PHOTO_DIR
 
 
-invites_photo_path = rf'{DIR}/photo/invites_graph.png'
-registration_photo_path = rf'{DIR}/photo/registration_graph.png'
+invites_photo_path = rf'{PHOTO_DIR}/invites_graph.png'
+registration_photo_path = rf'{PHOTO_DIR}/registration_graph.png'
 
 def get_or_create_invites_graph(path=invites_photo_path) -> str:
     create_user_invite_graph(path)
@@ -25,7 +25,9 @@ def create_user_invite_graph(path) -> None:
 
     plt.savefig(path)
 
-def get_or_create_registration_graph(data=get_users_registration_data(), path=registration_photo_path) -> str:
+def get_or_create_registration_graph(data=None, path=registration_photo_path) -> str:
+    if data is None:
+        data = get_users_registration_data()
     create_user_registration_graph(data, path)
     return path
 

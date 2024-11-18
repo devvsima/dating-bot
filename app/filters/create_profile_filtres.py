@@ -1,6 +1,5 @@
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import Message
-from app.handlers.msg_text import msg_text
 
 gender_map = {
     "Я парень": 'male',

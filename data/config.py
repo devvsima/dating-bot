@@ -2,6 +2,7 @@ from pathlib import Path
 from environs import Env
 
 DIR = Path(__file__).absolute().parent.parent
+PHOTO_DIR = fr"{DIR}/images" 
 
 env = Env()
 env.read_env()
