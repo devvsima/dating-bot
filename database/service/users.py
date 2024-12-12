@@ -20,11 +20,8 @@ def create_user(id: int, username: str = None, language: str = None) -> Users:
     logger.info(f"New user {username} | {id}")
     new_user = Users.create(id=id, username=username, language=language)
     return new_user
-    
-def new_referral(user: Users, inviter) -> None:
-    inviter_user: Users = get_user(inviter)
-    if inviter_user:
-        if not user.is_invited:
-            Users.update(referral=Users.referral + 1).where(Users.id == inviter).execute()
-            Users.update(is_invited=True).where(Users.id == user.id).execute()
+
+def new_referral(inviter) -> None:
+    Users.update(referral=Users.referral + 1).where(Users.id == inviter).execute()
+    logger.info(f"User: {inviter} | привел нового пользователя")
     

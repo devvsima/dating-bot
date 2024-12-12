@@ -13,8 +13,6 @@ from database.service.users import new_referral, get_or_create_user
 
 @dp.message_handler(CommandStart())
 async def _start_command(message: types.Message, user):
-    args = message.get_args()
-    new_referral(user, args)
     if await is_profile(message.from_user.id):
         await _menu(message)
     else:

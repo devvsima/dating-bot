@@ -3,12 +3,11 @@
 .vscode
 .venv
 
-.sqlite
-
 **/__pycache__
 
 **.sqlite
 **.sqlite3
+**.json
 **/.env
 **/logs
 **/invites_per_user.png
