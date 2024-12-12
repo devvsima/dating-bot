@@ -29,7 +29,7 @@ def get_users_stats() -> int:
 
 def get_profile_stats() -> dict:
     query = Profile.select(
-    fn.COUNT(Profile.id).alias('total_users'),
+    fn.COUNT(Profile.user_id).alias('total_users'),
     fn.SUM(Case(None, [(Profile.gender == 'male', 1)], 0)).alias('male_users'),
     fn.SUM(Case(None, [(Profile.gender == 'female', 1)], 0)).alias('female_users')
     )
