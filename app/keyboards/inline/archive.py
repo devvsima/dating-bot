@@ -1,0 +1,18 @@
+from aiogram.types import (
+    ReplyKeyboardRemove,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+)
+from loader import _
+
+def check_arhive_ikb():
+    ikb = InlineKeyboardMarkup(
+        resize_keyboard=True,
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text=_("Посмотреть"), callback_data="archive"),
+            ],
+        ],
+    )
+    return ikb
+

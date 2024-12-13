@@ -19,8 +19,7 @@ from app.keyboards.default import search_kb
 async def like_profile(message: types.Message, state: FSMContext):
     await message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
-    liker_ids = get_profile_likes(int(message.from_user.id))
-    
+    liker_ids = get_profile_likes(int(message.from_user.id))    
     if not liker_ids:
         await message.answer(msg_text.LIKE_ARCHIVE)
         await _cancel_command(message, state)
@@ -28,9 +27,25 @@ async def like_profile(message: types.Message, state: FSMContext):
     else:
         await state.update_data(ids=liker_ids)
         profile = await get_profile(liker_ids[0])
-        await send_profile(message, profile)
+        await send_profile(message.from_user.id, profile)
         
 
+@dp.callback_query_handler(Text("archive"), state="*")
+async def _like_profile(callback: types.Message, state: FSMContext):
+    await callback.message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
+    await LikeResponse.response.set()
+    liker_ids = get_profile_likes(int(callback.from_user.id))
+    logger.info(liker_ids)
+    if not liker_ids:
+        await callback.message.answer(msg_text.LIKE_ARCHIVE)
+        await _cancel_command(callback.message, state)
+        return
+    else:
+        await state.update_data(ids=liker_ids)
+        profile = await get_profile(liker_ids[0])
+        await send_profile(callback.from_user.id, profile)
+    
+        
 @dp.message_handler(Text(["❤️", "👎"]), state=LikeResponse.response)
 async def _like_response(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
@@ -38,11 +53,11 @@ async def _like_response(message: types.Message, state: FSMContext):
         profile = await get_profile(ids[0])
             
         if message.text == "❤️":
-            await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.id, profile.name))
-            await bot.send_message(chat_id=profile.id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))
+            await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.user_id, profile.name))
+            await bot.send_message(chat_id=profile.user_id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))
         elif message.text == "👎":
             pass
-        del_like(message.from_user.id, profile.id)
+        del_like(message.from_user.id, profile.user_id)
         
         del data['ids'][0] 
         if not ids:
@@ -51,5 +66,5 @@ async def _like_response(message: types.Message, state: FSMContext):
             return
         else:
             profile = await get_profile(ids[0])
-            await send_profile(message, profile)
+            await send_profile(message.from_user.id, profile)
         

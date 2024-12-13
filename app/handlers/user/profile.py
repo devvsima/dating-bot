@@ -12,13 +12,13 @@ from app.keyboards.default import profile_kb
 async def _profile_command(message: types.Message):
     user = await get_profile(message.from_user.id)
     
-    await send_profile(message, user)
+    await send_profile(message.from_user.id, user)
     await message.answer(msg_text.PROFILE_MENU, reply_markup=profile_kb())
 
 
-async def send_profile(message: types.Message, profile):
+async def send_profile(user_id, profile):
     await bot.send_photo(
-        chat_id=message.from_user.id,
+        chat_id=user_id,
         photo=profile.photo,
         caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
     )

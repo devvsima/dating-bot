@@ -34,7 +34,7 @@ async def _search_command(message: types.Message, state: FSMContext):
         await state.update_data(ids=ids)
         
         profile = await get_profile(ids[0])
-        await send_profile(message, profile)
+        await send_profile(message.from_user.id, profile)
 
         
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
@@ -44,8 +44,9 @@ async def _search_profile(message: types.Message, state: FSMContext):
         profile = await get_profile(ids[0])
         
         if message.text == "❤️":
-            set_new_like(message.from_user.id, profile.id)
-            await bot.send_message(chat_id=profile.id, text=msg_text.LIKE_PROFILE)
+            set_new_like(message.from_user.id, profile.user_id)
+            from app.keyboards.inline.archive import check_arhive_ikb
+            await bot.send_message(chat_id=profile.user_id, text=msg_text.LIKE_PROFILE, reply_markup=check_arhive_ikb())
         elif message.text == "👎":
             ...
         
@@ -55,6 +56,6 @@ async def _search_profile(message: types.Message, state: FSMContext):
             await _cancel_command(message, state)
             return
         profile = await get_profile(ids[0])
-        await send_profile(message, profile)
+        await send_profile(message.from_user.id, profile)
             
 
