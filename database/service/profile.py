@@ -3,10 +3,7 @@ from utils.logging import logger
 
 
 async def get_profile(user_id):
-    return Profile.get(Profile.user_id == user_id)
-
-async def is_profile(user_id):
-    return Profile.select().where(Profile.user_id == user_id).exists()
+    return Profile.get_or_none(Profile.user_id == user_id)
 
 async def delete_profile(user_id):
     user = await get_profile(user_id)
@@ -22,7 +19,7 @@ async def edit_profile_description(user_id, description):
     logger.info(f"User | {user_id} edit description")
 
 async def create_profile(state, user_id):
-    if await is_profile(user_id):
+    if await get_profile(user_id):
         await delete_profile(user_id)
         
     async with state.proxy() as data:
