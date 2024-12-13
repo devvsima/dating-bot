@@ -1,14 +1,21 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from database.service.stats import get_users_registration_data, get_users_invite
-from data.config import PHOTO_DIR
+
+from data.config import IMAGES_DIR
+
+invites_photo_path = rf'{IMAGES_DIR}/invites_graph.png'
+registration_photo_path = rf'{IMAGES_DIR}/registration_graph.png'
 
 
-invites_photo_path = rf'{PHOTO_DIR}/invites_graph.png'
-registration_photo_path = rf'{PHOTO_DIR}/registration_graph.png'
+def get_mounth_period():
+    today = datetime.today()
+    days_ago_30 = today - timedelta(days=30)
+    return today, days_ago_30
+
 
 def get_or_create_invites_graph(path=invites_photo_path) -> str:
     create_user_invite_graph(path)
@@ -37,7 +44,6 @@ def create_user_registration_graph(data, path):
     df['timestamp'] = pd.to_datetime(df['timestamp'])
 
     df['date'] = df['timestamp'].dt.date
-    from .date import get_mounth_period
     today, ago = get_mounth_period()
     start_date = datetime(int(ago.year), int(ago.month), int(ago.day))
     end_date = datetime(int(today.year), int(today.month), int(today.day))

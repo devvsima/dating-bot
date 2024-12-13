@@ -3,7 +3,8 @@ from aiogram.types import BotCommandScopeDefault, BotCommandScopeChat, BotComman
 from loader import bot
 
 admin_commands = [
-        BotCommand('/admin', 'example'),
+        BotCommand('/admin', 'admin panel'),
+        BotCommand('/reg', 'bot send regestration graph'),
     ]
 
 async def set_admin_commands(user_id: int):

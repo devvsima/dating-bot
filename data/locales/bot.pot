@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-23 19:46+0300\n"
+"POT-Creation-Date: 2024-12-13 14:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid ""
 "👤 Мой профиль\n"
 "🗄 Посмотреть лайки\n"
 "\n"
-"✉️ Пригласить друзей \n"
+"✉️ Пригласить друзей"
 msgstr ""
 
 #: app/handlers/msg_text.py:32
@@ -168,6 +168,14 @@ msgid ""
 "🙍‍♂️Man: {} | 🙍‍♀️Woman: {}"
 msgstr ""
 
+#: app/handlers/msg_text.py:145
+msgid "Выберите язык, на который вы хотите переключиться: 🌐"
+msgstr ""
+
+#: app/handlers/msg_text.py:149
+msgid "Ваш язык успешно изменён! ✅"
+msgstr ""
+
 #: app/keyboards/default/base.py:16
 msgid "Создать анкету"
 msgstr ""
@@ -198,6 +206,10 @@ msgstr ""
 
 #: app/keyboards/inline/admin.py:24
 msgid "Назад"
+msgstr ""
+
+#: app/keyboards/inline/archive.py:13
+msgid "Посмотреть"
 msgstr ""
 
 #: app/keyboards/inline/profile.py:13

@@ -1,5 +1,6 @@
 from .start import dp
-from .info import dp
+from .help import dp
+from .lang import dp
 
 from .cancel import dp
 

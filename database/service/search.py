@@ -2,7 +2,7 @@ from peewee import fn
 from ..models.profile import Profile
 
 from .profile import get_profile
-
+from utils.logging import logger
 async def elastic_search_user_ids(user_id, age_range=3, distance=0.1):
     user = await get_profile(user_id)
 
@@ -18,5 +18,6 @@ async def elastic_search_user_ids(user_id, age_range=3, distance=0.1):
         (Profile.age.between(user.age - age_range, user.age + age_range)) &
         (Profile.user_id != user_id)
     ).order_by(fn.SQRT(fn.POW(Profile.latitude - user.latitude, 2) + fn.POW(Profile.longitude - user.longitude, 2)))
+    logger.info(f"User: {user_id} | начал поиск анкет")
     
     return [i.user_id for i in users]

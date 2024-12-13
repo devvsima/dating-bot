@@ -1,4 +1,5 @@
 from ..models.profile import Profile
+
 from utils.logging import logger
 
 
@@ -8,15 +9,15 @@ async def get_profile(user_id):
 async def delete_profile(user_id):
     user = await get_profile(user_id)
     user.delete_instance()
-    logger.info(f"User | {user_id} delete profile")
+    logger.info(f"User: {user_id} | удалил профиль")
     
 async def edit_profile_photo(user_id, photo):
     Profile.update(photo=photo).where(Profile.user_id == user_id).execute()
-    logger.info(f"User | {user_id} edit photo")
-
+    logger.info(f"User: {user_id} | изменил фотографию")
+    
 async def edit_profile_description(user_id, description):
     Profile.update(description=description).where(Profile.user_id == user_id).execute()
-    logger.info(f"User | {user_id} edit description")
+    logger.info(f"User | {user_id} изменил описание")
 
 async def create_profile(state, user_id):
     if await get_profile(user_id):
@@ -35,4 +36,5 @@ async def create_profile(state, user_id):
             longitude = data["longitude"],
             description = data["desc"]
             )
-    logger.info(f"User | {user_id} created new profile")
+    logger.info(f"User: {user_id} | создал анкету")
+    

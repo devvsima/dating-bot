@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-23 19:46+0300\n"
+"POT-Creation-Date: 2024-12-13 14:52+0200\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -19,7 +19,6 @@ msgstr ""
 "Generated-By: Babel 2.9.1\n"
 
 #: app/handlers/msg_text.py:9
-#, fuzzy
 msgid ""
 "\n"
 "Привет! 👋\n"
@@ -32,8 +31,8 @@ msgstr ""
 "\n"
 "Hello! 👋\n"
 "\n"
-"Welcome to our Telegram dating bot! 💬 To get started, you need to create "
-"your profile. Type the command /create or just click on it. 🚀\n"
+"Welcome to our Telegram dating bot! 💬 To get started, you need to "
+"createyour profile. Type the command /create or just click on it. 🚀\n"
 "\n"
 "Create your profile and start meeting new people right now!\n"
 
@@ -44,7 +43,7 @@ msgid ""
 "👤 Мой профиль\n"
 "🗄 Посмотреть лайки\n"
 "\n"
-"✉️ Пригласить друзей \n"
+"✉️ Пригласить друзей"
 msgstr ""
 "\n"
 "🔍 Search profiles\n"
@@ -72,7 +71,6 @@ msgstr ""
 "🔍 View profiles\n"
 
 #: app/handlers/msg_text.py:45
-#, fuzzy
 msgid ""
 "\n"
 "👋\n"
@@ -209,6 +207,18 @@ msgid ""
 "Profiles: {}\n"
 "🙍‍♂️Man: {} | 🙍‍♀️Woman: {}"
 msgstr ""
+"👤Users: {}\n"
+"\n"
+"Profiles: {}\n"
+"🙍‍♂️Man: {} | 🙍‍♀️Woman: {}"
+
+#: app/handlers/msg_text.py:145
+msgid "Выберите язык, на который вы хотите переключиться: 🌐"
+msgstr "Select the language you want to switch to: 🌐"
+
+#: app/handlers/msg_text.py:149
+msgid "Ваш язык успешно изменён! ✅"
+msgstr "Your language has been successfully changed! ✅"
 
 #: app/keyboards/default/base.py:16
 msgid "Создать анкету"
@@ -242,6 +252,10 @@ msgstr "📊 Statistics"
 msgid "Назад"
 msgstr "Back"
 
+#: app/keyboards/inline/archive.py:13
+msgid "Посмотреть"
+msgstr "View👀"
+
 #: app/keyboards/inline/profile.py:13
 msgid "Да"
 msgstr "Yes"
@@ -253,15 +267,4 @@ msgstr "No"
 #: app/keyboards/inline/search.py:13
 msgid "Посмотреть👀"
 msgstr "View👀"
-
-#~ msgid ""
-#~ "Кому-то понравилась ваша анкета! Для "
-#~ "того чтобы глянуть нажмите 🗄 на "
-#~ "клавиатуре. Если вы в поиске, то "
-#~ "нужно завершить его."
-#~ msgstr ""
-#~ "Someone liked your profile! To view "
-#~ "it, press 🗄 on the keyboard. If"
-#~ " you are searching, you need to "
-#~ "finish it."
 
