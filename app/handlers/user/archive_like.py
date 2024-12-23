@@ -31,7 +31,7 @@ async def like_profile(message: types.Message, state: FSMContext):
         
 
 @dp.callback_query_handler(Text("archive"), state="*")
-async def _like_profile(callback: types.Message, state: FSMContext):
+async def _like_profile(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
     liker_ids = get_profile_likes(int(callback.from_user.id))

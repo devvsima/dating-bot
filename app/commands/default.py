@@ -6,8 +6,8 @@ async def set_default_commands():
     commands = [
         # BotCommand('/start', 'start bot'),
         BotCommand('/help', 'how it works?'),
-        BotCommand('/lang', 'change language'),
-        BotCommand('/profile', 'check your profile'),
+        BotCommand('/language', 'change language'),
+        # BotCommand('/profile', 'check your profile'),
         # BotCommand('/report', 'complain about a user'),
     ]
 

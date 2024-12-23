@@ -10,9 +10,10 @@ from app.keyboards.default import profile_kb
 
 @dp.message_handler(Text("👤"))
 async def _profile_command(message: types.Message):
-    user = await get_profile(message.from_user.id)
     
-    await send_profile(message.from_user.id, user)
+    profile = await get_profile(message.from_user.id)
+
+    await send_profile(message.from_user.id, profile)
     await message.answer(msg_text.PROFILE_MENU, reply_markup=profile_kb())
 
 
