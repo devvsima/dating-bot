@@ -1,12 +1,10 @@
 from aiogram.types import (
     ReplyKeyboardMarkup,
     KeyboardButton,
-    ReplyKeyboardRemove,
 )
-from loader import _
 
 
-def menu_kb():
+def menu_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
@@ -23,7 +21,7 @@ def menu_kb():
     return kb
 
 
-def profile_kb():
+def profile_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
@@ -41,7 +39,7 @@ def profile_kb():
     )
     return kb
 
-def search_kb():
+def search_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[

@@ -1,5 +1,5 @@
-from peewee import TextField, IntegerField, Model, CharField, BigIntegerField, FloatField, BooleanField, ForeignKeyField
-from ..connect import db, BaseModel
+from peewee import TextField, IntegerField, CharField, FloatField, BooleanField, ForeignKeyField
+from ..connect import BaseModel
 from .users import Users
 
 class Profile(BaseModel):

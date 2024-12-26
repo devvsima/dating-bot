@@ -5,7 +5,7 @@ from aiogram.types import (
 )
 from loader import _
 
-def lang_ikb():
+def lang_ikb() -> InlineKeyboardMarkup:
     ikb = InlineKeyboardMarkup(
         resize_keyboard=True,
         inline_keyboard=[

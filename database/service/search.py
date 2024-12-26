@@ -1,9 +1,14 @@
 from peewee import fn
+
 from ..models.profile import Profile
 
 from .profile import get_profile
+
 from utils.logging import logger
+
+
 async def elastic_search_user_ids(user_id, age_range=3, distance=0.1):
+    """Возвращает список id пользователей, которые подходят под критерии поиска, поиск идет по координатам"""
     user = await get_profile(user_id)
 
     # Вычисляем расстояние по координатам

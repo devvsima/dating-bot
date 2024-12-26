@@ -1,3 +1,5 @@
+from typing import Tuple, List, Any
+
 from utils.logging import logger
 
 from ..models.users import Users
@@ -5,7 +7,7 @@ from ..models.profile import Profile
 
 from peewee import fn, Case
 
-def get_users_invite() -> list:
+def get_all_users_invite() -> tuple[list[Any], list[Any]]:
     top_users = (Users
                 .select(Users.id, Users.username, Users.referral)
                 .order_by(Users.referral.desc())
@@ -15,7 +17,7 @@ def get_users_invite() -> list:
     return users, invites
 
 
-def get_users_registration_data() -> list:
+def get_all_users_registration_data() -> list:
     users = (Users
                 .select(Users.id, Users.username, Users.created_at)
                 .order_by(Users.referral.desc()))
@@ -25,9 +27,11 @@ def get_users_registration_data() -> list:
 
 
 def get_users_stats() -> int:
+    """Возвращает количество пользователей в БД"""
     return Users.select().count()
 
 def get_profile_stats() -> dict:
+    """Возвращает количество пользовательских анкет, мужских и женских"""
     query = Profile.select(
     fn.COUNT(Profile.user_id).alias('total_users'),
     fn.SUM(Case(None, [(Profile.gender == 'male', 1)], 0)).alias('male_users'),

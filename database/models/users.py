@@ -1,6 +1,6 @@
 from peewee import CharField, BigIntegerField, DateTimeField, IntegerField, BooleanField
 from datetime import datetime
-from ..connect import db, BaseModel
+from ..connect import BaseModel
 
 
 class Users(BaseModel):

@@ -5,7 +5,7 @@ from aiogram.types import (
 )
 from loader import _
 
-def check_arhive_ikb():
+def check_archive_ikb() -> InlineKeyboardMarkup:
     ikb = InlineKeyboardMarkup(
         resize_keyboard=True,
         inline_keyboard=[

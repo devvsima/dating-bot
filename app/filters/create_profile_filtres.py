@@ -1,6 +1,8 @@
 from aiogram.dispatcher.filters import BoundFilter
 from aiogram.types import Message
 
+from utils.cordinate import get_coordinates
+
 gender_map = {
     "Я парень": 'male',
     "I'm a boy": 'male',
@@ -21,22 +23,20 @@ find_gender_map = {
     "All": 'all',
     "Всі": 'all',
 }
-class Create(BoundFilter):
+class IsCreate(BoundFilter):
     async def check(self, message: Message):
         return bool(message.text in ["/create", "Создать анкету", "Create a profile", "Створити анкету"])
 
 
-class Gender(BoundFilter):
+class IsGender(BoundFilter):
     async def check(self, message: Message):
         if message.text in gender_map:
             message.conf['gender'] = gender_map[message.text]
             return True
         else:
-            # await message.answer(msg_text.INVALID_RESPONSE)
-            # есть возможнть таким образом реализовать ошибки, но проблема с языками
             return False
         
-class FindGender(BoundFilter):
+class IsFindGender(BoundFilter):
     async def check(self, message: Message):
         if message.text in find_gender_map:
             message.conf['find_gender'] = find_gender_map[message.text]
@@ -44,7 +44,7 @@ class FindGender(BoundFilter):
         else:
             return False
         
-class Photo(BoundFilter):
+class IsPhoto(BoundFilter):
     async def check(self, message: Message):
         return bool(message.photo)
             
@@ -57,9 +57,7 @@ class Age(BoundFilter):
     async def check(self, message: Message):
         return bool(message.text.isdigit() and int(message.text) < 100 and int(message.text) > 6)
 
-from utils.cordinate import get_coordinates
-        
-class City(BoundFilter):
+class IsCity(BoundFilter):
     async def check(self, message: Message):
         coordinates = get_coordinates(message.text)
         if coordinates:
@@ -68,6 +66,6 @@ class City(BoundFilter):
         else:
             return False
         
-class Description(BoundFilter):
+class IsDescription(BoundFilter):
     async def check(self, message: Message):
         return bool(len(message.text) < 300)

@@ -5,7 +5,7 @@ from aiogram.types import (
 )
 from loader import _
 
-def admin_menu_ikb():
+def admin_menu_ikb() -> InlineKeyboardMarkup:
     ikb = InlineKeyboardMarkup(
         resize_keyboard=True,
         inline_keyboard=[
@@ -16,7 +16,7 @@ def admin_menu_ikb():
     )
     return ikb
 
-def stats_ikb():
+def stats_ikb() -> InlineKeyboardMarkup:
     ikb = InlineKeyboardMarkup(
         resize_keyboard=True,
         inline_keyboard=[

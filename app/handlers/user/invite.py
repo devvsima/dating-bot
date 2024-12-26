@@ -1,12 +1,14 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text
 
-from loader import dp, bot
+from loader import dp
+
+from database.models.users import Users
 
 from app.handlers.msg_text import msg_text
 
 
 @dp.message_handler(Text("✉️"))
-async def _invitelink_command(message: types.Message):
+async def _invite_link_command(message: types.Message, user: Users) -> None:
     bot_user = await dp.bot.me
-    await message.answer(msg_text.INVITE_FRIENDS.format(bot_user.username, message.from_user.id))
+    await message.answer(msg_text.INVITE_FRIENDS.format(user.referral, bot_user.username, message.from_user.id))

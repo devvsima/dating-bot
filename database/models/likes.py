@@ -1,5 +1,5 @@
-from peewee import ForeignKeyField, CharField
-from ..connect import db, BaseModel
+from peewee import ForeignKeyField
+from ..connect import BaseModel
 
 from .users import Users
 

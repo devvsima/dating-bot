@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 from datetime import datetime, timedelta
 
-from database.service.stats import get_users_registration_data, get_users_invite
+from database.service.stats import get_all_users_registration_data, get_all_users_invite
 
 from data.config import IMAGES_DIR
 
@@ -23,7 +23,7 @@ def get_or_create_invites_graph(path=invites_photo_path) -> str:
 
 def create_user_invite_graph(path) -> None:
     plt.style.use(['dark_background'])
-    users, invites = get_users_invite()
+    users, invites = get_all_users_invite()
     print(invites)
     plt.pie(invites, labels=users)
     plt.xlabel('Users')
@@ -34,7 +34,7 @@ def create_user_invite_graph(path) -> None:
 
 def get_or_create_registration_graph(data=None, path=registration_photo_path) -> str:
     if data is None:
-        data = get_users_registration_data()
+        data = get_all_users_registration_data()
     create_user_registration_graph(data, path)
     return path
 

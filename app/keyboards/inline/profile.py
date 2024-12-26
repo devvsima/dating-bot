@@ -5,7 +5,7 @@ from aiogram.types import (
 )
 from loader import _
 
-def delete_profile_ikb():
+def delete_profile_ikb() -> InlineKeyboardMarkup:
     ikb = InlineKeyboardMarkup(
         resize_keyboard=True,
         inline_keyboard=[

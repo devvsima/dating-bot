@@ -8,15 +8,15 @@ from utils.logging import logger
 from database.service.likes import get_profile_likes, del_like
 from database.service.profile import get_profile
 
-from app.handlers.msg_text import msg_text
 from .profile import send_profile
 from .cancel import _cancel_command
+from app.handlers.msg_text import msg_text
 from app.states.like_responce import LikeResponse
 from app.keyboards.default import search_kb 
 
 
 @dp.message_handler(Text("🗄"), state="*")
-async def like_profile(message: types.Message, state: FSMContext):
+async def like_profile(message: types.Message, state: FSMContext) -> None:
     await message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
     liker_ids = get_profile_likes(int(message.from_user.id))    
@@ -31,7 +31,7 @@ async def like_profile(message: types.Message, state: FSMContext):
         
 
 @dp.callback_query_handler(Text("archive"), state="*")
-async def _like_profile(callback: types.CallbackQuery, state: FSMContext):
+async def _like_profile(callback: types.CallbackQuery, state: FSMContext) -> None:
     await callback.message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
     liker_ids = get_profile_likes(int(callback.from_user.id))
@@ -47,7 +47,7 @@ async def _like_profile(callback: types.CallbackQuery, state: FSMContext):
     
         
 @dp.message_handler(Text(["❤️", "👎"]), state=LikeResponse.response)
-async def _like_response(message: types.Message, state: FSMContext):
+async def _like_response(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
         ids = data.get('ids')
         profile = await get_profile(ids[0])

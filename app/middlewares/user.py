@@ -7,7 +7,7 @@ from database.service.users import get_or_create_user, get_user, create_user, ne
 
 class UsersMiddleware(BaseMiddleware):
     @staticmethod
-    async def on_process_message(message: Message, data: dict[str]):
+    async def on_process_message(message: Message, data: dict[str]) -> None:
         if 'channel_post' in message or message.chat.type != 'private':
             raise CancelHandler()
 
@@ -26,13 +26,13 @@ class UsersMiddleware(BaseMiddleware):
         data['user'] = user
 
     @staticmethod
-    async def on_process_callback_query(callback_query: CallbackQuery, data: dict[str]):
+    async def on_process_callback_query(callback_query: CallbackQuery, data: dict[str]) -> None:
         user = callback_query.from_user
 
         data['user'] = get_or_create_user(user.id, user.username, user.language_code)
 
     @staticmethod
-    async def on_process_inline_query(inline_query: InlineQuery, data: dict[str]):
+    async def on_process_inline_query(inline_query: InlineQuery, data: dict[str]) -> None:
         user = inline_query.from_user
 
         data['user'] = get_or_create_user(user.id, user.username, user.language_code)

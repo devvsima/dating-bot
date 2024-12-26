@@ -8,7 +8,7 @@ from loader import _
 
 del_kb = ReplyKeyboardRemove()
 
-def start_kb():
+def start_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
@@ -20,7 +20,7 @@ def start_kb():
     return kb
 
 
-def cancel_kb():
+def cancel_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[

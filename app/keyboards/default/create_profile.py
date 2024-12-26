@@ -1,12 +1,8 @@
-from aiogram.types import (
-    ReplyKeyboardMarkup,
-    KeyboardButton,
-    ReplyKeyboardRemove,
-)
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from loader import _
 
 
-def gender_kb():
+def gender_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
@@ -16,7 +12,7 @@ def gender_kb():
     return kb
 
 
-def find_gender_kb():
+def find_gender_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[

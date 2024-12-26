@@ -1,7 +1,8 @@
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 
-def get_coordinates(city_name, timeout=10) -> list:
+def get_coordinates(city_name: str, timeout: int = 10) -> list or None:
+    """Возвращает координаты переданного в city_name города"""
     geolocator = Nominatim(user_agent="dating_bot", timeout=timeout)
     location = geolocator.geocode(city_name)
     return (location.latitude, location.longitude) if location else None

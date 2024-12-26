@@ -2,24 +2,23 @@ from aiogram import types
 from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 
+from random import shuffle
+
 from loader import dp, bot
-from utils.logging import logger
 
 from database.service.likes import set_new_like
 from database.service.search import elastic_search_user_ids, get_profile
 
-from app.handlers.msg_text import msg_text
 from app.states.search_state import Search
 from app.keyboards.default.choise import search_kb
 
+from app.handlers.msg_text import msg_text
 from .cancel import _cancel_command
 from .profile import _profile_command, send_profile
 
-from random import shuffle
-
 
 @dp.message_handler(Text("🔍"))
-async def _search_command(message: types.Message, state: FSMContext):
+async def _search_command(message: types.Message, state: FSMContext) -> None:
     await message.answer(msg_text.SEARCH, reply_markup=search_kb())
     async with state.proxy() as data:
         ids = await elastic_search_user_ids(message.from_user.id)
@@ -38,7 +37,7 @@ async def _search_command(message: types.Message, state: FSMContext):
 
         
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
-async def _search_profile(message: types.Message, state: FSMContext):
+async def _search_profile(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
         ids = data['ids']
         profile = await get_profile(ids[0])

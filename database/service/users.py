@@ -2,28 +2,33 @@ from ..models.users import Users
 from utils.logging import logger
 
 
-def get_user(id) -> Users:
+def get_user(user_id: int) -> Users or None:
+    """Возвращает пользователя по его id"""
     try:
-        return Users.get(Users.id == id)
+        return Users.get(Users.id == user_id)
     except:
         return None
 
-def get_or_create_user(id: int, username: str = None, language: str = None) -> Users:
-    user = get_user(id)
+def get_or_create_user(user_id: int, username: str = None, language: str = None) -> Users:
+    """Возвращает пользователя по его id, если его нет - создает"""
+    user = get_user(user_id)
 
     if user:
         return user
 
-    return create_user(id, username, language)
+    return create_user(user_id, username, language)
 
-def create_user(id: int, username: str = None, language: str = None) -> Users:
-    logger.info(f"New user: {id} | {username}")
-    new_user = Users.create(id=id, username=username, language=language)
+def create_user(user_id: int, username: str = None, language: str = None) -> Users:
+    """Создает нового пользователя"""
+    logger.info(f"New user: {user_id} | {username}")
+    new_user = Users.create(id=user_id, username=username, language=language)
     return new_user
 
-def new_referral(inviter) -> None:
-    Users.update(referral=Users.referral + 1).where(Users.id == inviter).execute()
-    logger.info(f"User: {inviter} | привел нового пользователя")
+def new_referral(inviter_id: int) -> None:
+    """Добавляет приведенного реферала к пользователю inviter_id"""
+    Users.update(referral=Users.referral + 1).where(Users.id == inviter_id).execute()
+    logger.info(f"User: {inviter_id} | привел нового пользователя")
     
-def change_language(id: int, language: str):
-    Users.update(language=language).where(Users.id == id).execute()
+def change_language(user_id: int, language: str):
+    """Изменяет язык пользователя на language"""
+    Users.update(language=language).where(Users.id == user_id).execute()
