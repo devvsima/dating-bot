@@ -1,10 +1,10 @@
 from loader import dp
-from .admin import Admin
-from .create_profile_filtres import Gender, FindGender, Photo, Name, Age, City, Description
+from .admin import IsAdmin
+from .create_profile_filtres import IsGender, IsFindGender, IsPhoto, IsName, IsAge, IsCity, IsDescription
 
 
 
 if __name__ == 'bot.filters':
-    dp.filters_factory.bind(Admin)
-    dp.filters_factory.bind([Gender, FindGender, Photo, Name, Age, City, Description])
+    dp.filters_factory.bind(IsAdmin)
+    dp.filters_factory.bind([IsGender, IsFindGender, IsPhoto, IsName, IsAge, IsCity, IsDescription])
 
