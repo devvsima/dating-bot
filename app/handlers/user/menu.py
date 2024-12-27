@@ -8,5 +8,5 @@ from app.keyboards.default import  menu_kb
 
 
 @dp.message_handler(Command('menu'))
-async def _menu(message: types.Message) -> None:
+async def menu(message: types.Message) -> None:
     await message.answer(msg_text.MENU, reply_markup=menu_kb())

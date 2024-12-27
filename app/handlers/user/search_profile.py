@@ -11,6 +11,7 @@ from database.service.search import elastic_search_user_ids, get_profile
 
 from app.states.search_state import Search
 from app.keyboards.default.choise import search_kb
+from app.keyboards.inline.archive import check_archive_ikb
 
 from app.handlers.msg_text import msg_text
 from .cancel import _cancel_command
@@ -44,8 +45,7 @@ async def _search_profile(message: types.Message, state: FSMContext) -> None:
         
         if message.text == "❤️":
             set_new_like(message.from_user.id, profile.user_id)
-            from app.keyboards.inline.archive import check_arhive_ikb
-            await bot.send_message(chat_id=profile.user_id, text=msg_text.LIKE_PROFILE, reply_markup=check_arhive_ikb())
+            await bot.send_message(chat_id=profile.user_id, text=msg_text.LIKE_PROFILE, reply_markup=check_archive_ikb())
         elif message.text == "👎":
             ...
         

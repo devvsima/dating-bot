@@ -48,12 +48,12 @@ class IsPhoto(BoundFilter):
     async def check(self, message: Message):
         return bool(message.photo)
             
-class Name(BoundFilter):
+class IsName(BoundFilter):
     async def check(self, message: Message):
         return bool(len(message.text) < 70)
 
         
-class Age(BoundFilter):
+class IsAge(BoundFilter):
     async def check(self, message: Message):
         return bool(message.text.isdigit() and int(message.text) < 100 and int(message.text) > 6)
 

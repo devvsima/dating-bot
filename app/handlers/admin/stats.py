@@ -1,6 +1,6 @@
 from aiogram import types
 from aiogram.dispatcher.filters import Text, Command
-from app.filters.admin import Admin
+from app.filters.admin import IsAdmin
 
 from loader import dp
 from utils.graphs import get_or_create_registration_graph
@@ -20,7 +20,7 @@ from app.keyboards.inline.admin import stats_ikb
 #     with open(graph_path, "rb") as photo:
 #         await message.answer_photo(photo, text)
         
-@dp.message_handler(Admin(), Command("reg"))
+@dp.message_handler(IsAdmin(), Command("reg"))
 async def _stats_command(message: types.Message) -> None:
     profile_stats = get_profile_stats()
     graph_path = get_or_create_registration_graph()

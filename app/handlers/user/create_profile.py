@@ -18,7 +18,7 @@ async def _retry_create_profile_command(message: types.Message):
 
 
 # create profile
-@dp.message_handler(filters.Create())
+@dp.message_handler(filters.IsCreate())
 async def _create_profile_command(message: types.Message):
     await message.answer(msg_text.GENDER, reply_markup=gender_kb())
     
@@ -26,7 +26,7 @@ async def _create_profile_command(message: types.Message):
 
 
 # gender
-@dp.message_handler(filters.Gender(), state=ProfileCreate.gender)
+@dp.message_handler(filters.IsGender(), state=ProfileCreate.gender)
 async def _gender(message: types.Message, state: FSMContext):
     await state.update_data(gender=message.conf['gender'])
     await message.reply(msg_text.FIND_GENDER, reply_markup=find_gender_kb())
@@ -38,7 +38,7 @@ async def _incorrect_gender(message: types.Message):
 
 
 # gender of interest
-@dp.message_handler(filters.FindGender(), state=ProfileCreate.find_gender)
+@dp.message_handler(filters.IsFindGender(), state=ProfileCreate.find_gender)
 async def _find_gender(message: types.Message, state: FSMContext):
     await state.update_data(find_gender=message.conf['find_gender'])
     await message.reply(msg_text.PHOTO, reply_markup=del_kb)
@@ -50,7 +50,7 @@ async def _incorrect_find_gender(message: types.Message):
 
 
 # photo
-@dp.message_handler(filters.Photo(), content_types=["photo"], state=[ProfileEdit.photo, ProfileCreate.photo])
+@dp.message_handler(filters.IsPhoto(), content_types=["photo"], state=[ProfileEdit.photo, ProfileCreate.photo])
 async def _photo(message: types.Message, state: FSMContext):
     photo = message.photo[0].file_id
     if await state.get_state() == ProfileEdit.photo.state:
@@ -69,7 +69,7 @@ async def _incorrect_photo(message: types.Message):
 
 
 # name
-@dp.message_handler(filters.Name(), state=ProfileCreate.name)
+@dp.message_handler(filters.IsName(), state=ProfileCreate.name)
 async def _name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
     await message.reply(msg_text.AGE)
@@ -81,19 +81,19 @@ async def _incorrect_name(message: types.Message):
 
 
 # age
-@dp.message_handler(filters.Age(), state=ProfileCreate.age)
+@dp.message_handler(filters.IsAge(), state=ProfileCreate.age)
 async def _age(message: types.Message, state: FSMContext):
     await state.update_data(age=message.text)
     await message.reply(msg_text.CITY)
     await ProfileCreate.next()
         
 @dp.message_handler(state=ProfileCreate.age)
-async def _incorrectage(message: types.Message):
+async def _incorrect_age(message: types.Message):
     await message.answer(msg_text.INVALID_AGE)
 
 
 # city
-@dp.message_handler(filters.City(), state=ProfileCreate.city)
+@dp.message_handler(filters.IsCity(), state=ProfileCreate.city)
 async def _city(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         coordinates = (message.conf['coordinates'])
@@ -109,7 +109,7 @@ async def _incorrect_city(message: types.Message):
 
 
 # description
-@dp.message_handler(filters.Description(), state=[ProfileCreate.desc, ProfileEdit.desc])
+@dp.message_handler(filters.IsDescription(), state=[ProfileCreate.desc, ProfileEdit.desc])
 async def _description(message: types.Message, state=FSMContext):
     if await state.get_state() == ProfileEdit.desc.state:
         await edit_profile_description(message.from_user.id, message.text)
