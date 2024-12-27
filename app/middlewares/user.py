@@ -21,7 +21,7 @@ class UsersMiddleware(BaseMiddleware):
                     inviter = get_user(message.get_args())
                     if inviter:
                         new_referral(inviter)
-        if user.is_banned == True:
+        if user.is_banned:
             raise CancelHandler()
         data['user'] = user
 

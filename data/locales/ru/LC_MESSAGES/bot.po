@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-13 14:52+0200\n"
+"POT-Creation-Date: 2024-12-27 11:21+0200\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/handlers/msg_text.py:9
+#: app/handlers/msg_text.py:12
 msgid ""
 "\n"
 "Привет! 👋\n"
@@ -30,7 +30,7 @@ msgid ""
 "Создай профиль и начни знакомиться с новыми людьми прямо сейчас!\n"
 msgstr ""
 
-#: app/handlers/msg_text.py:21
+#: app/handlers/msg_text.py:24
 msgid ""
 "\n"
 "🔍 Искать анкеты\n"
@@ -40,7 +40,7 @@ msgid ""
 "✉️ Пригласить друзей"
 msgstr ""
 
-#: app/handlers/msg_text.py:32
+#: app/handlers/msg_text.py:35
 msgid ""
 "\n"
 "🔄 Заполнить анкету заново\n"
@@ -51,7 +51,7 @@ msgid ""
 "🔍 Смотреть анкеты\n"
 msgstr ""
 
-#: app/handlers/msg_text.py:45
+#: app/handlers/msg_text.py:48
 msgid ""
 "\n"
 "👋\n"
@@ -60,121 +60,122 @@ msgid ""
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
 "Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
 "/dating-bot'>GitHub</a>\n"
-"Некоторую статистику можно глянуть по команде /stats\n"
 "\n"
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
 
-#: app/handlers/msg_text.py:59
+#: app/handlers/msg_text.py:61
 msgid "Идет поиск..."
 msgstr ""
 
-#: app/handlers/msg_text.py:63
+#: app/handlers/msg_text.py:65
 msgid "Подходящих вам анкет нет. Вы можете попробовать указать другой город. 🌍"
 msgstr ""
 
-#: app/handlers/msg_text.py:67
+#: app/handlers/msg_text.py:69
 msgid "Больше анкет нет. Попробуй позже! 😊"
 msgstr ""
 
-#: app/handlers/msg_text.py:71
+#: app/handlers/msg_text.py:73
 msgid "Кому-то понравилась ваша анкета! Хотите посмотреть? 👀"
 msgstr ""
 
-#: app/handlers/msg_text.py:75
+#: app/handlers/msg_text.py:77
 msgid "Тебя еще никто не лайкнул. Но всё ещё впереди!"
 msgstr ""
 
-#: app/handlers/msg_text.py:79
+#: app/handlers/msg_text.py:81
 msgid ""
 "Отлично! Надеюсь хорошо проведете время ;) <a "
 "href='tg://user?id={}'>{}</a>"
 msgstr ""
 
-#: app/handlers/msg_text.py:83
+#: app/handlers/msg_text.py:85
 msgid "Укажи свой пол: 👤"
 msgstr ""
 
-#: app/handlers/msg_text.py:87
+#: app/handlers/msg_text.py:89
 msgid "Кто тебе интересен? Выбери пол человека: 👤"
 msgstr ""
 
-#: app/handlers/msg_text.py:91
+#: app/handlers/msg_text.py:93
 msgid "Пришли своё фото! 📸"
 msgstr ""
 
-#: app/handlers/msg_text.py:95
+#: app/handlers/msg_text.py:97
 msgid "Как тебя зовут? Напиши своё имя, чтобы мы могли продолжить! ✍️"
 msgstr ""
 
-#: app/handlers/msg_text.py:99
+#: app/handlers/msg_text.py:101
 msgid "Сколько тебе лет? Укажи свой возраст, пожалуйста! 🎂"
 msgstr ""
 
-#: app/handlers/msg_text.py:103
+#: app/handlers/msg_text.py:105
 msgid "Теперь введи свой город. 🏙️"
 msgstr ""
 
-#: app/handlers/msg_text.py:107
+#: app/handlers/msg_text.py:109
 msgid "Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝"
 msgstr ""
 
-#: app/handlers/msg_text.py:111
+#: app/handlers/msg_text.py:113
 msgid "Вы точно хотите удалить анкету?"
 msgstr ""
 
-#: app/handlers/msg_text.py:115
+#: app/handlers/msg_text.py:117
 msgid ""
 "Ваша анкета успешно удалена.\n"
 "\n"
 "Если хотите снова создать вашу анкету напиши команду /create"
 msgstr ""
 
-#: app/handlers/msg_text.py:119
+#: app/handlers/msg_text.py:121
 msgid ""
 "Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
 "правильно. 📝"
 msgstr ""
 
-#: app/handlers/msg_text.py:123
+#: app/handlers/msg_text.py:125
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr ""
 
-#: app/handlers/msg_text.py:127
+#: app/handlers/msg_text.py:129
 msgid ""
 "Неверный формат фотографии! Пожалуйста, загрузите изображение в "
 "правильном формате. 🖼️"
 msgstr ""
 
-#: app/handlers/msg_text.py:131
+#: app/handlers/msg_text.py:133
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr ""
 
-#: app/handlers/msg_text.py:135
+#: app/handlers/msg_text.py:137
 msgid ""
 "Приглашай друзей и получай бонус к своей анкете!\n"
+"\n"
+"Приглашенные пользователи: <b>{}</b>\n"
 "\n"
 "Ссылка для друзей:\n"
 "<code>https://t.me/{}?start={}</code>"
 msgstr ""
 
-#: app/handlers/msg_text.py:138
+#: app/handlers/msg_text.py:140
 msgid "Вы администратор!"
 msgstr ""
 
-#: app/handlers/msg_text.py:141
+#: app/handlers/msg_text.py:143
 msgid ""
-"👤Users: {}\n"
+"👤Пользователей: {}\n"
 "\n"
-"Profiles: {}\n"
-"🙍‍♂️Man: {} | 🙍‍♀️Woman: {}"
+"Анкет: {}\n"
+"🙍‍♂Парней: {} | 🙍‍♀Девушек: {}"
 msgstr ""
 
-#: app/handlers/msg_text.py:145
+#: app/handlers/msg_text.py:147
 msgid "Выберите язык, на который вы хотите переключиться: 🌐"
 msgstr ""
 
-#: app/handlers/msg_text.py:149
+#: app/handlers/msg_text.py:151
 msgid "Ваш язык успешно изменён! ✅"
 msgstr ""
 
@@ -182,23 +183,23 @@ msgstr ""
 msgid "Создать анкету"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:13
+#: app/keyboards/default/create_profile.py:9
 msgid "Я парень"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:13
+#: app/keyboards/default/create_profile.py:9
 msgid "Я девушка"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:24
+#: app/keyboards/default/create_profile.py:20
 msgid "Парни"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:25
+#: app/keyboards/default/create_profile.py:21
 msgid "Девушки"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:26
+#: app/keyboards/default/create_profile.py:22
 msgid "Все"
 msgstr ""
 
@@ -214,16 +215,12 @@ msgstr ""
 msgid "Посмотреть"
 msgstr ""
 
-#: app/keyboards/inline/profile.py:13
+#: app/keyboards/inline/profile.py:12
 msgid "Да"
 msgstr ""
 
-#: app/keyboards/inline/profile.py:14
+#: app/keyboards/inline/profile.py:13
 msgid "Нет"
-msgstr ""
-
-#: app/keyboards/inline/search.py:13
-msgid "Посмотреть👀"
 msgstr ""
 
 #~ msgid ""
@@ -277,5 +274,37 @@ msgstr ""
 #~ "неё. 🚀\n"
 #~ "\n"
 #~ "Создай профиль и начни знакомиться с новыми людьми прямо сейчас!\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "👋\n"
+#~ "Немного информации о боте:\n"
+#~ "Этот бот был создан по аналогии с"
+#~ " популярным ботом для знакомств <a "
+#~ "href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
+#~ "Весь код бота открыт и доступен на"
+#~ " <a href='https://github.com/devvsima/dating-"
+#~ "bot'>GitHub</a>\n"
+#~ "Некоторую статистику можно глянуть по команде /stats\n"
+#~ "\n"
+#~ "По вопросам и предложениям можно писать сюда: @devvsima.\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Приглашай друзей и получай бонус к своей анкете!\n"
+#~ "\n"
+#~ "Ссылка для друзей:\n"
+#~ "<code>https://t.me/{}?start={}</code>"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "👤Users: {}\n"
+#~ "\n"
+#~ "Profiles: {}\n"
+#~ "🙍‍♂️Man: {} | 🙍‍♀️Woman: {}"
+#~ msgstr ""
+
+#~ msgid "Посмотреть👀"
 #~ msgstr ""
 

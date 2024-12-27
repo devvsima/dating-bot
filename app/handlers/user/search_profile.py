@@ -26,7 +26,8 @@ async def _search_command(message: types.Message, state: FSMContext) -> None:
         
         if not ids:
             await message.answer(msg_text.INVALID_PROFILE_SEARCH)
-            await _profile_command(message)
+            from app.handlers.user.menu import menu
+            await menu(message)
             return
         
         shuffle(ids)
