@@ -17,6 +17,8 @@ def menu_kb() -> ReplyKeyboardMarkup:
                 KeyboardButton(text="✉️"),
             ],
         ],
+        one_time_keyboard=True,
+
     )
     return kb
 
@@ -36,6 +38,7 @@ def profile_kb() -> ReplyKeyboardMarkup:
 
             ],
         ],
+        one_time_keyboard=True,
     )
     return kb
 
@@ -46,9 +49,12 @@ def search_kb() -> ReplyKeyboardMarkup:
             [
                 KeyboardButton(text="❤️"),
                 KeyboardButton(text="👎"),
-                KeyboardButton(text="💤"),
-
             ],
+            [
+                KeyboardButton(text="💤"),
+                # KeyboardButton(text="💢"),
+            ],
+
         ],
     )
     return kb

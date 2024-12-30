@@ -1,5 +1,4 @@
 from aiogram.types import (
-    ReplyKeyboardRemove,
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )

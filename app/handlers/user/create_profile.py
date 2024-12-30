@@ -8,7 +8,7 @@ from database.service.profile import create_profile, edit_profile_photo, edit_pr
 from app.handlers.msg_text import msg_text
 from app.keyboards.default import gender_kb, find_gender_kb, del_kb
 from app.states.profile_create_state import ProfileEdit, ProfileCreate
-from app.handlers.user.profile import _profile_command
+from app.handlers.user.profile import profile_command
 import app.filters.create_profile_filtres as filters
 
 
@@ -55,7 +55,7 @@ async def _photo(message: types.Message, state: FSMContext):
     photo = message.photo[0].file_id
     if await state.get_state() == ProfileEdit.photo.state:
         await edit_profile_photo(message.from_user.id, photo)
-        await _profile_command(message)
+        await profile_command(message)
         await state.finish()
         return
     
@@ -118,7 +118,7 @@ async def _description(message: types.Message, state=FSMContext):
         await create_profile(state, user_id=message.from_user.id)
     
     await state.finish()
-    await _profile_command(message)
+    await profile_command(message)
     
 @dp.message_handler(state=[ProfileCreate.desc, ProfileEdit.desc])
 async def _incorrect_description(message: types.Message):

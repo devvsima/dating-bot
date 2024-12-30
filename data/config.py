@@ -9,7 +9,7 @@ env.read_env()
 #  tgbot
 TG_TOKEN = env.str("TOKEN", default=None)
 ADMINS = env.list("ADMINS", default=None, subcast=int)
-RATE_LIMIT = env.int("RATE_LIMIT", default=5)
+MODERATOR_GROUP = env.int("MODERATOR_GROUP_ID", default=None)
 
 # db
 DB_NAME = env.str("DB_NAME", default=None)

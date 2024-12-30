@@ -8,7 +8,7 @@ async def set_default_commands():
         BotCommand('/help', 'how it works?'),
         BotCommand('/language', 'change language'),
         # BotCommand('/profile', 'check your profile'),
-        # BotCommand('/report', 'complain about a user'),
+        BotCommand('/report', 'complain about a user'),
     ]
 
     await bot.set_my_commands(commands, scope=BotCommandScopeDefault())

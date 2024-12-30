@@ -8,12 +8,13 @@ from database.service.profile import get_profile
 
 from app.handlers.msg_text import msg_text
 from app.keyboards.default import  start_kb
-from .menu import menu
+from app.handlers.bot_utils import menu
+
 
 @dp.message_handler(CommandStart())
 async def _start_command(message: types.Message) -> None:
     if await get_profile(message.from_user.id):
-        await menu(message)
+        await menu(message.from_user.id)
     else:
         with open(f'{IMAGES_DIR}/christmas_logo.png', "rb") as photo:
             await message.answer_photo(

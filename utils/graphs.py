@@ -7,38 +7,24 @@ from database.service.stats import get_all_users_registration_data, get_all_user
 
 from data.config import IMAGES_DIR
 
-invites_photo_path = rf'{IMAGES_DIR}/invites_graph.png'
 registration_photo_path = rf'{IMAGES_DIR}/registration_graph.png'
 
 
 def get_mounth_period():
+    """Возращает текущую дату, и дату 30 дней назад"""
     today = datetime.today()
     days_ago_30 = today - timedelta(days=30)
     return today, days_ago_30
 
-
-def get_or_create_invites_graph(path=invites_photo_path) -> str:
-    create_user_invite_graph(path)
-    return path
-
-def create_user_invite_graph(path) -> None:
-    plt.style.use(['dark_background'])
-    users, invites = get_all_users_invite()
-    print(invites)
-    plt.pie(invites, labels=users)
-    plt.xlabel('Users')
-    plt.ylabel('Number of Invites')
-    plt.title('Invites per User')
-
-    plt.savefig(path)
-
 def get_or_create_registration_graph(data=None, path=registration_photo_path) -> str:
+    """Создает график регистрации пользователей и возращает путь к фотографии графика"""
     if data is None:
         data = get_all_users_registration_data()
     create_user_registration_graph(data, path)
     return path
 
 def create_user_registration_graph(data, path):
+    """Создает график новых пользователей в заданом периоде"""
     df = pd.DataFrame(data)
 
     df['timestamp'] = pd.to_datetime(df['timestamp'])
@@ -57,7 +43,15 @@ def create_user_registration_graph(data, path):
     sns.set_theme(style="whitegrid")  # Установка стиля Seaborn
 
     # Создаем бар график
-    sns.barplot(x=daily_counts_full.index, y=daily_counts_full, palette='Blues_d')
+    sns.barplot(
+        x=daily_counts_full.index,
+        y=daily_counts_full,
+        palette='Blues_d',
+        hue=daily_counts_full.index,  # Устанавливаем `x` как `hue`
+        legend=False  # Отключаем легенду
+    )
+
+
 
     plt.title('Приход пользователей за 30 дней', fontsize=16, fontweight='bold')
     plt.xlabel('Дата', fontsize=12)

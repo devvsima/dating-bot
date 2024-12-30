@@ -1,4 +1,4 @@
-from aiogram.types import BotCommandScopeDefault, BotCommandScopeChat, BotCommand
+from aiogram.types import BotCommandScopeChat, BotCommand
 
 from loader import bot
 

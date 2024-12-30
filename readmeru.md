@@ -1,6 +1,19 @@
-<picture>
-  <img src="https://pbs.twimg.com/media/GYKn8I_WAAAvErl?format=jpg&name=large">
-</picture>
+<p align="center">
+  <img src="https://i.ibb.co/ZVyJ7ky/Screenshot-52.png" alt="diagram" width="1000">
+</p>
+<details>
+  <summary>📸 Скриншоты</summary>
+  
+  <p align="center">
+    <img src="https://i.ibb.co/ggvC6kr/Screenshot-53.png" alt="Screenshot 1" width="800">
+  </p>
+  <p align="center">
+    <img src="https://pbs.twimg.com/media/GYKn8I_WAAAvErl?format=jpg&name=large" alt="Screenshot 2" width="800">
+  </p>
+  <!-- <p align="center">
+    <img src="https://pbs.twimg.com/media/GYKn8I_WAAAvErl?format=jpg&name=large" alt="Screenshot 3" width="500">
+  </p> -->
+</details>
 
 # 🚀 Давай начнем
 

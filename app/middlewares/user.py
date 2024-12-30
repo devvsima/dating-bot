@@ -5,6 +5,7 @@ from aiogram.types import Message, CallbackQuery, InlineQuery
 from database.service.users import get_or_create_user, get_user, create_user, new_referral
 
 
+
 class UsersMiddleware(BaseMiddleware):
     @staticmethod
     async def on_process_message(message: Message, data: dict[str]):
@@ -18,6 +19,9 @@ class UsersMiddleware(BaseMiddleware):
             if message.text.startswith('/start'):
                 if not user:
                     user = create_user(message.from_user.id, message.from_user.username, message.from_user.language_code)
+                    from app.handlers.bot_utils import new_user_alert_to_group
+                    
+                    await new_user_alert_to_group(user)
                     inviter = get_user(message.get_args())
                     if inviter:
                         new_referral(inviter)

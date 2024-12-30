@@ -8,7 +8,7 @@ from database.service.profile import delete_profile
 from app.handlers.msg_text import msg_text
 from app.keyboards.inline.profile import delete_profile_ikb
 from app.states.profile_create_state import ProfileEdit
-from .profile import _profile_command
+from .profile import profile_command
 
 
 @dp.message_handler(Text("🖼"))
@@ -27,10 +27,9 @@ async def _delete_profile_command(message: types.Message) -> None:
 
 @dp.callback_query_handler(Text(["delete_yes", "delete_no"]))
 async def _delete_profile_choice(callback: types.CallbackQuery) -> None:
-    print("test")
     if callback.data == "delete_yes":
         await delete_profile(callback.from_user.id)
         await callback.message.answer(msg_text.DELETE_PROFILE_ALERT)
     elif callback.data == "delete_no":
-        await _profile_command()
+        await profile_command()
 

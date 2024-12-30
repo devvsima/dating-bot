@@ -2,8 +2,8 @@ from aiogram.types import (
     ReplyKeyboardMarkup,
     KeyboardButton,
     ReplyKeyboardRemove,
-    
 )
+
 from loader import _
 
 del_kb = ReplyKeyboardRemove()

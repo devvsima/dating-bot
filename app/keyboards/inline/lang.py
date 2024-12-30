@@ -1,9 +1,8 @@
 from aiogram.types import (
-    ReplyKeyboardRemove,
     InlineKeyboardMarkup,
     InlineKeyboardButton,
 )
-from loader import _
+
 
 def lang_ikb() -> InlineKeyboardMarkup:
     ikb = InlineKeyboardMarkup(

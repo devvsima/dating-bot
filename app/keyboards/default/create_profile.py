@@ -25,6 +25,17 @@ def find_gender_kb() -> ReplyKeyboardMarkup:
     )
     return kb
 
+def suggest_previous_options_kb(text: str) -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(
+        resize_keyboard=True,
+        keyboard=[
+            [
+                KeyboardButton(text=text),
+            ],
+        ],
+    )
+    return kb
+
 
 
 
