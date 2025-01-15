@@ -13,6 +13,7 @@ from app.handlers.bot_utils import menu
 
 @dp.message_handler(CommandStart())
 async def _start_command(message: types.Message) -> None:
+    """Стратовая команда"""
     if await get_profile(message.from_user.id):
         await menu(message.from_user.id)
     else:

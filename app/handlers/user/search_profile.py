@@ -21,6 +21,7 @@ from .cancel import cancel_command
 
 @dp.message_handler(Text("🔍"))
 async def _search_command(message: types.Message, state: FSMContext) -> None:
+    """Начинает поиск анкет"""
     await message.answer(msg_text.SEARCH, reply_markup=search_kb())
     async with state.proxy() as data:
         ids = await elastic_search_user_ids(message.from_user.id)
@@ -39,6 +40,7 @@ async def _search_command(message: types.Message, state: FSMContext) -> None:
 @dp.message_handler(Command("report"), state=Search.search)
 @dp.message_handler(Text(["❤️","👎"]), state=Search.search)
 async def _search_profile(message: types.Message, state: FSMContext) -> None:
+    """Свайпы анкет"""
     async with state.proxy() as data:
         ids = data['ids']
         profile: Profile = await get_profile(ids[0])
@@ -58,7 +60,3 @@ async def _search_profile(message: types.Message, state: FSMContext) -> None:
             return
         profile = await get_profile(ids[0])
         await send_profile(message.from_user.id, profile)
-        
-        
-
-

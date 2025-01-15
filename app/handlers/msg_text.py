@@ -77,7 +77,7 @@ class MsgText:
 
     @property
     def LIKE_ACCEPT(self):
-        return _("Отлично! Надеюсь хорошо проведете время ;) <a href='tg://user?id={}'>{}</a>")
+        return _("Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>")
 
     @property
     def GENDER(self):

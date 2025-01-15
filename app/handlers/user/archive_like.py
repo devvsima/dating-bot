@@ -51,10 +51,30 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
     async with state.proxy() as data:
         ids = data.get('ids')
         profile = await get_profile(ids[0])
-            
+        
+        username_url = "https://t.me/{}"
+        id_url = "tg://user?id={}"
+                
         if message.text == "❤️":
-            await bot.send_message(chat_id=message.from_user.id, text=msg_text.LIKE_ACCEPT.format(profile.user_id, profile.name))
-            await bot.send_message(chat_id=profile.user_id, text=msg_text.LIKE_ACCEPT.format(message.from_user.id, message.from_user.full_name))
+            """Отправка пользователю которому ответили на лайк"""
+            url = id_url.format(message.from_user.id)
+            if message.from_user.username:
+                url = username_url.format(message.from_user.username)
+                
+            await bot.send_message(
+                chat_id=profile.user_id, 
+                text=msg_text.LIKE_ACCEPT.format(url, message.from_user.full_name)
+                )
+            
+            """Отправка пользователю который ответил на лайк"""
+            url = id_url.format(profile.user_id)
+            if profile.user_id.username:
+                url = username_url.format(profile.user_id.username)
+                
+            await bot.send_message(
+                chat_id=message.from_user.id,
+                text=msg_text.LIKE_ACCEPT.format(url,profile.name ))
+            
         elif message.text == "👎":
             pass
         del_like(message.from_user.id, profile.user_id)

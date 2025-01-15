@@ -9,6 +9,7 @@ from app.handlers.bot_utils import menu
 @dp.message_handler(Text("💤"), state="*")
 @dp.message_handler(Command("cancel"), state="*")
 async def cancel_command(message: types.Message, state: FSMContext) -> None:
+    """Сбрасывает состояния и дает пользователю меню"""
     if state is None:
         return
     await state.finish()

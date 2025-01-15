@@ -9,5 +9,6 @@ from app.handlers.msg_text import msg_text
 
 @dp.message_handler(Command('help'))
 async def _help_command(message: types.Message) -> None:
+    """Команда дающее небольшое описание бота"""
     with open(f'{IMAGES_DIR}/logo.jpg', "rb") as photo:
         await message.answer_photo(photo=photo, caption=msg_text.INFO.format())

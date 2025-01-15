@@ -14,12 +14,14 @@ import app.filters.create_profile_filtres as filters
 
 @dp.message_handler(text="🔄")
 async def _retry_create_profile_command(message: types.Message):
+    """Запускает создания профиля заново"""
     await _create_profile_command(message)
 
 
 # create profile
 @dp.message_handler(filters.IsCreate())
 async def _create_profile_command(message: types.Message):
+    """Начало создание профиля"""
     await message.answer(msg_text.GENDER, reply_markup=gender_kb())
     
     await ProfileCreate.gender.set()
@@ -34,6 +36,7 @@ async def _gender(message: types.Message, state: FSMContext):
     
 @dp.message_handler(state=ProfileCreate.gender)
 async def _incorrect_gender(message: types.Message):
+    """Ошибка фильтра гендера"""
     await message.answer(msg_text.INVALID_RESPONSE)
 
 
@@ -46,6 +49,7 @@ async def _find_gender(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=ProfileCreate.find_gender)
 async def _incorrect_find_gender(message: types.Message):
+    """Ошибка фильтра гендера"""
     await message.answer(msg_text.INVALID_RESPONSE)
 
 
@@ -65,6 +69,7 @@ async def _photo(message: types.Message, state: FSMContext):
     
 @dp.message_handler(state=[ProfileEdit.photo, ProfileCreate.photo])
 async def _incorrect_photo(message: types.Message):
+    """Ошибка фильтра фотографии"""
     await message.answer(msg_text.INVALID_PHOTO)
 
 
@@ -77,6 +82,7 @@ async def _name(message: types.Message, state: FSMContext):
     
 @dp.message_handler(state=ProfileCreate.name)
 async def _incorrect_name(message: types.Message):
+    """Ошибка фильтра имени"""
     await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
 
@@ -89,12 +95,14 @@ async def _age(message: types.Message, state: FSMContext):
         
 @dp.message_handler(state=ProfileCreate.age)
 async def _incorrect_age(message: types.Message):
+    """Ошибка фильтра возраста"""
     await message.answer(msg_text.INVALID_AGE)
 
 
 # city
 @dp.message_handler(filters.IsCity(), state=ProfileCreate.city)
 async def _city(message: types.Message, state: FSMContext):
+    """Устанавливает город пользователю сохрання кординаты"""
     async with state.proxy() as data:
         coordinates = (message.conf['coordinates'])
         data["city"] = message.text
@@ -105,12 +113,14 @@ async def _city(message: types.Message, state: FSMContext):
     
 @dp.message_handler(state=ProfileCreate.city,)
 async def _incorrect_city(message: types.Message):
+    """Ошибка фильтра города"""
     await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
 
 # description
 @dp.message_handler(filters.IsDescription(), state=[ProfileCreate.desc, ProfileEdit.desc])
 async def _description(message: types.Message, state=FSMContext):
+    """Устанавливает описание пользователю"""
     if await state.get_state() == ProfileEdit.desc.state:
         await edit_profile_description(message.from_user.id, message.text)
     else:
@@ -122,4 +132,5 @@ async def _description(message: types.Message, state=FSMContext):
     
 @dp.message_handler(state=[ProfileCreate.desc, ProfileEdit.desc])
 async def _incorrect_description(message: types.Message):
+    """Ошибка фильтра описания"""
     await message.answer(msg_text.INVALID_LONG_RESPONSE)
