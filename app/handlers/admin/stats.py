@@ -1,5 +1,5 @@
 from aiogram import types
-from aiogram.dispatcher.filters import Text, Command
+from aiogram.dispatcher.filters import Text
 from app.filters.admin import IsAdmin
 
 from loader import dp

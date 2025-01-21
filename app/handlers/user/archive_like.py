@@ -3,7 +3,6 @@ from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 
 from loader import dp, bot
-from utils.logging import logger
 
 from database.service.likes import get_profile_likes, del_like
 from database.service.profile import get_profile
@@ -17,6 +16,7 @@ from app.keyboards.default import search_kb
 
 @dp.message_handler(Text("🗄"), state="*")
 async def like_profile(message: types.Message, state: FSMContext) -> None:
+    """Архив лайков анкеты пользовтеля"""
     await message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
     liker_ids = get_profile_likes(message.from_user.id)
@@ -35,7 +35,6 @@ async def _like_profile(callback: types.CallbackQuery, state: FSMContext) -> Non
     await callback.message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await LikeResponse.response.set()
     liker_ids = get_profile_likes(int(callback.from_user.id))
-    logger.info(liker_ids)
     if not liker_ids:
         await callback.message.answer(msg_text.LIKE_ARCHIVE)
         await cancel_command(callback.message, state)
@@ -45,15 +44,14 @@ async def _like_profile(callback: types.CallbackQuery, state: FSMContext) -> Non
         profile = await get_profile(liker_ids[0])
         await send_profile(callback.from_user.id, profile)
     
-        
+username_url = "https://t.me/{}"
+id_url = "tg://user?id={}"    
 @dp.message_handler(Text(["❤️", "👎"]), state=LikeResponse.response)
 async def _like_response(message: types.Message, state: FSMContext) -> None:
+    """ 'Свайпы' людей которые лайкнули анкету пользователя """
     async with state.proxy() as data:
         ids = data.get('ids')
         profile = await get_profile(ids[0])
-        
-        username_url = "https://t.me/{}"
-        id_url = "tg://user?id={}"
                 
         if message.text == "❤️":
             """Отправка пользователю которому ответили на лайк"""

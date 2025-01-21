@@ -6,9 +6,9 @@ from loader import dp
 from database.service.profile import create_profile, edit_profile_photo, edit_profile_description
 
 from app.handlers.msg_text import msg_text
+from app.handlers.user.profile import profile_command
 from app.keyboards.default import gender_kb, find_gender_kb, del_kb
 from app.states.profile_create_state import ProfileEdit, ProfileCreate
-from app.handlers.user.profile import profile_command
 import app.filters.create_profile_filtres as filters
 
 
@@ -102,7 +102,6 @@ async def _incorrect_age(message: types.Message):
 # city
 @dp.message_handler(filters.IsCity(), state=ProfileCreate.city)
 async def _city(message: types.Message, state: FSMContext):
-    """Устанавливает город пользователю сохрання кординаты"""
     async with state.proxy() as data:
         coordinates = (message.conf['coordinates'])
         data["city"] = message.text
@@ -120,7 +119,6 @@ async def _incorrect_city(message: types.Message):
 # description
 @dp.message_handler(filters.IsDescription(), state=[ProfileCreate.desc, ProfileEdit.desc])
 async def _description(message: types.Message, state=FSMContext):
-    """Устанавливает описание пользователю"""
     if await state.get_state() == ProfileEdit.desc.state:
         await edit_profile_description(message.from_user.id, message.text)
     else:

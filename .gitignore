@@ -2,6 +2,7 @@
 .fleet
 .vscode
 .venv
+.github
 
 **/__pycache__
 

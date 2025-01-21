@@ -18,6 +18,12 @@ DB_PORT = env.int("DB_PORT", default=5432)
 DB_USER = env.str("DB_USER", default="postgres")
 DB_PASS = env.str("DB_PASS", default="postgres")
 
+# redis
+REDIS_HOST = env.str('REDIS_HOST', default=None)
+REDIS_PORT = env.int('REDIS_PORT', default=6379)
+REDIS_DB = env.int('REDIS_DB', default=5)
+
+
 I18N_DOMAIN = 'bot'
 
 IMAGES_DIR = fr"{DIR}/images" 
