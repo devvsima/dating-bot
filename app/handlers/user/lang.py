@@ -1,22 +1,24 @@
-from aiogram import types
-from aiogram.dispatcher.filters import Command, Text
+from aiogram import F, types
+from aiogram.filters import Command
 
-from loader import dp
+from loader import _
+
+from app.routers import user_router as router
 
 from database.service.users import change_language
-
-from app.handlers.msg_text import msg_text
+    
 from app.keyboards.inline.lang import lang_ikb
 
 
-@dp.message_handler(Command('language'))
-@dp.message_handler(Command('lang'))
+@router.message(Command('language'))
+@router.message(Command('lang'))
 async def _lang(message: types.Message) -> None:
     """Предлагает клавиатуру с доступными языками"""
-    await message.answer(msg_text.CHANGE_LANG, reply_markup=lang_ikb())
+    await message.answer(_("Select the language you want to switch"), reply_markup=lang_ikb())
 
-@dp.callback_query_handler(Text(['ru', 'uk', 'en']))
+
+@router.callback_query(F.data.in_(['ru', 'uk', 'en']))
 async def _lang_change(callback: types.CallbackQuery) -> None:
     """Меняет язык пользователя на выбранный"""
     change_language(callback.from_user.id, callback.data)
-    await callback.message.edit_text(msg_text.DONE_CHANGE_LANG)
+    await callback.message.edit_text(_("Language changed"))

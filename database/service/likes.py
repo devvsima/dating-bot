@@ -17,7 +17,7 @@ def set_new_like(liker_id: int, liked_id: int) -> None:
     
 def get_profile_likes(user_id: int) -> list:
     ids = Likes.select(Likes).where(Likes.liked_id == user_id)
-    return [i.liker_id for i in ids]
+    return [i.liker_id.id for i in ids]
 
 def del_like(liked_id: int, liker_id: int) -> None:
     """Удаляет из БД лайк пользователя liker_id к пользователю liked_id"""

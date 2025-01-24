@@ -1,13 +1,14 @@
 from aiogram import types
-from aiogram.dispatcher.filters import Command
+from aiogram.filters import Command
 
-from loader import dp
+from app.routers import user_router as router
+
 from data.config import IMAGES_DIR
 
 from app.handlers.msg_text import msg_text
 
 
-@dp.message_handler(Command('help'))
+@router.message(Command('help'))
 async def _help_command(message: types.Message) -> None:
     """Команда дающее небольшое описание бота"""
     with open(f'{IMAGES_DIR}/logo.jpg', "rb") as photo:

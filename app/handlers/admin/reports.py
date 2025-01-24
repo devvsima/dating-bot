@@ -1,14 +1,13 @@
-from aiogram import types
-from aiogram.dispatcher.filters import Text
+from aiogram import F, types
 
-from loader import dp
+from app.routers import admin_router as router
 
 from database.service.users import ban_or_unban_user
     
 from app.handlers.msg_text import msg_text
 
         
-@dp.callback_query_handler(Text(startswith="block_user_"))
+@router.callback_query(F.data(startswith="block_user_"))
 async def _block_user_callback(callback: types.CallbackQuery) -> None:
     """Блокирует пользователя переданого в калбек"""
     user_id = callback.data[11:]

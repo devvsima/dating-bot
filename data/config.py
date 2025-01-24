@@ -6,24 +6,30 @@ DIR = Path(__file__).absolute().parent.parent
 env = Env()
 env.read_env()
 
-#  tgbot
-TG_TOKEN = env.str("TOKEN", default=None)
-ADMINS = env.list("ADMINS", default=None, subcast=int)
-MODERATOR_GROUP = env.int("MODERATOR_GROUP_ID", default=None)
+# ---< Telegram bot >---
+TG_TOKEN: str = env.str("TOKEN", default=None)
+ADMINS: list = env.list("ADMINS", default=None, subcast=int)
+SKIP_UPDATES: bool = env.bool('SKIP_UPDATES', default=True)
+MODERATOR_GROUP: int = env.int("MODERATOR_GROUP_ID", default=None)
 
-# db
-DB_NAME = env.str("DB_NAME", default=None)
-DB_HOST = env.str("DB_HOST", default="localhost")
-DB_PORT = env.int("DB_PORT", default=5432)
-DB_USER = env.str("DB_USER", default="postgres")
-DB_PASS = env.str("DB_PASS", default="postgres")
+# ---< Database >---
+DB_NAME: str = env.str("DB_NAME", default=None)
+DB_HOST: str = env.str("DB_HOST", default="localhost")
+DB_PORT: int = env.int("DB_PORT", default=5432)
+DB_USER: str = env.str("DB_USER", default="postgres")
+DB_PASS: str = env.str("DB_PASS", default="postgres")
 
-# redis
-REDIS_HOST = env.str('REDIS_HOST', default=None)
-REDIS_PORT = env.int('REDIS_PORT', default=6379)
-REDIS_DB = env.int('REDIS_DB', default=5)
+# ---< Redis >---
+REDIS_HOST: str = env.str('REDIS_HOST', default=None)
+REDIS_PORT: int = env.int('REDIS_PORT', default=6379)
+REDIS_DB: int = env.int('REDIS_DB', default=5)
 
+REDIS_URL: str = env.str("RD_URI", default=None)
 
+if REDIS_HOST and REDIS_PORT and REDIS_HOST:
+    REDIS_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_HOST}"
+
+# ---< Other >---
 I18N_DOMAIN = 'bot'
 
 IMAGES_DIR = fr"{DIR}/images" 

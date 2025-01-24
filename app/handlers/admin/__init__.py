@@ -1,7 +1,7 @@
-from .admin import dp
-from .stats import dp
-from .mailing import dp
-from .users import dp
-from .reports import dp
+from .admin import router
+from .stats import router
+from .mailing import router
+from .users import router
+from .reports import router
 
-__all__ = ["dp"]
+__all__ = ["router"]

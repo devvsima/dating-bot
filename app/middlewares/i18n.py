@@ -14,27 +14,16 @@ pybabel update -i data/locales/bot.pot -d data/locales -D bot
 
 """
 
-from aiogram.contrib.middlewares.i18n import I18nMiddleware
-from aiogram.types import Message
+from aiogram.types import Update
+from aiogram.utils.i18n import I18nMiddleware
 
-from data.config import I18N_DOMAIN, LOCALES_DIR
-
-
-class ACLMiddleware(I18nMiddleware):
-    async def get_user_locale(self, action: str, args: list[Message, dict[str]]):
-        *_, data = args
-        user = data['user']
-
-        return user.language
-
-    def set_user_locale(self, locale: str):
-        self.ctx_locale.set(locale)
-
-    async def trigger(self, action, args):
-        if 'update' not in action and 'error' not in action and action.startswith('process'):
-            locale = await self.get_user_locale(action, args)
-            self.set_user_locale(locale)
-            return True
+from loader import i18n
 
 
-i18n = ACLMiddleware(I18N_DOMAIN, LOCALES_DIR)
+class MyI18nMiddleware(I18nMiddleware):
+    async def get_locale(self, event: Update, data: dict) -> str:
+        user = data.get("user")
+        return user.language if user else await super().get_locale(event, data)
+
+
+i18n_middleware = MyI18nMiddleware(i18n)

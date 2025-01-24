@@ -1,5 +1,7 @@
-from aiogram.dispatcher.filters.state import StatesGroup, State
+from aiogram.fsm.state import State, StatesGroup
 
+class LikeResponse(StatesGroup):
+    response = State()
 
 class ProfileCreate(StatesGroup):
     gender = State()
@@ -13,3 +15,6 @@ class ProfileCreate(StatesGroup):
 class ProfileEdit(StatesGroup):
     photo = State()
     desc = State()
+    
+class Search(StatesGroup):
+    search = State()

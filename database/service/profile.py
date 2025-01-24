@@ -23,23 +23,22 @@ async def edit_profile_description(user_id, description):
     Profile.update(description=description).where(Profile.user_id == user_id).execute()
     logger.info(f"User | {user_id} изменил описание")
 
-async def create_profile(state, user_id):
+async def create_profile(data, user_id):
     """Создает профиль пользователя, если профиль есть - удаляет его"""
     if await get_profile(user_id):
         await delete_profile(user_id)
         
-    async with state.proxy() as data:
-        Profile.create(      
-            user_id = user_id,
-            gender = data["gender"],
-            find_gender = data["find_gender"],
-            photo = data["photo"],
-            name = data["name"],
-            age = data["age"],
-            city = data["city"],
-            latitude = data["latitude"],
-            longitude = data["longitude"],
-            description = data["desc"]
-            )
+    Profile.create(      
+        user_id = user_id,
+        gender = data.get("gender"),
+        find_gender = data.get("find_gender"),
+        photo = data.get("photo"),
+        name = data.get("name"),
+        age = data.get("age"),
+        city = data.get("city"),
+        latitude = data.get("latitude"),
+        longitude = data.get("longitude"),
+        description = data.get("desc")
+    )
     logger.info(f"User: {user_id} | создал анкету")
     

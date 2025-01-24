@@ -1,24 +1,30 @@
-from aiogram import Dispatcher, executor
-from app import middlewares ,filters, handlers
+import asyncio
+
+from app.middlewares import setup_middlewares
 from loader import dp, bot
 from utils.logging import logger
 
-
-async def on_startup(_):
-    from app.commands import set_default_commands
+async def on_startup() -> None:
+    from app.others.commands import set_default_commands
     await set_default_commands()
-    logger.info("~ Bot_startup")
+    logger.info("~ Bot startup")
 
-async def on_shutdown(dispatcher: Dispatcher):
-    logger.info("~ Shutting down...")
+async def on_shutdown() -> None:
+    logger.info("~ Bot shutting down...")
+
+    
+async def main():
+    setup_middlewares(dp)
+    dp.startup.register(on_startup)
+    dp.shutdown.register(on_shutdown)
+    from app.handlers import setup_handlers
+    setup_handlers(dp)
+    from data.config import SKIP_UPDATES
+    await dp.start_polling(     
+        bot,
+        skip_updates=SKIP_UPDATES,
+    )
 
 
 if __name__ == "__main__":
-    from app.middlewares import setup_middlewares
-    setup_middlewares(dp)
-    executor.start_polling(     
-        dp,
-        on_startup=on_startup,
-        on_shutdown=on_shutdown,
-        skip_updates=True,
-    )
+    asyncio.run(main())
