@@ -5,9 +5,9 @@ from aiogram.filters.state import StateFilter
 
 from app.routers import user_router as router
 
-
-
 from app.handlers.bot_utils import menu
+
+
 @router.message(F.text == "💤", StateFilter("*"))
 @router.message(Command("cancel"), StateFilter("*"))
 async def cancel_command(message: types.Message, state: FSMContext) -> None:

@@ -10,5 +10,6 @@ from app.filters.admin import IsAdmin
 async def _users_mailing_panel(message: types.Message) -> None:
     """Админ панель для рассылки пользователям"""
     await message.answer(msg_text.MAILING_PANEL)
-    
+
+
 """unfinished"""

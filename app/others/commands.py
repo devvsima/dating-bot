@@ -24,7 +24,7 @@ def get_admins_commands(lang: str = "en"):
     return commands
 
 
-async def set_default_commands():
+async def set_default_commands() -> None:
     await bot.set_my_commands(get_default_commands(), scope=BotCommandScopeDefault())
     for lang in i18n.available_locales:
         await bot.set_my_commands(
@@ -33,7 +33,7 @@ async def set_default_commands():
             language_code=lang,
         )
 
-async def set_admins_commands(id: int):
+async def set_admins_commands(id: int) -> None:
     await bot.set_my_commands(
         get_admins_commands(), scope=BotCommandScopeChat(chat_id=id)
     )

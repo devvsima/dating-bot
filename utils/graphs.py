@@ -10,11 +10,11 @@ from data.config import IMAGES_DIR
 registration_photo_path = rf'{IMAGES_DIR}/registration_graph.png'
 
 
-def get_mounth_period():
+def get_day_period(days: int = 30):
     """Возращает текущую дату, и дату 30 дней назад"""
     today = datetime.today()
-    days_ago_30 = today - timedelta(days=30)
-    return today, days_ago_30
+    days_ago = today - timedelta(days)
+    return today, days_ago
 
 def get_or_create_registration_graph(data=None, path=registration_photo_path) -> str:
     """Создает график регистрации пользователей и возращает путь к фотографии графика"""
@@ -30,7 +30,7 @@ def create_user_registration_graph(data, path):
     df['timestamp'] = pd.to_datetime(df['timestamp'])
 
     df['date'] = df['timestamp'].dt.date
-    today, ago = get_mounth_period()
+    today, ago = get_day_period(30)
     start_date = datetime(int(ago.year), int(ago.month), int(ago.day))
     end_date = datetime(int(today.year), int(today.month), int(today.day))
     all_dates = pd.date_range(start=start_date, end=end_date).date
@@ -42,16 +42,13 @@ def create_user_registration_graph(data, path):
     plt.figure(figsize=(12, 6))
     sns.set_theme(style="whitegrid")  # Установка стиля Seaborn
 
-    # Создаем бар график
     sns.barplot(
         x=daily_counts_full.index,
         y=daily_counts_full,
         palette='Blues_d',
-        hue=daily_counts_full.index,  # Устанавливаем `x` как `hue`
-        legend=False  # Отключаем легенду
+        hue=daily_counts_full.index,
+        legend=False
     )
-
-
 
     plt.title('Приход пользователей за 30 дней', fontsize=16, fontweight='bold')
     plt.xlabel('Дата', fontsize=12)

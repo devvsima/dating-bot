@@ -29,16 +29,16 @@ def new_referral(inviter_id: int) -> None:
     Users.update(referral=Users.referral + 1).where(Users.id == inviter_id).execute()
     logger.info(f"User: {inviter_id} | привел нового пользователя")
     
-def change_language(user_id: int, language: str):
+def change_language(user_id: int, language: str) -> None:
     """Изменяет язык пользователя на language"""
     Users.update(language=language).where(Users.id == user_id).execute()
 
-def toggle_user_ban(user: Users):
+def toggle_user_ban(user: Users) -> None:
     """Меняет статус блокировки пользователя на противоположный"""
     user.is_banned = not user.is_banned
     user.save()
 
-def ban_or_unban_user(user_id: int, is_banned: bool):
+def ban_or_unban_user(user_id: int, is_banned: bool) -> None:
     """Меняет статус блокировки пользователя на заданный"""
     Users.update(is_banned=is_banned).where(Users.id == user_id).execute()
     

@@ -9,7 +9,7 @@ env.read_env()
 # ---< Telegram bot >---
 TG_TOKEN: str = env.str("TOKEN", default=None)
 ADMINS: list = env.list("ADMINS", default=None, subcast=int)
-SKIP_UPDATES: bool = env.bool('SKIP_UPDATES', default=True)
+SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=True)
 MODERATOR_GROUP: int = env.int("MODERATOR_GROUP_ID", default=None)
 
 # ---< Database >---
@@ -20,9 +20,9 @@ DB_USER: str = env.str("DB_USER", default="postgres")
 DB_PASS: str = env.str("DB_PASS", default="postgres")
 
 # ---< Redis >---
-REDIS_HOST: str = env.str('REDIS_HOST', default=None)
-REDIS_PORT: int = env.int('REDIS_PORT', default=6379)
-REDIS_DB: int = env.int('REDIS_DB', default=5)
+REDIS_HOST: str = env.str("REDIS_HOST", default=None)
+REDIS_PORT: int = env.int("REDIS_PORT", default=6379)
+REDIS_DB: int = env.int("REDIS_DB", default=5)
 
 REDIS_URL: str = env.str("RD_URI", default=None)
 
@@ -30,7 +30,7 @@ if REDIS_HOST and REDIS_PORT and REDIS_HOST:
     REDIS_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_HOST}"
 
 # ---< Other >---
-I18N_DOMAIN = 'bot'
+I18N_DOMAIN = "bot"
 
-IMAGES_DIR = fr"{DIR}/images" 
-LOCALES_DIR = f'{DIR}/data/locales'
+IMAGES_DIR = rf"{DIR}/images"
+LOCALES_DIR = f"{DIR}/data/locales"

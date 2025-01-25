@@ -2,7 +2,7 @@
 from aiogram import Dispatcher
 from aiogram.types import ErrorEvent
 
-from utils import logger
+from utils.logging import logger
 
 from .admin import router as admin_router
 from .user import router as user_router

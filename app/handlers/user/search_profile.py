@@ -41,8 +41,9 @@ async def _search_command(message: types.Message, state: FSMContext) -> None:
     profile = await get_profile(ids[0])
     await send_profile(message.from_user.id, profile)
 
+
 @router.message(Command("report"), StateFilter(Search.search))
-@router.message(F.text.in_(["❤️","👎"]), StateFilter(Search.search))
+@router.message(F.text.in_(["❤️", "👎"]), StateFilter(Search.search))
 async def _search_profile(message: types.Message, state: FSMContext) -> None:
     """Свайпы анкет"""
     data = await state.get_data()
@@ -69,7 +70,7 @@ async def _search_profile(message: types.Message, state: FSMContext) -> None:
 
     ids.pop(0)
 
-    if not ids:        
+    if not ids:
         await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
         return

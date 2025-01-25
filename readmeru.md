@@ -18,9 +18,10 @@
 # 🚀 Давай начнем
 
 ## 🛠️ Стек технологий
-- `aiogram 2`
+- `Aiogram 3`
+- `Redis`
 - `i18n`
-- `peewee`
+- `Peewee`
 - `PostgreSQL \ Sqlite`
 
 ---
