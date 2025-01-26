@@ -1,8 +1,9 @@
 from aiogram import BaseMiddleware
+from aiogram.types import Update
 
+from app.handlers.bot_utils import new_user_alert_to_group
 from database.service.users import create_user, get_user, new_referral
 from typing import Any, Callable, Dict
-from aiogram.types import Update
 
 
 class StartMiddleware(BaseMiddleware):
@@ -14,9 +15,7 @@ class StartMiddleware(BaseMiddleware):
                 username=event.from_user.username,
                 language=event.from_user.language_code,
             )
-
-        from app.handlers.bot_utils import new_user_alert_to_group
-        await new_user_alert_to_group(user)
+            await new_user_alert_to_group(user)
         
         inviter: str = data["command"].args
 
