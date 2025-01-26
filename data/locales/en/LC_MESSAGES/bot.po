@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-30 11:07+0200\n"
+"POT-Creation-Date: 2025-01-25 23:07+0200\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -115,9 +115,8 @@ msgid "Тебя еще никто не лайкнул. Но всё ещё впе
 msgstr "No one has liked you yet. But there's still time!"
 
 #: app/handlers/msg_text.py:80
-msgid ""
-"Отлично! Надеюсь хорошо проведете время ;) <a "
-"href='tg://user?id={}'>{}</a>"
+#, fuzzy
+msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr "Great! Hope you have a good time ;) <a href='tg://user?id={}'>{}</a>"
 
 #: app/handlers/msg_text.py:84
@@ -234,8 +233,8 @@ msgid ""
 "Пользователь: @{} | <code>{}</code> отправил жалобу на анкету "
 "пользователя: @{} | <code>{}</code>"
 msgstr ""
-"User: @{} | <code>{}</code>  sent a complaint about the profile of"
-"user: @{} | <code>{}</code>"
+"User: @{} | <code>{}</code>  sent a complaint about the profile ofuser: "
+"@{} | <code>{}</code>"
 
 #: app/handlers/msg_text.py:164
 msgid "..."
@@ -336,6 +335,22 @@ msgstr "☠️ Block user {}"
 #: app/keyboards/inline/report.py:18
 msgid "Отклонить"
 msgstr "Reject"
+
+#: app/others/commands.py:8
+msgid "start chat"
+msgstr "start chat"
+
+#: app/others/commands.py:9
+msgid "change language"
+msgstr "change language"
+
+#: app/others/commands.py:10
+msgid "additional description"
+msgstr "additional description"
+
+#: app/others/commands.py:20
+msgid "admin panel"
+msgstr "admin panel"
 
 #~ msgid "Назад"
 #~ msgstr "Back"

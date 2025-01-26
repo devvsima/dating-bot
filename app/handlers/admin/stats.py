@@ -1,4 +1,5 @@
 from aiogram import F, types
+from aiogram.filters import Command
 
 from app.filters.admin import IsAdmin
 
@@ -11,6 +12,7 @@ from database.service.stats import get_profile_stats, get_users_stats
 from app.handlers.msg_text import msg_text
 
 
+@router.message(IsAdmin(), Command("stats"))
 @router.message(IsAdmin(), F.text.in_(["📊 Статистика", "📊 Statistics"]))
 async def _stats_command(message: types.Message) -> None:
     """Отправляет администратору график регистрации пользователей и статистику пользователей в БД"""

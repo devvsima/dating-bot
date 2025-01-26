@@ -67,12 +67,12 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
             url = username_url.format(message.from_user.username)
 
         await bot.send_message(
-            chat_id=profile.user_id,
+            chat_id=profile.user_id.id,
             text=msg_text.LIKE_ACCEPT.format(url, message.from_user.full_name),
         )
 
         """Отправка пользователю который ответил на лайк"""
-        url = id_url.format(profile.user_id)
+        url = id_url.format(profile.user_id.id)
         if profile.user_id.username:
             url = username_url.format(profile.user_id.username)
 
@@ -83,7 +83,7 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
 
     elif message.text == "👎":
         pass
-    del_like(message.from_user.id, profile.user_id)
+    del_like(message.from_user.id, profile.user_id.id)
 
     ids.pop(0)
     await state.update_data(ids=ids)
