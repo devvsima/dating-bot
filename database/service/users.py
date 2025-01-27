@@ -2,44 +2,46 @@ from ..models.users import Users
 from utils.logging import logger
 
 
-def get_user(user_id: int) -> Users | None:
+async def get_user(user_id: int) -> Users | None:
     """Возвращает пользователя по его id"""
     try:
         return Users.get(Users.id == user_id)
     except:
         return None
 
-def get_or_create_user(user_id: int, username: str = None, language: str = None) -> Users:
-    """Возвращает пользователя по его id, если его нет - создает"""
-    user = get_user(user_id)
 
-    if user:
+async def get_or_create_user(user_id: int, username: str = None, language: str = None) -> Users:
+    """Возвращает пользователя по его id, если его нет - создает"""
+    if user := await get_user(user_id):
         return user
 
-    return create_user(user_id, username, language)
+    return await create_user(user_id, username, language)
 
-def create_user(user_id: int, username: str = None, language: str = None) -> Users:
+
+async def create_user(user_id: int, username: str = None, language: str = None) -> Users:
     """Создает нового пользователя"""
     logger.info(f"New user: {user_id} | {username}")
-    new_user = Users.create(id=user_id, username=username, language=language)
-    return new_user
+    return Users.create(id=user_id, username=username, language=language)
 
-def new_referral(inviter_id: int) -> None:
+
+async def new_referral(inviter_id: int) -> None:
     """Добавляет приведенного реферала к пользователю inviter_id"""
     Users.update(referral=Users.referral + 1).where(Users.id == inviter_id).execute()
     logger.info(f"User: {inviter_id} | привел нового пользователя")
+
     
-def change_language(user_id: int, language: str) -> None:
+async def change_language(user_id: int, language: str) -> None:
     """Изменяет язык пользователя на language"""
     Users.update(language=language).where(Users.id == user_id).execute()
+    logger.info(f"User: {user_id} | изменил язык на - {language}")
 
-def toggle_user_ban(user: Users) -> None:
+    
+async def toggle_user_ban(user: Users) -> None:
     """Меняет статус блокировки пользователя на противоположный"""
     user.is_banned = not user.is_banned
     user.save()
 
-def ban_or_unban_user(user_id: int, is_banned: bool) -> None:
+
+async def ban_or_unban_user(user_id: int, is_banned: bool) -> None:
     """Меняет статус блокировки пользователя на заданный"""
     Users.update(is_banned=is_banned).where(Users.id == user_id).execute()
-    
-    

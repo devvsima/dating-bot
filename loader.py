@@ -7,11 +7,12 @@ from data import config
 from utils.logging import logger
 
 
-# if config.REDIS_URL:
-#     from aiogram.fsm.storage.redis import RedisStorage
-#     storage = RedisStorage(config.REDIS_HOST, config.REDIS_PORT, db=config.REDIS_DB)
-#     logger.info("Storage: Redis")
-if not config.REDIS_URL:
+if config.REDIS_URL:
+    from aiogram.fsm.storage.redis import RedisStorage
+    from redis.asyncio.client import Redis
+    storage = RedisStorage(Redis.from_url(config.REDIS_URL))
+    logger.info("Storage: Redis")
+elif not config.REDIS_URL:
     from aiogram.fsm.storage.memory import MemoryStorage
     storage = MemoryStorage()
     logger.info("Storage: Default")

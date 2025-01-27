@@ -21,7 +21,7 @@ async def like_profile(message: types.Message, state: FSMContext) -> None:
     await message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await state.set_state(LikeResponse.response)
 
-    liker_ids = get_profile_likes(message.from_user.id)
+    liker_ids = await get_profile_likes(message.from_user.id)
 
     if not liker_ids:
         await message.answer(msg_text.LIKE_ARCHIVE)
@@ -38,7 +38,7 @@ async def _like_profile(callback: types.CallbackQuery, state: FSMContext) -> Non
     await callback.message.answer(text=msg_text.SEARCH, reply_markup=search_kb())
     await state.set_state(LikeResponse.response)
 
-    liker_ids = get_profile_likes(int(callback.from_user.id))
+    liker_ids = await get_profile_likes(int(callback.from_user.id))
     if not liker_ids:
         await callback.message.answer(msg_text.LIKE_ARCHIVE)
         await cancel_command(callback.message, state)
@@ -83,7 +83,7 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
 
     elif message.text == "👎":
         pass
-    del_like(message.from_user.id, profile.user_id.id)
+    await del_like(message.from_user.id, profile.user_id.id)
 
     ids.pop(0)
     await state.update_data(ids=ids)

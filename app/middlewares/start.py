@@ -8,9 +8,9 @@ from typing import Any, Callable, Dict
 
 class StartMiddleware(BaseMiddleware):
     async def __call__(self, handler: Callable, event: Update, data: Dict[str, Any]) -> Any:
-        user = get_user(event.from_user.id)
+        user = await get_user(event.from_user.id)
         if not user:
-            user = create_user(
+            user = await create_user(
                 user_id=event.from_user.id,
                 username=event.from_user.username,
                 language=event.from_user.language_code,
@@ -20,7 +20,7 @@ class StartMiddleware(BaseMiddleware):
         inviter: str = data["command"].args
 
         if inviter:
-            new_referral(inviter)
+            await new_referral(inviter)
             
         if not user.is_banned:
             data["user"] = user

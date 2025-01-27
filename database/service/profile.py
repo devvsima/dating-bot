@@ -10,8 +10,7 @@ async def get_profile(user_id: int):
 
 async def delete_profile(user_id: int):
     """Удаляет профиль пользователя"""
-    user = await get_profile(user_id)
-    user.delete_instance()
+    Profile.delete().where(Profile.user_id == id).execute()
     logger.info(f"User: {user_id} | удалил профиль")
 
 

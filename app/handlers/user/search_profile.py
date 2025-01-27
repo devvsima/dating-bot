@@ -59,7 +59,7 @@ async def _search_profile(message: types.Message, state: FSMContext) -> None:
     if message.text == "👎":
         pass
     elif message.text == "❤️":
-        set_new_like(message.from_user.id, profile.user_id)
+        await set_new_like(message.from_user.id, profile.user_id)
         await message.bot.send_message(
             chat_id=profile.user_id.id,
             text=msg_text.LIKE_PROFILE,

@@ -19,5 +19,5 @@ async def _lang(message: types.Message) -> None:
 @router.callback_query(F.data.in_(["ru", "uk", "en"]))
 async def _lang_change(callback: types.CallbackQuery) -> None:
     """Меняет язык пользователя на выбранный"""
-    change_language(callback.from_user.id, callback.data)
+    await change_language(callback.from_user.id, callback.data)
     await callback.message.edit_text(msg_text.DONE_CHANGE_LANG)

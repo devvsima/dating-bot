@@ -26,8 +26,8 @@ REDIS_DB: int = env.int("REDIS_DB", default=5)
 
 REDIS_URL: str = env.str("RD_URI", default=None)
 
-if REDIS_HOST and REDIS_PORT and REDIS_HOST:
-    REDIS_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_HOST}"
+if all([REDIS_DB, REDIS_HOST, REDIS_PORT]):
+    REDIS_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}"
 
 # ---< Other >---
 I18N_DOMAIN = "bot"

@@ -14,7 +14,7 @@ class UsersMiddleware(BaseMiddleware):
         if event.inline_query:
             from_user = event.inline_query.from_user
         if from_user:
-            user = get_or_create_user(
+            user = await get_or_create_user(
                 user_id=from_user.id,
                 username=from_user.username,
                 language=from_user.language_code,
