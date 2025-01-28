@@ -40,7 +40,8 @@ async def send_profile(user_id: int, profile: Profile) -> None:
         chat_id=user_id,
         photo=profile.photo,
         caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
-    )
+        parse_mode=None,
+        )
     
 async def new_user_alert_to_group(user: Users) -> None:
     """Отправляет уведомление в модераторскуб группу о новом пользователе"""
@@ -52,4 +53,11 @@ async def new_user_alert_to_group(user: Users) -> None:
             )
         except:
             logger.error("Сообщение в модераторскую группу не отправленно")
-            
+        
+username_url = "https://t.me/{}"
+id_url = "tg://user?id={}"
+async def create_user_url(user_id: int, username: str):
+    url = id_url.format(user_id)
+    if username:
+        url = username_url.format(username)
+    return url

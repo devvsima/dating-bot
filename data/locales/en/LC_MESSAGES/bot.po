@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-25 23:07+0200\n"
+"POT-Creation-Date: 2025-01-29 01:13+0200\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -58,20 +58,18 @@ msgid ""
 "🔄 Заполнить анкету заново\n"
 "🖼 Изменить фотографию\n"
 "✍️ Изменить описание\n"
-"❌ Удалить анкету\n"
+"❌ Отключить анкету\n"
 "\n"
 "🔍 Смотреть анкеты\n"
 msgstr ""
-"\n"
 "🔄 Refill the form\n"
 "🖼 Change photo\n"
 "✍️ Edit description\n"
-"❌ Delete profile\n"
+"❌ Disable profile\n"
 "\n"
 "🔍 View profiles\n"
 
 #: app/handlers/msg_text.py:47
-#, fuzzy
 msgid ""
 "\n"
 "👋\n"
@@ -90,7 +88,6 @@ msgstr ""
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Diving</a>\n"
 "The entire bot's code is open and available on <a "
 "href='https://github.com/devvsima/dating-bot'>GitHub</a>\n"
-"Some statistics can be viewed using the command /stats\n"
 "\n"
 "For questions and suggestions, you can contact here: @devvsima.\n"
 
@@ -115,7 +112,6 @@ msgid "Тебя еще никто не лайкнул. Но всё ещё впе
 msgstr "No one has liked you yet. But there's still time!"
 
 #: app/handlers/msg_text.py:80
-#, fuzzy
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr "Great! Hope you have a good time ;) <a href='tg://user?id={}'>{}</a>"
 
@@ -150,18 +146,20 @@ msgstr ""
 "better. 📝"
 
 #: app/handlers/msg_text.py:112
-msgid "Вы точно хотите удалить анкету?"
-msgstr "Are you sure you want to delete the profile?"
+#, fuzzy
+msgid ""
+"Ваша анкета временно отключена.\n"
+"\n"
+"Чтобы снова активировать её, просто нажмите на кнопку."
+msgstr ""
+"Your profile is temporarily disabled.\n"
+"To reactivate it, just click the button below."
 
 #: app/handlers/msg_text.py:116
 msgid ""
-"Ваша анкета успешно удалена.\n"
-"\n"
-"Если хотите снова создать вашу анкету напиши команду /create"
-msgstr ""
-"Your profile has been successfully deleted.\n"
-"\n"
-"If you want to create your profile again, type the command /create"
+"✅ Ваша анкета успешно восстановлена! Теперь вы снова можете пользоваться "
+"ботом."
+msgstr "✅ Your profile has been successfully restored! You can now use the bot."
 
 #: app/handlers/msg_text.py:120
 msgid ""
@@ -184,7 +182,6 @@ msgid "Неверный формат, возраст нужно указыват
 msgstr "Incorrect format, age should be specified in numbers. 🔢"
 
 #: app/handlers/msg_text.py:136
-#, fuzzy
 msgid ""
 "Приглашай друзей и получай бонус к своей анкете!\n"
 "\n"
@@ -284,6 +281,10 @@ msgstr "💊 Unban users"
 msgid "Создать анкету"
 msgstr "Create a profile"
 
+#: app/keyboards/default/choise.py:67
+msgid "🔙 Вернуть профиль"
+msgstr "🔙 Return profile"
+
 #: app/keyboards/default/create_profile.py:9
 msgid "Я парень"
 msgstr "I'm male"
@@ -320,14 +321,6 @@ msgstr "🔫 Other"
 msgid "Посмотреть"
 msgstr "View👀"
 
-#: app/keyboards/inline/profile.py:12
-msgid "Да"
-msgstr "Yes"
-
-#: app/keyboards/inline/profile.py:13
-msgid "Нет"
-msgstr "No"
-
 #: app/keyboards/inline/report.py:15
 msgid "☠️ Заблокировать пользователя {}"
 msgstr "☠️ Block user {}"
@@ -348,10 +341,14 @@ msgstr "change language"
 msgid "additional description"
 msgstr "additional description"
 
-#: app/others/commands.py:20
+#: app/others/commands.py:11
+msgid "activate profile"
+msgstr "activate profile"
+
+#: app/others/commands.py:21
 msgid "admin panel"
 msgstr "admin panel"
 
-#~ msgid "Назад"
-#~ msgstr "Back"
+#~ msgid "Вернуть профиль"
+#~ msgstr ""
 

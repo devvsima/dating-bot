@@ -18,3 +18,6 @@ class ProfileEdit(StatesGroup):
     
 class Search(StatesGroup):
     search = State()
+    
+class DisableProfile(StatesGroup):
+    waiting = State()

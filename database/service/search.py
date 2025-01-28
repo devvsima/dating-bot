@@ -9,8 +9,9 @@ from utils.logging import logger
 
 async def elastic_search_user_ids(user_id: int, age_range: int = 3, distance: float = 0.1) -> list:
     """
-    Возвращает список id пользователей, которые подходят под критерии поиска,
-    поиск идет по координатам
+    Ищет подходящие анкеты для пользователя и возвращает список id пользователей,
+    которые подходят под критерии поиска. 
+    Поиск идет по координатам и параметрам анкеты
     """
     profile: Profile = await get_profile(user_id)
 
@@ -23,7 +24,7 @@ async def elastic_search_user_ids(user_id: int, age_range: int = 3, distance: fl
     users = (
         Profile.select(Profile.user_id, distance_expr.alias("distance"))
         .where(
-            (Profile.active == True)
+            (Profile.is_active == True)
             & (fn.ABS(Profile.latitude - profile.latitude) < distance)
             & (fn.ABS(Profile.longitude - profile.longitude) < distance)
             & ((Profile.gender == profile.find_gender) | (profile.find_gender == "all"))

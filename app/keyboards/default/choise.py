@@ -2,7 +2,7 @@ from aiogram.types import (
     ReplyKeyboardMarkup,
     KeyboardButton,
 )
-
+from loader import _
 
 def menu_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
@@ -56,5 +56,17 @@ def search_kb() -> ReplyKeyboardMarkup:
             ],
 
         ],
+    )
+    return kb
+
+def profile_return_kb() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(
+        resize_keyboard=True,
+        keyboard=[
+            [
+                KeyboardButton(text=_("🔙 Вернуть профиль")),
+            ],
+        ],
+        one_time_keyboard=True,
     )
     return kb

@@ -26,6 +26,6 @@ async def get_profile_stats() -> dict:
         fn.COUNT(Profile.user_id).alias("users_count"),
         fn.SUM(Case(None, [(Profile.gender == "male", 1)], 0)).alias("male_count"),
         fn.SUM(Case(None, [(Profile.gender == "female", 1)], 0)).alias("female_count"),
-        fn.SUM(Case(None, [(Profile.active == True, 1)], 0)).alias("active_profile"),
+        fn.SUM(Case(None, [(Profile.is_active == True, 1)], 0)).alias("active_profile"),
     )
     return query.dicts().get()

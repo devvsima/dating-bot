@@ -24,6 +24,12 @@ async def create_user(user_id: int, username: str = None, language: str = None) 
     return Users.create(id=user_id, username=username, language=language)
 
 
+async def update_user_username(user_id: int, username: str = None) -> None:
+    """Обновляет данные пользователя"""
+    Users.update(username=username).where(Users.id == user_id).execute()
+    logger.info(f"Update user: {user_id} | {username}")
+
+
 async def new_referral(inviter_id: int) -> None:
     """Добавляет приведенного реферала к пользователю inviter_id"""
     Users.update(referral=Users.referral + 1).where(Users.id == inviter_id).execute()

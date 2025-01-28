@@ -1,4 +1,5 @@
 from aiogram import F, types
+from aiogram.filters.state import StateFilter
 
 from app.routers import user_router as router
 
@@ -9,7 +10,7 @@ from app.handlers.bot_utils import send_profile
 from app.keyboards.default import profile_kb
 
 
-@router.message(F.text == "👤")
+@router.message(F.text == "👤", StateFilter(None))
 async def profile_command(message: types.Message) -> None:
     """Отправляет профиль пользователя"""
     profile = await get_profile(message.from_user.id)

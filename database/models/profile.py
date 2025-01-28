@@ -13,6 +13,5 @@ class Profile(BaseModel):
    photo = TextField()
    age = IntegerField(index=True)
    description = CharField(max_length=1000)
-   active = BooleanField(default=True, index=True)
-   # is_active = BooleanField(default=True, index=True)
+   is_active = BooleanField(default=True, index=True)
 

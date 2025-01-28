@@ -1,4 +1,5 @@
 from aiogram import F, types
+from aiogram.filters.state import StateFilter
 
 from loader import bot
 
@@ -9,7 +10,7 @@ from database.models.users import Users
 from app.handlers.msg_text import msg_text
 
 
-@router.message(F.text == "✉️")
+@router.message(F.text == "✉️", StateFilter(None))
 async def _invite_link_command(message: types.Message, user: Users) -> None:
     """Дает пользователю его реферальную ссылку"""
     bot_user = await bot.get_me()

@@ -11,8 +11,12 @@ async def get_profile(user_id: int):
 async def delete_profile(user_id: int):
     """Удаляет профиль пользователя"""
     Profile.delete().where(Profile.user_id == user_id).execute()
-
     logger.info(f"User: {user_id} | удалил профиль")
+
+
+async def update_profile_status(user_id: int, is_active: bool) -> None:
+    """Задает профилю статус, активны/не активный"""
+    Profile.update(is_active=is_active).where(Profile.user_id == user_id).execute()
 
 
 async def edit_profile_photo(user_id, photo):

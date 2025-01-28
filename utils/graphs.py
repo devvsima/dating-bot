@@ -7,7 +7,7 @@ from database.service.stats import get_all_users_registration_data
 
 from data.config import IMAGES_DIR
 
-registration_photo_path = rf'{IMAGES_DIR}/registration_graph.png'
+registration_photo_path = f'{IMAGES_DIR}/registration_graph.png'
 
 
 def get_day_period(days: int = 30):

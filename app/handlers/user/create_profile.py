@@ -14,7 +14,7 @@ from app.others.states import ProfileEdit, ProfileCreate
 import app.filters.create_profile_filtres as filters
 
 
-@router.message(F.text == "🔄")
+@router.message(F.text == "🔄", StateFilter(None))
 async def _retry_create_profile_command(message: types.Message, state: FSMContext):
     """Запускает создания профиля заново"""
     await _create_profile_command(message, state)
@@ -30,35 +30,35 @@ async def _create_profile_command(message: types.Message, state: FSMContext):
 
 
 # < gender >
-@router.message(filters.IsGender(), StateFilter(ProfileCreate.gender))
+@router.message(ProfileCreate.gender, filters.IsGender())
 async def _gender(message: types.Message, state: FSMContext, gender: str):
     await state.update_data(gender=gender)
     await message.reply(msg_text.FIND_GENDER, reply_markup=find_gender_kb())
     await state.set_state(ProfileCreate.find_gender)
 
 
-@router.message(StateFilter(ProfileCreate.gender))
+@router.message(ProfileCreate.gender)
 async def _incorrect_gender(message: types.Message):
     """Ошибка фильтра гендера"""
     await message.answer(msg_text.INVALID_RESPONSE)
 
 
 # < find gender >
-@router.message(filters.IsFindGender(), StateFilter(ProfileCreate.find_gender))
+@router.message(ProfileCreate.find_gender, filters.IsFindGender())
 async def _find_gender(message: types.Message, state: FSMContext, find_gender: str):
     await state.update_data(find_gender=find_gender)
     await message.reply(msg_text.PHOTO, reply_markup=del_kb)
     await state.set_state(ProfileCreate.photo)
 
 
-@router.message(StateFilter(ProfileCreate.find_gender))
+@router.message(ProfileCreate.find_gender)
 async def _incorrect_find_gender(message: types.Message):
     """Ошибка фильтра гендера"""
     await message.answer(msg_text.INVALID_RESPONSE)
 
 
 # < photo >
-@router.message(filters.IsPhoto(), StateFilter(ProfileCreate.photo, ProfileEdit.photo))
+@router.message(StateFilter(ProfileCreate.photo, ProfileEdit.photo), filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext):
     photo = message.photo[0].file_id
     if await state.get_state() == ProfileEdit.photo.state:
@@ -79,35 +79,35 @@ async def _incorrect_photo(message: types.Message):
 
 
 # < name >
-@router.message(filters.IsName(), StateFilter(ProfileCreate.name))
+@router.message(filters.IsName(), ProfileCreate.name)
 async def _name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
     await message.reply(msg_text.AGE)
     await state.set_state(ProfileCreate.age)
 
 
-@router.message(StateFilter(ProfileCreate.name))
+@router.message(ProfileCreate.name)
 async def _incorrect_name(message: types.Message):
     """Ошибка фильтра имени"""
     await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
 
 # < age >
-@router.message(filters.IsAge(), StateFilter(ProfileCreate.age))
+@router.message(ProfileCreate.age, filters.IsAge())
 async def _age(message: types.Message, state: FSMContext):
     await state.update_data(age=message.text)
     await message.reply(msg_text.CITY)
     await state.set_state(ProfileCreate.city)
 
 
-@router.message(StateFilter(ProfileCreate.age))
+@router.message(ProfileCreate.age)
 async def _incorrect_age(message: types.Message):
     """Ошибка фильтра возраста"""
     await message.answer(msg_text.INVALID_AGE)
 
 
 # < city >
-@router.message(filters.IsCity(), StateFilter(ProfileCreate.city))
+@router.message(ProfileCreate.city, filters.IsCity())
 async def _city(message: types.Message, state: FSMContext, coordinates: dict):
     await state.update_data(
         city=message.text,
@@ -119,14 +119,14 @@ async def _city(message: types.Message, state: FSMContext, coordinates: dict):
     await state.set_state(ProfileCreate.desc)
 
 
-@router.message(StateFilter(ProfileCreate.city))
+@router.message(ProfileCreate.city)
 async def _incorrect_city(message: types.Message):
     """Ошибка фильтра города"""
     await message.answer(msg_text.INVALID_LONG_RESPONSE)
 
 
 # < description >
-@router.message(filters.IsDescription(), StateFilter(ProfileCreate.desc, ProfileEdit.desc))
+@router.message(StateFilter(ProfileCreate.desc, ProfileEdit.desc), filters.IsDescription())
 async def _description(message: types.Message, state: FSMContext):
     if await state.get_state() == ProfileEdit.desc.state:
         await edit_profile_description(message.from_user.id, message.text)

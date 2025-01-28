@@ -8,6 +8,7 @@ def get_default_commands(lang: str = "en"):
         BotCommand(command="/start", description=_("start chat", locale=lang)),
         BotCommand(command="/lang", description=_("change language", locale=lang)),
         BotCommand(command="/help", description=_("additional description", locale=lang)),
+        BotCommand(command="/activate", description=_("activate profile", locale=lang)),
     ]
 
     return commands

@@ -38,7 +38,7 @@ class IsGender(Filter):
 
 
 class IsFindGender(Filter):
-    async def __call__(self, message: Message) -> bool:
+    async def __call__(self, message: Message) -> dict | bool:
         if message.text in find_gender_map:
             return {"find_gender": find_gender_map[message.text]}
         return False
@@ -57,18 +57,19 @@ class IsName(Filter):
 class IsAge(Filter):
     async def __call__(self, message: Message) -> bool:
         return bool(
-            message.text.isdigit() and int(message.text) < 100 and int(message.text) > 6
+            message.text.isdigit() and 
+            int(message.text) < 100 and
+            int(message.text) > 6
         )
 
 
 class IsCity(Filter):
     async def __call__(self, message: Message) -> bool:
-        coordinates = get_coordinates(message.text)
-        if coordinates:
+        if coordinates := get_coordinates(message.text):
             return {"coordinates": coordinates}
         return False
 
 
 class IsDescription(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(len(message.text) < 300)
+        return bool(len(message.text) < 1000)

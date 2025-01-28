@@ -1,6 +1,6 @@
 from aiogram import F, types
 from aiogram.filters.command import Command
-
+from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 from random import shuffle
@@ -18,10 +18,9 @@ from app.keyboards.inline.archive import check_archive_ikb
 from app.handlers.bot_utils import menu, send_profile, report_to_profile
 from app.handlers.msg_text import msg_text
 from .cancel import cancel_command
-from aiogram.filters.state import StateFilter
 
 
-@router.message(F.text == "🔍")
+@router.message(F.text == "🔍", StateFilter(None))
 async def _search_command(message: types.Message, state: FSMContext) -> None:
     """Начинает поиск анкет"""
     await message.answer(msg_text.SEARCH, reply_markup=search_kb())
@@ -42,8 +41,8 @@ async def _search_command(message: types.Message, state: FSMContext) -> None:
     await send_profile(message.from_user.id, profile)
 
 
-@router.message(Command("report"), StateFilter(Search.search))
-@router.message(F.text.in_(["❤️", "👎"]), StateFilter(Search.search))
+@router.message(Search.search, Command("report"))
+@router.message(Search.search, F.text.in_(["❤️", "👎"]))
 async def _search_profile(message: types.Message, state: FSMContext) -> None:
     """Свайпы анкет"""
     data = await state.get_data()

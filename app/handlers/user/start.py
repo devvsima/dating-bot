@@ -1,5 +1,6 @@
 from aiogram import types
 from aiogram.filters import CommandStart
+from aiogram.filters.state import StateFilter
 
 from app.routers import start_router
 
@@ -15,7 +16,7 @@ from app.handlers.bot_utils import menu
 photo = types.FSInputFile(f"{IMAGES_DIR}/new_logo.webp")
 
 
-@start_router.message(CommandStart())
+@start_router.message(CommandStart(), StateFilter(None))
 async def _start_command(message: types.Message) -> None:
     """Стратовая команда"""
     if await get_profile(message.from_user.id):

@@ -14,4 +14,4 @@ def setup_handlers(dp: Dispatcher) -> None:
     async def _error(event: ErrorEvent):
         logger.exception(event.exception)
 
-    dp.include_routers(start_router, user_router, admin_router)
+    dp.include_routers(user_router, start_router, admin_router)
