@@ -55,17 +55,9 @@ async def new_user_alert_to_group(user: Users) -> None:
             logger.error("Сообщение в модераторскую группу не отправленно")
 
 
-id_url = "tg://user?id={}"    
-username_url = "https://t.me/{}"
-# def create_user_url(user_id: int, username: str = None) -> str:
-#     """Создает ссылку на пользователя и возращает её"""
-#     url = id_url.format(user_id)
-#     if username:
-#         url = username_url.format(username)
-#     return url
-def create_user_url(user_id: int, username: str = None) -> str:
+def generate_user_link(user_id: int, username: str = None) -> str:
     """
-    Генерирует ссылку на пользователя Telegram.
+    Генерирует ссылку на пользователя
     Если указан username, создается ссылка https://t.me/username,
     иначе используется tg://user?id=user_id.
     """
@@ -73,13 +65,9 @@ def create_user_url(user_id: int, username: str = None) -> str:
         return f"https://t.me/{username}"
     return f"tg://user?id={user_id}"
 
-async def sending_user_contact(user_id: int, name: str, user_url: str) -> None:
+async def sending_user_contact(user_id: int, name: str, user_link: str) -> None:
     """Отправляет сообщение с контактом пользователя"""
-    print(user_url)
-    message_text = msg_text.LIKE_ACCEPT.format(str(user_url), str(name))  # Явно передаем строки
-    print(message_text)
     await bot.send_message(
         chat_id=user_id,
-        text=message_text,
-        parse_mode="HTML"  # Убедись, что HTML-разметка включена
+        text=msg_text.LIKE_ACCEPT.format(user_link, name),
     )

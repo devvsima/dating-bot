@@ -16,7 +16,7 @@ from app.handlers.msg_text import msg_text
 from app.others.states import DisableProfile
 from app.others.states import LikeResponse
 from app.keyboards.default.choise import search_kb
-from app.handlers.bot_utils import sending_user_contact, create_user_url
+from app.handlers.bot_utils import sending_user_contact, generate_user_link
 
 
 @router.message(F.text == "🗄", StateFilter(None))
@@ -70,7 +70,7 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
         await sending_user_contact(
             user_id = profile.user_id.id,
             name = message.from_user.full_name,
-            url = create_user_url(
+            user_link = generate_user_link(
                 user_id = message.from_user.id,
                 username = message.from_user.username,
             )
@@ -80,7 +80,7 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
         await sending_user_contact(
             user_id=message.from_user.id, 
             name=profile.name, 
-            url=create_user_url(
+            user_link = generate_user_link(
                 user_id=profile.user_id.id, 
                 username=profile.user_id.username,
             )
@@ -89,7 +89,6 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
     await del_like(message.from_user.id, profile.user_id.id)
 
     ids.pop(0)
-    # await state.update_data(ids=ids)
     if not ids:
         await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
