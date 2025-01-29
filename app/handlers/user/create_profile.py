@@ -8,7 +8,8 @@ from database.service.profile import create_profile, edit_profile_photo, edit_pr
 
 from app.handlers.msg_text import msg_text
 from app.handlers.user.profile import profile_command
-from app.keyboards.default import gender_kb, find_gender_kb, del_kb
+from app.keyboards.default.create_profile import gender_kb, find_gender_kb
+from app.keyboards.default.base import del_kb
 from app.others.states import ProfileEdit, ProfileCreate
 
 import app.filters.create_profile_filtres as filters

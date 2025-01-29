@@ -7,7 +7,7 @@ from database.service.profile import get_profile
 
 from app.handlers.msg_text import msg_text
 from app.handlers.bot_utils import send_profile
-from app.keyboards.default import profile_kb
+from app.keyboards.default.choise import profile_kb
 
 
 @router.message(F.text == "👤", StateFilter(None))

@@ -9,7 +9,7 @@ from data.config import IMAGES_DIR
 from database.service.profile import get_profile
 
 from app.handlers.msg_text import msg_text
-from app.keyboards.default import start_kb
+from app.keyboards.default.create_profile import start_kb
 from app.handlers.bot_utils import menu
 
 
