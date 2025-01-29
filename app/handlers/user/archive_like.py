@@ -13,8 +13,9 @@ from .profile import send_profile
 from .cancel import cancel_command
 from app.handlers.msg_text import msg_text
 from app.others.states import LikeResponse
-from app.keyboards.default import search_kb
+from app.keyboards.default.choise import search_kb
 from app.handlers.bot_utils import create_user_url
+
 
 @router.message(F.text == "🗄", StateFilter(None))
 async def like_profile(message: types.Message, state: FSMContext) -> None:
