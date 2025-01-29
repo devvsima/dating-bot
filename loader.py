@@ -16,7 +16,7 @@ elif not config.REDIS_URL:
     from aiogram.fsm.storage.memory import MemoryStorage
     storage = MemoryStorage()
     logger.info("Storage: Default")
-    
+
 bot = Bot(
     config.TG_TOKEN,
     default=DefaultBotProperties(parse_mode=ParseMode.HTML),

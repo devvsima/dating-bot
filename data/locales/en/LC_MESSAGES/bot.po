@@ -113,7 +113,7 @@ msgstr "No one has liked you yet. But there's still time!"
 
 #: app/handlers/msg_text.py:80
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
-msgstr "Great! Hope you have a good time ;) <a href='tg://user?id={}'>{}</a>"
+msgstr "Great! Hope you have a good time ;) <a href='{}'>{}</a>"
 
 #: app/handlers/msg_text.py:84
 msgid "Укажи свой пол: 👤"
