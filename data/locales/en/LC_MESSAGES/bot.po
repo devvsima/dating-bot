@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-29 01:13+0200\n"
+"POT-Creation-Date: 2025-01-29 14:13+0200\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -146,7 +146,6 @@ msgstr ""
 "better. 📝"
 
 #: app/handlers/msg_text.py:112
-#, fuzzy
 msgid ""
 "Ваша анкета временно отключена.\n"
 "\n"
@@ -203,29 +202,33 @@ msgstr "You're the administrator!"
 
 #: app/handlers/msg_text.py:144
 msgid ""
-"👤Пользователей: {}\n"
+"  \n"
+"👤 Пользователей: {}\t|🚫 Заблокированных: {}  \n"
 "\n"
-"Анкет: {}\n"
-"🙍‍♂Парней: {} | 🙍‍♀Девушек: {}"
+"📂 Анкет: {}\t|🔕 Неактивных: {}\n"
+"\n"
+"🙍‍♂ Парней: {}\t|🙍‍♀ Девушек: {}  \n"
 msgstr ""
-"👤Users: {}\n"
+"  \n"
+"👤 Users: {}\t||🚫 Blocked: {}  \n"
 "\n"
-"Profiles: {}\n"
-"🙍‍♂Man: {} | 🙍‍♀Woman: {}"
+"📂 Questionnaires: {}{\t||🔕 Inactive: {}\n"
+"\n"
+"🙍‍♂ Guys: {}\t|🙍‍♀ Girls: {}  \n"
 
-#: app/handlers/msg_text.py:148
+#: app/handlers/msg_text.py:154
 msgid "Выберите язык, на который вы хотите переключиться: 🌐"
 msgstr "Select the language you want to switch to: 🌐"
 
-#: app/handlers/msg_text.py:152
+#: app/handlers/msg_text.py:158
 msgid "Ваш язык успешно изменён! ✅"
 msgstr "Your language has been successfully changed! ✅"
 
-#: app/handlers/msg_text.py:156
+#: app/handlers/msg_text.py:162
 msgid "Появился новый пользователь, @{} | {}"
 msgstr "There's a new user, @{} | | {}"
 
-#: app/handlers/msg_text.py:160
+#: app/handlers/msg_text.py:166
 msgid ""
 "Пользователь: @{} | <code>{}</code> отправил жалобу на анкету "
 "пользователя: @{} | <code>{}</code>"
@@ -233,29 +236,45 @@ msgstr ""
 "User: @{} | <code>{}</code>  sent a complaint about the profile ofuser: "
 "@{} | <code>{}</code>"
 
-#: app/handlers/msg_text.py:164
-msgid "..."
-msgstr "..."
-
-#: app/handlers/msg_text.py:168
+#: app/handlers/msg_text.py:170
 msgid "Панель управлением пользователями"
 msgstr "User management panel"
 
-#: app/handlers/msg_text.py:172
+#: app/handlers/msg_text.py:174
 msgid "💊 Укажите список пользовтелей для разблокировки в формате: 1234567, 234567"
 msgstr "💊 Specify the list of users to unlock in the format: 1234567, 234567"
 
-#: app/handlers/msg_text.py:176
+#: app/handlers/msg_text.py:178
 msgid "⚔️ Укажите список пользовтелей для блокировки в формате: 1234567, 234567"
 msgstr "⚔️ Specify the list of users to block in the format: 1234567, 234567"
 
-#: app/handlers/msg_text.py:180
+#: app/handlers/msg_text.py:182
 msgid "Пользователь: {} заблокирован"
 msgstr "User: {} blocked"
 
-#: app/handlers/msg_text.py:184
+#: app/handlers/msg_text.py:186
 msgid "Укажите текст сообщение которое хотите отправить"
 msgstr "Specify the text of the message you want to send"
+
+#: app/handlers/msg_text.py:190
+msgid "✅ Ваша жалоба на пользователя отправлена на рассмотрение!"
+msgstr "✅ Your user complaint has been sent for review!"
+
+#: app/handlers/msg_text.py:194
+msgid ""
+"Укажите причину жалобы:\n"
+"🔞 Неприличный материал\n"
+"💰 Реклама\n"
+"🔫 Другое\n"
+"\n"
+"Если жалоба ошибочная, вы можете вернутся назад.\n"
+msgstr ""
+"Please state the reason for the complaint: \n"
+"🔞 Obscene material."
+"💰 Advertising."
+"🔫 Other 🔫"
+"\n"
+"If the complaint is wrong, you can go back."
 
 #: app/keyboards/default/admin.py:12
 msgid "📊 Статистика"
@@ -277,45 +296,37 @@ msgstr "⚔️ Ban users"
 msgid "💊 Разбанить пользователей"
 msgstr "💊 Unban users"
 
-#: app/keyboards/default/base.py:16
-msgid "Создать анкету"
-msgstr "Create a profile"
-
-#: app/keyboards/default/choise.py:67
+#: app/keyboards/default/choise.py:68
 msgid "🔙 Вернуть профиль"
 msgstr "🔙 Return profile"
 
-#: app/keyboards/default/create_profile.py:9
+#: app/keyboards/default/choise.py:85
+msgid "Отменить жалобу"
+msgstr "Cancel the report"
+
+#: app/keyboards/default/create_profile.py:10
+msgid "Создать анкету"
+msgstr "Create a profile"
+
+#: app/keyboards/default/create_profile.py:21
 msgid "Я парень"
 msgstr "I'm male"
 
-#: app/keyboards/default/create_profile.py:9
+#: app/keyboards/default/create_profile.py:21
 msgid "Я девушка"
 msgstr "I'm female"
 
-#: app/keyboards/default/create_profile.py:20
+#: app/keyboards/default/create_profile.py:32
 msgid "Парни"
 msgstr "Men"
 
-#: app/keyboards/default/create_profile.py:21
+#: app/keyboards/default/create_profile.py:33
 msgid "Девушки"
 msgstr "Women"
 
-#: app/keyboards/default/create_profile.py:22
+#: app/keyboards/default/create_profile.py:34
 msgid "Все"
 msgstr "All"
-
-#: app/keyboards/default/report.py:10
-msgid "🔞 Неприличный материал"
-msgstr "🔞 Indecent material"
-
-#: app/keyboards/default/report.py:13
-msgid "💰 Реклама"
-msgstr "💰 Advertisement"
-
-#: app/keyboards/default/report.py:16
-msgid "🔫 Другое"
-msgstr "🔫 Other"
 
 #: app/keyboards/inline/archive.py:12
 msgid "Посмотреть"
@@ -348,7 +359,3 @@ msgstr "activate profile"
 #: app/others/commands.py:21
 msgid "admin panel"
 msgstr "admin panel"
-
-#~ msgid "Вернуть профиль"
-#~ msgstr ""
-

@@ -15,17 +15,22 @@ async def get_all_users_registration_data() -> list:
     return registration_data
 
 
-async def get_users_stats() -> int:
-    """Возвращает количество пользователей в БД"""
-    return Users.select().count()
+async def get_users_stats() -> tuple[int, int]:
+    """Возвращает количество пользователей и заблокированных пользователей"""
+    query = Users.select(
+        fn.COUNT(Users.id).alias("count"),
+        fn.SUM(Case(Users.is_banned, [(True, 1)], 0)).alias("banned_count")
+    )
+    return query.dicts().get()
 
 
 async def get_profile_stats() -> dict:
-    """Возвращает количество пользовательских анкет, мужских и женских"""
+    """Возвращает количество: пользовательских анкет,
+    анкет парне, анкет девушек, не активныханкет"""
     query = Profile.select(
-        fn.COUNT(Profile.user_id).alias("users_count"),
+        fn.COUNT(Profile.user_id).alias("count"),
         fn.SUM(Case(None, [(Profile.gender == "male", 1)], 0)).alias("male_count"),
         fn.SUM(Case(None, [(Profile.gender == "female", 1)], 0)).alias("female_count"),
-        fn.SUM(Case(None, [(Profile.is_active == True, 1)], 0)).alias("active_profile"),
+        fn.SUM(Case(None, [(Profile.is_active == False, 1)], 0)).alias("inactive_profile"),
     )
     return query.dicts().get()

@@ -41,8 +41,7 @@ async def _search_command(message: types.Message, state: FSMContext) -> None:
     await send_profile(message.from_user.id, profile)
 
 
-@router.message(Search.search, Command("report"))
-@router.message(Search.search, F.text.in_(["❤️", "👎"]))
+@router.message(Search.search, F.text.in_(["❤️", "👎", "💢"]))
 async def _search_profile(message: types.Message, state: FSMContext) -> None:
     """Свайпы анкет"""
     data = await state.get_data()
@@ -64,7 +63,8 @@ async def _search_profile(message: types.Message, state: FSMContext) -> None:
             text=msg_text.LIKE_PROFILE,
             reply_markup=check_archive_ikb(),
         )
-    elif message.text == "/report":
+    elif message.text == "💢":
+        await message.answer("✅ Ваша жалоба на пользователя отправлена на рассмотрение!") 
         await report_to_profile(message.from_user, profile)
 
     ids.pop(0)

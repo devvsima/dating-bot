@@ -2,6 +2,18 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from loader import _
 
 
+def start_kb() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(
+        resize_keyboard=True,
+        keyboard=[
+            [
+                KeyboardButton(text=_("Создать анкету")),
+            ],
+        ],
+    )
+    return kb
+
+
 def gender_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,

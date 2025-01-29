@@ -4,6 +4,7 @@ from aiogram.types import (
 )
 from loader import _
 
+
 def menu_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
@@ -48,11 +49,11 @@ def search_kb() -> ReplyKeyboardMarkup:
         keyboard=[
             [
                 KeyboardButton(text="❤️"),
+                KeyboardButton(text="💢"),
                 KeyboardButton(text="👎"),
             ],
             [
                 KeyboardButton(text="💤"),
-                # KeyboardButton(text="💢"),
             ],
 
         ],
@@ -68,5 +69,21 @@ def profile_return_kb() -> ReplyKeyboardMarkup:
             ],
         ],
         one_time_keyboard=True,
+    )
+    return kb
+
+def report_kb() -> ReplyKeyboardMarkup:
+    kb = ReplyKeyboardMarkup(
+        resize_keyboard=True,
+            keyboard=[
+            [
+                KeyboardButton(text="🔞"),
+                KeyboardButton(text="💰"),
+                KeyboardButton(text="🔫"),
+            ],
+            [
+                KeyboardButton(text=_("Отменить жалобу")),
+            ],
+        ],
     )
     return kb
