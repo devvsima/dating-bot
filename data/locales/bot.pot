@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-29 14:13+0200\n"
+"POT-Creation-Date: 2025-01-30 23:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -223,32 +223,28 @@ msgid ""
 "Если жалоба ошибочная, вы можете вернутся назад.\n"
 msgstr ""
 
-#: app/keyboards/default/admin.py:12
+#: app/keyboards/default/admin.py:13
 msgid "📊 Статистика"
 msgstr ""
 
-#: app/keyboards/default/admin.py:15
+#: app/keyboards/default/admin.py:16
 msgid "👤 Пользователи"
 msgstr ""
 
-#: app/keyboards/default/admin.py:18
+#: app/keyboards/default/admin.py:19
 msgid "📩 Рассылка"
 msgstr ""
 
-#: app/keyboards/default/admin.py:33
+#: app/keyboards/default/admin.py:34
 msgid "⚔️ Забанить пользователей"
 msgstr ""
 
-#: app/keyboards/default/admin.py:36
+#: app/keyboards/default/admin.py:37
 msgid "💊 Разбанить пользователей"
 msgstr ""
 
-#: app/keyboards/default/choise.py:68
+#: app/keyboards/default/base.py:44
 msgid "🔙 Вернуть профиль"
-msgstr ""
-
-#: app/keyboards/default/choise.py:85
-msgid "Отменить жалобу"
 msgstr ""
 
 #: app/keyboards/default/create_profile.py:10
@@ -275,7 +271,7 @@ msgstr ""
 msgid "Все"
 msgstr ""
 
-#: app/keyboards/inline/archive.py:12
+#: app/keyboards/inline/archive.py:13
 msgid "Посмотреть"
 msgstr ""
 
@@ -303,7 +299,11 @@ msgstr ""
 msgid "activate profile"
 msgstr ""
 
-#: app/others/commands.py:21
+#: app/others/commands.py:20
 msgid "admin panel"
+msgstr ""
+
+#: app/others/commands.py:21
+msgid "stats"
 msgstr ""
 

@@ -37,17 +37,13 @@ def find_gender_kb() -> ReplyKeyboardMarkup:
     )
     return kb
 
-# def suggest_previous_options_kb(text: str) -> ReplyKeyboardMarkup:
+# async def contact_keyboard() -> ReplyKeyboardMarkup:
 #     kb = ReplyKeyboardMarkup(
 #         resize_keyboard=True,
 #         keyboard=[
 #             [
-#                 KeyboardButton(text=text),
+#                 KeyboardButton(text=_("📱 Отправить"), request_contact=True)
 #             ],
 #         ],
 #     )
 #     return kb
-
-
-
-

@@ -10,7 +10,7 @@ env.read_env()
 TG_TOKEN: str = env.str("TOKEN", default=None)
 ADMINS: list = env.list("ADMINS", default=None, subcast=int)
 MODERATOR_GROUP: int = env.int("MODERATOR_GROUP_ID", default=None)
-SKIP_UPDATES: bool = True
+SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
 
 # ---< Database >---
 DB_NAME: str = env.str("DB_NAME", default=None)

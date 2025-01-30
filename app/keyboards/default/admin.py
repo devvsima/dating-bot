@@ -4,6 +4,7 @@ from aiogram.types import (
 )
 from loader import _
 
+
 def admin_menu_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,

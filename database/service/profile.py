@@ -14,9 +14,10 @@ async def delete_profile(user_id: int):
     logger.info(f"User: {user_id} | удалил профиль")
 
 
-async def update_profile_status(user_id: int, is_active: bool) -> None:
+async def update_profile_is_active_status(user_id: int, is_active: bool) -> None:
     """Задает профилю статус, активны/не активный"""
     Profile.update(is_active=is_active).where(Profile.user_id == user_id).execute()
+    logger.info(f"User: {user_id} | поменял стату профиля на - {is_active}")
 
 
 async def edit_profile_photo(user_id, photo):

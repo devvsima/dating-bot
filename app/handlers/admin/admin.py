@@ -12,4 +12,7 @@ from app.handlers.msg_text import msg_text
 @router.message(Command("admin"), StateFilter(None))
 async def _admin_command(message: types.Message) -> None:
     """Админ панель"""
-    await message.answer(msg_text.ADMIN_WELCOME, reply_markup=admin_menu_kb())
+    await message.answer(
+        text = msg_text.ADMIN_WELCOME,
+        reply_markup = admin_menu_kb()
+    )

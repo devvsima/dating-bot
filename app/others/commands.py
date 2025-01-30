@@ -17,9 +17,8 @@ def get_admins_commands(lang: str = "en"):
     commands = get_default_commands(lang)
     commands.extend(
         [
-            BotCommand(
-                command="/admin", description=_("admin panel", locale=lang)
-            )
+            BotCommand(command="/admin", description=_("admin panel", locale=lang)),
+            BotCommand(command="/stats", description=_("stats", locale=lang))
         ]
     )
     return commands

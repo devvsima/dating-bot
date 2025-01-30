@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-29 14:13+0200\n"
+"POT-Creation-Date: 2025-01-30 23:42+0200\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -115,9 +115,7 @@ msgstr "Тебе ще ніхто не лайкнув. Але все ще поп�
 
 #: app/handlers/msg_text.py:80
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
-msgstr ""
-"Чудово! Сподіваюся, добре проведете час ;) <a "
-"href='{}'>{}</a>"
+msgstr "Чудово! Сподіваюся, добре проведете час ;) <a href='{}'>{}</a>"
 
 #: app/handlers/msg_text.py:84
 msgid "Укажи свой пол: 👤"
@@ -286,33 +284,29 @@ msgstr ""
 "\n"
 "Якщо скарга помилкова, ви можете повернутися назад.\n"
 
-#: app/keyboards/default/admin.py:12
+#: app/keyboards/default/admin.py:13
 msgid "📊 Статистика"
 msgstr "📊 Статистика"
 
-#: app/keyboards/default/admin.py:15
+#: app/keyboards/default/admin.py:16
 msgid "👤 Пользователи"
 msgstr "👤 Користувачі"
 
-#: app/keyboards/default/admin.py:18
+#: app/keyboards/default/admin.py:19
 msgid "📩 Рассылка"
 msgstr "📩 Розсилка"
 
-#: app/keyboards/default/admin.py:33
+#: app/keyboards/default/admin.py:34
 msgid "⚔️ Забанить пользователей"
 msgstr "⚔️ Забанити користувачів"
 
-#: app/keyboards/default/admin.py:36
+#: app/keyboards/default/admin.py:37
 msgid "💊 Разбанить пользователей"
 msgstr "💊 Розбанити користувачів"
 
-#: app/keyboards/default/choise.py:68
+#: app/keyboards/default/base.py:44
 msgid "🔙 Вернуть профиль"
 msgstr "🔙 Повернути профіль"
-
-#: app/keyboards/default/choise.py:85
-msgid "Отменить жалобу"
-msgstr "Скасувати скаргу"
 
 #: app/keyboards/default/create_profile.py:10
 msgid "Создать анкету"
@@ -338,7 +332,7 @@ msgstr "Дівчата"
 msgid "Все"
 msgstr "Всі"
 
-#: app/keyboards/inline/archive.py:12
+#: app/keyboards/inline/archive.py:13
 msgid "Посмотреть"
 msgstr "Подивитися👀"
 
@@ -366,6 +360,17 @@ msgstr "додатковий опис"
 msgid "activate profile"
 msgstr "активувати профіль"
 
-#: app/others/commands.py:21
+#: app/others/commands.py:20
 msgid "admin panel"
 msgstr "адмін панель"
+
+#: app/others/commands.py:21
+msgid "stats"
+msgstr "статистика"
+
+#~ msgid "Отменить жалобу"
+#~ msgstr "Скасувати скаргу"
+
+#~ msgid "📱 Отправить"
+#~ msgstr ""
+

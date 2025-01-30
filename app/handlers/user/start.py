@@ -23,5 +23,7 @@ async def _start_command(message: types.Message) -> None:
         await menu(message.from_user.id)
     else:
         await message.answer_photo(
-            photo=photo, caption=msg_text.WELCOME, reply_markup=start_kb()
+            photo = photo,
+            caption = msg_text.WELCOME,
+            reply_markup = start_kb(),
         )

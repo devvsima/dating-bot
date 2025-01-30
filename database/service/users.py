@@ -51,3 +51,4 @@ async def toggle_user_ban(user: Users) -> None:
 async def ban_or_unban_user(user_id: int, is_banned: bool) -> None:
     """Меняет статус блокировки пользователя на заданный"""
     Users.update(is_banned=is_banned).where(Users.id == user_id).execute()
+    logger.info(f"User: {user_id} | стату блокироваки изминен на - {is_banned}")

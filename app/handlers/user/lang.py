@@ -14,7 +14,10 @@ from app.keyboards.inline.lang import lang_ikb
 @router.message(Command("lang"), StateFilter(None))
 async def _lang(message: types.Message) -> None:
     """Предлагает клавиатуру с доступными языками"""
-    await message.answer(msg_text.CHANGE_LANG, reply_markup=lang_ikb())
+    await message.answer(
+        msg_text.CHANGE_LANG,
+        reply_markup = await lang_ikb()
+    )
 
 
 @router.callback_query(F.data.in_(["ru", "uk", "en"]))
