@@ -1,37 +1,40 @@
-from math import radians, sin, cos, sqrt, atan2
 from peewee import fn
 from loguru import logger
-from database.models import Profile  # Убедись, что у тебя правильно импортирован Profile
-from database.service.profile import get_profile  # Функция получения профиля пользователя
+from database.models import Profile  
+from database.service.profile import get_profile
 
-async def elastic_search_user_ids(user_id: int, age_range: int = 3, max_distance: float = 10) -> list:
+async def elastic_search_user_ids(user_id: int, age_range: int = 3, distance: float = 0.1) -> list:
     """
-    Ищет подходящие анкеты и возвращает список id пользователей,
-    отсортированных от ближайших к дальним.
+    Ищет подходящие анкеты для пользователя и возвращает список id пользователей,
+    которые подходят под критерии поиска. 
+    Поиск идет по координатам и параметрам анкеты
     """
-    profile: Profile = await get_profile(user_id)  # Получаем профиль пользователя
+    profile: Profile = await get_profile(user_id)
 
-    # Haversine formula (расчёт расстояния через SQL)
-    distance_expr = (
-        fn.ACOS(
-            fn.SIN(fn.RADIANS(profile.latitude)) * fn.SIN(fn.RADIANS(Profile.latitude)) +
-            fn.COS(fn.RADIANS(profile.latitude)) * fn.COS(fn.RADIANS(Profile.latitude)) *
-            fn.COS(fn.RADIANS(Profile.longitude - profile.longitude))
-        ) * 6371  # 6371 — радиус Земли в километрах
-    ).alias("distance")
-
-    query = (
-        Profile
-        .select(Profile.user_id, distance_expr)
-        .where(
-            (Profile.is_active == True) &
-            ((Profile.gender == profile.find_gender) | (profile.find_gender == "all")) &
-            ((profile.gender == Profile.find_gender) | (Profile.find_gender == "all")) &
-            (Profile.age.between(profile.age - age_range, profile.age + age_range)) &
-            (Profile.user_id != user_id) &
-            (distance_expr <= max_distance)  # Перенесли в WHERE
-        )
-        .order_by(distance_expr)  # Сортировка от ближнего к дальнему
+    # Вычисляем расстояние по координатам
+    distance_expr = fn.SQRT(
+        fn.POW(Profile.latitude - profile.latitude, 2)
+        + fn.POW(Profile.longitude - profile.longitude, 2)
     )
 
-    return [row.user_id.id for row in query]
+    users = (
+        Profile.select(Profile.user_id, distance_expr.alias("distance"))
+        .where(
+            (Profile.is_active == True)
+            & (fn.ABS(Profile.latitude - profile.latitude) < distance)
+            & (fn.ABS(Profile.longitude - profile.longitude) < distance)
+            & ((Profile.gender == profile.find_gender) | (profile.find_gender == "all"))
+            & ((profile.gender == Profile.find_gender) | (Profile.find_gender == "all"))
+            & (Profile.age.between(profile.age - age_range, profile.age + age_range))
+            & (Profile.user_id != user_id)
+        )
+        .order_by(
+            fn.SQRT(
+                fn.POW(Profile.latitude - profile.latitude, 2)
+                + fn.POW(Profile.longitude - profile.longitude, 2)
+            )
+        )
+    )
+    logger.info(f"User: {user_id} | начал поиск анкет")
+
+    return [i.user_id.id for i in users]
