@@ -1,7 +1,9 @@
 from aiogram.fsm.state import State, StatesGroup
 
+
 class LikeResponse(StatesGroup):
     response = State()
+
 
 class ProfileCreate(StatesGroup):
     gender = State()
@@ -11,13 +13,16 @@ class ProfileCreate(StatesGroup):
     age = State()
     city = State()
     desc = State()
-    
+
+
 class ProfileEdit(StatesGroup):
     photo = State()
     desc = State()
-    
+
+
 class Search(StatesGroup):
     search = State()
-    
+
+
 class DisableProfile(StatesGroup):
     waiting = State()

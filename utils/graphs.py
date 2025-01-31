@@ -16,12 +16,14 @@ def get_day_period(days: int = 30):
     days_ago = today - timedelta(days)
     return today, days_ago
 
+
 async def get_or_create_registration_graph(data=None, path=registration_photo_path) -> str:
     """Создает график регистрации пользователей и возращает путь к фотографии графика"""
     if data is None:
         data = await get_all_users_registration_data()
     create_user_registration_graph(data, path)
     return path
+
 
 def create_user_registration_graph(data, path):
     """Создает график новых пользователей в заданом периоде"""

@@ -13,7 +13,6 @@ from database.service.stats import get_profile_stats, get_users_stats
 from app.handlers.msg_text import msg_text
 
 
-
 @router.message(Command("stats"), StateFilter(None))
 @router.message(F.text.in_(["📊 Статистика", "📊 Statistics"]), StateFilter(None))
 async def _stats_command(message: types.Message) -> None:
@@ -25,7 +24,7 @@ async def _stats_command(message: types.Message) -> None:
     users_stats = await get_users_stats()
     graph_path = await get_or_create_registration_graph()
     photo = types.FSInputFile(graph_path)
-    
+
     text = msg_text.USERS_STATS.format(
         users_stats["count"],
         users_stats["banned_count"],
@@ -34,8 +33,8 @@ async def _stats_command(message: types.Message) -> None:
         profile_stats["male_count"],
         profile_stats["female_count"],
     )
-    
+
     await message.answer_photo(photo, text)
-    
+
     # Удаляем временный файл
     os.remove(graph_path)

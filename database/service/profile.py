@@ -33,9 +33,9 @@ async def edit_profile_description(user_id, description):
 
 
 async def create_profile(
-    user_id: int, gender: str, find_gender: str,
-    photo: str, name: str, age: int, city: str,
-    latitude: str, longitude: str, description: str,
+        user_id: int, gender: str, find_gender: str,
+        photo: str, name: str, age: int, city: str,
+        latitude: str, longitude: str, description: str,
 ):
     """Создает профиль пользователя, если профиль есть - удаляет его"""
     if await get_profile(user_id):

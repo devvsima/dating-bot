@@ -4,6 +4,7 @@ from aiogram.types import Message, CallbackQuery
 from typing import Any, Callable
 from database.service.users import get_or_create_user
 
+
 class UsersMiddleware(BaseMiddleware):
     async def __call__(self, handler: Callable, event: Message | CallbackQuery, data: dict) -> Any:
         user = await get_or_create_user(
@@ -15,4 +16,3 @@ class UsersMiddleware(BaseMiddleware):
             data["user"] = user
             return await handler(event, data)
         return
-    

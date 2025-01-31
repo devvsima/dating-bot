@@ -12,7 +12,6 @@ from app.handlers.msg_text import msg_text
 from app.keyboards.default.create_profile import start_kb
 from app.handlers.bot_utils import menu
 
-
 photo = types.FSInputFile(f"{IMAGES_DIR}/new_logo.webp")
 
 
@@ -23,7 +22,7 @@ async def _start_command(message: types.Message) -> None:
         await menu(message.from_user.id)
     else:
         await message.answer_photo(
-            photo = photo,
-            caption = msg_text.WELCOME,
-            reply_markup = start_kb(),
+            photo=photo,
+            caption=msg_text.WELCOME,
+            reply_markup=start_kb(),
         )

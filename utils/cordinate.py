@@ -8,7 +8,8 @@ def get_coordinates(city_name: str, timeout: int = 10) -> list | None:
     location = geolocator.geocode(city_name)
     return (location.latitude, location.longitude) if location else None
 
-def find_nearby_profiles(user_coordinates, profiles, max_distance_km=50)-> list:
+
+def find_nearby_profiles(user_coordinates, profiles, max_distance_km=50) -> list:
     nearby_profiles = []
     for profile in profiles:
         distance = geodesic(user_coordinates, profile["coordinates"]).kilometers

@@ -1,4 +1,3 @@
-
 from aiogram import Dispatcher
 from aiogram.types import ErrorEvent
 

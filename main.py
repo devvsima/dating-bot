@@ -12,6 +12,7 @@ async def on_startup() -> None:
     await set_default_commands()
     logger.info("~ Bot startup")
 
+
 async def on_shutdown() -> None:
     logger.info("~ Bot shutting down...")
 

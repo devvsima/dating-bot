@@ -22,7 +22,7 @@ from .cancel import cancel_command
 @router.message(F.text == "🔍", StateFilter(None))
 async def _search_command(message: types.Message, state: FSMContext) -> None:
     """Начинает поиск анкет"""
-    await message.answer(msg_text.SEARCH, reply_markup= search_kb)
+    await message.answer(msg_text.SEARCH, reply_markup=search_kb)
 
     ids = await elastic_search_user_ids(message.from_user.id)
     if not ids:
@@ -49,12 +49,12 @@ async def _search_profile(message: types.Message, state: FSMContext) -> None:
     if message.text == "❤️":
         await set_new_like(message.from_user.id, profile.user_id)
         await message.bot.send_message(
-            chat_id = profile.user_id.id,
-            text = msg_text.LIKE_PROFILE,
-            reply_markup = check_archive_ikb(),
+            chat_id=profile.user_id.id,
+            text=msg_text.LIKE_PROFILE,
+            reply_markup=check_archive_ikb(),
         )
     elif message.text == "💢":
-        await message.answer(msg_text.REPORT_TO_PROFILE) 
+        await message.answer(msg_text.REPORT_TO_PROFILE)
         await report_to_profile(message.from_user, profile)
 
     ids.pop(0)

@@ -16,7 +16,7 @@ async def _lang(message: types.Message) -> None:
     """Предлагает клавиатуру с доступными языками"""
     await message.answer(
         msg_text.CHANGE_LANG,
-        reply_markup = await lang_ikb()
+        reply_markup=await lang_ikb()
     )
 
 

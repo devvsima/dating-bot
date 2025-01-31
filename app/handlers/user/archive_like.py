@@ -24,8 +24,8 @@ async def like_profile(message: types.Message, state: FSMContext) -> None:
         return
     await update_user_username(message.from_user.id, message.from_user.username)
     await message.answer(
-        text = msg_text.SEARCH,
-        reply_markup = arhive_search_kb
+        text=msg_text.SEARCH,
+        reply_markup=arhive_search_kb
     )
     await state.set_state(LikeResponse.response)
 
@@ -46,8 +46,8 @@ async def _like_profile(callback: types.CallbackQuery, state: FSMContext) -> Non
     await state.set_state(LikeResponse.response)
     await update_user_username(callback.from_user.id, callback.from_user.username)
     await callback.message.answer(
-        text = msg_text.SEARCH,
-        reply_markup = arhive_search_kb
+        text=msg_text.SEARCH,
+        reply_markup=arhive_search_kb
     )
 
     if liker_ids := await get_profile_likes(callback.from_user.id):
@@ -69,24 +69,24 @@ async def _like_response(message: types.Message, state: FSMContext) -> None:
     if message.text == "❤️":
         """Отправка пользователю которому ответили на лайк"""
         await sending_user_contact(
-            user_id = profile.user_id.id,
-            name = message.from_user.full_name,
-            user_link = generate_user_link(
-                user_id = message.from_user.id,
-                username = message.from_user.username,
+            user_id=profile.user_id.id,
+            name=message.from_user.full_name,
+            user_link=generate_user_link(
+                user_id=message.from_user.id,
+                username=message.from_user.username,
             )
         )
-        
+
         """Отправка пользователю который ответил на лайк"""
         await sending_user_contact(
-            user_id=message.from_user.id, 
-            name=profile.name, 
-            user_link = generate_user_link(
-                user_id=profile.user_id.id, 
+            user_id=message.from_user.id,
+            name=profile.name,
+            user_link=generate_user_link(
+                user_id=profile.user_id.id,
                 username=profile.user_id.username,
             )
         )
-        
+
     await del_like(message.from_user.id, profile.user_id.id)
 
     ids.pop(0)

@@ -2,6 +2,7 @@ from peewee import TextField, IntegerField, CharField, FloatField, BooleanField,
 from ..connect import BaseModel
 from .users import Users
 
+
 class Profile(BaseModel):
    user_id = ForeignKeyField(Users, backref='profile', primary_key=True)
    name = CharField(max_length=50)
@@ -14,4 +15,3 @@ class Profile(BaseModel):
    age = IntegerField(index=True)
    description = CharField(max_length=1000)
    is_active = BooleanField(default=True, index=True)
-

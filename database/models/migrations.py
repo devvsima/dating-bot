@@ -8,6 +8,8 @@ from data.config import DIR
 from playhouse.migrate import PostgresqlMigrator, migrate
 
 from ..connect import db
+
+
 def export_data(db, model, file):
     # Экспорт данных
     data = []
@@ -22,7 +24,7 @@ def export_data(db, model, file):
 
     with open(file, 'w') as f:
         json.dump(data, f, default=json_serial)
-    
+
 
 def import_data(db, model, file):
     with open(file, 'r') as f:
@@ -32,7 +34,7 @@ def import_data(db, model, file):
     for table in data:
         table_name = list(table.keys())[0]  # Имя таблицы из JSON
         rows = table[table_name]
-        
+
         if model is None:
             print(f"Не удалось найти модель для таблицы {table_name}")
             continue

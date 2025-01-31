@@ -13,6 +13,7 @@ def get_default_commands(lang: str = "en"):
 
     return commands
 
+
 def get_admins_commands(lang: str = "en"):
     commands = get_default_commands(lang)
     commands.extend(
@@ -32,6 +33,7 @@ async def set_default_commands() -> None:
             scope=BotCommandScopeDefault(),
             language_code=lang,
         )
+
 
 async def set_admins_commands(id: int) -> None:
     await bot.set_my_commands(

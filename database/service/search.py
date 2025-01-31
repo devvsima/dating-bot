@@ -1,7 +1,8 @@
 from peewee import fn
 from loguru import logger
-from database.models import Profile  
+from database.models import Profile
 from database.service.profile import get_profile
+
 
 async def elastic_search_user_ids(user_id: int, age_range: int = 3, distance: float = 0.1) -> list:
     """

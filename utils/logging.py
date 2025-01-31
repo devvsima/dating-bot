@@ -2,11 +2,10 @@ from logging import getLogger
 from data.config import DIR
 from loguru import logger
 
-
 logger.add(
-    f"{DIR}/logs/logs.log", 
-    format='[{time}] [{level}] [{file.name}:{line}]  {message}', 
-    level='DEBUG', 
+    f"{DIR}/logs/logs.log",
+    format='[{time}] [{level}] [{file.name}:{line}]  {message}',
+    level='DEBUG',
     rotation='1 month',
     compression='zip')
 

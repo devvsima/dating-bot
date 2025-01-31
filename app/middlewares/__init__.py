@@ -8,12 +8,12 @@ from app.middlewares.i18n import i18n_middleware
 
 def setup_middlewares(dp: Dispatcher) -> None:
     start_router.message.middleware(StartMiddleware())
-    
+
     admin_router.message.middleware(AdminMiddleware())
-    
+
     user_router.message.middleware(UsersMiddleware())
     user_router.callback_query.middleware(UsersMiddleware())
-    
+
     start_router.message.middleware(i18n_middleware)
     admin_router.message.middleware(i18n_middleware)
     user_router.message.middleware(i18n_middleware)

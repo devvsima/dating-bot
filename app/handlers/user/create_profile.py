@@ -135,15 +135,15 @@ async def _description(message: types.Message, state: FSMContext):
         data = await state.get_data()
         await create_profile(
             user_id=message.from_user.id,
-            gender = data["gender"],
-            find_gender = data["find_gender"],
-            photo = data["photo"],
-            name = data["name"],
-            age = data["age"],
-            city = data["city"],
-            latitude = data["latitude"],
-            longitude = data["longitude"],
-            description = message.text
+            gender=data["gender"],
+            find_gender=data["find_gender"],
+            photo=data["photo"],
+            name=data["name"],
+            age=data["age"],
+            city=data["city"],
+            latitude=data["latitude"],
+            longitude=data["longitude"],
+            description=message.text
         )
 
     await state.clear()

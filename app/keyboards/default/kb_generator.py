@@ -2,7 +2,7 @@ from aiogram.types import (
     ReplyKeyboardMarkup,
     KeyboardButton,
 )
-from loader import _
+
 
 def simple_kb_generator(*buttons_list: list, one_time: bool = True, resize: bool = True) -> ReplyKeyboardMarkup:
     """

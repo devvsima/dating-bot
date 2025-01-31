@@ -25,4 +25,3 @@ async def del_like(liked_id: int, liker_id: int) -> None:
     """Удаляет лайк из БД"""
     logger.info(f"{liker_id} & {liked_id} | лайк удален")
     Likes.delete().where((Likes.liker_id == liker_id) & (Likes.liked_id == liked_id)).execute()
-

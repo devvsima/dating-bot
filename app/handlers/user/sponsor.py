@@ -20,15 +20,15 @@ async def _sponsor_command(message: types.Message) -> None:
         currency="XTR",
         prices=[types.LabeledPrice(label="XTR", amount=1)]
     )
-    
-    
+
+
 @router.pre_checkout_query()
 async def pre_checkout_query(event: types.PreCheckoutQuery) -> None:
     from utils.logging import logger
     logger.debug(event)
     await event.answer(True)
-    
-    
+
+
 @router.message(F.succesful_payment.paylod == "sponsor")
 async def succesful_payment(message: types.Message) -> None:
     link = await bot.create_chat_invite_link(MODERATOR_GROUP, member_limit=1)

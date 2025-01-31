@@ -19,15 +19,14 @@ class StartMiddleware(BaseMiddleware):
             return
 
         user = await create_user(
-            user_id = message.from_user.id,
-            username = message.from_user.username,
-            language = message.from_user.language_code,
+            user_id=message.from_user.id,
+            username=message.from_user.username,
+            language=message.from_user.language_code,
         )
         data["user"] = user
         await new_user_alert_to_group(user)
-        
+
         if inviter := data["command"].args:
             await new_referral(decode_base62(inviter))
-            
+
         return await handler(message, data)
-    

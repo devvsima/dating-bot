@@ -31,10 +31,10 @@ def user_ban_or_unban_kb() -> ReplyKeyboardMarkup:
         resize_keyboard=True,
         keyboard=[
             [
-            KeyboardButton(text=_(f"⚔️ Забанить пользователей")),
+                KeyboardButton(text=_(f"⚔️ Забанить пользователей")),
             ],
             [
-            KeyboardButton(text=_("💊 Разбанить пользователей")),
+                KeyboardButton(text=_("💊 Разбанить пользователей")),
 
             ],
         ],
