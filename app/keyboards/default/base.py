@@ -26,11 +26,13 @@ menu_kb: ReplyKeyboardMarkup = kb_gen(
 search_kb: ReplyKeyboardMarkup = kb_gen(
     ["❤️", "💢", "👎"],
     ["💤"],
+    one_time=False,
 )
 
 arhive_search_kb: ReplyKeyboardMarkup = kb_gen(
     ["❤️", "👎"],
     ["💤"],
+    one_time=False,
 )
 
 

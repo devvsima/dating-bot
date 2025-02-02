@@ -15,14 +15,9 @@ from app.others.states import ProfileEdit, ProfileCreate
 import app.filters.create_profile_filtres as filters
 
 
-@router.message(F.text == "🔄", StateFilter(None))
-async def _retry_create_profile_command(message: types.Message, state: FSMContext):
-    """Запускает создания профиля заново"""
-    await _create_profile_command(message, state)
-
-
 # create profile
-@router.message(filters.IsCreate())
+@router.message(F.text == "🔄", StateFilter(None))
+@router.message(filters.IsCreate(), StateFilter(None))
 async def _create_profile_command(message: types.Message, state: FSMContext):
     """Начало создание профиля"""
     await message.answer(msg_text.GENDER, reply_markup=gender_kb())

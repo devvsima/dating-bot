@@ -36,7 +36,7 @@ class IsGender(Filter):
     async def __call__(self, message: Message) -> dict | bool:
         if message.text in gender_map:
             return {"gender": gender_map[message.text]}
-        return False
+        return
 
 
 class IsFindGender(Filter):

@@ -26,6 +26,7 @@ def gender_kb() -> ReplyKeyboardMarkup:
 
 def find_gender_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
+        # input_field_placeholder="Выбрете кто вам инетересен:",
         resize_keyboard=True,
         keyboard=[
             [
