@@ -19,7 +19,7 @@ def get_admins_commands(lang: str = "en"):
     commands.extend(
         [
             BotCommand(command="/admin", description=_("admin panel", locale=lang)),
-            BotCommand(command="/stats", description=_("stats", locale=lang))
+            BotCommand(command="/stats", description=_("stats", locale=lang)),
         ]
     )
     return commands
@@ -36,9 +36,7 @@ async def set_default_commands() -> None:
 
 
 async def set_admins_commands(id: int) -> None:
-    await bot.set_my_commands(
-        get_admins_commands(), scope=BotCommandScopeChat(chat_id=id)
-    )
+    await bot.set_my_commands(get_admins_commands(), scope=BotCommandScopeChat(chat_id=id))
     for lang in i18n.available_locales:
         await bot.set_my_commands(
             get_admins_commands(lang),

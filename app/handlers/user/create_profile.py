@@ -143,7 +143,7 @@ async def _description(message: types.Message, state: FSMContext):
             city=data["city"],
             latitude=data["latitude"],
             longitude=data["longitude"],
-            description=message.text
+            description=message.text,
         )
 
     await state.clear()

@@ -16,7 +16,4 @@ async def profile_command(message: types.Message) -> None:
     profile = await get_profile(message.from_user.id)
 
     await send_profile(message.from_user.id, profile)
-    await message.answer(
-        msg_text.PROFILE_MENU,
-        reply_markup=profile_kb,
-    )
+    await message.answer(msg_text.PROFILE_MENU, reply_markup=profile_kb)

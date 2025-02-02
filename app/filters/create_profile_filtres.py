@@ -27,7 +27,9 @@ find_gender_map = {
 
 class IsCreate(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(message.text in ["/create", "Создать анкету", "Create a profile", "Створити анкету"])
+        return bool(
+            message.text in ["/create", "Создать анкету", "Create a profile", "Створити анкету"]
+        )
 
 
 class IsGender(Filter):
@@ -56,16 +58,14 @@ class IsName(Filter):
 
 class IsAge(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(
-            message.text.isdigit() and
-            int(message.text) < 100 and
-            int(message.text) > 6
-        )
+        return bool(message.text.isdigit() and int(message.text) < 100 and int(message.text) > 6)
 
 
 class IsCity(Filter):
     async def __call__(self, message: Message) -> bool:
-        if coordinates := get_coordinates(message.text):
+        if message.text.isdigit():
+            return False
+        elif coordinates := get_coordinates(message.text):
             return {"coordinates": coordinates}
         return False
 

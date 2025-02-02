@@ -31,15 +31,13 @@ async def _disable_profile_command(message: types.Message, state: FSMContext) ->
     """Отключение профиля"""
     await state.set_state(DisableProfile.waiting)
     await update_profile_is_active_status(message.from_user.id, False)
-    await message.answer(
-        text=msg_text.DISABLE_PROFILE,
-        reply_markup=profile_return_kb()
-    )
+    await message.answer(text=msg_text.DISABLE_PROFILE, reply_markup=profile_return_kb())
 
 
-@router.message(F.text.in_(
-    ["🔙 Вернуть профиль", "🔙 Return profile", "🔙 Повернути профіль"]
-), DisableProfile.waiting)
+@router.message(
+    F.text.in_(["🔙 Вернуть профиль", "🔙 Return profile", "🔙 Повернути профіль"]),
+    DisableProfile.waiting,
+)
 async def _activate_profile_command(message: types.Message, state: FSMContext) -> None:
     await state.clear()
     await update_profile_is_active_status(message.from_user.id, True)

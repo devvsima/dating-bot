@@ -10,7 +10,7 @@ def encode_base62(num: int) -> str:
     while num:
         num, rem = divmod(num, base)
         encoded.append(BASE62_ALPHABET[rem])
-    return ''.join(reversed(encoded))
+    return "".join(reversed(encoded))
 
 
 def decode_base62(encoded_str: str) -> str:

@@ -2,6 +2,7 @@ import json
 from .users import Users
 from .profile import Profile
 from .likes import Likes
+
 # Подключение к SQLite
 from datetime import datetime
 from data.config import DIR
@@ -22,12 +23,12 @@ def export_data(db, model, file):
             return obj.isoformat()  # Преобразование в ISO 8601
         raise TypeError(f"Type {type(obj)} not serializable")
 
-    with open(file, 'w') as f:
+    with open(file, "w") as f:
         json.dump(data, f, default=json_serial)
 
 
 def import_data(db, model, file):
-    with open(file, 'r') as f:
+    with open(file, "r") as f:
         data = json.load(f)
 
     # Импорт данных
@@ -42,6 +43,7 @@ def import_data(db, model, file):
         # Вставка данных в PostgreSQL
         with db.atomic():
             model.insert_many(rows).execute()
+
 
 # import_data(db, Profile, f"{DIR}/profile.json")
 # import_data(db, Profile, f"{DIR}/profile.json")

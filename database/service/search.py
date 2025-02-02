@@ -7,7 +7,7 @@ from database.service.profile import get_profile
 async def elastic_search_user_ids(user_id: int, age_range: int = 3, distance: float = 0.1) -> list:
     """
     Ищет подходящие анкеты для пользователя и возвращает список id пользователей,
-    которые подходят под критерии поиска. 
+    которые подходят под критерии поиска.
     Поиск идет по координатам и параметрам анкеты
     """
     profile: Profile = await get_profile(user_id)

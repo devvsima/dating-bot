@@ -37,6 +37,7 @@ def find_gender_kb() -> ReplyKeyboardMarkup:
     )
     return kb
 
+
 # async def contact_keyboard() -> ReplyKeyboardMarkup:
 #     kb = ReplyKeyboardMarkup(
 #         resize_keyboard=True,

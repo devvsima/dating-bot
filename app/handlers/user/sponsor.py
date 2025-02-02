@@ -18,13 +18,14 @@ async def _sponsor_command(message: types.Message) -> None:
         description="Небольшая поддержка бота дающая доступ в закрытую группу спонсоров",
         payload="sponsor",
         currency="XTR",
-        prices=[types.LabeledPrice(label="XTR", amount=1)]
+        prices=[types.LabeledPrice(label="XTR", amount=1)],
     )
 
 
 @router.pre_checkout_query()
 async def pre_checkout_query(event: types.PreCheckoutQuery) -> None:
     from utils.logging import logger
+
     logger.debug(event)
     await event.answer(True)
 
@@ -33,7 +34,6 @@ async def pre_checkout_query(event: types.PreCheckoutQuery) -> None:
 async def succesful_payment(message: types.Message) -> None:
     link = await bot.create_chat_invite_link(MODERATOR_GROUP, member_limit=1)
     await bot.refund_star_payment(
-        message.from_user.id,
-        message.successful_payment.telegram_payment_charge_id
+        message.from_user.id, message.successful_payment.telegram_payment_charge_id
     )
     await message.answer(f"Твоя пригласительная ссылка: {link}")

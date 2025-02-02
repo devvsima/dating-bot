@@ -19,18 +19,23 @@ async def menu(user_id: int) -> None:
     )
 
 
-async def report_to_profile(user, profile: Profile) -> None:
+async def report_to_profile(user: Users, profile: Profile) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
     if MODERATOR_GROUP:
         try:
             await send_profile(MODERATOR_GROUP, profile)
-            text = msg_text.REPORT_TO_USER.format(user.username, user.id, profile.user_id.username, profile.user_id)
+            text = msg_text.REPORT_TO_USER.format(
+                user.username, user.id, profile.user_id.username, profile.user_id.id
+            )
 
             await bot.send_message(
                 chat_id=MODERATOR_GROUP,
                 text=text,
-                reply_markup=await block_user_ikb(profile.user_id),
+                reply_markup=block_user_ikb(
+                    user_id=profile.user_id.id,
+                    username=profile.user_id.username,
+                ),
             )
         except:
             logger.error("Сообщение в модераторскую группу не отправленно")
@@ -51,8 +56,7 @@ async def new_user_alert_to_group(user: Users) -> None:
     if MODERATOR_GROUP:
         try:
             await bot.send_message(
-                chat_id=MODERATOR_GROUP,
-                text=msg_text.NEW_USER.format(user.username, user.id)
+                chat_id=MODERATOR_GROUP, text=msg_text.NEW_USER.format(user.username, user.id)
             )
         except:
             logger.error("Сообщение в модераторскую группу не отправленно")
