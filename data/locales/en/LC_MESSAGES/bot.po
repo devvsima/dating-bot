@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-30 23:42+0200\n"
+"POT-Creation-Date: 2025-02-02 22:05+0200\n"
 "PO-Revision-Date: 2024-09-07 14:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -154,33 +154,33 @@ msgstr ""
 "Your profile is temporarily disabled.\n"
 "To reactivate it, just click the button below."
 
-#: app/handlers/msg_text.py:116
+#: app/handlers/msg_text.py:118
 msgid ""
 "✅ Ваша анкета успешно восстановлена! Теперь вы снова можете пользоваться "
 "ботом."
 msgstr "✅ Your profile has been successfully restored! You can now use the bot."
 
-#: app/handlers/msg_text.py:120
+#: app/handlers/msg_text.py:122
 msgid ""
 "Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
 "правильно. 📝"
 msgstr "Incorrect response. Please choose from the keyboard or write correctly. 📝"
 
-#: app/handlers/msg_text.py:124
+#: app/handlers/msg_text.py:126
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr "Character limit exceeded. Please shorten the message. ✂️"
 
-#: app/handlers/msg_text.py:128
+#: app/handlers/msg_text.py:130
 msgid ""
 "Неверный формат фотографии! Пожалуйста, загрузите изображение в "
 "правильном формате. 🖼️"
 msgstr "Incorrect photo format! Please upload the image in the correct format. 🖼️"
 
-#: app/handlers/msg_text.py:132
+#: app/handlers/msg_text.py:136
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr "Incorrect format, age should be specified in numbers. 🔢"
 
-#: app/handlers/msg_text.py:136
+#: app/handlers/msg_text.py:140
 msgid ""
 "Приглашай друзей и получай бонус к своей анкете!\n"
 "\n"
@@ -196,39 +196,39 @@ msgstr ""
 "Link for friends:\n"
 "<code>https://t.me/{}?start={}</code>"
 
-#: app/handlers/msg_text.py:140
+#: app/handlers/msg_text.py:146
 msgid "Вы администратор!"
 msgstr "You're the administrator!"
 
-#: app/handlers/msg_text.py:144
+#: app/handlers/msg_text.py:150
 msgid ""
-"  \n"
-"👤 Пользователей: {}\t|🚫 Заблокированных: {}  \n"
+"\n"
+"👤 Пользователей: {}\t|🚫 Заблокированных: {}\n"
 "\n"
 "📂 Анкет: {}\t|🔕 Неактивных: {}\n"
 "\n"
-"🙍‍♂ Парней: {}\t|🙍‍♀ Девушек: {}  \n"
+"🙍‍♂ Парней: {}\t|🙍‍♀ Девушек: {}\n"
 msgstr ""
 "  \n"
 "👤 Users: {}\t||🚫 Blocked: {}  \n"
 "\n"
-"📂 Questionnaires: {}{\t||🔕 Inactive: {}\n"
+"📂 Profile: {}\t||🔕 Inactive: {}\n"
 "\n"
 "🙍‍♂ Guys: {}\t|🙍‍♀ Girls: {}  \n"
 
-#: app/handlers/msg_text.py:154
+#: app/handlers/msg_text.py:160
 msgid "Выберите язык, на который вы хотите переключиться: 🌐"
 msgstr "Select the language you want to switch to: 🌐"
 
-#: app/handlers/msg_text.py:158
+#: app/handlers/msg_text.py:164
 msgid "Ваш язык успешно изменён! ✅"
 msgstr "Your language has been successfully changed! ✅"
 
-#: app/handlers/msg_text.py:162
+#: app/handlers/msg_text.py:168
 msgid "Появился новый пользователь, @{} | {}"
 msgstr "There's a new user, @{} | | {}"
 
-#: app/handlers/msg_text.py:166
+#: app/handlers/msg_text.py:172
 msgid ""
 "Пользователь: @{} | <code>{}</code> отправил жалобу на анкету "
 "пользователя: @{} | <code>{}</code>"
@@ -236,31 +236,31 @@ msgstr ""
 "User: @{} | <code>{}</code>  sent a complaint about the profile ofuser: "
 "@{} | <code>{}</code>"
 
-#: app/handlers/msg_text.py:170
+#: app/handlers/msg_text.py:178
 msgid "Панель управлением пользователями"
 msgstr "User management panel"
 
-#: app/handlers/msg_text.py:174
+#: app/handlers/msg_text.py:182
 msgid "💊 Укажите список пользовтелей для разблокировки в формате: 1234567, 234567"
 msgstr "💊 Specify the list of users to unlock in the format: 1234567, 234567"
 
-#: app/handlers/msg_text.py:178
+#: app/handlers/msg_text.py:186
 msgid "⚔️ Укажите список пользовтелей для блокировки в формате: 1234567, 234567"
 msgstr "⚔️ Specify the list of users to block in the format: 1234567, 234567"
 
-#: app/handlers/msg_text.py:182
+#: app/handlers/msg_text.py:190
 msgid "Пользователь: {} заблокирован"
 msgstr "User: {} blocked"
 
-#: app/handlers/msg_text.py:186
+#: app/handlers/msg_text.py:194
 msgid "Укажите текст сообщение которое хотите отправить"
 msgstr "Specify the text of the message you want to send"
 
-#: app/handlers/msg_text.py:190
+#: app/handlers/msg_text.py:198
 msgid "✅ Ваша жалоба на пользователя отправлена на рассмотрение!"
 msgstr "✅ Your user complaint has been sent for review!"
 
-#: app/handlers/msg_text.py:194
+#: app/handlers/msg_text.py:202
 msgid ""
 "Укажите причину жалобы:\n"
 "🔞 Неприличный материал\n"
@@ -285,11 +285,11 @@ msgstr "👤 Users"
 msgid "📩 Рассылка"
 msgstr "📩 Mailing list"
 
-#: app/keyboards/default/admin.py:34
+#: app/keyboards/default/admin.py:32
 msgid "⚔️ Забанить пользователей"
 msgstr "⚔️ Ban users"
 
-#: app/keyboards/default/admin.py:37
+#: app/keyboards/default/admin.py:35
 msgid "💊 Разбанить пользователей"
 msgstr "💊 Unban users"
 
@@ -309,15 +309,15 @@ msgstr "I'm male"
 msgid "Я девушка"
 msgstr "I'm female"
 
-#: app/keyboards/default/create_profile.py:32
+#: app/keyboards/default/create_profile.py:33
 msgid "Парни"
 msgstr "Men"
 
-#: app/keyboards/default/create_profile.py:33
+#: app/keyboards/default/create_profile.py:34
 msgid "Девушки"
 msgstr "Women"
 
-#: app/keyboards/default/create_profile.py:34
+#: app/keyboards/default/create_profile.py:35
 msgid "Все"
 msgstr "All"
 
@@ -329,7 +329,7 @@ msgstr "View👀"
 msgid "☠️ Заблокировать пользователя {}"
 msgstr "☠️ Block user {}"
 
-#: app/keyboards/inline/report.py:18
+#: app/keyboards/inline/report.py:20
 msgid "Отклонить"
 msgstr "Reject"
 
@@ -349,17 +349,10 @@ msgstr "additional description"
 msgid "activate profile"
 msgstr "activate profile"
 
-#: app/others/commands.py:20
+#: app/others/commands.py:21
 msgid "admin panel"
 msgstr "admin panel"
 
-#: app/others/commands.py:21
+#: app/others/commands.py:22
 msgid "stats"
 msgstr "stats"
-
-#~ msgid "Отменить жалобу"
-#~ msgstr "Cancel the report"
-
-#~ msgid "📱 Отправить"
-#~ msgstr ""
-

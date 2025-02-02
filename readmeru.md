@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://i.ibb.co/ZVyJ7ky/Screenshot-52.png" alt="diagram" width="1000">
+  <img src="https://i.ibb.co/PGwpsJGp/Screenshot-62.png" alt="diagram" width="1200">
 </p>
 <details>
   <summary>📸 Скриншоты</summary>
-  
+
   <p align="center">
     <img src="https://i.ibb.co/ggvC6kr/Screenshot-53.png" alt="Screenshot 1" width="800">
   </p>
@@ -99,4 +99,3 @@ cp .env.dist .env
 ---
 
 ### Теперь бот готов к запуску! 🎉
-
