@@ -1,5 +1,12 @@
+# Telegram dating bot Michalangelo 💞
+
+- `Aiogram 3`
+- `i18n`
+- ORM: `Peewee`
+- Database: `PostgreSQL \ Sqlite, Redis`
+
 <p align="center">
-  <img src="https://i.ibb.co/PGwpsJGp/Screenshot-62.png" alt="diagram" width="1200">
+  <img src="https://i.ibb.co/PGwpsJGp/Screenshot-62.png" alt="diagram" width="1100">
 </p>
 <details>
   <summary>📸 Screanshots</summary>
@@ -10,22 +17,8 @@
   <p align="center">
     <img src="https://pbs.twimg.com/media/GYKn8I_WAAAvErl?format=jpg&name=large" alt="Screenshot 2" width="800">
   </p>
-  <!-- <p align="center">
-    <img src="https://pbs.twimg.com/media/GYKn8I_WAAAvErl?format=jpg&name=large" alt="Screenshot 3" width="500">
-  </p> -->
 </details>
 
-
-# 🚀 Let's get started
-
-## 🛠️ Technology Stack
-- `Aiogram 3`
-- `Redis`
-- `i18n`
-- `Peewee`
-- `PostgreSQL \ Sqlite`
-
----
 
 ## 📥 Installation Instructions
 
