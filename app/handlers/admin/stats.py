@@ -15,14 +15,14 @@ from app.handlers.msg_text import msg_text
 
 @router.message(Command("stats"), StateFilter(None))
 @router.message(F.text.in_(["📊 Статистика", "📊 Statistics"]), StateFilter(None))
-async def _stats_command(message: types.Message) -> None:
+async def _stats_command(message: types.Message, session) -> None:
     """
     Отправляет администратору график регистрации пользователей
     и статистику пользователей в БД
     """
-    profile_stats = await get_profile_stats()
-    users_stats = await get_users_stats()
-    graph_path = await get_or_create_registration_graph()
+    profile_stats = await get_profile_stats(session)
+    users_stats = await get_users_stats(session)
+    graph_path = await get_or_create_registration_graph(session)
     photo = types.FSInputFile(graph_path)
 
     text = msg_text.USERS_STATS.format(

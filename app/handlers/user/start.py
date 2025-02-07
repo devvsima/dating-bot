@@ -3,7 +3,7 @@ from aiogram.filters import CommandStart
 from aiogram.filters.state import StateFilter
 
 from data.config import IMAGES_DIR
-from database.service.profile import get_profile
+from database.service.profiles import get_profile
 
 from app.routers import start_router
 from app.handlers.msg_text import msg_text
@@ -12,9 +12,9 @@ from app.handlers.bot_utils import menu
 
 
 @start_router.message(CommandStart(), StateFilter(None))
-async def _start_command(message: types.Message) -> None:
+async def _start_command(message: types.Message, session) -> None:
     """Стратовая команда"""
-    if await get_profile(message.from_user.id):
+    if await get_profile(session, message.from_user.id):
         await menu(message.from_user.id)
     else:
         photo = types.FSInputFile(f"{IMAGES_DIR}/new_logo.webp")

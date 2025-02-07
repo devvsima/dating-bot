@@ -2,7 +2,7 @@
 
 - `Aiogram 3`
 - `i18n`
-- ORM: `Peewee`
+- ORM: `SqlAlchemy`
 - Database: `PostgreSQL \ Sqlite, Redis`
 
 <p align="center">

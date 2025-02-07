@@ -7,7 +7,7 @@ from random import shuffle
 from app.routers import user_router as router
 
 from database.models.profile import Profile
-from database.service.likes import set_new_like
+from database.service.matchs import set_new_like
 from database.service.search import elastic_search_user_ids, get_profile
 
 from app.others.states import Search
@@ -20,11 +20,11 @@ from .cancel import cancel_command
 
 
 @router.message(F.text == "🔍", StateFilter(None))
-async def _search_command(message: types.Message, state: FSMContext) -> None:
+async def _search_command(message: types.Message, state: FSMContext, session) -> None:
     """Начинает поиск анкет"""
     await message.answer(msg_text.SEARCH, reply_markup=search_kb)
 
-    ids = await elastic_search_user_ids(message.from_user.id)
+    ids = await elastic_search_user_ids(session, message.from_user.id)
     if not ids:
         await message.answer(msg_text.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
@@ -35,27 +35,31 @@ async def _search_command(message: types.Message, state: FSMContext) -> None:
     await state.set_state(Search.search)
     await state.update_data(ids=ids)
 
-    profile = await get_profile(ids[0])
+    profile = await get_profile(session, ids[0])
     await send_profile(message.from_user.id, profile)
 
 
 @router.message(Search.search, F.text.in_(["❤️", "👎", "💢"]))
-async def _search_profile(message: types.Message, state: FSMContext) -> None:
+async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
     """Свайпы анкет"""
     data: dict = await state.get_data()
     ids: list = data.get("ids", [])
-    profile: Profile = await get_profile(ids[0])
+    profile: Profile = await get_profile(session, ids[0])
 
     if message.text == "❤️":
-        await set_new_like(message.from_user.id, profile.user_id)
+        await set_new_like(session, message.from_user.id, profile.user_id)
         await message.bot.send_message(
-            chat_id=profile.user_id.id,
+            chat_id=profile.user_id,
             text=msg_text.LIKE_PROFILE,
             reply_markup=check_archive_ikb(),
         )
     elif message.text == "💢":
         await message.answer(msg_text.REPORT_TO_PROFILE)
-        await report_to_profile(message.from_user, profile)
+        await report_to_profile(
+            session=session,
+            user=message.from_user,
+            profile=profile,
+        )
 
     ids.pop(0)
 
@@ -66,5 +70,5 @@ async def _search_profile(message: types.Message, state: FSMContext) -> None:
 
     await state.update_data(ids=ids)
 
-    profile: Profile = await get_profile(ids[0])
+    profile: Profile = await get_profile(session, ids[0])
     await send_profile(message.from_user.id, profile)

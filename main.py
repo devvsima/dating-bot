@@ -3,7 +3,7 @@ from aiogram.methods import DeleteWebhook
 
 from loader import dp, bot
 from utils.logging import logger
-from data.config import SKIP_UPDATES
+from data.config import tgbot
 
 from app.middlewares import setup_middlewares
 from app.handlers import setup_handlers
@@ -11,7 +11,9 @@ from app.handlers import setup_handlers
 
 async def on_startup() -> None:
     from app.others.commands import set_default_commands
+    from database.connect import create_db
 
+    await create_db()
     await set_default_commands()
     logger.info("~ Bot startup")
 
@@ -26,7 +28,7 @@ async def main():
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 
-    await bot(DeleteWebhook(drop_pending_updates=SKIP_UPDATES))
+    await bot(DeleteWebhook(drop_pending_updates=tgbot.SKIP_UPDATES))
     await dp.start_polling(bot)
 
 

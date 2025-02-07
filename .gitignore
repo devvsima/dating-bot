@@ -4,11 +4,13 @@
 .venv
 .github
 
+
 **/__pycache__
 
 **.sqlite
 **.sqlite3
 **.json
+**.csv
 **/.env
 **/logs
 **/invites_per_user.png

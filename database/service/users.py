@@ -1,54 +1,60 @@
-from ..models.users import Users
+from sqlalchemy import select, update
+from sqlalchemy.ext.asyncio import AsyncSession
+from ..models.user import User
 from utils.logging import logger
 
 
-async def get_user(user_id: int) -> Users | None:
+async def get_user(session: AsyncSession, user_id: int) -> User | None:
     """Возвращает пользователя по его id"""
-    try:
-        return Users.get(Users.id == user_id)
-    except:
-        return None
+    return await session.get(User, user_id)
 
 
-async def get_or_create_user(user_id: int, username: str = None, language: str = None) -> Users:
+async def get_or_create_user(
+    session: AsyncSession, user_id: int, username: str = None, language: str = None
+) -> User:
     """Возвращает пользователя по его id, если его нет - создает"""
-    if user := await get_user(user_id):
+    if user := await get_user(session, user_id):
         return user
 
-    return await create_user(user_id, username, language)
+    return await create_user(session, user_id, username, language)
 
 
-async def create_user(user_id: int, username: str = None, language: str = None) -> Users:
+async def create_user(
+    session: AsyncSession, user_id: int, username: str = None, language: str = None
+) -> User:
     """Создает нового пользователя"""
     logger.info(f"New user: {user_id} | {username}")
-    return Users.create(id=user_id, username=username, language=language)
+    user = User(id=user_id, username=username, language=language)
+    session.add(user)
+    await session.commit()
+    return user
 
 
-async def update_user_username(user_id: int, username: str = None) -> None:
+async def update_user_username(session: AsyncSession, user_id: int, username: str = None) -> None:
     """Обновляет данные пользователя"""
-    Users.update(username=username).where(Users.id == user_id).execute()
+    await session.execute(update(User).where(User.id == user_id).values(username=username))
+    await session.commit()
     logger.info(f"Update user: {user_id} | {username}")
 
 
-async def new_referral(inviter_id: int) -> None:
+async def new_referral(session: AsyncSession, inviter_id: int) -> None:
     """Добавляет приведенного реферала к пользователю inviter_id"""
-    Users.update(referral=Users.referral + 1).where(Users.id == inviter_id).execute()
+    await session.execute(
+        update(User).where(User.id == inviter_id).values(referral=User.referral + 1)
+    )
+    await session.commit()
     logger.info(f"User: {inviter_id} | привел нового пользователя")
 
 
-async def change_language(user_id: int, language: str) -> None:
+async def change_language(session: AsyncSession, user_id: int, language: str) -> None:
     """Изменяет язык пользователя на language"""
-    Users.update(language=language).where(Users.id == user_id).execute()
+    await session.execute(update(User).where(User.id == user_id).values(language=language))
+    await session.commit()
     logger.info(f"User: {user_id} | изменил язык на - {language}")
 
 
-async def toggle_user_ban(user: Users) -> None:
-    """Меняет статус блокировки пользователя на противоположный"""
-    user.is_banned = not user.is_banned
-    user.save()
-
-
-async def ban_or_unban_user(user_id: int, is_banned: bool) -> None:
+async def ban_or_unban_user(session: AsyncSession, user_id: int, is_banned: bool) -> None:
     """Меняет статус блокировки пользователя на заданный"""
-    Users.update(is_banned=is_banned).where(Users.id == user_id).execute()
-    logger.info(f"User: {user_id} | стату блокироваки изминен на - {is_banned}")
+    await session.execute(update(User).where(User.id == user_id).values(is_banned=is_banned))
+    await session.commit()
+    logger.info(f"User: {user_id} | статус блокировки изменен на - {is_banned}")

@@ -1,13 +1,16 @@
 from loader import bot
-from data.config import MODERATOR_GROUP
+from data.config import tgbot
 from utils.logging import logger
 
-from database.models.users import Users
+from database.models.user import User
 from database.models.profile import Profile
+from database.service.users import get_user
 
 from app.handlers.msg_text import msg_text
 from app.keyboards.default.base import menu_kb
 from app.keyboards.inline.report import block_user_ikb
+
+MODERATOR_GROUP = tgbot.MODERATOR_GROUP
 
 
 async def menu(user_id: int) -> None:
@@ -19,26 +22,47 @@ async def menu(user_id: int) -> None:
     )
 
 
-async def report_to_profile(user: Users, profile: Profile) -> None:
+async def report_to_profile(user: User, profile: Profile, session) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
-    if MODERATOR_GROUP:
-        try:
-            await send_profile(MODERATOR_GROUP, profile)
-            text = msg_text.REPORT_TO_USER.format(
-                user.username, user.id, profile.user_id.username, profile.user_id.id
-            )
+    await send_profile(MODERATOR_GROUP, profile)
+    reported_user = await get_user(session, profile.user_id)
 
-            await bot.send_message(
-                chat_id=MODERATOR_GROUP,
-                text=text,
-                reply_markup=block_user_ikb(
-                    user_id=profile.user_id.id,
-                    username=profile.user_id.username,
-                ),
-            )
-        except:
-            logger.error("Сообщение в модераторскую группу не отправленно")
+    text = msg_text.REPORT_TO_USER.format(
+        user.username, user.id, reported_user.username, profile.user_id
+    )
+
+    await bot.send_message(
+        chat_id=MODERATOR_GROUP,
+        text=text,
+        reply_markup=block_user_ikb(
+            user_id=profile.user_id,
+            username=reported_user.username,
+        ),
+    )
+
+
+# async def report_to_profile(user: User, profile: Profile, session) -> None:
+#     """Отправляет в группу модераторов анкету пользователя
+#     на которого пришла жалоба"""
+#     if MODERATOR_GROUP:
+#         try:
+#             await send_profile(MODERATOR_GROUP, profile)
+#             text = msg_text.REPORT_TO_USER.format(
+#                 user.username, user.id, profile.user_id.username, profile.user_id
+#             )
+
+#             reported_user = await get_user(session, profile.user_id)
+#             await bot.send_message(
+#                 chat_id=MODERATOR_GROUP,
+#                 text=text,
+#                 reply_markup=block_user_ikb(
+#                     user_id=profile.user_id,
+#                     username=reported_user.username,
+#                 ),
+#             )
+#         except:
+#             logger.error("Сообщение в модераторскую группу не отправленно")
 
 
 async def send_profile(user_id: int, profile: Profile) -> None:
@@ -51,7 +75,7 @@ async def send_profile(user_id: int, profile: Profile) -> None:
     )
 
 
-async def new_user_alert_to_group(user: Users) -> None:
+async def new_user_alert_to_group(user: User) -> None:
     """Отправляет уведомление в модераторскуб группу о новом пользователе"""
     if MODERATOR_GROUP:
         try:

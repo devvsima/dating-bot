@@ -19,7 +19,6 @@ def admin_menu_kb() -> ReplyKeyboardMarkup:
                 KeyboardButton(text=_("📩 Рассылка")),
             ],
         ],
-        one_time_keyboard=True,
     )
     return kb
 
@@ -35,6 +34,5 @@ def user_ban_or_unban_kb() -> ReplyKeyboardMarkup:
                 KeyboardButton(text=_("💊 Разбанить пользователей")),
             ],
         ],
-        one_time_keyboard=True,
     )
     return kb

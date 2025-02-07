@@ -1,34 +1,45 @@
-from peewee import fn, Case
+from sqlalchemy import select, func, case
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..models.users import Users
+from ..models.user import User
 from ..models.profile import Profile
 
 
-async def get_all_users_registration_data() -> list:
-    users = Users.select(Users.id, Users.username, Users.created_at).order_by(Users.referral.desc())
-    # Формируем данные в виде списка словарей
-    registration_data = [
-        {"username": user.username, "timestamp": user.created_at} for user in users
-    ]
-    return registration_data
+async def get_all_users_registration_data(session: AsyncSession) -> list:
+    """Возвращает список пользователей с датой регистрации"""
+    stmt = select(User.id, User.username, User.created_at).order_by(User.referral.desc())
+    result = await session.execute(stmt)
+    users = result.fetchall()
+
+    return [{"username": user.username, "timestamp": user.created_at} for user in users]
 
 
-async def get_users_stats() -> tuple[int, int]:
+async def get_users_stats(session: AsyncSession) -> tuple[int, int]:
     """Возвращает количество пользователей и заблокированных пользователей"""
-    query = Users.select(
-        fn.COUNT(Users.id).alias("count"),
-        fn.SUM(Case(Users.is_banned, [(True, 1)], 0)).alias("banned_count"),
+    stmt = select(
+        func.count(User.id).label("count"),
+        func.sum(case((User.is_banned == True, 1), else_=0)).label("banned_count"),
     )
-    return query.dicts().get()
+    result = await session.execute(stmt)
+    stats = result.fetchone()
+
+    return {"count": stats[0], "banned_count": stats[1]}
 
 
-async def get_profile_stats() -> dict:
-    """Возвращает количество: пользовательских анкет,
-    анкет парне, анкет девушек, не активныханкет"""
-    query = Profile.select(
-        fn.COUNT(Profile.user_id).alias("count"),
-        fn.SUM(Case(None, [(Profile.gender == "male", 1)], 0)).alias("male_count"),
-        fn.SUM(Case(None, [(Profile.gender == "female", 1)], 0)).alias("female_count"),
-        fn.SUM(Case(None, [(Profile.is_active == False, 1)], 0)).alias("inactive_profile"),
+async def get_profile_stats(session: AsyncSession) -> dict:
+    """Возвращает количество анкет (всего, мужчин, женщин, неактивных)"""
+    stmt = select(
+        func.count(Profile.user_id).label("count"),
+        func.sum(case((Profile.gender == "male", 1), else_=0)).label("male_count"),
+        func.sum(case((Profile.gender == "female", 1), else_=0)).label("female_count"),
+        func.sum(case((Profile.is_active == False, 1), else_=0)).label("inactive_profile"),
     )
-    return query.dicts().get()
+    result = await session.execute(stmt)
+    stats = result.fetchone()
+
+    return {
+        "count": stats[0],
+        "male_count": stats[1],
+        "female_count": stats[2],
+        "inactive_profile": stats[3],
+    }
