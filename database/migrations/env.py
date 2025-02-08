@@ -20,7 +20,10 @@ from data.config import database
 from database.models import User, Profile, Match
 from database.models.base import BaseModel
 
-config.set_main_option("sqlalchemy.url", database.URL + "?async_fallback=True")
+if database.URL.startswith("sqlite"):
+    config.set_main_option("sqlalchemy.url", database.URL.replace("sqlite+aiosqlite", "sqlite"))
+else:
+    config.set_main_option("sqlalchemy.url", database.URL + "?async_fallback=True")
 
 target_metadata = BaseModel.metadata
 
