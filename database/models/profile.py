@@ -1,9 +1,9 @@
-from sqlalchemy import BigInteger, String, Boolean, Integer, ForeignKey
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import BaseModel
 
-from enum import Enum
+# from enum import Enum
 
 
 # class Gender(Enum):

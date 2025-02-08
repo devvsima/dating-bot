@@ -24,10 +24,10 @@ class DatabaseSettings:
     USER: str = env.str("DB_USER", default="postgres")
     PASS: str = env.str("DB_PASS", default="postgres")
 
-    DB_URL: str = env.str("DB_URL", default=f"sqlite+aiosqlite:///{DIR}/database/db.sqlite3")
+    URL: str = env.str("DB_URL", default=f"sqlite+aiosqlite:///{DIR}/database/db.sqlite3")
 
     if all([NAME, HOST, PORT, USER, PASS]):
-        DB_URL = f"postgresql+asyncpg://{USER}:{PASS}@{HOST}:{PORT}/{NAME}"
+        URL = f"postgresql+asyncpg://{USER}:{PASS}@{HOST}:{PORT}/{NAME}"
 
     ECHO = False
     POOL_SIZE = 5
