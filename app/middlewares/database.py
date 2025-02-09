@@ -1,7 +1,6 @@
-from aiogram import BaseMiddleware
-
 from typing import Any
 
+from aiogram import BaseMiddleware
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
 

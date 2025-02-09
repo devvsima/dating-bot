@@ -1,21 +1,18 @@
+from random import shuffle
+
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from random import shuffle
-
-from app.routers import user_router as router
-
-from database.models.profile import Profile
-from database.service.matchs import set_new_like
-from database.service.search import elastic_search_user_ids, get_profile
-
-from app.others.states import Search
+from app.handlers.bot_utils import menu, report_to_profile, send_profile
+from app.handlers.msg_text import msg_text
 from app.keyboards.default.base import search_kb
 from app.keyboards.inline.archive import check_archive_ikb
+from app.others.states import Search
+from app.routers import user_router as router
+from database.services import Match, Profile
+from database.services.search import search_profiles
 
-from app.handlers.bot_utils import menu, send_profile, report_to_profile
-from app.handlers.msg_text import msg_text
 from .cancel import cancel_command
 
 
@@ -24,7 +21,7 @@ async def _search_command(message: types.Message, state: FSMContext, session) ->
     """Начинает поиск анкет"""
     await message.answer(msg_text.SEARCH, reply_markup=search_kb)
 
-    ids = await elastic_search_user_ids(session, message.from_user.id)
+    ids = await search_profiles(session, message.from_user.id)
     if not ids:
         await message.answer(msg_text.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
@@ -35,7 +32,7 @@ async def _search_command(message: types.Message, state: FSMContext, session) ->
     await state.set_state(Search.search)
     await state.update_data(ids=ids)
 
-    profile = await get_profile(session, ids[0])
+    profile = await Profile.get(session, ids[0])
     await send_profile(message.from_user.id, profile)
 
 
@@ -44,10 +41,10 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
     """Свайпы анкет"""
     data: dict = await state.get_data()
     ids: list = data.get("ids", [])
-    profile: Profile = await get_profile(session, ids[0])
+    profile = await Profile.get(session, ids[0])
 
     if message.text == "❤️":
-        await set_new_like(session, message.from_user.id, profile.user_id)
+        await Match.set_new_like(session, message.from_user.id, profile.user_id)
         await message.bot.send_message(
             chat_id=profile.user_id,
             text=msg_text.LIKE_PROFILE,
@@ -70,5 +67,5 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
 
     await state.update_data(ids=ids)
 
-    profile: Profile = await get_profile(session, ids[0])
+    profile = await Profile.get(session, ids[0])
     await send_profile(message.from_user.id, profile)

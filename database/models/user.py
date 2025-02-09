@@ -1,11 +1,10 @@
-from sqlalchemy import BigInteger, String, Boolean, Integer
+from sqlalchemy import BigInteger, Boolean, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 
 from .base import BaseModel
 
 
-class User(BaseModel):
+class UserModel(BaseModel):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
@@ -13,3 +12,7 @@ class User(BaseModel):
     language: Mapped[str] = mapped_column(String, default="en")
     referral: Mapped[int] = mapped_column(Integer, default=0)
     is_banned: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    profile: Mapped["ProfileModel"] = relationship(
+        "ProfileModel", uselist=False, back_populates="user"
+    )

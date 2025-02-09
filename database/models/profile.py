@@ -1,23 +1,10 @@
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
 
-# from enum import Enum
 
-
-# class Gender(Enum):
-#     male = "male"
-#     female = "female"
-
-
-# class FindGender(Enum):
-#     male = "male"
-#     female = "female"
-#     all = "all"
-
-
-class Profile(BaseModel):
+class ProfileModel(BaseModel):
     __tablename__ = "profiles"
 
     user_id: Mapped[int] = mapped_column(
@@ -33,3 +20,5 @@ class Profile(BaseModel):
     age: Mapped[int]
     description: Mapped[str]
     is_active: Mapped[bool] = mapped_column(default=True)
+
+    user: Mapped["UserModel"] = relationship("UserModel", back_populates="profile")

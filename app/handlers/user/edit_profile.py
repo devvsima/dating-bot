@@ -1,15 +1,13 @@
 from aiogram import F, types
-from aiogram.fsm.context import FSMContext
 from aiogram.filters.state import StateFilter
+from aiogram.fsm.context import FSMContext
 
-from database.service.profiles import update_profile_is_active_status
-
-from app.routers import user_router as router
-
-from app.handlers.msg_text import msg_text
 from app.handlers.bot_utils import menu
-from app.others.states import ProfileEdit, DisableProfile
+from app.handlers.msg_text import msg_text
 from app.keyboards.default.base import profile_return_kb
+from app.others.states import DisableProfile, ProfileEdit
+from app.routers import user_router as router
+from database.services import Profile
 
 
 @router.message(F.text == "🖼", StateFilter(None))
@@ -30,7 +28,7 @@ async def _edit_profile_description_command(message: types.Message, state: FSMCo
 async def _disable_profile_command(message: types.Message, state: FSMContext, session) -> None:
     """Отключение профиля"""
     await state.set_state(DisableProfile.waiting)
-    await update_profile_is_active_status(session, message.from_user.id, False)
+    await Profile.update_isactive(session, message.from_user.id, False)
     await message.answer(text=msg_text.DISABLE_PROFILE, reply_markup=profile_return_kb())
 
 
@@ -38,7 +36,7 @@ async def _disable_profile_command(message: types.Message, state: FSMContext, se
     F.text.in_(["🔙 Вернуть профиль", "🔙 Return profile", "🔙 Повернути профіль"]),
     DisableProfile.waiting,
 )
-async def _activate_profile_command(message: types.Message, state: FSMContext, session) -> None:
-    await update_profile_is_active_status(session, message.from_user.id, True)
+async def _activate_profile_command(message: types.Message, session) -> None:
+    await Profile.update_isactive(session, message.from_user.id, True)
     await message.answer(msg_text.ACTIVATE_PROFILE_ALERT)
     await menu(message.from_user.id)

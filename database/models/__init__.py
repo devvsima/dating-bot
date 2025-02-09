@@ -1,3 +1,3 @@
-from .user import User
-from .profile import Profile
-from .match import Match
+from .match import MatchModel
+from .profile import ProfileModel
+from .user import UserModel

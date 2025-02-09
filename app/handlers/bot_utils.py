@@ -1,14 +1,11 @@
-from loader import bot
-from data.config import tgbot
-from utils.logging import logger
-
-from database.models.user import User
-from database.models.profile import Profile
-from database.service.users import get_user
-
 from app.handlers.msg_text import msg_text
 from app.keyboards.default.base import menu_kb
 from app.keyboards.inline.report import block_user_ikb
+from data.config import tgbot
+from database.models import ProfileModel, UserModel
+from database.services import User
+from loader import bot
+from utils.logging import logger
 
 MODERATOR_GROUP = tgbot.MODERATOR_GROUP
 
@@ -22,11 +19,11 @@ async def menu(user_id: int) -> None:
     )
 
 
-async def report_to_profile(user: User, profile: Profile, session) -> None:
+async def report_to_profile(user: UserModel, profile: ProfileModel, session) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
     await send_profile(MODERATOR_GROUP, profile)
-    reported_user = await get_user(session, profile.user_id)
+    reported_user = await User.get(session, profile.user_id)
 
     text = msg_text.REPORT_TO_USER.format(
         user.username, user.id, reported_user.username, profile.user_id
@@ -65,7 +62,7 @@ async def report_to_profile(user: User, profile: Profile, session) -> None:
 #             logger.error("Сообщение в модераторскую группу не отправленно")
 
 
-async def send_profile(user_id: int, profile: Profile) -> None:
+async def send_profile(user_id: int, profile: ProfileModel) -> None:
     """Отправляет пользователю переданный в функцию профиль"""
     await bot.send_photo(
         chat_id=user_id,
@@ -75,7 +72,7 @@ async def send_profile(user_id: int, profile: Profile) -> None:
     )
 
 
-async def new_user_alert_to_group(user: User) -> None:
+async def new_user_alert_to_group(user: UserModel) -> None:
     """Отправляет уведомление в модераторскуб группу о новом пользователе"""
     if MODERATOR_GROUP:
         try:

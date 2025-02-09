@@ -3,7 +3,7 @@ from aiogram.client.bot import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.utils.i18n import I18n
 
-from data.config import redis, tgbot, I18N_DOMAIN, LOCALES_DIR
+from data.config import I18N_DOMAIN, LOCALES_DIR, redis, tgbot
 from utils.logging import logger
 
 if redis.URL:

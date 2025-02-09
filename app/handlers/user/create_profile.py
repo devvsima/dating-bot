@@ -1,18 +1,15 @@
 from aiogram import F, types
-from aiogram.fsm.context import FSMContext
 from aiogram.filters.state import StateFilter
-
-from app.routers import user_router as router
-
-from database.service.profiles import create_profile, edit_profile_photo, edit_profile_description
-
-from app.handlers.msg_text import msg_text
-from app.handlers.user.profile import profile_command
-from app.keyboards.default.create_profile import gender_kb, find_gender_kb
-from app.keyboards.default.base import del_kb
-from app.others.states import ProfileEdit, ProfileCreate
+from aiogram.fsm.context import FSMContext
 
 import app.filters.create_profile_filtres as filters
+from app.handlers.msg_text import msg_text
+from app.handlers.user.profile import profile_command
+from app.keyboards.default.base import del_kb
+from app.keyboards.default.create_profile import find_gender_kb, gender_kb
+from app.others.states import ProfileCreate, ProfileEdit
+from app.routers import user_router as router
+from database.services import Profile
 
 
 # create profile
@@ -58,7 +55,7 @@ async def _incorrect_find_gender(message: types.Message):
 async def _photo(message: types.Message, state: FSMContext, session):
     photo = message.photo[0].file_id
     if await state.get_state() == ProfileEdit.photo.state:
-        await edit_profile_photo(session, message.from_user.id, photo)
+        await Profile.update_photo(session, message.from_user.id, photo)
         await profile_command(message, session)
         await state.clear()
         return
@@ -125,10 +122,10 @@ async def _incorrect_city(message: types.Message):
 @router.message(StateFilter(ProfileCreate.desc, ProfileEdit.desc), filters.IsDescription())
 async def _description(message: types.Message, state: FSMContext, session):
     if await state.get_state() == ProfileEdit.desc.state:
-        await edit_profile_description(session, message.from_user.id, message.text)
+        await Profile.update_description(session, message.from_user.id, message.text)
     else:
         data = await state.get_data()
-        await create_profile(
+        await Profile.create(
             session,
             user_id=message.from_user.id,
             gender=data["gender"],

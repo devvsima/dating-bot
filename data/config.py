@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from environs import Env
 
 DIR = Path(__file__).absolute().parent.parent

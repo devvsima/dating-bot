@@ -1,9 +1,8 @@
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 
-from app.routers import admin_router as router
-
 from app.handlers.msg_text import msg_text
+from app.routers import admin_router as router
 
 
 @router.message(F.text.in_(["📩 Рассылка", "📩 Mailing list", "📩 Розсилка"]), StateFilter(None))

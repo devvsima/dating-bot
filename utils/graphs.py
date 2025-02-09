@@ -1,11 +1,11 @@
+from datetime import datetime, timedelta
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
-from datetime import datetime, timedelta
-
-from database.service.stats import get_all_users_registration_data
 
 from data.config import IMAGES_DIR
+from database.services.stat import get_all_users_registration_data
 
 registration_photo_path = f"{IMAGES_DIR}/registration_graph.png"
 

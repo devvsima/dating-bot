@@ -1,12 +1,12 @@
 import asyncio
+
 from aiogram.methods import DeleteWebhook
 
-from loader import dp, bot
-from utils.logging import logger
-from data.config import tgbot
-
-from app.middlewares import setup_middlewares
 from app.handlers import setup_handlers
+from app.middlewares import setup_middlewares
+from data.config import tgbot
+from loader import bot, dp
+from utils.logging import logger
 
 
 async def on_startup() -> None:

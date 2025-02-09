@@ -1,8 +1,8 @@
-from sqlalchemy import func, DateTime
-from sqlalchemy.orm import Mapped, DeclarativeBase, mapped_column
-
-from typing import Annotated
 from datetime import datetime
+from typing import Annotated
+
+from sqlalchemy import DateTime, func
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 created_at = Annotated[datetime, mapped_column(DateTime, default=func.now())]
 updated_at = Annotated[datetime, mapped_column(DateTime, default=func.now(), onupdate=func.now())]

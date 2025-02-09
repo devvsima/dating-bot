@@ -1,12 +1,11 @@
 from aiogram import F, types
-from aiogram.fsm.context import FSMContext
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
-
-from app.routers import user_router as router
+from aiogram.fsm.context import FSMContext
 
 from app.handlers.bot_utils import menu
 from app.others.states import DisableProfile
+from app.routers import user_router as router
 
 
 @router.message(F.text == "💤", StateFilter("*"))

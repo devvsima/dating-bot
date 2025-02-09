@@ -1,5 +1,5 @@
-from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
+from geopy.geocoders import Nominatim
 
 
 def get_coordinates(city_name: str, timeout: int = 10) -> list | None:

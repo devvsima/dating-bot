@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .base import BaseModel
 
 
-class Match(BaseModel):
+class MatchModel(BaseModel):
     __tablename__ = "matchs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)

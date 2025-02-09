@@ -1,6 +1,8 @@
 from logging import getLogger
-from data.config import DIR
+
 from loguru import logger
+
+from data.config import DIR
 
 logger.add(
     f"{DIR}/logs/logs.log",

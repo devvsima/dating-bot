@@ -2,12 +2,11 @@ from aiogram import F, types
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 
-from loader import bot
-from data.config import MODERATOR_GROUP
-
 from app.routers import user_router as router
+from data.config import tgbot
+from loader import bot
 
-from app.handlers.msg_text import msg_text
+MODERATOR_GROUP = tgbot.MODERATOR_GROUP
 
 
 @router.message(Command("sponsor"), StateFilter(None))
