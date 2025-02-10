@@ -6,7 +6,6 @@
 
 
 **/__pycache__
-**/migrations/versions
 
 **.sqlite
 **.sqlite3

@@ -1,4 +1,4 @@
-alembic revision --autogenerate
+alembic revision --autogeneratex
 
 
 alembic upgrade head
