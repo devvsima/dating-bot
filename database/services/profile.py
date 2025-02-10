@@ -1,4 +1,4 @@
-from sqlalchemy import delete, update
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from utils.logging import logger
@@ -18,32 +18,25 @@ class Profile:
         await session.commit()
         logger.info(f"User: {user_id} | удалил профиль")
 
-    async def update_isactive(session: AsyncSession, user_id: int, is_active: bool) -> None:
+    async def update_isactive(
+        session: AsyncSession, profile: ProfileModel, is_active: bool
+    ) -> None:
         """Задает профилю статус, активный/не активный"""
-        await session.execute(
-            update(ProfileModel).where(ProfileModel.user_id == user_id).values(is_active=is_active)
-        )
+        profile.is_active = is_active
         await session.commit()
-        logger.info(f"User: {user_id} | поменял статус профиля на - {is_active}")
+        logger.info(f"User: {profile.user_id} | поменял статус профиля на - {is_active}")
 
-    async def update_photo(session: AsyncSession, user_id: int, photo: str):
+    async def update_photo(session: AsyncSession, profile: ProfileModel, photo: str):
         """Изменяет фотографию пользователя"""
-        await session.execute(
-            update(ProfileModel).where(ProfileModel.user_id == user_id).values(photo=photo)
-        )
+        profile.photo = photo
         await session.commit()
-        logger.info(f"User: {user_id} | изменил фотографию")
+        logger.info(f"User: {profile.user_id} | изменил фотографию")
 
-    async def update_description(session: AsyncSession, user_id: int, description: str):
+    async def update_description(session: AsyncSession, profile: ProfileModel, description: str):
         """Изменяет описание пользователя"""
-
-        await session.execute(
-            update(ProfileModel)
-            .where(ProfileModel.user_id == user_id)
-            .values(description=description)
-        )
+        profile.description = description
         await session.commit()
-        logger.info(f"User | {user_id} изменил описание")
+        logger.info(f"User | {profile.user_id} изменил описание")
 
     async def create(
         session: AsyncSession,

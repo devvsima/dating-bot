@@ -45,7 +45,7 @@ class User:
     @staticmethod
     async def update_username(session: AsyncSession, user: UserModel, username: str = None) -> None:
         """Обновляет данные пользователя"""
-        user.username += username
+        user.username = username
         await session.commit()
         logger.info(f"Update user: {user.id} | {username}")
 

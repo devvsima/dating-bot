@@ -7,10 +7,11 @@ from app.handlers.msg_text import msg_text
 from app.keyboards.default.create_profile import start_kb
 from app.routers import start_router
 from data.config import IMAGES_DIR
+from database.models import UserModel
 
 
 @start_router.message(CommandStart(), StateFilter(None))
-async def _start_command(message: types.Message, user) -> None:
+async def _start_command(message: types.Message, user: UserModel) -> None:
     """Стратовая команда"""
     if user.profile:
         await menu(user.id)

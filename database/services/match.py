@@ -8,7 +8,7 @@ from ..models.match import MatchModel
 
 class Match:
     @staticmethod
-    async def add(session: AsyncSession, sender_id: int, receiver_id: int) -> None:
+    async def create(session: AsyncSession, sender_id: int, receiver_id: int) -> None:
         """Добавляет лайк в БД, если он уже есть - ничего не делает"""
         result = await session.execute(
             select(MatchModel).where(

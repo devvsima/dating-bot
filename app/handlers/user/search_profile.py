@@ -10,6 +10,7 @@ from app.keyboards.default.base import search_kb
 from app.keyboards.inline.archive import check_archive_ikb
 from app.others.states import Search
 from app.routers import user_router as router
+from database.models import UserModel
 from database.services import Match, Profile
 from database.services.search import search_profiles
 
@@ -17,11 +18,13 @@ from .cancel import cancel_command
 
 
 @router.message(F.text == "🔍", StateFilter(None))
-async def _search_command(message: types.Message, state: FSMContext, session) -> None:
+async def _search_command(
+    message: types.Message, state: FSMContext, user: UserModel, session
+) -> None:
     """Начинает поиск анкет"""
     await message.answer(msg_text.SEARCH, reply_markup=search_kb)
 
-    ids = await search_profiles(session, message.from_user.id)
+    ids = await search_profiles(session, user.profile)
     if not ids:
         await message.answer(msg_text.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
@@ -44,7 +47,7 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
     profile = await Profile.get(session, ids[0])
 
     if message.text == "❤️":
-        await Match.set_new_like(session, message.from_user.id, profile.user_id)
+        await Match.create(session, message.from_user.id, profile.user_id)
         await message.bot.send_message(
             chat_id=profile.user_id,
             text=msg_text.LIKE_PROFILE,
