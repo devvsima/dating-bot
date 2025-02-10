@@ -9,6 +9,7 @@ from app.keyboards.default.base import del_kb
 from app.keyboards.default.create_profile import find_gender_kb, gender_kb
 from app.others.states import ProfileCreate, ProfileEdit
 from app.routers import user_router as router
+from database.models.user import UserModel
 from database.services import Profile
 
 
@@ -52,10 +53,10 @@ async def _incorrect_find_gender(message: types.Message):
 
 # < photo >
 @router.message(StateFilter(ProfileCreate.photo, ProfileEdit.photo), filters.IsPhoto())
-async def _photo(message: types.Message, state: FSMContext, session):
+async def _photo(message: types.Message, state: FSMContext, user: UserModel, session):
     photo = message.photo[0].file_id
     if await state.get_state() == ProfileEdit.photo.state:
-        await Profile.update_photo(session, message.from_user.id, photo)
+        await Profile.update_photo(session, user.profile, photo)
         await profile_command(message, session)
         await state.clear()
         return
@@ -120,9 +121,9 @@ async def _incorrect_city(message: types.Message):
 
 # < description >
 @router.message(StateFilter(ProfileCreate.desc, ProfileEdit.desc), filters.IsDescription())
-async def _description(message: types.Message, state: FSMContext, session):
+async def _description(message: types.Message, state: FSMContext, user: UserModel, session):
     if await state.get_state() == ProfileEdit.desc.state:
-        await Profile.update_description(session, message.from_user.id, message.text)
+        await Profile.update_description(session, user.profile, message.text)
     else:
         data = await state.get_data()
         await Profile.create(

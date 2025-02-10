@@ -7,6 +7,7 @@ from app.handlers.msg_text import msg_text
 from app.keyboards.default.base import profile_return_kb
 from app.others.states import DisableProfile, ProfileEdit
 from app.routers import user_router as router
+from database.models import UserModel
 from database.services import Profile
 
 
@@ -25,10 +26,12 @@ async def _edit_profile_description_command(message: types.Message, state: FSMCo
 
 
 @router.message(F.text == "❌", StateFilter(None))
-async def _disable_profile_command(message: types.Message, state: FSMContext, session) -> None:
+async def _disable_profile_command(
+    message: types.Message, state: FSMContext, user: UserModel, session
+) -> None:
     """Отключение профиля"""
     await state.set_state(DisableProfile.waiting)
-    await Profile.update_isactive(session, message.from_user.id, False)
+    await Profile.update_isactive(session, user.profile, False)
     await message.answer(text=msg_text.DISABLE_PROFILE, reply_markup=profile_return_kb())
 
 
