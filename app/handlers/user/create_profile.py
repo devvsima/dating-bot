@@ -57,7 +57,7 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
     photo = message.photo[0].file_id
     if await state.get_state() == ProfileEdit.photo.state:
         await Profile.update_photo(session, user.profile, photo)
-        await profile_command(message, session)
+        await profile_command(message, user)
         await state.clear()
         return
 
@@ -127,7 +127,7 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
     else:
         data = await state.get_data()
         await Profile.create(
-            session,
+            session=session,
             user_id=message.from_user.id,
             gender=data["gender"],
             find_gender=data["find_gender"],
@@ -141,7 +141,8 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
         )
 
     await state.clear()
-    await profile_command(message, session)
+    await session.refresh(user)
+    await profile_command(message, user)
 
 
 @router.message(StateFilter(ProfileCreate.desc, ProfileEdit.desc))

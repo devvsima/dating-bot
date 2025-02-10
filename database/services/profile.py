@@ -71,3 +71,4 @@ class Profile:
         session.add(profile)
         await session.commit()
         logger.info(f"User: {user_id} | создал анкету")
+        return profile
