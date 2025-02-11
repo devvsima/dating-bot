@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-02 22:05+0200\n"
+"POT-Creation-Date: 2025-02-11 20:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.9.1\n"
+"Generated-By: Babel 2.17.0\n"
 
-#: app/handlers/msg_text.py:11
+#: app/handlers/msg_text.py:12
 msgid ""
 "\n"
 "Привет! 👋\n"
@@ -28,7 +28,7 @@ msgid ""
 "Создай профиль и начни знакомиться с новыми людьми прямо сейчас!\n"
 msgstr ""
 
-#: app/handlers/msg_text.py:23
+#: app/handlers/msg_text.py:24
 msgid ""
 "\n"
 "🔍 Искать анкеты\n"
@@ -38,7 +38,7 @@ msgid ""
 "✉️ Пригласить друзей"
 msgstr ""
 
-#: app/handlers/msg_text.py:34
+#: app/handlers/msg_text.py:35
 msgid ""
 "\n"
 "🔄 Заполнить анкету заново\n"
@@ -49,7 +49,7 @@ msgid ""
 "🔍 Смотреть анкеты\n"
 msgstr ""
 
-#: app/handlers/msg_text.py:47
+#: app/handlers/msg_text.py:48
 msgid ""
 "\n"
 "👋\n"
@@ -83,6 +83,7 @@ msgid "Тебя еще никто не лайкнул. Но всё ещё впе
 msgstr ""
 
 #: app/handlers/msg_text.py:80
+#, python-brace-format
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr ""
 
@@ -114,7 +115,7 @@ msgstr ""
 msgid "Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝"
 msgstr ""
 
-#: app/handlers/msg_text.py:112
+#: app/handlers/msg_text.py:113
 msgid ""
 "Ваша анкета временно отключена.\n"
 "\n"
@@ -137,7 +138,7 @@ msgstr ""
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr ""
 
-#: app/handlers/msg_text.py:130
+#: app/handlers/msg_text.py:131
 msgid ""
 "Неверный формат фотографии! Пожалуйста, загрузите изображение в "
 "правильном формате. 🖼️"
@@ -147,7 +148,8 @@ msgstr ""
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr ""
 
-#: app/handlers/msg_text.py:140
+#: app/handlers/msg_text.py:141
+#, python-brace-format
 msgid ""
 "Приглашай друзей и получай бонус к своей анкете!\n"
 "\n"
@@ -162,6 +164,7 @@ msgid "Вы администратор!"
 msgstr ""
 
 #: app/handlers/msg_text.py:150
+#, python-brace-format
 msgid ""
 "\n"
 "👤 Пользователей: {}\t|🚫 Заблокированных: {}\n"
@@ -180,10 +183,12 @@ msgid "Ваш язык успешно изменён! ✅"
 msgstr ""
 
 #: app/handlers/msg_text.py:168
+#, python-brace-format
 msgid "Появился новый пользователь, @{} | {}"
 msgstr ""
 
-#: app/handlers/msg_text.py:172
+#: app/handlers/msg_text.py:173
+#, python-brace-format
 msgid ""
 "Пользователь: @{} | <code>{}</code> отправил жалобу на анкету "
 "пользователя: @{} | <code>{}</code>"
@@ -202,6 +207,7 @@ msgid "⚔️ Укажите список пользовтелей для бло
 msgstr ""
 
 #: app/handlers/msg_text.py:190
+#, python-brace-format
 msgid "Пользователь: {} заблокирован"
 msgstr ""
 
@@ -223,63 +229,82 @@ msgid ""
 "Если жалоба ошибочная, вы можете вернутся назад.\n"
 msgstr ""
 
-#: app/keyboards/default/admin.py:13
+#: app/keyboards/default/admin.py:10
 msgid "📊 Статистика"
 msgstr ""
 
-#: app/keyboards/default/admin.py:16
+#: app/keyboards/default/admin.py:11
 msgid "👤 Пользователи"
 msgstr ""
 
-#: app/keyboards/default/admin.py:19
+#: app/keyboards/default/admin.py:12
 msgid "📩 Рассылка"
 msgstr ""
 
-#: app/keyboards/default/admin.py:32
+#: app/keyboards/default/admin.py:22
 msgid "⚔️ Забанить пользователей"
 msgstr ""
 
-#: app/keyboards/default/admin.py:35
+#: app/keyboards/default/admin.py:23
 msgid "💊 Разбанить пользователей"
 msgstr ""
 
-#: app/keyboards/default/base.py:44
+#: app/keyboards/default/base.py:41
 msgid "🔙 Вернуть профиль"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:10
+#: app/keyboards/default/base.py:53
+msgid "Отменить жалобу"
+msgstr ""
+
+#: app/keyboards/default/base.py:68
+msgid "Оставить предыдущее"
+msgstr ""
+
+#: app/keyboards/default/create_profile.py:11
 msgid "Создать анкету"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:21
+#: app/keyboards/default/create_profile.py:20
+#: app/keyboards/default/create_profile.py:31
+#: app/keyboards/default/create_profile.py:46
+msgid "Выберете из вариантов:"
+msgstr ""
+
+#: app/keyboards/default/create_profile.py:23
 msgid "Я парень"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:21
+#: app/keyboards/default/create_profile.py:23
 msgid "Я девушка"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:33
+#: app/keyboards/default/create_profile.py:35
 msgid "Парни"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:34
+#: app/keyboards/default/create_profile.py:36
 msgid "Девушки"
 msgstr ""
 
-#: app/keyboards/default/create_profile.py:35
+#: app/keyboards/default/create_profile.py:37
 msgid "Все"
 msgstr ""
 
-#: app/keyboards/inline/archive.py:13
+#: app/keyboards/default/create_profile.py:49
+msgid "📱 Отправить"
+msgstr ""
+
+#: app/keyboards/inline/archive.py:10
 msgid "Посмотреть"
 msgstr ""
 
-#: app/keyboards/inline/report.py:15
+#: app/keyboards/inline/report.py:12
+#, python-brace-format
 msgid "☠️ Заблокировать пользователя {}"
 msgstr ""
 
-#: app/keyboards/inline/report.py:20
+#: app/keyboards/inline/report.py:17
 msgid "Отклонить"
 msgstr ""
 

@@ -24,27 +24,25 @@ async def _search_command(
     """Начинает поиск анкет"""
     await message.answer(msg_text.SEARCH, reply_markup=search_kb)
 
-    ids = await search_profiles(session, user.profile)
-    if not ids:
+    if profile_list := await search_profiles(session, user.profile):
+        shuffle(profile_list)
+
+        await state.set_state(Search.search)
+        await state.update_data(ids=profile_list)
+
+        profile = await Profile.get(session, profile_list[0])
+        await send_profile(message.from_user.id, profile)
+    else:
         await message.answer(msg_text.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
-        return
-
-    shuffle(ids)
-
-    await state.set_state(Search.search)
-    await state.update_data(ids=ids)
-
-    profile = await Profile.get(session, ids[0])
-    await send_profile(message.from_user.id, profile)
 
 
 @router.message(Search.search, F.text.in_(["❤️", "👎", "💢"]))
 async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
     """Свайпы анкет"""
-    data: dict = await state.get_data()
-    ids: list = data.get("ids", [])
-    profile = await Profile.get(session, ids[0])
+    data = await state.get_data()
+    profile_list = data.get("ids", [])
+    profile = await Profile.get(session, profile_list[0])
 
     if message.text == "❤️":
         await Match.create(session, message.from_user.id, profile.user_id)
@@ -60,15 +58,11 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
             user=message.from_user,
             profile=profile,
         )
-
-    ids.pop(0)
-
-    if not ids:
+    profile_list.pop(0)
+    if profile_list:
+        profile = await Profile.get(session, profile_list[0])
+        await state.update_data(ids=profile_list)
+        await send_profile(message.from_user.id, profile)
+    else:
         await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
-        return
-
-    await state.update_data(ids=ids)
-
-    profile = await Profile.get(session, ids[0])
-    await send_profile(message.from_user.id, profile)

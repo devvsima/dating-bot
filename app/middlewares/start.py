@@ -9,25 +9,38 @@ from utils.base62 import decode_base62
 
 
 class StartMiddleware(BaseMiddleware):
-    async def __call__(self, handler: Callable, message: Message, data: dict) -> Any:
+    async def __call__(self, handler: Callable, event: Message, data: dict) -> Any:
         session = data["session"]
-        if user := await User.get_with_profile(session, message.from_user.id):
-            if not user.is_banned:
-                data["user"] = user
-                return await handler(message, data)
-            return
-
-        user = await User.create_user(
+        user = await User.get_or_create(
             session,
-            user_id=message.from_user.id,
-            username=message.from_user.username,
-            language=message.from_user.language_code,
+            user_id=event.from_user.id,
+            username=event.from_user.username,
+            language=event.from_user.language_code,
         )
-        data["user"] = user
-        await new_user_alert_to_group(user)
+        if not user.is_banned:
+            data["user"] = user
+            return await handler(event, data)
+        return
 
-        if inviter := data["command"].args:
-            inviter = User.get(decode_base62(inviter))
-            await User.increment_referral_count(session, inviter)
+    # async def __call__(self, handler: Callable, message: Message, data: dict) -> Any:
+    #     session = data["session"]
+    #     if user := await User.get_with_profile(session, message.from_user.id):
+    #         if not user.is_banned:
+    #             data["user"] = user
+    #             return await handler(message, data)
+    #         return
 
-        return await handler(message, data)
+    #     user = await User.create_user(
+    #         session,
+    #         user_id=message.from_user.id,
+    #         username=message.from_user.username,
+    #         language=message.from_user.language_code,
+    #     )
+    #     data["user"] = user
+    #     await new_user_alert_to_group(user)
+
+    #     if inviter := data["command"].args:
+    #         inviter = User.get(decode_base62(inviter))
+    #         await User.increment_referral_count(session, inviter)
+
+    #     return await handler(message, data)

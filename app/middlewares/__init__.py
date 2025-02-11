@@ -1,23 +1,20 @@
 from aiogram import Dispatcher
 
-from .database import DatabaseMiddleware
-from .user import UsersMiddleware
-from .start import StartMiddleware
-from .admin import AdminMiddleware
-
-from app.routers import start_router, admin_router, user_router
 from app.middlewares.i18n import i18n_middleware
+from app.routers import admin_router, start_router, user_router
+from database.connect import async_session
+
+from .admin import AdminMiddleware
+from .database import DatabaseMiddleware
+from .start import StartMiddleware
+from .user import UsersMiddleware
 
 
 def setup_middlewares(dp: Dispatcher) -> None:
-    from database.connect import async_session
-
     dp.update.middleware(DatabaseMiddleware(async_session))
 
     start_router.message.middleware(StartMiddleware())
-
     admin_router.message.middleware(AdminMiddleware())
-
     user_router.message.middleware(UsersMiddleware())
     user_router.callback_query.middleware(UsersMiddleware())
 

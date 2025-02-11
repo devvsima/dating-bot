@@ -8,15 +8,6 @@ env = Env()
 env.read_env()
 
 
-# ---< Telegram bot >---
-class TelegramBotSettings:
-    TOKEN: str = env.str("TOKEN", default=None)
-    SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
-
-    ADMINS: list = env.list("ADMINS", default=None, subcast=int)
-    MODERATOR_GROUP: int = env.int("MODERATOR_GROUP_ID", default=None)
-
-
 # ---< Database >---
 class DatabaseSettings:
     NAME: str = env.str("DB_NAME", default=None)
@@ -47,14 +38,21 @@ class RedisSettings:
         URL = f"redis://{HOST}:{PORT}/{DB}"
 
 
-# ---< Other >---
+# ---< Telegram bot >---
+BOT_TOKEN: str = env.str("TOKEN", default=None)
+SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
+
+ADMINS: list = env.list("ADMINS", default=None, subcast=int)
+MODERATOR_GROUP: int = env.int("MODERATOR_GROUP_ID", default=None)
+
 TIME_ZONE = "UTC"
 
 I18N_DOMAIN = "bot"
 
+
+# ---< Other >---
 IMAGES_DIR = rf"{DIR}/images"
 LOCALES_DIR = f"{DIR}/data/locales"
 
-tgbot = TelegramBotSettings()
 database = DatabaseSettings()
 redis = RedisSettings()
