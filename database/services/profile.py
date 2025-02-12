@@ -36,7 +36,7 @@ class Profile:
         """Изменяет описание пользователя"""
         profile.description = description
         await session.commit()
-        logger.info(f"User | {profile.user_id} изменил описание")
+        logger.info(f"User: {profile.user_id} | изменил описание")
 
     async def create(
         session: AsyncSession,

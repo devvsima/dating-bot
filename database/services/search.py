@@ -3,7 +3,6 @@ from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models.profile import ProfileModel
-from database.services.profile import Profile
 
 
 async def search_profiles(
