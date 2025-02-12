@@ -25,22 +25,20 @@ class User:
     async def get_or_create(
         session: AsyncSession, user_id: int, username: str = None, language: str = None
     ) -> UserModel:
-        """Возвращает пользователя по его id, если его нет - создает"""
         if user := await User.get_with_profile(session, user_id):
-            return user
-
-        return await User.create_or_get(session, user_id, username, language)
+            return user, False
+        await User.create(session, user_id=user_id, username=username, language=language)
+        user = await User.get_with_profile(session, user_id)
+        return user, True
 
     @staticmethod
-    async def create_or_get(
+    async def create(
         session: AsyncSession, user_id: int, username: str = None, language: str = None
     ) -> UserModel:
         """Создает нового пользователя"""
-        logger.info(f"New user: {user_id} | {username}")
-        user = UserModel(id=user_id, username=username, language=language)
-        session.add(user)
+        logger.info(f"New user: {user_id} | {username} | {language}")
+        session.add(UserModel(id=user_id, username=username, language=language))
         await session.commit()
-        return user
 
     @staticmethod
     async def update_username(session: AsyncSession, user: UserModel, username: str = None) -> None:
