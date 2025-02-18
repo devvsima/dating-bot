@@ -3,7 +3,6 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from data.config import database
 from utils.logging import logger
 
-
 if database.URL.startswith("sqlite"):
     logger.info("Database: Sqlite")
 else:

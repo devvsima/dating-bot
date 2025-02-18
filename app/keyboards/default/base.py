@@ -1,6 +1,7 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
+from database.models.profile import ProfileModel
 from loader import _
 
 from .kb_generator import simple_kb_generator as kb_gen
@@ -60,12 +61,15 @@ def hints_kb(text: str) -> ReplyKeyboardMarkup:
     return kb_gen([text])
 
 
-def leave_previous_kb() -> ReplyKeyboardMarkup:
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        one_time_keyboard=True,
-        keyboard=[
-            [KeyboardButton(text=_("Оставить предыдущее"))],
-        ],
-    )
+def leave_previous_kb(profile: ProfileModel) -> ReplyKeyboardMarkup:
+    if profile:
+        kb = ReplyKeyboardMarkup(
+            resize_keyboard=True,
+            one_time_keyboard=True,
+            keyboard=[
+                [KeyboardButton(text=_("Оставить предыдущее"))],
+            ],
+        )
+    else:
+        kb = del_kb
     return kb

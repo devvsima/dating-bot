@@ -44,9 +44,7 @@ async def _find_gender(
 ):
     await state.update_data(find_gender=find_gender)
 
-    kb = leave_previous_kb() if user.profile else del_kb
-
-    await message.reply(msg_text.PHOTO, reply_markup=kb)
+    await message.reply(msg_text.PHOTO, reply_markup=leave_previous_kb(user.profile))
     await state.set_state(ProfileCreate.photo)
 
 
@@ -67,7 +65,7 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
 
     photo = (
         user.profile.photo
-        if message.text in filters.leave_previous_list
+        if message.text in filters.leave_previous_tuple
         else message.photo[0].file_id
     )
     kb = hints_kb(str(user.profile.name)) if user.profile else None
@@ -125,9 +123,7 @@ async def _city(message: types.Message, state: FSMContext, coordinates: dict, us
         latitude=coordinates[0],
         longitude=coordinates[1],
     )
-    kb = leave_previous_kb() if user.profile else None
-
-    await message.reply(msg_text.DESCRIPTION, reply_markup=kb)
+    await message.reply(msg_text.DESCRIPTION, reply_markup=leave_previous_kb(user.profile))
     await state.set_state(ProfileCreate.desc)
 
 
@@ -147,7 +143,7 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
 
         description = (
             user.profile.description
-            if message.text in filters.leave_previous_list
+            if message.text in filters.leave_previous_tuple
             else message.text
         )
 

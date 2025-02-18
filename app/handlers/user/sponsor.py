@@ -3,10 +3,8 @@ from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 
 from app.routers import user_router as router
-from data.config import tgbot
+from data.config import MODERATOR_GROUP
 from loader import bot
-
-MODERATOR_GROUP = tgbot.MODERATOR_GROUP
 
 
 @router.message(Command("sponsor"), StateFilter(None))

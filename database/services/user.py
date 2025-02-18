@@ -54,18 +54,18 @@ class User:
         """Добавляет приведенного реферала к пользователю inviter_id"""
         user.referral += num
         await session.commit()
-        logger.info(f"UserModel: {user.id} | привел нового пользователя")
+        logger.info(f"User: {user.id} | привел нового пользователя")
 
     @staticmethod
     async def update_language(session: AsyncSession, user: UserModel, language: str) -> None:
         """Изменяет язык пользователя на language"""
         user.language = language
         await session.commit()
-        logger.info(f"UserModel: {user.id} | изменил язык на - {language}")
+        logger.info(f"User: {user.id} | изменил язык на - {language}")
 
     @staticmethod
     async def update_isbanned(session: AsyncSession, user: UserModel, is_banned: bool) -> None:
         """Меняет статус блокировки пользователя на заданный"""
         user.is_banned = is_banned
         await session.commit()
-        logger.info(f"UserModel: {user.id} | статус блокировки изменен на - {is_banned}")
+        logger.info(f"User: {user.id} | статус блокировки изменен на - {is_banned}")

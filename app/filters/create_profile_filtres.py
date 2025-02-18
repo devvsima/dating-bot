@@ -24,13 +24,13 @@ find_gender_map = {
     "Всі": "all",
 }
 
-leave_previous_list = ["Оставить предыдущее", "Leave previous", "Залишити попереднє"]
-start_command_list = ["/create", "Создать анкету", "Create a profile", "Створити анкету"]
+leave_previous_tuple = ("Оставить предыдущее", "Leave previous", "Залишити попереднє")
+start_command_tuple = ("/create", "Создать анкету", "Create a profile", "Створити анкету")
 
 
 class IsCreate(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(message.text in start_command_list)
+        return bool(message.text in start_command_tuple)
 
 
 class IsGender(Filter):
@@ -49,7 +49,7 @@ class IsFindGender(Filter):
 
 class IsPhoto(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(message.photo or message.text in leave_previous_list)
+        return bool(message.photo or message.text in leave_previous_tuple)
 
 
 class IsName(Filter):

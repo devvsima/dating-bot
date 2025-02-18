@@ -1,3 +1,5 @@
+import html
+
 from app.handlers.msg_text import msg_text
 from app.keyboards.default.base import menu_kb
 from app.keyboards.inline.report import block_user_ikb
@@ -75,7 +77,8 @@ def generate_user_link(user_id: int, username: str = None) -> str:
 
 async def sending_user_contact(user_id: int, name: str, user_link: str) -> None:
     """Отправляет сообщение с контактом пользователя"""
+
     await bot.send_message(
         chat_id=user_id,
-        text=msg_text.LIKE_ACCEPT.format(user_link, name),
+        text=msg_text.LIKE_ACCEPT.format(user_link, html.escape(name)),
     )
