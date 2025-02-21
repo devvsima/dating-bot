@@ -39,14 +39,3 @@ def find_gender_kb() -> ReplyKeyboardMarkup:
         ],
     )
     return kb
-
-
-def contact_keyboard() -> ReplyKeyboardMarkup:
-    kb = ReplyKeyboardMarkup(
-        input_field_placeholder=_("Выберете из вариантов:"),
-        resize_keyboard=True,
-        keyboard=[
-            [KeyboardButton(text=_("📱 Отправить"), request_contact=True)],
-        ],
-    )
-    return kb

@@ -37,7 +37,7 @@ async def _search_command(
         await menu(message.from_user.id)
 
 
-@router.message(Search.search, F.text.in_(["❤️", "👎", "💢"]))
+@router.message(Search.search, F.text.in_(("❤️", "👎", "💢")))
 async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
     """Свайпы анкет"""
     data = await state.get_data()

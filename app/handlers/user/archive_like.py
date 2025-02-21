@@ -52,7 +52,7 @@ async def _like_profile(
         await cancel_command(callback.message, state)
 
 
-@router.message(LikeResponse.response, F.text.in_(["❤️", "👎"]))
+@router.message(LikeResponse.response, F.text.in_(("❤️", "👎")))
 async def _like_response(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:

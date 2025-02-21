@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 import app.filters.create_profile_filtres as filters
 from app.handlers.msg_text import msg_text
 from app.handlers.user.profile import profile_command
-from app.keyboards.default.base import del_kb, hints_kb, leave_previous_kb
+from app.keyboards.default.base import hints_kb, leave_previous_kb
 from app.keyboards.default.create_profile import find_gender_kb, gender_kb
 from app.others.states import ProfileCreate, ProfileEdit
 from app.routers import user_router as router
@@ -68,7 +68,7 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
         if message.text in filters.leave_previous_tuple
         else message.photo[0].file_id
     )
-    kb = hints_kb(str(user.profile.name)) if user.profile else None
+    kb = hints_kb(user.profile.name) if user.profile else None
 
     await state.update_data(photo=photo)
     await message.reply(msg_text.NAME, reply_markup=kb)

@@ -3,6 +3,7 @@ from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 
 from app.handlers.msg_text import msg_text
+from app.keyboards.default.create_profile import contact_kb
 from app.routers import user_router as router
 from data.config import IMAGES_DIR
 
