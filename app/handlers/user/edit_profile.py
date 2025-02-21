@@ -39,7 +39,10 @@ async def _disable_profile_command(
     F.text.in_(["🔙 Вернуть профиль", "🔙 Return profile", "🔙 Повернути профіль"]),
     DisableProfile.waiting,
 )
-async def _activate_profile_command(message: types.Message, session) -> None:
-    await Profile.update_isactive(session, message.from_user.id, True)
+async def _activate_profile_command(
+    message: types.Message, state: FSMContext, user: UserModel, session
+) -> None:
+    await Profile.update_isactive(session, user.profile, True)
     await message.answer(msg_text.ACTIVATE_PROFILE_ALERT)
-    await menu(message.from_user.id)
+    await state.clear()
+    await menu(user.id)
