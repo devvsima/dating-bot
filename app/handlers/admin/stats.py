@@ -11,12 +11,10 @@ from utils.graphs import get_or_create_registration_graph
 
 
 @router.message(Command("stats"), StateFilter(None))
-@router.message(F.text.in_(["📊 Статистика", "📊 Statistics"]), StateFilter(None))
+@router.message(F.text.in_(("📊 Статистика", "📊 Statistics")), StateFilter(None))
 async def _stats_command(message: types.Message, session) -> None:
-    """
-    Отправляет администратору график регистрации пользователей
-    и статистику пользователей в БД
-    """
+    """Отправляет администратору график регистрации пользователей
+    и статистику пользователей в БД"""
     profile_stats = await get_profile_statistics(session)
     users_stats = await get_user_statistics(session)
     graph_path = await get_or_create_registration_graph(session)

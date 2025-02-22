@@ -1,6 +1,6 @@
-from aiogram.filters.callback_data import CallbackData
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from app.filters.kb_filter import LangCallback
 from loader import i18n
 
 language_dict = {
@@ -8,10 +8,6 @@ language_dict = {
     "uk": "Українська",
     "en": "English",
 }
-
-
-class LangCallback(CallbackData, prefix="lang"):
-    lang: str
 
 
 def lang_ikb():
