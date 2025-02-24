@@ -5,31 +5,64 @@ from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 
 from app.handlers.msg_text import msg_text
+from app.keyboards.inline.admin import stats_ikb
 from app.routers import admin_router as router
-from database.services.stat import get_profile_statistics, get_user_statistics
+from database.services.stats import (
+    get_match_statistics,
+    get_profile_statistics,
+    get_user_statistics,
+)
 from utils.graphs import get_or_create_registration_graph
 
 
 @router.message(Command("stats"), StateFilter(None))
 @router.message(F.text.in_(("📊 Статистика", "📊 Statistics")), StateFilter(None))
 async def _stats_command(message: types.Message, session) -> None:
-    """Отправляет администратору график регистрации пользователей
-    и статистику пользователей в БД"""
-    profile_stats = await get_profile_statistics(session)
-    users_stats = await get_user_statistics(session)
+    """Отправляет администратору меню статистики"""
     graph_path = await get_or_create_registration_graph(session)
     photo = types.FSInputFile(graph_path)
-
-    text = msg_text.USERS_STATS.format(
+    users_stats = await get_user_statistics(session)
+    text = msg_text.USER_STATS.format(
         users_stats["count"],
         users_stats["banned_count"],
-        profile_stats["count"],
-        profile_stats["inactive_profile"],
-        profile_stats["male_count"],
-        profile_stats["female_count"],
+        users_stats["total_referrals"],
+        users_stats["most_popular_language"],
+    )
+    await message.answer_photo(photo=photo, caption=text, reply_markup=stats_ikb("Profile"))
+
+    os.remove(graph_path)
+
+
+@router.callback_query(F.data.startswith("stats"), StateFilter(None))
+async def _stats_callback(callback: types.CallbackQuery, session) -> None:
+    """Отправляет администратору график и статистику"""
+    graph_path = await get_or_create_registration_graph(session)
+    photo = types.FSInputFile(graph_path)
+    if callback.data == "stats_User":
+        users_stats = await get_user_statistics(session)
+        text = msg_text.USER_STATS.format(
+            users_stats["count"],
+            users_stats["banned_count"],
+            users_stats["total_referrals"],
+            users_stats["most_popular_language"],
+        )
+        kb_text = "Profile"
+    elif callback.data == "stats_Profile":
+        match_stats = await get_match_statistics(session)
+        profile_stats = await get_profile_statistics(session)
+        text = msg_text.PROFILE_STATS.format(
+            profile_stats["count"],
+            profile_stats["inactive_profile"],
+            profile_stats["male_count"],
+            profile_stats["female_count"],
+            match_stats[0],
+            profile_stats["average_age"],
+            profile_stats["most_popular_city"],
+        )
+        kb_text = "User"
+
+    await callback.message.edit_media(
+        media=types.InputMediaPhoto(media=photo, caption=text), reply_markup=stats_ikb(kb_text)
     )
 
-    await message.answer_photo(photo, text)
-
-    # Удаляем временный файл
     os.remove(graph_path)

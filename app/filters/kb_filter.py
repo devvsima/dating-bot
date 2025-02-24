@@ -3,3 +3,7 @@ from aiogram.filters.callback_data import CallbackData
 
 class LangCallback(CallbackData, prefix="lang"):
     lang: str
+
+
+class BlockUserCallback(CallbackData, prefix="ban"):
+    user_id: int | None

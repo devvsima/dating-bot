@@ -146,14 +146,25 @@ class MsgText:
         return _("Вы администратор!")
 
     @property
-    def USERS_STATS(self):
-        return _("""
-👤 Пользователей: {}\t|🚫 Заблокированных: {}
+    def PROFILE_STATS(self):
+        return """
+📂 Profile: {} | 🔕 Inactive: {}
+🙍‍♂ Guys: {} | 🙍‍♀ Girls: {}
 
-📂 Анкет: {}\t|🔕 Неактивных: {}
+💘 Matchs: {}
 
-🙍‍♂ Парней: {}\t|🙍‍♀ Девушек: {}
-""")
+🕘 Age: {}
+🏙 City: {}
+"""
+
+    @property
+    def USER_STATS(self):
+        return """
+👤 Users: {}\t| 🚫 Blocked: {}
+✉️ Referrals: {}
+
+🌍 Most popular language: {}
+"""
 
     @property
     def CHANGE_LANG(self):
@@ -188,6 +199,10 @@ class MsgText:
     @property
     def USER_BANNED(self):
         return _("Пользователь: {} заблокирован")
+
+    @property
+    def USER_BANNED_CANCEL(self):
+        return _("Администратор отклонил заявку на блокировку")
 
     @property
     def MAILING_PANEL(self):

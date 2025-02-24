@@ -10,10 +10,10 @@ from loader import bot
 from utils.logging import logger
 
 
-async def menu(user_id: int) -> None:
+async def menu(chat_id: int) -> None:
     """Отправляет меню пользователю"""
     await bot.send_message(
-        chat_id=user_id,
+        chat_id=chat_id,
         text=msg_text.MENU,
         reply_markup=menu_kb,
     )
@@ -43,10 +43,10 @@ async def report_to_profile(user: UserModel, profile: ProfileModel, session) -> 
             logger.error("Сообщение в модераторскую группу не отправленно")
 
 
-async def send_profile(user_id: int, profile: ProfileModel) -> None:
+async def send_profile(chat_id: int, profile: ProfileModel) -> None:
     """Отправляет пользователю переданный в функцию профиль"""
     await bot.send_photo(
-        chat_id=user_id,
+        chat_id=chat_id,
         photo=profile.photo,
         caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
         parse_mode=None,
@@ -75,10 +75,10 @@ def generate_user_link(user_id: int, username: str = None) -> str:
     return f"tg://user?id={user_id}"
 
 
-async def sending_user_contact(user_id: int, name: str, user_link: str) -> None:
+async def sending_user_contact(chat_id: int, name: str, user_link: str) -> None:
     """Отправляет сообщение с контактом пользователя"""
 
     await bot.send_message(
-        chat_id=user_id,
+        chat_id=chat_id,
         text=msg_text.LIKE_ACCEPT.format(user_link, html.escape(name)),
     )

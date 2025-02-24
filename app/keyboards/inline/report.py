@@ -1,21 +1,20 @@
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardMarkup
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
+from app.filters.kb_filter import BlockUserCallback
 from loader import _
 
 
 def block_user_ikb(user_id: int, username: str) -> InlineKeyboardMarkup:
-    ikb = InlineKeyboardMarkup(
-        resize_keyboard=True,
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(
-                    text=_("☠️ Заблокировать пользователя {}").format(username),
-                    callback_data=f"block_user_{user_id}",
-                ),
-            ],
-            [
-                InlineKeyboardButton(text=_("Отклонить"), callback_data="..."),
-            ],
-        ],
+    builder = InlineKeyboardBuilder()
+
+    builder.button(
+        text=_("☠️ Заблокировать пользователя {}").format(username),
+        callback_data=BlockUserCallback(user_id=user_id),
     )
-    return ikb
+    builder.button(
+        text=_("Отклонить"),
+        callback_data=BlockUserCallback(user_id=None),
+    )
+
+    return builder.as_markup()

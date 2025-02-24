@@ -6,7 +6,7 @@ from app.keyboards.default.admin import user_ban_or_unban_kb
 from app.routers import admin_router as router
 
 
-@router.message(F.text.in_(["👤 Пользователи", "👤 Користувачі", "👤 Users"]), StateFilter(None))
+@router.message(F.text.in_(("👤 Пользователи", "👤 Користувачі", "👤 Users")), StateFilter(None))
 async def _users_admin_panel(message: types.Message) -> None:
     """Админ панель управление пользователями"""
     await message.answer(
@@ -16,7 +16,7 @@ async def _users_admin_panel(message: types.Message) -> None:
 
 
 @router.message(
-    F.text.in_(["⚔️ Забанить пользователей", "⚔️ Забанити користувачів", "⚔️ Ban users"]),
+    F.text.in_(("⚔️ Забанить пользователей", "⚔️ Забанити користувачів", "⚔️ Ban users")),
     StateFilter(None),
 )
 async def _ban_users_command(message: types.Message) -> None:
@@ -25,7 +25,7 @@ async def _ban_users_command(message: types.Message) -> None:
 
 
 @router.message(
-    F.text.in_(["💊 Разбанить пользователей", "💊 Розбанити користувачів", "💊 Unban users"]),
+    F.text.in_(("💊 Разбанить пользователей", "💊 Розбанити користувачів", "💊 Unban users")),
     StateFilter(None),
 )
 async def _unban_users_commad(message: types.Message) -> None:

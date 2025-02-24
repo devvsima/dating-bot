@@ -3,6 +3,15 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
 
+ROLES = {
+    0: "banned",
+    1: "user",
+    2: "sponsor",
+    3: "moderator",
+    4: "admin",
+    5: "owner",
+}
+
 
 class UserModel(BaseModel):
     __tablename__ = "users"

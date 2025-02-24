@@ -3,7 +3,7 @@ from aiogram.types import BotCommand, BotCommandScopeChat, BotCommandScopeDefaul
 from loader import _, bot, i18n
 
 
-def get_default_commands(lang: str = "en"):
+def get_default_commands(lang: str = "en") -> list:
     commands = [
         BotCommand(command="/start", description=_("start chat", locale=lang)),
         BotCommand(command="/lang", description=_("change language", locale=lang)),
@@ -14,7 +14,7 @@ def get_default_commands(lang: str = "en"):
     return commands
 
 
-def get_admins_commands(lang: str = "en"):
+def get_admins_commands(lang: str = "en") -> list:
     commands = get_default_commands(lang)
     commands.extend(
         [

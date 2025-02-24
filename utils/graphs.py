@@ -5,9 +5,11 @@ import pandas as pd
 import seaborn as sns
 
 from data.config import IMAGES_DIR
-from database.services.stat import get_all_users_registration_data
+from database.services.stats import get_all_users_registration_data
 
 registration_photo_path = f"{IMAGES_DIR}/registration_graph.png"
+
+from typing import Tuple
 
 
 def get_day_period(days: int = 30):
@@ -25,7 +27,7 @@ async def get_or_create_registration_graph(session, data=None, path=registration
     return path
 
 
-def create_user_registration_graph(data, path):
+def create_user_registration_graph(data, path) -> None:
     """Создает график новых пользователей в заданом периоде"""
     df = pd.DataFrame(data)
 
