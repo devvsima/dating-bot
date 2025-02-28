@@ -9,6 +9,14 @@ from database.services import User
 from loader import bot
 from utils.logging import logger
 
+effect_dict = {
+    "🔥": "5104841245755180586",
+    "👍": "5107584321108051014",
+    "👎": "5104858069142078462",
+    "🎉": "5046509860389126442",
+    "💩": "5046589136895476101",
+}
+
 
 async def menu(chat_id: int) -> None:
     """Отправляет меню пользователю"""
@@ -81,4 +89,5 @@ async def sending_user_contact(chat_id: int, name: str, user_link: str) -> None:
     await bot.send_message(
         chat_id=chat_id,
         text=msg_text.LIKE_ACCEPT.format(user_link, html.escape(name)),
+        message_effect_id=effect_dict["🎉"],
     )
