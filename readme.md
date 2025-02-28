@@ -1,4 +1,4 @@
-# <center>Telegram dating bot [Michelangelo | Miki](https://t.me/michalangelo_bot?start=Oj0wd)</center>
+## <center>Telegram dating bot [Michelangelo](https://t.me/michalangelo_bot?start=Oj0wd) 💞</center>
 - `Aiogram 3`
 - `i18n`
 - `SqlAlchemy`
@@ -11,18 +11,19 @@
 </p>
 
 ---
-#### Navigation
-- [Telegram dating bot Michelangelo | Miki](#telegram-dating-bot-michelangelo--miki)
-      - [Navigation](#navigation)
-    - [Install](#install)
-      - [Windows](#windows)
-      - [Linux](#linux)
-    - [Settings](#settings)
-      - [Bot](#bot)
-      - [Database](#database)
-      - [Redis](#redis)
+### Navigation
+
+- [Telegram dating bot Michelangelo 💞](#telegram-dating-bot-michelangelo-)
+  - [Navigation](#navigation)
+  - [Install](#install)
+    - [Windows](#windows)
+    - [Linux](#linux)
+  - [Settings](#settings)
+    - [Bot](#bot)
+    - [Database](#database)
+    - [Redis](#redis)
   - [Migrations](#migrations)
-    - [Startup](#startup)
+  - [Startup](#startup)
 
 ---
 ### Install
@@ -92,7 +93,7 @@ You can specify a link to the Redis connection in the `RD_URL` field at once.
 | REDIS_DB              | Database name                                  | 5                        |
 | RD_URL                | (Optional)Full link to connect to the database | redis://localhost:6379/5 |
 
-## Migrations
+### Migrations
 
 This project uses **Alembic** for database migrations.
 
