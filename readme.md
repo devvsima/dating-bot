@@ -1,4 +1,4 @@
-## <center>Telegram dating bot [Michelangelo](https://t.me/michalangelo_bot?start=Oj0wd) 💞</center>
+# <center>Telegram dating bot [Michelangelo](https://t.me/michalangelo_bot?start=Oj0wd) 💞</center>
 - `Aiogram 3`
 - `i18n`
 - `SqlAlchemy`
@@ -11,7 +11,7 @@
 </p>
 
 ---
-### Navigation
+## Navigation
 
 - [Telegram dating bot Michelangelo 💞](#telegram-dating-bot-michelangelo-)
   - [Navigation](#navigation)
@@ -26,14 +26,14 @@
   - [Startup](#startup)
 
 ---
-### Install
+## Install
 First you need to bend the repository to the correct derictory.
 
 ```bash
 git clone https://github.com/devvsima/dating-bot.git
 cd dating-bot
 ```
-#### Windows
+### Windows
 
 ```bash
 python3 -m venv .venv
@@ -42,7 +42,7 @@ source .venv/bin/activate
 
 pip3 install -r requirements.txt
 ```
-#### Linux
+### Linux
 
 ```bash
 python -m venv .venv
@@ -55,11 +55,11 @@ pip install -r requirements.txt
 > 💡 You may have to install apt install python3.10-venv or something like that.
 
 ---
-### Settings
+## Settings
 
 First, copy the `.env.dist` file and rename it to `.env`:
 Now you need to customize the `.env` file
-#### Bot
+### Bot
 
 | <center>Name</center> | <center>Description</center>                                                  | <center>Example</center> |
 | --------------------- | ----------------------------------------------------------------------------- | ------------------------ |
@@ -68,7 +68,7 @@ Now you need to customize the `.env` file
 | MODERATOR_GROUP_ID    | (Optional) ID of the administrator group, where user complaints will be sent. | -100123456789            |
 | SKIP_UPDATES          | Option whether the bot will skip updates while not active                     | True, False              |
 
-#### Database
+### Database
 If the settings for the database are not filled out, asynchronous Sqlite will be used.
 You can specify a link to the database connection in the DB_URL field.
 
@@ -82,7 +82,7 @@ You can specify a link to the database connection in the DB_URL field.
 | DB_URL                | (Optional)Full link to connect to the database | postgresql+asyncpg://user:password@localhost:port/name |
 
 
-#### Redis
+### Redis
 The radishes will be used as FSM storage. If redis is not connected the standard aiogram storage will be used.
 You can specify a link to the Redis connection in the `RD_URL` field at once.
 
@@ -93,7 +93,9 @@ You can specify a link to the Redis connection in the `RD_URL` field at once.
 | REDIS_DB              | Database name                                  | 5                        |
 | RD_URL                | (Optional)Full link to connect to the database | redis://localhost:6379/5 |
 
-### Migrations
+---
+
+## Migrations
 
 This project uses **Alembic** for database migrations.
 
@@ -122,7 +124,7 @@ Ensure `alembic.ini` has the correct database URL before running migrations.
 
 
 ---
-### Startup
+## Startup
 
 First you need to [install dependencies](#Install) and do a [database migration](#Migrations) if you haven't already done one.
 
