@@ -58,7 +58,7 @@ async def _incorrect_find_gender(message: types.Message):
 @router.message(filters.IsPhoto(), StateFilter(ProfileCreate.photo, ProfileEdit.photo))
 async def _photo(message: types.Message, state: FSMContext, user: UserModel, session):
     if await state.get_state() == ProfileEdit.photo.state:
-        await Profile.update_photo(session, user.profile, photo)
+        await Profile.update_photo(session, user.profile, message.photo[0].file_id)
         await profile_command(message, user)
         await state.clear()
         return
