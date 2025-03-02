@@ -1,3 +1,5 @@
+from functools import wraps
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
@@ -36,7 +38,7 @@ class User:
         session: AsyncSession, user_id: int, username: str = None, language: str = None
     ) -> UserModel:
         """Создает нового пользователя"""
-        logger.info(f"New user: {user_id} | {username} | {language}")
+        logger.log("DATABASE", f"New user: {user_id} (@{username}) {language}")
         session.add(UserModel(id=user_id, username=username, language=language))
         await session.commit()
 
@@ -45,27 +47,29 @@ class User:
         """Обновляет данные пользователя"""
         user.username = username
         await session.commit()
-        logger.info(f"Update user: {user.id} | {username}")
+        logger.log("DATABASE", f"{user.id} ({user.username}): обновленно имя на - {username}")
 
     @staticmethod
     async def increment_referral_count(
         session: AsyncSession, user: UserModel, num: int = 1
     ) -> None:
-        """Добавляет приведенного реферала к пользователю inviter_id"""
+        """Добавляет приведенного реферала к пользователю {inviter_id}"""
         user.referral += num
         await session.commit()
-        logger.info(f"User: {user.id} | привел нового пользователя")
+        logger.log("DATABASE", f"{user.id} (@{user.username}): привел нового пользователя")
 
     @staticmethod
     async def update_language(session: AsyncSession, user: UserModel, language: str) -> None:
-        """Изменяет язык пользователя на language"""
+        """Изменяет язык пользователя на {language}"""
         user.language = language
         await session.commit()
-        logger.info(f"User: {user.id} | изменил язык на - {language}")
+        logger.log("DATABASE", f"{user.id} (@{user.username}): изменил язык на - {language}")
 
     @staticmethod
     async def update_isbanned(session: AsyncSession, user: UserModel, is_banned: bool) -> None:
-        """Меняет статус блокировки пользователя на заданный"""
+        """Меняет статус блокировки пользователя на {is_banned}"""
         user.is_banned = is_banned
         await session.commit()
-        logger.info(f"User: {user.id} | статус блокировки изменен на - {is_banned}")
+        logger.log(
+            "DATABASE", f"{user.id} (@{user.username}): статус блокировки изменен на - {is_banned}"
+        )

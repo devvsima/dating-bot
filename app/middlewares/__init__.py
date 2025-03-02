@@ -6,12 +6,19 @@ from database.connect import async_session
 
 from .admin import AdminMiddleware
 from .database import DatabaseMiddleware
+from .log import LoggingMiddleware
 from .start import StartMiddleware
 from .user import UsersMiddleware
 
 
 def setup_middlewares(dp: Dispatcher) -> None:
     dp.update.middleware(DatabaseMiddleware(async_session))
+    start_router.message.middleware(LoggingMiddleware())
+    admin_router.message.middleware(LoggingMiddleware())
+    user_router.message.middleware(LoggingMiddleware())
+    start_router.callback_query.middleware(LoggingMiddleware())
+    admin_router.callback_query.middleware(LoggingMiddleware())
+    user_router.callback_query.middleware(LoggingMiddleware())
 
     start_router.message.middleware(StartMiddleware())
     admin_router.message.middleware(AdminMiddleware())

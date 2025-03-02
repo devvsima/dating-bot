@@ -4,9 +4,9 @@ from data.config import database
 from utils.logging import logger
 
 if database.URL.startswith("sqlite"):
-    logger.info("Database: Sqlite")
+    logger.log("BOT", "Database: Sqlite")
 else:
-    logger.info("Database: PostgreSql")
+    logger.log("BOT", "Database: PostgreSql")
 
 async_engine = create_async_engine(
     url=database.URL,

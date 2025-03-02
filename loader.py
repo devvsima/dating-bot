@@ -11,12 +11,12 @@ if redis.URL:
     from redis.asyncio.client import Redis
 
     storage = RedisStorage(Redis.from_url(redis.URL))
-    logger.info("Storage: Redis")
+    logger.log("BOT", "Storage: Redis")
 elif not redis.URL:
     from aiogram.fsm.storage.memory import MemoryStorage
 
     storage = MemoryStorage()
-    logger.info("Storage: Default")
+    logger.log("BOT", "Storage: Default")
 
 bot = Bot(
     token=BOT_TOKEN,

@@ -18,12 +18,12 @@ class Match:
         existing_like = result.scalar()
 
         if existing_like:
-            logger.info(f"Повторился лайк: {sender_id} & {receiver_id}")
+            logger.info(f"{sender_id} & {receiver_id}: лайк повторился")
         else:
             stmt = insert(MatchModel).values(sender_id=sender_id, receiver_id=receiver_id)
             await session.execute(stmt)
             await session.commit()
-            logger.info(f"User: {sender_id} | лайкнул пользователя {receiver_id}")
+            logger.info(f"{sender_id}: лайкнул пользователя {receiver_id}")
 
     @staticmethod
     async def get_all(session: AsyncSession, user_id: int) -> list:
@@ -43,4 +43,4 @@ class Match:
             )
         )
         await session.commit()
-        logger.info(f"{sender_id} & {receiver_id} | лайк удален")
+        logger.info(f"{sender_id} & {receiver_id}: лайк удален")

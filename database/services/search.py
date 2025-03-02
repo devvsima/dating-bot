@@ -38,6 +38,6 @@ async def search_profiles(
     result = await session.execute(stmt)
     user_ids = [row[0] for row in result.fetchall()]
 
-    logger.info(f"User: {profile.user_id} | начал поиск анкет")
+    logger.log("DATABASE", f"{profile.user_id}: начал поиск анкет")
 
     return user_ids

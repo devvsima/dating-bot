@@ -13,11 +13,11 @@ async def on_startup() -> None:
     from app.others.commands import set_default_commands
 
     await set_default_commands()
-    logger.info("~ Bot startup")
+    logger.log("BOT", "~ Bot startup")
 
 
 async def on_shutdown() -> None:
-    logger.info("~ Bot shutting down...")
+    logger.log("BOT", "~ Bot shutting down...")
 
 
 async def main():
