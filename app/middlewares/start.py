@@ -19,11 +19,10 @@ class StartMiddleware(BaseMiddleware):
         )
         if not user.is_banned:
             data["user"] = user
-
             if is_create:
                 if inviter := data["command"].args:
                     await new_user_alert_to_group(user)
-                    inviter = User.get(session, decode_base62(inviter))
+                    inviter = await User.get(session, decode_base62(inviter))
                     await User.increment_referral_count(session, inviter)
 
             return await handler(message, data)
