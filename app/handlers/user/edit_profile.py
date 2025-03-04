@@ -35,8 +35,18 @@ async def _disable_profile_command(
     await message.answer(text=msg_text.DISABLE_PROFILE, reply_markup=profile_return_kb())
 
 
+return_profile_tuple = (
+    "🔙 Вернуть профиль",
+    "🔙 Return profile",
+    "🔙 Повернути профіль",
+    "🔙 Wróć do profilu",
+    "🔙 Perfil de retorno",
+    "🔙 Profil de retour",
+)
+
+
 @router.message(
-    F.text.in_(("🔙 Вернуть профиль", "🔙 Return profile", "🔙 Повернути профіль")),
+    F.text.in_(return_profile_tuple),
     DisableProfile.waiting,
 )
 async def _activate_profile_command(
