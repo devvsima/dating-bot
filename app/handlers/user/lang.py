@@ -12,14 +12,14 @@ from database.services import User
 @router.message(Command("language"), StateFilter(None))
 @router.message(Command("lang"), StateFilter(None))
 async def _lang(message: types.Message) -> None:
-    """Предлагает клавиатуру с доступными языками"""
+    """Отображает список доступных языков и позволяет выбрать предпочтительный"""
     await message.answer(msg_text.CHANGE_LANG, reply_markup=lang_ikb())
 
 
-@router.callback_query(LangCallback.filter())
-async def _lang_change(
+@router.callback_query(LangCallback.filter(), StateFilter(None))
+async def _change_lang(
     callback: types.CallbackQuery, callback_data: LangCallback, user: UserModel, session
 ) -> None:
-    """Меняет язык пользователя на выбранный"""
-    await User.update_language(session, user, language=callback_data.lang)
+    """Обрабатывает выбранный пользователем язык, и устанавливает его"""
+    await User.update_language(session, user, callback_data.lang)
     await callback.message.edit_text(msg_text.DONE_CHANGE_LANG)

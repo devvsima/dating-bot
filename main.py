@@ -4,14 +4,13 @@ from aiogram.methods import DeleteWebhook
 
 from app.handlers import setup_handlers
 from app.middlewares import setup_middlewares
+from app.others.commands import set_default_commands
 from data.config import SKIP_UPDATES
 from loader import bot, dp
 from utils.logging import logger
 
 
 async def on_startup() -> None:
-    from app.others.commands import set_default_commands
-
     await set_default_commands()
     logger.log("BOT", "~ Bot startup")
 

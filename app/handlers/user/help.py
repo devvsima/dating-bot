@@ -7,8 +7,9 @@ from app.routers import user_router as router
 from data.config import IMAGES_DIR
 
 
+@router.message(Command("info"), StateFilter(None))
 @router.message(Command("help"), StateFilter(None))
 async def _help_command(message: types.Message) -> None:
-    """Команда дающее небольшое описание бота"""
+    """Отправляет пользователю небольшое описание бота"""
     photo = types.FSInputFile(f"{IMAGES_DIR}/new_logo.webp")
     await message.answer_photo(photo=photo, caption=msg_text.INFO)

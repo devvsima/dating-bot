@@ -42,6 +42,7 @@ async def _like_profile(
     await state.set_state(LikeResponse.response)
     await User.update_username(session, user, callback.from_user.username)  # needs to be redone
     await callback.message.answer(text=msg_text.SEARCH, reply_markup=arhive_search_kb)
+    await callback.answer()
 
     if liker_ids := await Match.get_all(session, callback.from_user.id):
         await state.update_data(ids=liker_ids)
@@ -64,18 +65,12 @@ async def _like_response(
 
     if message.text == "❤️":
         """Отправка пользователю который ответил на лайк"""
-        await sending_user_contact(
-            chat_id=user.id,
-            name=another_user.profile.name,
-            user_link=generate_user_link(user_id=another_user.id, username=another_user.username),
-        )
+        link = generate_user_link(user_id=another_user.id, username=another_user.username)
+        await sending_user_contact(chat_id=user.id, name=another_user.profile.name, user_link=link)
 
         """Отправка пользователю которому ответили на лайк"""
-        await sending_user_contact(
-            chat_id=another_user.id,
-            name=user.profile.name,
-            user_link=generate_user_link(user_id=user.id, username=user.username),
-        )
+        link = generate_user_link(user_id=user.id, username=user.username)
+        await sending_user_contact(chat_id=another_user.id, name=user.profile.name, user_link=link)
 
     await Match.delete(session, user.id, another_user.id)
 

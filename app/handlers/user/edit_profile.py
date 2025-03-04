@@ -13,14 +13,14 @@ from database.services import Profile
 
 @router.message(F.text == "🖼", StateFilter(None))
 async def _edit_profile_photo_command(message: types.Message, state: FSMContext) -> None:
-    """Редактирование фотографии"""
+    """Редактирует фотографию пользователя"""
     await state.set_state(ProfileEdit.photo)
     await message.answer(msg_text.PHOTO)
 
 
 @router.message(F.text == "✍️", StateFilter(None))
 async def _edit_profile_description_command(message: types.Message, state: FSMContext) -> None:
-    """Редактирование описания"""
+    """Редактирует описание пользователя"""
     await state.set_state(ProfileEdit.desc)
     await message.answer(msg_text.DESCRIPTION)
 
@@ -29,7 +29,7 @@ async def _edit_profile_description_command(message: types.Message, state: FSMCo
 async def _disable_profile_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
-    """Отключение профиля"""
+    """Отключает профиль пользователя, и не дает ему дальше пользоватся ботом до восстановления"""
     await state.set_state(DisableProfile.waiting)
     await Profile.update_isactive(session, user.profile, False)
     await message.answer(text=msg_text.DISABLE_PROFILE, reply_markup=profile_return_kb())
@@ -42,6 +42,7 @@ async def _disable_profile_command(
 async def _activate_profile_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
+    """Активирует профиль пользователя и выводит и состояния блокировки"""
     await Profile.update_isactive(session, user.profile, True)
     await message.answer(msg_text.ACTIVATE_PROFILE_ALERT)
     await state.clear()

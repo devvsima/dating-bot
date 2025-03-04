@@ -17,9 +17,9 @@ from database.services import Profile
 @router.message(F.text == "🔄", StateFilter(None))
 @router.message(filters.IsCreate(), StateFilter(None))
 async def _create_profile_command(message: types.Message, state: FSMContext):
-    """Начало создание профиля"""
+    """Запускает процесс создания профиля пользователя.
+    Также используется для пересоздания анкеты"""
     await message.answer(msg_text.GENDER, reply_markup=gender_kb())
-
     await state.set_state(ProfileCreate.gender)
 
 
@@ -77,13 +77,13 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
 
 @router.message(StateFilter(ProfileEdit.photo))
 async def _incorrect_photo(message: types.Message):
-    """Ошибка фильтра фотографии"""
+    """Ошибка фильтра фото"""
     await message.answer(msg_text.INVALID_PHOTO)
 
 
 # < name >
 @router.message(filters.IsName(), StateFilter(ProfileCreate.name))
-async def _name(message: types.Message, state: FSMContext, user):
+async def _name(message: types.Message, state: FSMContext, user: UserModel):
     await state.update_data(name=message.text)
 
     kb = hints_kb(str(user.profile.age)) if user.profile else None

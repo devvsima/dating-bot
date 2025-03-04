@@ -10,7 +10,8 @@ from utils.base62 import encode_base62
 
 @router.message(F.text == "✉️", StateFilter(None))
 async def _invite_link_command(message: types.Message, user: UserModel) -> None:
-    """Дает пользователю его реферальную ссылку"""
+    """Отправляет персональную реферальную ссылку для приглашения друзей.
+    Ссылка создается на основе пользовательского id и кодировки base62"""
     bot_user = await bot.get_me()
     user_code: str = encode_base62(message.from_user.id)
     await message.answer(

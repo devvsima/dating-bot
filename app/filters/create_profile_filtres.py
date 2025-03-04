@@ -4,28 +4,60 @@ from aiogram.types import Message
 from utils.cordinate import get_coordinates
 
 gender_map = {
-    "Я парень": "male",
-    "I'm male": "male",
-    "Я хлопець": "male",
-    "Я девушка": "female",
-    "I'm female": "female",
-    "Я дівчина": "female",
+    "Парень": "male",  # Русский
+    "Хлопець": "male",  # Украинский
+    "Boy": "male",  # Английский
+    "Garçon": "male",  # Французский
+    "Chico": "male",  # Испанский
+    "Chłopak": "male",  # Польский
+    "Девушка": "female",  # Русский
+    "Дівчина": "female",  # Украинский
+    "Girl": "female",  # Английский
+    "Fille": "female",  # Французский
+    "Chica": "female",  # Испанский
+    "Dziewczyna": "female",  # Польский
 }
 
 find_gender_map = {
-    "Парни": "male",
-    "Male": "male",
-    "Men": "male",
-    "Девушки": "female",
-    "Women": "female",
-    "Дівчата": "female",
-    "Все": "all",
-    "All": "all",
-    "Всі": "all",
+    "Парней": "male",  # Русский
+    "Хлопців": "male",  # Украинский
+    "Boys": "male",  # Английский
+    "Garçons": "male",  # Французский
+    "Chicos": "male",  # Испанский
+    "Chłopców": "male",  # Польский
+    "Девушек": "female",  # Русский
+    "Дівчат": "female",  # Украинский
+    "Girls": "female",  # Английский
+    "Filles": "female",  # Французский
+    "Chicas": "female",  # Испанский
+    "Dziewcząt": "female",  # Польский
+    "Всех": "all",  # Русский
+    "Усіх": "all",  # Украинский
+    "Everyone": "all",  # Английский
+    "Tous": "all",  # Французский
+    "Todos": "all",  # Испанский
+    "Wszyscy": "all",  # Польский
 }
 
-leave_previous_tuple = ("Оставить предыдущее", "Leave previous", "Залишити попереднє")
-start_command_tuple = ("/create", "Создать анкету", "Create a profile", "Створити анкету")
+
+leave_previous_tuple = (
+    "Оставить предыдущее",  # Русский
+    "Leave previous",  # Английский
+    "Залишити попереднє",  # Украинский
+    "Laisser le précédent",  # Французский
+    "Dejar el anterior",  # Испанский
+    "Pozostaw poprzednie",  # Польский
+)
+
+start_command_tuple = (
+    "/create",
+    "Создать анкету",  # Русский
+    "Create a profile",  # Английский
+    "Створити анкету",  # Украинский
+    "Créer un profil",  # Французский
+    "Crear un perfil",  # Испанский
+    "Utwórz profil",  # Польский
+)
 
 
 class IsCreate(Filter):

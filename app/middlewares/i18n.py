@@ -6,6 +6,9 @@ pybabel extract --input-dirs=. -o data/locales/bot.pot --project=bot
 pybabel init -i data/locales/bot.pot -d data/locales -D bot -l en
 pybabel init -i data/locales/bot.pot -d data/locales -D bot -l ru
 pybabel init -i data/locales/bot.pot -d data/locales -D bot -l uk
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l fr
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l pl
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l es
 
 - После того как все текста переведены, нужно скомпилировать все переводы
 pybabel compile -d data/locales -D bot --statistics

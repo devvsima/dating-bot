@@ -8,7 +8,7 @@ from database.services import Profile, User
 
 
 @router.callback_query(BlockUserCallback.filter(), StateFilter(None))
-async def _report_user_callback(callback: types.CallbackQuery, callback_data, session) -> None:
+async def _complaint_user_callback(callback: types.CallbackQuery, callback_data, session) -> None:
     """Блокирует пользователя переданого в калбек"""
     if user_id := callback_data.user_id:
         user = await User.get_with_profile(session, user_id)

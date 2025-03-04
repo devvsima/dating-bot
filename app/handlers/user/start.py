@@ -12,7 +12,7 @@ from database.models import UserModel
 
 @start_router.message(CommandStart(), StateFilter(None))
 async def _start_command(message: types.Message, user: UserModel) -> None:
-    """Стратовая команда"""
+    """Стандартная команда /start для запуска бота и начала взаимодействия с ним"""
     if user.profile:
         await menu(user.id)
     else:

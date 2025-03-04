@@ -17,10 +17,9 @@ def start_kb() -> ReplyKeyboardMarkup:
 
 def gender_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
-        input_field_placeholder=_("Выберете из вариантов:"),
         resize_keyboard=True,
         keyboard=[
-            [KeyboardButton(text=_("Я парень")), KeyboardButton(text=_("Я девушка"))],
+            [KeyboardButton(text=_("Парень")), KeyboardButton(text=_("Девушка"))],
         ],
     )
     return kb
@@ -28,13 +27,12 @@ def gender_kb() -> ReplyKeyboardMarkup:
 
 def find_gender_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
-        input_field_placeholder=_("Выберете из вариантов:"),
         resize_keyboard=True,
         keyboard=[
             [
-                KeyboardButton(text=_("Парни")),
-                KeyboardButton(text=_("Девушки")),
-                KeyboardButton(text=_("Все")),
+                KeyboardButton(text=_("Парней")),
+                KeyboardButton(text=_("Девушек")),
+                KeyboardButton(text=_("Всех")),
             ],
         ],
     )

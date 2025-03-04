@@ -27,7 +27,7 @@ async def menu(chat_id: int) -> None:
     )
 
 
-async def report_to_profile(user: UserModel, profile: ProfileModel, session) -> None:
+async def complaint_to_profile(user: UserModel, profile: ProfileModel, session) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
     if MODERATOR_GROUP:
@@ -36,7 +36,7 @@ async def report_to_profile(user: UserModel, profile: ProfileModel, session) -> 
             reported_user = await User.get(session, profile.user_id)
 
             text = msg_text.REPORT_TO_USER.format(
-                user.username, user.id, reported_user.username, profile.user_id
+                user.id, user.username, profile.user_id, reported_user.username
             )
 
             await bot.send_message(
