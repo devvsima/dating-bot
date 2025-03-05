@@ -25,8 +25,6 @@ async def _search_command(
     await message.answer(msg_text.SEARCH, reply_markup=search_kb)
 
     if profile_list := await search_profiles(session, user.profile):
-        shuffle(profile_list)
-
         await state.set_state(Search.search)
         await state.update_data(ids=profile_list)
 
