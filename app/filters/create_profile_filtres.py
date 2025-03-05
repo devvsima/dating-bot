@@ -1,7 +1,7 @@
 from aiogram.filters import Filter
 from aiogram.types import Message
 
-from utils.cordinate import get_coordinates
+from utils.geopy import get_coordinates
 
 gender_map = {
     "Парень": "male",  # Русский

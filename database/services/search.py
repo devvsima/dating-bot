@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models.profile import ProfileModel
 
+EARTH_RADIUS_KM = 6371
+
 
 async def search_profiles(
     session: AsyncSession, profile: ProfileModel, age_range: int = 3, distance: float = 0.1
@@ -13,10 +15,12 @@ async def search_profiles(
     которые подходят под критерии поиска.
     Поиск идет по координатам и параметрам анкеты.
     """
-    # Вычисляем расстояние по координатам
-    distance_expr = func.sqrt(
-        func.pow(ProfileModel.latitude - profile.latitude, 2)
-        + func.pow(ProfileModel.longitude - profile.longitude, 2)
+
+    distance_expr = EARTH_RADIUS_KM * func.acos(
+        func.cos(func.radians(profile.latitude))
+        * func.cos(func.radians(ProfileModel.latitude))
+        * func.cos(func.radians(ProfileModel.longitude) - func.radians(profile.longitude))
+        + func.sin(func.radians(profile.latitude)) * func.sin(func.radians(ProfileModel.latitude))
     )
 
     stmt = (
@@ -24,8 +28,7 @@ async def search_profiles(
         .where(
             and_(
                 ProfileModel.is_active == True,
-                func.abs(ProfileModel.latitude - profile.latitude) < distance,
-                func.abs(ProfileModel.longitude - profile.longitude) < distance,
+                distance_expr < 200,  # Ограничение по расстоянию в 200 км
                 or_(ProfileModel.gender == profile.find_gender, profile.find_gender == "all"),
                 or_(profile.gender == ProfileModel.find_gender, ProfileModel.find_gender == "all"),
                 ProfileModel.age.between(profile.age - age_range, profile.age + age_range),
@@ -36,8 +39,7 @@ async def search_profiles(
     )
 
     result = await session.execute(stmt)
-    user_ids = [row[0] for row in result.fetchall()]
 
     logger.log("DATABASE", f"{profile.user_id}: начал поиск анкет")
 
-    return user_ids
+    return [row[0] for row in result.fetchall()]
