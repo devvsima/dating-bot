@@ -24,7 +24,7 @@ async def _create_profile_command(message: types.Message, state: FSMContext):
 
 
 # < gender >
-@router.message(filters.IsGender(), StateFilter(ProfileCreate.gender))
+@router.message(StateFilter(ProfileCreate.gender), F.text, filters.IsGender())
 async def _gender(message: types.Message, state: FSMContext, gender: str):
     await state.update_data(gender=gender)
     await message.reply(msg_text.FIND_GENDER, reply_markup=find_gender_kb())
@@ -38,7 +38,7 @@ async def _incorrect_gender(message: types.Message):
 
 
 # < find gender >
-@router.message(filters.IsFindGender(), StateFilter(ProfileCreate.find_gender))
+@router.message(StateFilter(ProfileCreate.find_gender), F.text, filters.IsFindGender())
 async def _find_gender(
     message: types.Message, state: FSMContext, find_gender: str, user: UserModel
 ):
@@ -55,7 +55,7 @@ async def _incorrect_find_gender(message: types.Message):
 
 
 # < photo >
-@router.message(filters.IsPhoto(), StateFilter(ProfileCreate.photo, ProfileEdit.photo))
+@router.message(StateFilter(ProfileCreate.photo, ProfileEdit.photo), F.photo, filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext, user: UserModel, session):
     if await state.get_state() == ProfileEdit.photo.state:
         await Profile.update_photo(session, user.profile, message.photo[0].file_id)
@@ -75,14 +75,14 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
     await state.set_state(ProfileCreate.name)
 
 
-@router.message(StateFilter(ProfileEdit.photo))
+@router.message(StateFilter(ProfileCreate.photo, ProfileEdit.photo))
 async def _incorrect_photo(message: types.Message):
     """Ошибка фильтра фото"""
     await message.answer(msg_text.INVALID_PHOTO)
 
 
 # < name >
-@router.message(filters.IsName(), StateFilter(ProfileCreate.name))
+@router.message(StateFilter(ProfileCreate.name), F.text, filters.IsName())
 async def _name(message: types.Message, state: FSMContext, user: UserModel):
     await state.update_data(name=message.text)
 
@@ -99,7 +99,7 @@ async def _incorrect_name(message: types.Message):
 
 
 # < age >
-@router.message(filters.IsAge(), StateFilter(ProfileCreate.age))
+@router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
 async def _age(message: types.Message, state: FSMContext, user: UserModel):
     await state.update_data(age=message.text)
 
@@ -116,7 +116,7 @@ async def _incorrect_age(message: types.Message):
 
 
 # < city >
-@router.message(filters.IsCity(), StateFilter(ProfileCreate.city))
+@router.message(StateFilter(ProfileCreate.city), F.text, filters.IsCity())
 async def _city(message: types.Message, state: FSMContext, coordinates: dict, user: UserModel):
     await state.update_data(
         city=message.text,
@@ -134,7 +134,7 @@ async def _incorrect_city(message: types.Message):
 
 
 # < description >
-@router.message(filters.IsDescription(), StateFilter(ProfileCreate.desc, ProfileEdit.desc))
+@router.message(StateFilter(ProfileCreate.desc, ProfileEdit.desc), F.text, filters.IsDescription())
 async def _description(message: types.Message, state: FSMContext, user: UserModel, session):
     if await state.get_state() == ProfileEdit.desc.state:
         await Profile.update_description(session, user.profile, message.text)
