@@ -14,8 +14,8 @@ from database.services import Profile
 
 
 # create profile
-@router.message(F.text == "🔄", StateFilter(None))
-@router.message(filters.IsCreate(), StateFilter(None))
+@router.message(StateFilter(None), F.text == "🔄")
+@router.message(StateFilter(None), filters.IsCreate())
 async def _create_profile_command(message: types.Message, state: FSMContext):
     """Запускает процесс создания профиля пользователя.
     Также используется для пересоздания анкеты"""

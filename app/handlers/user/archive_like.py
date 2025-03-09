@@ -14,7 +14,7 @@ from .cancel import cancel_command
 from .profile import send_profile
 
 
-@router.message(F.text == "🗄", StateFilter("*"))
+@router.message(StateFilter("*"), F.text == "🗄")
 async def like_profile(message: types.Message, state: FSMContext, user: UserModel, session) -> None:
     """Архив лайков анкеты пользовтеля"""
     if await state.get_state() == DisableProfile.waiting:
@@ -32,7 +32,7 @@ async def like_profile(message: types.Message, state: FSMContext, user: UserMode
         await cancel_command(message, state)
 
 
-@router.callback_query(F.data == "archive", StateFilter("*"))
+@router.callback_query(StateFilter("*"), F.data == "archive")
 async def _like_profile(
     callback: types.CallbackQuery, state: FSMContext, user: UserModel, session
 ) -> None:

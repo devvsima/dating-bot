@@ -8,7 +8,7 @@ from app.routers import user_router as router
 from database.models import UserModel
 
 
-@router.message(F.text == "👤", StateFilter(None))
+@router.message(StateFilter(None), F.text == "👤")
 async def profile_command(message: types.Message, user: UserModel) -> None:
     """Отправляет профиль пользователя"""
     await send_profile(message.from_user.id, user.profile)

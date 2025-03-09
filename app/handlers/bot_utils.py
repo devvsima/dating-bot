@@ -9,7 +9,7 @@ from database.services import User
 from loader import bot
 from utils.logging import logger
 
-effect_dict = {
+EFFECT_DICT = {
     "🔥": "5104841245755180586",
     "👍": "5107584321108051014",
     "👎": "5104858069142078462",
@@ -66,7 +66,7 @@ async def new_user_alert_to_group(user: UserModel) -> None:
     if MODERATOR_GROUP:
         try:
             await bot.send_message(
-                chat_id=MODERATOR_GROUP, text=msg_text.NEW_USER.format(user.username, user.id)
+                chat_id=MODERATOR_GROUP, text=msg_text.NEW_USER.format(user.id, user.username)
             )
         except:
             logger.error("Сообщение в модераторскую группу не отправленно")
@@ -89,5 +89,5 @@ async def sending_user_contact(chat_id: int, name: str, user_link: str) -> None:
     await bot.send_message(
         chat_id=chat_id,
         text=msg_text.LIKE_ACCEPT.format(user_link, html.escape(name)),
-        message_effect_id=effect_dict["🎉"],
+        message_effect_id=EFFECT_DICT["🎉"],
     )

@@ -8,8 +8,8 @@ from app.others.states import LikeResponse, Search
 from app.routers import user_router as router
 
 
-@router.message(F.text == "💤", StateFilter(Search.search, LikeResponse.response))
-@router.message(Command("cancel"), StateFilter(Search.search, LikeResponse.response))
+@router.message(StateFilter(Search.search, LikeResponse.response), F.text == "💤")
+@router.message(StateFilter(Search.search, LikeResponse.response), Command("cancel"))
 async def cancel_command(message: types.Message, state: FSMContext) -> None:
     """Сбрасывает состояния и отправляет меню пользователю"""
     await state.clear()

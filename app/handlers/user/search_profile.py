@@ -17,7 +17,7 @@ from database.services.search import search_profiles
 from .cancel import cancel_command
 
 
-@router.message(F.text == "🔍", StateFilter(None))
+@router.message(StateFilter(None), F.text == "🔍")
 async def _search_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
@@ -35,7 +35,7 @@ async def _search_command(
         await menu(message.from_user.id)
 
 
-@router.message(Search.search, F.text.in_(("❤️", "👎", "💢")))
+@router.message(StateFilter(Search.search), F.text.in_(("❤️", "👎", "💢")))
 async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
     """
     Пользователь может взаимодействовать с анкетами, предложенными ботом,

@@ -11,21 +11,21 @@ from database.models import UserModel
 from database.services import Profile
 
 
-@router.message(F.text == "🖼", StateFilter(None))
+@router.message(StateFilter(None), F.text == "🖼")
 async def _edit_profile_photo_command(message: types.Message, state: FSMContext) -> None:
     """Редактирует фотографию пользователя"""
     await state.set_state(ProfileEdit.photo)
     await message.answer(msg_text.PHOTO)
 
 
-@router.message(F.text == "✍️", StateFilter(None))
+@router.message(StateFilter(None), F.text == "✍️")
 async def _edit_profile_description_command(message: types.Message, state: FSMContext) -> None:
     """Редактирует описание пользователя"""
     await state.set_state(ProfileEdit.desc)
     await message.answer(msg_text.DESCRIPTION)
 
 
-@router.message(F.text == "❌", StateFilter(None))
+@router.message(StateFilter(None), F.text == "❌")
 async def _disable_profile_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
@@ -35,7 +35,7 @@ async def _disable_profile_command(
     await message.answer(text=msg_text.DISABLE_PROFILE, reply_markup=profile_return_kb())
 
 
-return_profile_tuple = (
+RETURN_PRIFILE_TUPLE = (
     "🔙 Вернуть профиль",
     "🔙 Return profile",
     "🔙 Повернути профіль",
@@ -45,10 +45,7 @@ return_profile_tuple = (
 )
 
 
-@router.message(
-    F.text.in_(return_profile_tuple),
-    DisableProfile.waiting,
-)
+@router.message(DisableProfile.waiting, F.text.in_(RETURN_PRIFILE_TUPLE))
 async def _activate_profile_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
