@@ -1,5 +1,3 @@
-from random import shuffle
-
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
@@ -35,7 +33,7 @@ async def _search_command(
         await menu(message.from_user.id)
 
 
-@router.message(Search.search, F.text.in_(("❤️", "👎", "💢")))
+@router.message(F.text.in_(("❤️", "👎", "💢")), StateFilter(Search.search))
 async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
     """
     Пользователь может взаимодействовать с анкетами, предложенными ботом,

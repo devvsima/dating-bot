@@ -66,7 +66,7 @@ async def new_user_alert_to_group(user: UserModel) -> None:
     if MODERATOR_GROUP:
         try:
             await bot.send_message(
-                chat_id=MODERATOR_GROUP, text=msg_text.NEW_USER.format(user.username, user.id)
+                chat_id=MODERATOR_GROUP, text=msg_text.NEW_USER.format(user.id, user.username)
             )
         except:
             logger.error("Сообщение в модераторскую группу не отправленно")

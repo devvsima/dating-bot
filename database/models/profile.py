@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey
+from sqlalchemy import BigInteger, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
@@ -8,7 +8,7 @@ class ProfileModel(BaseModel):
     __tablename__ = "profiles"
 
     user_id: Mapped[int] = mapped_column(
-        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+        BigInteger, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
     )
     name: Mapped[str]
     gender: Mapped[str]
