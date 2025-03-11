@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-03-04 16:46+0200\n"
-"PO-Revision-Date: 2025-03-04 17:39+0200\n"
+"PO-Revision-Date: 2025-03-11 13:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -101,8 +101,7 @@ msgstr "🔍 Recherche..."
 #: app/handlers/msg_text.py:65
 msgid "Подходящих анкет нет. Попробуй указать другой город. 🌍"
 msgstr ""
-"Il n'y a pas de profil approprié. Essayez de spécifier une autre ville. "
-"🌍"
+"Il n'y a pas de profil approprié. Essayez de spécifier une autre ville. 🌍"
 
 #: app/handlers/msg_text.py:69
 msgid "Больше анкет нет. Попробуйте позже! 😊"
@@ -119,7 +118,8 @@ msgstr "Vous n'avez pas encore été aimé, mais tout est devant vous !"
 #: app/handlers/msg_text.py:81
 #, python-brace-format
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
-msgstr "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
+msgstr ""
+"Super! J'espère que vous passerez un bon moment ;) <a href='{}'>{}</a>"
 
 #: app/handlers/msg_text.py:85
 msgid "Укажи, свой пол: 👤"
@@ -153,16 +153,16 @@ msgstr ""
 
 #: app/handlers/msg_text.py:114
 msgid ""
-"Твоя анкета временно отключена. Чтобы снова её активировать, просто "
-"нажми на кнопку. 😊"
+"Твоя анкета временно отключена. Чтобы снова её активировать, просто нажми "
+"на кнопку. 😊"
 msgstr ""
 "Votre profil a été temporairement désactivé. Pour le réactiver, il vous "
 "suffit de cliquer sur le bouton. 😊"
 
 #: app/handlers/msg_text.py:119
 msgid ""
-"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь "
-"пользоваться ботом."
+"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
+"ботом."
 msgstr ""
 "✅ Votre profil a été restauré avec succès ! Vous pouvez maintenant "
 "utiliser le bot à nouveau."

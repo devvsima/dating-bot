@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-03-04 16:46+0200\n"
-"PO-Revision-Date: 2025-03-04 17:48+0200\n"
+"PO-Revision-Date: 2025-03-11 13:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: pl <LL@li.org>\n"
 "Language: pl\n"
@@ -100,7 +100,7 @@ msgstr "🔍 Wyszukiwanie..."
 
 #: app/handlers/msg_text.py:65
 msgid "Подходящих анкет нет. Попробуй указать другой город. 🌍"
-msgstr "Подходящих анкет нет. Попробуй указать другой город. 🌍"
+msgstr "Nie ma odpowiednich kwestionariuszy. Spróbuj podać inne miasto. 🌍"
 
 #: app/handlers/msg_text.py:69
 msgid "Больше анкет нет. Попробуйте позже! 😊"

@@ -83,11 +83,11 @@ def generate_user_link(user_id: int, username: str = None) -> str:
     return f"tg://user?id={user_id}"
 
 
-async def sending_user_contact(chat_id: int, name: str, user_link: str) -> None:
+async def sending_user_contact(chat_id: int, name: str, language: str, user_link: str) -> None:
     """Отправляет сообщение с контактом пользователя"""
 
     await bot.send_message(
         chat_id=chat_id,
-        text=msg_text.LIKE_ACCEPT.format(user_link, html.escape(name)),
+        text=msg_text.LIKE_ACCEPT(language).format(user_link, html.escape(name)),
         message_effect_id=effect_dict["🎉"],
     )

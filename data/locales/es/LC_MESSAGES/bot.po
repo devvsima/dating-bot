@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2025-03-04 16:46+0200\n"
-"PO-Revision-Date: 2025-03-04 17:26+0200\n"
+"PO-Revision-Date: 2025-03-11 13:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: es <LL@li.org>\n"
 "Language: es\n"
@@ -116,7 +116,7 @@ msgstr "Aún no te han gustado, ¡pero lo tienes todo por delante!"
 #: app/handlers/msg_text.py:81
 #, python-brace-format
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
-msgstr "Отлично! Espero que te diviertas  ;) <a href='{}'>{}</a>"
+msgstr "¡Excelente! Espero que lo pases bien ;) <a href='{}'>{}</a>"
 
 #: app/handlers/msg_text.py:85
 msgid "Укажи, свой пол: 👤"
@@ -308,7 +308,7 @@ msgstr "⚔️ Prohibir usuarios"
 
 #: app/keyboards/default/admin.py:23
 msgid "💊 Разбанить пользователей"
-msgstr "💊 Разбанить пользователей"
+msgstr "💊 Desbanear usuarios"
 
 #: app/keyboards/default/base.py:42
 msgid "🔙 Вернуть профиль"

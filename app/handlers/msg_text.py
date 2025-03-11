@@ -68,17 +68,15 @@ class MsgText:
     def EMPTY_PROFILE_SEARCH(self):
         return _("Больше анкет нет. Попробуйте позже! 😊")
 
-    @property
-    def LIKE_PROFILE(self):
-        return _("Кому-то понравилась тваоя анкета! Хочешь посмотреть? 👀")
+    def LIKE_PROFILE(self, language: str):
+        return _("Кому-то понравилась тваоя анкета! Хочешь посмотреть? 👀", locale=language)
+
+    def LIKE_ACCEPT(self, language: str):
+        return _("Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>", locale=language)
 
     @property
     def LIKE_ARCHIVE(self):
         return _("Тебя ещё никто не лайкнул, но всё впереди!")
-
-    @property
-    def LIKE_ACCEPT(self):
-        return _("Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>")
 
     @property
     def GENDER(self):

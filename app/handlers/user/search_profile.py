@@ -11,6 +11,7 @@ from app.routers import user_router as router
 from database.models import UserModel
 from database.services import Match, Profile
 from database.services.search import search_profiles
+from database.services.user import User
 
 from .cancel import cancel_command
 
@@ -43,13 +44,13 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
     """
     data = await state.get_data()
     profile_list = data.get("ids", [])
-    profile = await Profile.get(session, profile_list[0])
+    another_user = await User.get_with_profile(session, profile_list[0])
 
     if message.text == "❤️":
-        await Match.create(session, message.from_user.id, profile.user_id)
+        await Match.create(session, message.from_user.id, another_user.id)
         await message.bot.send_message(
-            chat_id=profile.user_id,
-            text=msg_text.LIKE_PROFILE,
+            chat_id=another_user.id,
+            text=msg_text.LIKE_PROFILE(another_user.language),
             reply_markup=check_archive_ikb(),
         )
     elif message.text == "💢":
@@ -57,7 +58,7 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
         await complaint_to_profile(
             session=session,
             user=message.from_user,
-            profile=profile,
+            profile=another_user.profile,
         )
     profile_list.pop(0)
     if profile_list:

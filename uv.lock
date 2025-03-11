@@ -129,6 +129,15 @@ wheels = [
 ]
 
 [[package]]
+name = "babel"
+version = "2.17.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/6b/d52e42361e1aa00709585ecc30b3f9684b3ab62530771402248b1b1d6240/babel-2.17.0.tar.gz", hash = "sha256:0c54cffb19f690cdcc52a3b50bcbf71e07a808d1c80d549f2459b9d2cf0afb9d", size = 9951852 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/b8/3fe70c75fe32afc4bb507f75563d39bc5642255d1d94f1f23604725780bf/babel-2.17.0-py3-none-any.whl", hash = "sha256:4d0b53093fdfb4b21c92b5213dba5a1b23885afa8383709427046b21c366e5f2", size = 10182537 },
+]
+
+[[package]]
 name = "certifi"
 version = "2025.1.31"
 source = { registry = "https://pypi.org/simple" }
@@ -194,6 +203,7 @@ dependencies = [
     { name = "aiogram" },
     { name = "aiosqlite" },
     { name = "asyncpg" },
+    { name = "babel" },
     { name = "environs" },
     { name = "geopy" },
     { name = "loguru" },
@@ -209,6 +219,7 @@ requires-dist = [
     { name = "aiogram", specifier = ">=3.18.0" },
     { name = "aiosqlite", specifier = ">=0.21.0" },
     { name = "asyncpg", specifier = ">=0.30.0" },
+    { name = "babel", specifier = ">=2.17.0" },
     { name = "environs", specifier = ">=14.1.1" },
     { name = "geopy", specifier = ">=2.4.1" },
     { name = "loguru", specifier = ">=0.7.3" },

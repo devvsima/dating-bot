@@ -66,11 +66,21 @@ async def _like_response(
     if message.text == "❤️":
         """Отправка пользователю который ответил на лайк"""
         link = generate_user_link(user_id=another_user.id, username=another_user.username)
-        await sending_user_contact(chat_id=user.id, name=another_user.profile.name, user_link=link)
+        await sending_user_contact(
+            chat_id=user.id,
+            name=another_user.profile.name,
+            language=user.language,
+            user_link=link,
+        )
 
         """Отправка пользователю которому ответили на лайк"""
         link = generate_user_link(user_id=user.id, username=user.username)
-        await sending_user_contact(chat_id=another_user.id, name=user.profile.name, user_link=link)
+        await sending_user_contact(
+            chat_id=another_user.id,
+            name=user.profile.name,
+            language=another_user.language,
+            user_link=link,
+        )
 
     await Match.delete(session, user.id, another_user.id)
 
