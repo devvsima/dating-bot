@@ -4,7 +4,7 @@ from aiogram import F, types
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 
-from app.handlers.msg_text import msg_text
+from app.handlers.message_text import admin_message_text as amt
 from app.keyboards.inline.admin import stats_ikb
 from app.routers import admin_router as router
 from database.services.stats import (
@@ -16,13 +16,13 @@ from utils.graphs import get_or_create_registration_graph
 
 
 @router.message(Command("stats"), StateFilter(None))
-@router.message(F.text.in_(("📊 Статистика", "📊 Statistics")), StateFilter(None))
+@router.message(F.text == "📊 Statistics", StateFilter(None))
 async def _stats_command(message: types.Message, session) -> None:
     """Отправляет администратору меню статистики"""
     graph_path = await get_or_create_registration_graph(session)
     photo = types.FSInputFile(graph_path)
     users_stats = await get_user_statistics(session)
-    text = msg_text.USER_STATS.format(
+    text = amt.USER_STATS.format(
         users_stats["count"],
         users_stats["banned_count"],
         users_stats["total_referrals"],
@@ -40,7 +40,7 @@ async def _stats_callback(callback: types.CallbackQuery, session) -> None:
     photo = types.FSInputFile(graph_path)
     if callback.data == "stats_User":
         users_stats = await get_user_statistics(session)
-        text = msg_text.USER_STATS.format(
+        text = amt.USER_STATS.format(
             users_stats["count"],
             users_stats["banned_count"],
             users_stats["total_referrals"],
@@ -50,7 +50,7 @@ async def _stats_callback(callback: types.CallbackQuery, session) -> None:
     elif callback.data == "stats_Profile":
         match_stats = await get_match_statistics(session)
         profile_stats = await get_profile_statistics(session)
-        text = msg_text.PROFILE_STATS.format(
+        text = amt.PROFILE_STATS.format(
             profile_stats["count"],
             profile_stats["inactive_profile"],
             profile_stats["male_count"],

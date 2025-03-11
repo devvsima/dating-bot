@@ -3,7 +3,7 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 import app.filters.create_profile_filtres as filters
-from app.handlers.msg_text import msg_text
+from app.handlers.message_text import user_message_text as umt
 from app.handlers.user.profile import profile_command
 from app.keyboards.default.base import hints_kb, leave_previous_kb
 from app.keyboards.default.create_profile import find_gender_kb, gender_kb
@@ -19,7 +19,7 @@ from database.services import Profile
 async def _create_profile_command(message: types.Message, state: FSMContext):
     """Запускает процесс создания профиля пользователя.
     Также используется для пересоздания анкеты"""
-    await message.answer(msg_text.GENDER, reply_markup=gender_kb())
+    await message.answer(umt.GENDER, reply_markup=gender_kb())
     await state.set_state(ProfileCreate.gender)
 
 
@@ -27,14 +27,14 @@ async def _create_profile_command(message: types.Message, state: FSMContext):
 @router.message(StateFilter(ProfileCreate.gender), F.text, filters.IsGender())
 async def _gender(message: types.Message, state: FSMContext, gender: str):
     await state.update_data(gender=gender)
-    await message.reply(msg_text.FIND_GENDER, reply_markup=find_gender_kb())
+    await message.reply(umt.FIND_GENDER, reply_markup=find_gender_kb())
     await state.set_state(ProfileCreate.find_gender)
 
 
 @router.message(StateFilter(ProfileCreate.gender))
 async def _incorrect_gender(message: types.Message):
     """Ошибка фильтра гендера"""
-    await message.answer(msg_text.INVALID_RESPONSE)
+    await message.answer(umt.INVALID_RESPONSE)
 
 
 # < find gender >
@@ -44,14 +44,14 @@ async def _find_gender(
 ):
     await state.update_data(find_gender=find_gender)
 
-    await message.reply(msg_text.PHOTO, reply_markup=leave_previous_kb(user.profile))
+    await message.reply(umt.PHOTO, reply_markup=leave_previous_kb(user.profile))
     await state.set_state(ProfileCreate.photo)
 
 
 @router.message(StateFilter(ProfileCreate.find_gender))
 async def _incorrect_find_gender(message: types.Message):
     """Ошибка фильтра гендера"""
-    await message.answer(msg_text.INVALID_RESPONSE)
+    await message.answer(umt.INVALID_RESPONSE)
 
 
 # < photo >
@@ -71,14 +71,14 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
     kb = hints_kb(user.profile.name) if user.profile else None
 
     await state.update_data(photo=photo)
-    await message.reply(msg_text.NAME, reply_markup=kb)
+    await message.reply(umt.NAME, reply_markup=kb)
     await state.set_state(ProfileCreate.name)
 
 
 @router.message(StateFilter(ProfileCreate.photo, ProfileEdit.photo))
 async def _incorrect_photo(message: types.Message):
     """Ошибка фильтра фото"""
-    await message.answer(msg_text.INVALID_PHOTO)
+    await message.answer(umt.INVALID_PHOTO)
 
 
 # < name >
@@ -88,14 +88,14 @@ async def _name(message: types.Message, state: FSMContext, user: UserModel):
 
     kb = hints_kb(str(user.profile.age)) if user.profile else None
 
-    await message.reply(msg_text.AGE, reply_markup=kb)
+    await message.reply(umt.AGE, reply_markup=kb)
     await state.set_state(ProfileCreate.age)
 
 
 @router.message(StateFilter(ProfileCreate.name))
 async def _incorrect_name(message: types.Message):
     """Ошибка фильтра имени"""
-    await message.answer(msg_text.INVALID_LONG_RESPONSE)
+    await message.answer(umt.INVALID_LONG_RESPONSE)
 
 
 # < age >
@@ -105,14 +105,14 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 
     kb = hints_kb(user.profile.city) if user.profile else None
 
-    await message.reply(msg_text.CITY, reply_markup=kb)
+    await message.reply(umt.CITY, reply_markup=kb)
     await state.set_state(ProfileCreate.city)
 
 
 @router.message(StateFilter(ProfileCreate.age))
 async def _incorrect_age(message: types.Message):
     """Ошибка фильтра возраста"""
-    await message.answer(msg_text.INVALID_AGE)
+    await message.answer(umt.INVALID_AGE)
 
 
 # < city >
@@ -123,14 +123,14 @@ async def _city(message: types.Message, state: FSMContext, coordinates: dict, us
         latitude=coordinates[0],
         longitude=coordinates[1],
     )
-    await message.reply(msg_text.DESCRIPTION, reply_markup=leave_previous_kb(user.profile))
+    await message.reply(umt.DESCRIPTION, reply_markup=leave_previous_kb(user.profile))
     await state.set_state(ProfileCreate.desc)
 
 
 @router.message(StateFilter(ProfileCreate.city))
 async def _incorrect_city(message: types.Message):
     """Ошибка фильтра города"""
-    await message.answer(msg_text.INVALID_LONG_RESPONSE)
+    await message.answer(umt.INVALID_LONG_RESPONSE)
 
 
 # < description >
@@ -169,4 +169,4 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
 @router.message(StateFilter(ProfileCreate.desc, ProfileEdit.desc))
 async def _incorrect_description(message: types.Message):
     """Ошибка фильтра описания"""
-    await message.answer(msg_text.INVALID_LONG_RESPONSE)
+    await message.answer(umt.INVALID_LONG_RESPONSE)

@@ -3,7 +3,7 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 from app.handlers.bot_utils import generate_user_link, sending_user_contact
-from app.handlers.msg_text import msg_text
+from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import arhive_search_kb
 from app.others.states import DisableProfile, LikeResponse
 from app.routers import user_router as router
@@ -20,7 +20,7 @@ async def like_profile(message: types.Message, state: FSMContext, user: UserMode
     if await state.get_state() == DisableProfile.waiting:
         return
     await User.update_username(session, user, message.from_user.username)  # needs to be redone
-    await message.answer(text=msg_text.SEARCH, reply_markup=arhive_search_kb)
+    await message.answer(text=umt.SEARCH, reply_markup=arhive_search_kb)
     await state.set_state(LikeResponse.response)
 
     if liker_ids := await Match.get_all(session, message.from_user.id):
@@ -28,7 +28,7 @@ async def like_profile(message: types.Message, state: FSMContext, user: UserMode
         profile = await Profile.get(session, liker_ids[0])
         await send_profile(message.from_user.id, profile)
     else:
-        await message.answer(msg_text.LIKE_ARCHIVE)
+        await message.answer(umt.LIKE_ARCHIVE)
         await cancel_command(message, state)
 
 
@@ -41,7 +41,7 @@ async def _like_profile(
         return
     await state.set_state(LikeResponse.response)
     await User.update_username(session, user, callback.from_user.username)  # needs to be redone
-    await callback.message.answer(text=msg_text.SEARCH, reply_markup=arhive_search_kb)
+    await callback.message.answer(text=umt.SEARCH, reply_markup=arhive_search_kb)
     await callback.answer()
 
     if liker_ids := await Match.get_all(session, callback.from_user.id):
@@ -49,7 +49,7 @@ async def _like_profile(
         profile = await Profile.get(session, liker_ids[0])
         await send_profile(callback.from_user.id, profile)
     else:
-        await callback.message.answer(msg_text.LIKE_ARCHIVE)
+        await callback.message.answer(umt.LIKE_ARCHIVE)
         await cancel_command(callback.message, state)
 
 
@@ -90,5 +90,5 @@ async def _like_response(
         profile = await Profile.get(session, ids[0])
         await send_profile(user.id, profile)
     else:
-        await message.answer(msg_text.EMPTY_PROFILE_SEARCH)
+        await message.answer(umt.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)

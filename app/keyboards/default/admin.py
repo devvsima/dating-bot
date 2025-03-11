@@ -1,26 +1,15 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
+from app.keyboards.default.kb_generator import simple_kb_generator as kb_gen
 from loader import _
 
+admin_menu_kb: ReplyKeyboardMarkup = kb_gen(
+    ["📊 Statistics"],
+    ["👤 Users"],
+    ["📩 Mailing to users"],
+)
 
-def admin_menu_kb() -> ReplyKeyboardMarkup:
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        keyboard=[
-            [KeyboardButton(text=_("📊 Статистика"))],
-            [KeyboardButton(text=_("👤 Пользователи"))],
-            [KeyboardButton(text=_("📩 Рассылка"))],
-        ],
-    )
-    return kb
-
-
-def user_ban_or_unban_kb() -> ReplyKeyboardMarkup:
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        keyboard=[
-            [KeyboardButton(text=_(f"⚔️ Забанить пользователей"))],
-            [KeyboardButton(text=_("💊 Разбанить пользователей"))],
-        ],
-    )
-    return kb
+user_ban_or_unban_kb: ReplyKeyboardMarkup = kb_gen(
+    ["⚔️ Ban users"],
+    ["💊 Unban users"],
+)

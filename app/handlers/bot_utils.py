@@ -1,6 +1,7 @@
 import html
 
-from app.handlers.msg_text import msg_text
+from app.handlers.message_text import admin_message_text as amt
+from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import menu_kb
 from app.keyboards.inline.report import block_user_ikb
 from data.config import MODERATOR_GROUP
@@ -22,7 +23,7 @@ async def menu(chat_id: int) -> None:
     """Отправляет меню пользователю"""
     await bot.send_message(
         chat_id=chat_id,
-        text=msg_text.MENU,
+        text=umt.MENU,
         reply_markup=menu_kb,
     )
 
@@ -35,7 +36,7 @@ async def complaint_to_profile(user: UserModel, profile: ProfileModel, session) 
             await send_profile(MODERATOR_GROUP, profile)
             reported_user = await User.get(session, profile.user_id)
 
-            text = msg_text.REPORT_TO_USER.format(
+            text = umt.REPORT_TO_USER.format(
                 user.id, user.username, profile.user_id, reported_user.username
             )
 
@@ -66,7 +67,7 @@ async def new_user_alert_to_group(user: UserModel) -> None:
     if MODERATOR_GROUP:
         try:
             await bot.send_message(
-                chat_id=MODERATOR_GROUP, text=msg_text.NEW_USER.format(user.id, user.username)
+                chat_id=MODERATOR_GROUP, text=amt.NEW_USER.format(user.id, user.username)
             )
         except:
             logger.error("Сообщение в модераторскую группу не отправленно")
@@ -88,6 +89,6 @@ async def sending_user_contact(chat_id: int, name: str, language: str, user_link
 
     await bot.send_message(
         chat_id=chat_id,
-        text=msg_text.LIKE_ACCEPT(language).format(user_link, html.escape(name)),
+        text=umt.LIKE_ACCEPT(language).format(user_link, html.escape(name)),
         message_effect_id=effect_dict["🎉"],
     )

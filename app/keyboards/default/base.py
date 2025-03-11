@@ -32,17 +32,9 @@ arhive_search_kb: ReplyKeyboardMarkup = kb_gen(
     ["❤️", "👎"],
     ["💤"],
 )
-
-
-def profile_return_kb() -> ReplyKeyboardMarkup:
-    kb = ReplyKeyboardMarkup(
-        resize_keyboard=True,
-        one_time_keyboard=True,
-        keyboard=[
-            [KeyboardButton(text=_("🔙 Вернуть профиль"))],
-        ],
-    )
-    return kb
+profile_return_kb: ReplyKeyboardMarkup = kb_gen(
+    ["🔙"],
+)
 
 
 def report_kb() -> ReplyKeyboardMarkup:
