@@ -180,22 +180,6 @@ class AdminMessageText:
         return _("Укажи текст сообщения которое будет отправленно")
 
     @property
-    def USER_PANEL(self):
-        return _("Панель управления пользователями:")
-
-    @property
-    def UNBAN_USERS_PANEL(self):
-        return _(
-            "💊 Пожалуйста, укажи список ID пользователей через запятую для разблокировки.\nПример: 1234567, 234567"
-        )
-
-    @property
-    def BAN_USERS_PANEL(self):
-        return _(
-            "⚔️ Пожалуйста, укажи список ID пользователей через запятую для блокировки.\nПример: 1234567, 234567"
-        )
-
-    @property
     def PROFILE_STATS(self):
         return """
 📂 Profile: {} | 🔕 Inactive: {}
@@ -215,6 +199,10 @@ class AdminMessageText:
 
 🌍 Most popular language: {}
 """
+
+    @property
+    def LOG_SENDING(self):
+        return _("Log sending...")
 
     @property
     def USER_BANNED(self):

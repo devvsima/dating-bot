@@ -1,4 +1,5 @@
 import html
+import re
 
 from app.handlers.message_text import admin_message_text as amt
 from app.handlers.message_text import user_message_text as umt
@@ -17,6 +18,13 @@ effect_dict = {
     "🎉": "5046509860389126442",
     "💩": "5046589136895476101",
 }
+
+
+def check_args_type(type: type, data_list: str) -> list | bool:
+    try:
+        return list(map(type, re.split(r"[ ,]+", data_list)))
+    except:
+        return False
 
 
 async def menu(chat_id: int) -> None:

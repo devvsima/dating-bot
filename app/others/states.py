@@ -26,3 +26,7 @@ class Search(StatesGroup):
 
 class DisableProfile(StatesGroup):
     waiting = State()
+
+
+class Mailing(StatesGroup):
+    message = State()

@@ -1,5 +1,3 @@
-from functools import wraps
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
@@ -7,6 +5,7 @@ from sqlalchemy.orm import joinedload
 from utils.logging import logger
 
 from ..models.user import UserModel
+from .profile import Profile
 
 
 class User:
@@ -15,6 +14,11 @@ class User:
         """Возвращает пользователя по его id"""
         return await session.get(UserModel, user_id)
 
+    async def get_all(session: AsyncSession) -> list[UserModel]:
+        """Возвращает список всех пользователей"""
+        result = await session.execute(select(UserModel))
+        return result.scalars().all()
+
     @staticmethod
     async def get_with_profile(session: AsyncSession, user_id: int):
         """Возвращает пользователя и его профиль"""
@@ -22,6 +26,12 @@ class User:
             select(UserModel).options(joinedload(UserModel.profile)).where(UserModel.id == user_id)
         )
         return result.scalar_one_or_none()
+
+    @staticmethod
+    async def set_user_ban_and_profile_status(session, user_id: int, is_banned: bool):
+        user = await User.get_with_profile(session, user_id)
+        await User.update_isbanned(session, user, is_banned)
+        await Profile.update_isactive(session, user.profile, not is_banned)
 
     @staticmethod
     async def get_or_create(
