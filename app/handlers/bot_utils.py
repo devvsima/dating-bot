@@ -4,7 +4,7 @@ import re
 from app.handlers.message_text import admin_message_text as amt
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import menu_kb
-from app.keyboards.inline.report import block_user_ikb
+from app.keyboards.inline.admin import block_user_ikb
 from data.config import MODERATOR_GROUP
 from database.models import ProfileModel, UserModel
 from database.services import User

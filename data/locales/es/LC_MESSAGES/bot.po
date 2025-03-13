@@ -7,18 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-11 14:48+0200\n"
-"PO-Revision-Date: 2025-03-11 14:40+0200\n"
+"POT-Creation-Date: 2025-03-13 17:18+0200\n"
+"PO-Revision-Date: 2025-03-13 17:20+0200\n"
 "Last-Translator: \n"
-"Language: es\n"
 "Language-Team: es <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.5\n"
 
-#: app/handlers/message_text.py:12
+#: app/handlers/message_text.py:11
 msgid ""
 "\n"
 "Привет! 👋\n"
@@ -36,7 +37,7 @@ msgstr ""
 "\n"
 "¡Te deseamos una agradable experiencia de citas! 😊\n"
 
-#: app/handlers/message_text.py:25
+#: app/handlers/message_text.py:22
 msgid ""
 "\n"
 "🔍 Смотреть анкеты\n"
@@ -52,7 +53,7 @@ msgstr ""
 "\n"
 "✉️ Invitar amigos"
 
-#: app/handlers/message_text.py:36
+#: app/handlers/message_text.py:31
 msgid ""
 "\n"
 "🔄 Заполнить анкету заново\n"
@@ -70,124 +71,127 @@ msgstr ""
 "\n"
 "🔍 Ver perfiles\n"
 
-#: app/handlers/message_text.py:49
+#: app/handlers/message_text.py:42
+msgid "Неизвестная команда. Если заблудился, напиши /start."
+msgstr "Comando desconocido. Si te pierdes, escribe /start."
+
+#: app/handlers/message_text.py:46
 msgid ""
 "\n"
 "👋\n"
 "Немного информации о боте:\n"
 "Этот бот был создан по аналогии с популярным ботом для знакомств <a "
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
-"Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
-"/dating-bot'>GitHub</a>\n"
+"Весь код бота открыт и доступен на <a href='https://github.com/devvsima/dating-"
+"bot'>GitHub</a>\n"
 "\n"
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
 "\n"
 "👋\n"
 "Un poco de información sobre el bot:\n"
-"Este bot fue creado a lo largo de las líneas de un bot de citas populares"
-" \n"
-"Todo el código del bot está abierto y disponible en <a "
-"href='https://github.com/devvsima/dating-bot'>GitHub</a>\n"
+"Este bot fue creado a lo largo de las líneas de un bot de citas populares \n"
+"Todo el código del bot está abierto y disponible en <a href='https://github."
+"com/devvsima/dating-bot'>GitHub</a>\n"
 "\n"
 "Para preguntas y sugerencias puedes escribir aquí: @devvsima.\n"
 
-#: app/handlers/message_text.py:61
+#: app/handlers/message_text.py:57
 msgid "🔍 Выполняется поиск..."
 msgstr "🔍 Buscando..."
 
-#: app/handlers/message_text.py:65
+#: app/handlers/message_text.py:61
 msgid "Подходящих анкет нет. Попробуй указать другой город. 🌍"
 msgstr "No hay perfiles adecuados. Prueba a especificar otra ciudad. 🌍"
 
-#: app/handlers/message_text.py:69
+#: app/handlers/message_text.py:65
 msgid "Больше анкет нет. Попробуйте позже! 😊"
 msgstr "No hay más perfiles. ¡Vuelve a intentarlo más tarde! 😊"
 
-#: app/handlers/message_text.py:72
+#: app/handlers/message_text.py:68
 msgid "Кому-то понравилась тваоя анкета! Хочешь посмотреть? 👀"
 msgstr "¡A alguien le ha gustado tu perfil! Te gustaría verlo? 👀"
 
-#: app/handlers/message_text.py:75
+#: app/handlers/message_text.py:71
 #, python-brace-format
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr "¡Excelente! Espero que lo pases bien ;) <a href='{}'>{}</a>"
 
-#: app/handlers/message_text.py:79
+#: app/handlers/message_text.py:75
 msgid "Тебя ещё никто не лайкнул, но всё впереди!"
 msgstr "Aún no te han gustado, ¡pero lo tienes todo por delante!"
 
-#: app/handlers/message_text.py:83
+#: app/handlers/message_text.py:79
 msgid "Укажи, свой пол: 👤"
 msgstr "Indique su sexo: 👤"
 
-#: app/handlers/message_text.py:87
+#: app/handlers/message_text.py:83
 msgid "Выбери, кого ты ищешь: 💕"
 msgstr "Elige a quien buscas 💕"
 
-#: app/handlers/message_text.py:91
+#: app/handlers/message_text.py:87
 msgid "Пришли своё фото! 📸"
 msgstr "¡Envía tu foto! 📸"
 
-#: app/handlers/message_text.py:95
+#: app/handlers/message_text.py:91
 msgid "Как тебя зовут? ✍️"
 msgstr "¿Cómo te llamas? ✍️"
 
-#: app/handlers/message_text.py:99
+#: app/handlers/message_text.py:95
 msgid "Сколько тебе лет? 🎂"
 msgstr "¿Cuántos años tienes? 🎂"
 
-#: app/handlers/message_text.py:103
+#: app/handlers/message_text.py:99
 msgid "Укажи свой город: 🏙️"
 msgstr "Introduzca su ciudad: 🏙️"
 
-#: app/handlers/message_text.py:107
+#: app/handlers/message_text.py:103
 msgid "Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝"
 msgstr "Háblenos un poco de usted. Ayudará a los demás a conocerte mejor. 📝"
 
-#: app/handlers/message_text.py:111
+#: app/handlers/message_text.py:107
 msgid ""
-"Твоя анкета отключена.\n"
 "\n"
-"🔙 Чтобы активировать анкету"
+"❌ Ваша анкета отключена, некоторые функции теперь недоступны.\n"
+"💬 Чтобы активировать анкету, напишите команду /start."
 msgstr ""
-"Tu perfil está desactivado.\n"
 "\n"
-"🔙 Para activar su perfil"
+"❌Tu perfil ha sido deshabilitado, algunas funciones ahora no están "
+"disponibles.\n"
+"💬 Para activar el cuestionario escribe el comando /start."
 
-#: app/handlers/message_text.py:115
+#: app/handlers/message_text.py:113
 msgid ""
 "✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
 "ботом."
 msgstr ""
-"✅ ¡Tu perfil ha sido restaurado con éxito! Ahora puedes volver a utilizar"
-" el bot."
+"✅ ¡Tu perfil ha sido restaurado con éxito! Ahora puedes volver a utilizar el "
+"bot."
 
-#: app/handlers/message_text.py:119
+#: app/handlers/message_text.py:117
 msgid ""
-"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
-"правильно. 📝"
+"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝"
 msgstr ""
 "Respuesta incorrecta. Por favor, elija en su teclado o escríbala "
 "correctamente. 📝"
 
-#: app/handlers/message_text.py:123
+#: app/handlers/message_text.py:121
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr "Se ha superado el límite de caracteres. Por favor, acorte el mensaje. ✂️"
 
-#: app/handlers/message_text.py:128
+#: app/handlers/message_text.py:126
 msgid ""
-"Неверный формат фотографии! Пожалуйста, загрузите изображение в "
-"правильном формате. 🖼️"
+"Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном "
+"формате. 🖼️"
 msgstr ""
 "¡Formato de imagen incorrecto! Por favor, suba la imagen en el formato "
 "correcto. 🖼️"
 
-#: app/handlers/message_text.py:133
+#: app/handlers/message_text.py:131
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr "Formato incorrecto, la edad debe darse en números. 🔢"
 
-#: app/handlers/message_text.py:138
+#: app/handlers/message_text.py:136
 #, python-brace-format
 msgid ""
 "Приглашай друзей и получай бонусы!\n"
@@ -204,29 +208,30 @@ msgstr ""
 "Enlace para amigos:\n"
 "<code>https://t.me/{}?start={}</code>"
 
-#: app/handlers/message_text.py:143
+#: app/handlers/message_text.py:141
 msgid "Выбери язык бота, на который хочешь переключиться: 🌐"
 msgstr "Elige el idioma del bot al que quieres cambiar: 🌐"
 
-#: app/handlers/message_text.py:146
+#: app/handlers/message_text.py:144
 msgid "Язык бота изменён! ✅"
 msgstr "¡Se ha cambiado el bot de idioma! ✅"
 
-#: app/handlers/message_text.py:151
+#: app/handlers/message_text.py:149
 #, python-brace-format
 msgid ""
-"Пользователь <code>{}</code> (@{}) отправил жалобу на анкету "
-"пользователя: <code>{}</code> (@{})"
+"Пользователь <code>{}</code> (@{}) отправил жалобу на анкету пользователя: "
+"<code>{}</code> (@{})"
 msgstr ""
-"El usuario <code>{}</code> (@{}) envió una queja sobre un perfil de "
-"usuario: <code>{}</code> (@{})"
+"El usuario <code>{}</code> (@{}) envió una queja sobre un perfil de usuario: "
+"<code>{}</code> (@{})"
 
-#: app/handlers/message_text.py:156
+#: app/handlers/message_text.py:154
 msgid "✅ Жалоба отправлена на рассмотрение!"
 msgstr "✅ ¡Queja enviada para revisión!"
 
-#: app/handlers/message_text.py:160
+#: app/handlers/message_text.py:158
 msgid ""
+"\n"
 "Укажи причину жалобы:\n"
 "🔞 Неприличный материал\n"
 "💰 Реклама\n"
@@ -234,6 +239,7 @@ msgid ""
 "\n"
 "Если жалоба ошибочная, то можете вернутся назад.\n"
 msgstr ""
+"\n"
 "Indique el motivo de la denuncia:\n"
 "🔞 Material indecente\n"
 "💰 Publicidad\n"
@@ -241,52 +247,11 @@ msgstr ""
 "\n"
 "Si la denuncia es errónea, puedes volver atrás.\n"
 
-#: app/handlers/message_text.py:172
-msgid "Ты администратор!"
-msgstr "¡Tú eres el administrador!"
-
-#: app/handlers/message_text.py:180
-msgid "Укажи текст сообщения которое будет отправленно"
-msgstr "Especifique el texto del mensaje que desea enviar"
-
-#: app/handlers/message_text.py:184
-msgid "Панель управления пользователями:"
-msgstr "Panel de control del usuario:"
-
-#: app/handlers/message_text.py:189
-msgid ""
-"💊 Пожалуйста, укажи список ID пользователей через запятую для "
-"разблокировки.\n"
-"Пример: 1234567, 234567"
-msgstr ""
-"💊 Especifique una lista separada por comas de los ID de usuario que desea"
-" desbloquear.\n"
-"Ejemplo: 1234567, 234567"
-
-#: app/handlers/message_text.py:195
-msgid ""
-"⚔️ Пожалуйста, укажи список ID пользователей через запятую для "
-"блокировки.\n"
-"Пример: 1234567, 234567"
-msgstr ""
-"⚔️ Especifique una lista separada por comas de los ID de usuario que "
-"desea bloquear.\n"
-"Ejemplo: 1234567, 234567"
-
-#: app/handlers/message_text.py:221
-#, python-brace-format
-msgid "Пользователь: <code>{}</code> заблокирован"
-msgstr "Usuario: <code>{}</code> bloqueado"
-
-#: app/handlers/message_text.py:225
-msgid "Администратор отклонил жалобу"
-msgstr "El administrador rechazó la reclamación"
-
-#: app/keyboards/default/base.py:46
+#: app/keyboards/default/base.py:45
 msgid "Отменить жалобу"
 msgstr "Anulación de la denuncia"
 
-#: app/keyboards/default/base.py:62
+#: app/keyboards/default/base.py:61
 msgid "Оставить предыдущее"
 msgstr "Laisser le précédent"
 
@@ -317,60 +282,3 @@ msgstr "Todos"
 #: app/keyboards/inline/archive.py:10
 msgid "Посмотреть"
 msgstr "Ver"
-
-#: app/keyboards/inline/report.py:12
-#, python-brace-format
-msgid "☠️ Заблокировать пользователя {}"
-msgstr "☠️ Bloquear usuario {}"
-
-#: app/keyboards/inline/report.py:16
-msgid "Отклонить"
-msgstr "Rechazar"
-
-#: app/others/commands.py:8
-msgid "Начать"
-msgstr "Inicio"
-
-#: app/others/commands.py:9
-msgid "Изменить язык бота"
-msgstr "Cambiar el idioma del bot"
-
-#: app/others/commands.py:10
-msgid "Дополнительное описание"
-msgstr "Descripción adicional"
-
-#: app/others/commands.py:11
-msgid "Активировать анкету"
-msgstr "Activar el formulario"
-
-#: app/others/commands.py:21
-msgid "Админ панель"
-msgstr "panel de administración"
-
-#: app/others/commands.py:22
-msgid "Статистика"
-msgstr "Estadísticas"
-
-#~ msgid "📊 Статистика"
-#~ msgstr "📊 Estadísticas"
-
-#~ msgid "👤 Пользователи"
-#~ msgstr "👤 Usuarios"
-
-#~ msgid "📩 Рассылка"
-#~ msgstr "📩 Boletines"
-
-#~ msgid "⚔️ Забанить пользователей"
-#~ msgstr "⚔️ Prohibir usuarios"
-
-#~ msgid "💊 Разбанить пользователей"
-#~ msgstr "💊 Desbanear usuarios"
-
-#~ msgid "🔙 Вернуть профиль"
-#~ msgstr "🔙 Perfil de retorno"
-
-#~ msgid ""
-#~ "Новый пользователь!\n"
-#~ "<code>{}</code> (@{})"
-#~ msgstr "¡Nuevo usuario !"
-

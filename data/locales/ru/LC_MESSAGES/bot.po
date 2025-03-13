@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-11 14:48+0200\n"
+"POT-Creation-Date: 2025-03-13 17:18+0200\n"
 "PO-Revision-Date: 2025-03-04 16:06+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/handlers/message_text.py:12
+#: app/handlers/message_text.py:11
 msgid ""
 "\n"
 "Привет! 👋\n"
@@ -30,7 +30,7 @@ msgid ""
 "Желаем приятных знакомств! 😊\n"
 msgstr ""
 
-#: app/handlers/message_text.py:25
+#: app/handlers/message_text.py:22
 msgid ""
 "\n"
 "🔍 Смотреть анкеты\n"
@@ -40,7 +40,7 @@ msgid ""
 "✉️ Пригласить друзей"
 msgstr ""
 
-#: app/handlers/message_text.py:36
+#: app/handlers/message_text.py:31
 msgid ""
 "\n"
 "🔄 Заполнить анкету заново\n"
@@ -51,7 +51,11 @@ msgid ""
 "🔍 Смотреть анкеты\n"
 msgstr ""
 
-#: app/handlers/message_text.py:49
+#: app/handlers/message_text.py:42
+msgid "Неизвестная команда. Если заблудился, напиши /start."
+msgstr ""
+
+#: app/handlers/message_text.py:46
 msgid ""
 "\n"
 "👋\n"
@@ -64,93 +68,93 @@ msgid ""
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
 
-#: app/handlers/message_text.py:61
+#: app/handlers/message_text.py:57
 msgid "🔍 Выполняется поиск..."
 msgstr ""
 
-#: app/handlers/message_text.py:65
+#: app/handlers/message_text.py:61
 msgid "Подходящих анкет нет. Попробуй указать другой город. 🌍"
 msgstr ""
 
-#: app/handlers/message_text.py:69
+#: app/handlers/message_text.py:65
 msgid "Больше анкет нет. Попробуйте позже! 😊"
 msgstr ""
 
-#: app/handlers/message_text.py:72
+#: app/handlers/message_text.py:68
 msgid "Кому-то понравилась тваоя анкета! Хочешь посмотреть? 👀"
 msgstr ""
 
-#: app/handlers/message_text.py:75
+#: app/handlers/message_text.py:71
 #, python-brace-format
 msgid "Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr ""
 
-#: app/handlers/message_text.py:79
+#: app/handlers/message_text.py:75
 msgid "Тебя ещё никто не лайкнул, но всё впереди!"
 msgstr ""
 
-#: app/handlers/message_text.py:83
+#: app/handlers/message_text.py:79
 msgid "Укажи, свой пол: 👤"
 msgstr ""
 
-#: app/handlers/message_text.py:87
+#: app/handlers/message_text.py:83
 msgid "Выбери, кого ты ищешь: 💕"
 msgstr ""
 
-#: app/handlers/message_text.py:91
+#: app/handlers/message_text.py:87
 msgid "Пришли своё фото! 📸"
 msgstr ""
 
-#: app/handlers/message_text.py:95
+#: app/handlers/message_text.py:91
 msgid "Как тебя зовут? ✍️"
 msgstr ""
 
-#: app/handlers/message_text.py:99
+#: app/handlers/message_text.py:95
 msgid "Сколько тебе лет? 🎂"
 msgstr ""
 
-#: app/handlers/message_text.py:103
+#: app/handlers/message_text.py:99
 msgid "Укажи свой город: 🏙️"
 msgstr ""
 
-#: app/handlers/message_text.py:107
+#: app/handlers/message_text.py:103
 msgid "Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝"
 msgstr ""
 
-#: app/handlers/message_text.py:111
+#: app/handlers/message_text.py:107
 msgid ""
-"Твоя анкета отключена.\n"
 "\n"
-"🔙 Чтобы активировать анкету"
+"❌ Ваша анкета отключена, некоторые функции теперь недоступны.\n"
+"💬 Чтобы активировать анкету, напишите команду /start."
 msgstr ""
 
-#: app/handlers/message_text.py:115
+#: app/handlers/message_text.py:113
 msgid ""
 "✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
 "ботом."
 msgstr ""
 
-#: app/handlers/message_text.py:119
+#: app/handlers/message_text.py:117
 msgid ""
 "Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
 "правильно. 📝"
 msgstr ""
 
-#: app/handlers/message_text.py:123
+#: app/handlers/message_text.py:121
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr ""
 
-#: app/handlers/message_text.py:128
+#: app/handlers/message_text.py:126
 msgid ""
 "Неверный формат фотографии! Пожалуйста, загрузите изображение в "
 "правильном формате. 🖼️"
 msgstr ""
 
-#: app/handlers/message_text.py:133
+#: app/handlers/message_text.py:131
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr ""
 
-#: app/handlers/message_text.py:138
+#: app/handlers/message_text.py:136
 #, python-brace-format
 msgid ""
 "Приглашай друзей и получай бонусы!\n"
@@ -161,27 +165,28 @@ msgid ""
 "<code>https://t.me/{}?start={}</code>"
 msgstr ""
 
-#: app/handlers/message_text.py:143
+#: app/handlers/message_text.py:141
 msgid "Выбери язык бота, на который хочешь переключиться: 🌐"
 msgstr ""
 
-#: app/handlers/message_text.py:146
+#: app/handlers/message_text.py:144
 msgid "Язык бота изменён! ✅"
 msgstr ""
 
-#: app/handlers/message_text.py:151
+#: app/handlers/message_text.py:149
 #, python-brace-format
 msgid ""
 "Пользователь <code>{}</code> (@{}) отправил жалобу на анкету "
 "пользователя: <code>{}</code> (@{})"
 msgstr ""
 
-#: app/handlers/message_text.py:156
+#: app/handlers/message_text.py:154
 msgid "✅ Жалоба отправлена на рассмотрение!"
 msgstr ""
 
-#: app/handlers/message_text.py:160
+#: app/handlers/message_text.py:158
 msgid ""
+"\n"
 "Укажи причину жалобы:\n"
 "🔞 Неприличный материал\n"
 "💰 Реклама\n"
@@ -190,46 +195,11 @@ msgid ""
 "Если жалоба ошибочная, то можете вернутся назад.\n"
 msgstr ""
 
-#: app/handlers/message_text.py:172
-msgid "Ты администратор!"
-msgstr ""
-
-#: app/handlers/message_text.py:180
-msgid "Укажи текст сообщения которое будет отправленно"
-msgstr ""
-
-#: app/handlers/message_text.py:184
-msgid "Панель управления пользователями:"
-msgstr ""
-
-#: app/handlers/message_text.py:189
-msgid ""
-"💊 Пожалуйста, укажи список ID пользователей через запятую для "
-"разблокировки.\n"
-"Пример: 1234567, 234567"
-msgstr ""
-
-#: app/handlers/message_text.py:195
-msgid ""
-"⚔️ Пожалуйста, укажи список ID пользователей через запятую для "
-"блокировки.\n"
-"Пример: 1234567, 234567"
-msgstr ""
-
-#: app/handlers/message_text.py:221
-#, python-brace-format
-msgid "Пользователь: <code>{}</code> заблокирован"
-msgstr ""
-
-#: app/handlers/message_text.py:225
-msgid "Администратор отклонил жалобу"
-msgstr ""
-
-#: app/keyboards/default/base.py:46
+#: app/keyboards/default/base.py:45
 msgid "Отменить жалобу"
 msgstr ""
 
-#: app/keyboards/default/base.py:62
+#: app/keyboards/default/base.py:61
 msgid "Оставить предыдущее"
 msgstr ""
 
@@ -260,75 +230,4 @@ msgstr ""
 #: app/keyboards/inline/archive.py:10
 msgid "Посмотреть"
 msgstr ""
-
-#: app/keyboards/inline/report.py:12
-#, python-brace-format
-msgid "☠️ Заблокировать пользователя {}"
-msgstr ""
-
-#: app/keyboards/inline/report.py:16
-msgid "Отклонить"
-msgstr ""
-
-#: app/others/commands.py:8
-msgid "Начать"
-msgstr ""
-
-#: app/others/commands.py:9
-msgid "Изменить язык бота"
-msgstr ""
-
-#: app/others/commands.py:10
-msgid "Дополнительное описание"
-msgstr ""
-
-#: app/others/commands.py:11
-msgid "Активировать анкету"
-msgstr ""
-
-#: app/others/commands.py:21
-msgid "Админ панель"
-msgstr ""
-
-#: app/others/commands.py:22
-msgid "Статистика"
-msgstr ""
-
-#~ msgid ""
-#~ "Твоя анкета временно отключена. Чтобы "
-#~ "снова её активировать, просто нажми на"
-#~ " кнопку. 😊"
-#~ msgstr ""
-
-#~ msgid "📊 Статистика"
-#~ msgstr ""
-
-#~ msgid "👤 Пользователи"
-#~ msgstr ""
-
-#~ msgid "📩 Рассылка"
-#~ msgstr ""
-
-#~ msgid "⚔️ Забанить пользователей"
-#~ msgstr ""
-
-#~ msgid "💊 Разбанить пользователей"
-#~ msgstr ""
-
-#~ msgid "🔙 Вернуть профиль"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Новый пользователь!\n"
-#~ "<code>{}</code> (@{})"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Твоя анкета отключена.\n"
-#~ "\n"
-#~ " 🔙 Чтобы активировать анкету"
-#~ msgstr ""
-
-#~ msgid "Язык бот изменён! ✅"
-#~ msgstr ""
 

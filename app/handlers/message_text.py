@@ -8,53 +8,49 @@ from loader import _
 class UserMessageText:
     @property
     def WELCOME(self):
-        return _(
-            """
+        return _("""
 Привет! 👋
 
 Добро пожаловать в наш Telegram-бот для знакомств! 💕
 Чтобы начать, создай свой профиль 🚀
 
 Желаем приятных знакомств! 😊
-"""
-        )
+""")
 
     @property
     def MENU(self):
-        return _(
-            """
+        return _("""
 🔍 Смотреть анкеты
 👤 Моя анкета
 🗄 Посмотреть лайки
 
-✉️ Пригласить друзей"""
-        )
+✉️ Пригласить друзей""")
 
     @property
     def PROFILE_MENU(self):
-        return _(
-            """
+        return _("""
 🔄 Заполнить анкету заново
 🖼 Изменить фотографию
 ✍️ Изменить описание
 ❌ Отключить анкету
 
 🔍 Смотреть анкеты
-"""
-        )
+""")
+
+    @property
+    def UNKNOWN_COMMAND(self):
+        return _("Неизвестная команда. Если заблудился, напиши /start.")
 
     @property
     def INFO(self):
-        return _(
-            """
+        return _("""
 👋
 Немного информации о боте:
 Этот бот был создан по аналогии с популярным ботом для знакомств <a href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>
 Весь код бота открыт и доступен на <a href='https://github.com/devvsima/dating-bot'>GitHub</a>
 
 По вопросам и предложениям можно писать сюда: @devvsima.
-"""
-        )
+""")
 
     @property
     def SEARCH(self):
@@ -108,7 +104,9 @@ class UserMessageText:
 
     @property
     def DISABLE_PROFILE(self):
-        return _("Твоя анкета отключена.\n\n🔙 Чтобы активировать анкету")
+        return _("""
+❌ Ваша анкета отключена, некоторые функции теперь недоступны.
+💬 Чтобы активировать анкету, напишите команду /start.""")
 
     @property
     def ACTIVATE_PROFILE_ALERT(self):
@@ -157,7 +155,8 @@ class UserMessageText:
 
     @property
     def RESON_OF_REPORTING(self):
-        return _("""Укажи причину жалобы:
+        return _("""
+Укажи причину жалобы:
 🔞 Неприличный материал
 💰 Реклама
 🔫 Другое
@@ -169,7 +168,7 @@ class UserMessageText:
 class AdminMessageText:
     @property
     def ADMIN_WELCOME(self):
-        return _("Ты администратор!")
+        return "You are an administrator!"
 
     @property
     def NEW_USER(self):
@@ -177,7 +176,7 @@ class AdminMessageText:
 
     @property
     def MAILING_PANEL(self):
-        return _("Укажи текст сообщения которое будет отправленно")
+        return "Please provide the message text that will be sent"
 
     @property
     def PROFILE_STATS(self):
@@ -185,7 +184,7 @@ class AdminMessageText:
 📂 Profile: {} | 🔕 Inactive: {}
 🙍‍♂ Guys: {} | 🙍‍♀ Girls: {}
 
-💘 Matchs: {}
+💘 Matches: {}
 
 🕘 Age: {}
 🏙 City: {}
@@ -202,15 +201,15 @@ class AdminMessageText:
 
     @property
     def LOG_SENDING(self):
-        return _("Log sending...")
+        return "Log sending..."
 
     @property
     def USER_BANNED(self):
-        return _("Пользователь: <code>{}</code> заблокирован")
+        return "User: <code>{}</code> is banned"
 
     @property
     def USER_BANNED_CANCEL(self):
-        return _("Администратор отклонил жалобу")
+        return "Administrator rejected the complaint"
 
 
 user_message_text = UserMessageText()

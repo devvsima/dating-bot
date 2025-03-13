@@ -4,14 +4,14 @@ from aiogram.filters.state import StateFilter
 from aiogram.types import FSInputFile
 
 from app.handlers.message_text import admin_message_text as amt
-from app.routers import admin_router as router
+from app.routers import admin_router
 from data.config import DIR
 
 LOG_FILE_DIR = f"{DIR}/logs/logs.log"
 
 
-@router.message(Command("log"), StateFilter(None))
-@router.message(Command("logs"), StateFilter(None))
+@admin_router.message(Command("log"), StateFilter(None))
+@admin_router.message(Command("logs"), StateFilter(None))
 async def _logs_command(message: types.Message) -> None:
     """Отправляет администратору последний файл логов бота"""
     await message.answer(amt.LOG_SENDING)

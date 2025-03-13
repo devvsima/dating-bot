@@ -5,12 +5,12 @@ from aiogram.filters.state import StateFilter
 from app.filters.kb_filter import BlockUserCallback
 from app.handlers.bot_utils import check_args_type
 from app.handlers.message_text import admin_message_text as amt
-from app.routers import admin_router as router
+from app.routers import admin_router
 from database.services import User
 
 
-@router.message(Command("ban"), StateFilter(None))
-@router.message(Command("unban"), StateFilter(None))
+@admin_router.message(Command("ban"), StateFilter(None))
+@admin_router.message(Command("unban"), StateFilter(None))
 async def ban_unban_users_command(message: types.Message, command: CommandObject, session) -> None:
     """Блокирует или разблокирует пользователей, принимает список user_id через ','"""
 
@@ -37,7 +37,7 @@ async def ban_unban_users_command(message: types.Message, command: CommandObject
         await message.answer(text_success)
 
 
-@router.callback_query(BlockUserCallback.filter(), StateFilter(None))
+@admin_router.callback_query(BlockUserCallback.filter(), StateFilter(None))
 async def _complaint_user_callbackd(callback: types.CallbackQuery, callback_data, session) -> None:
     """Блокирует пользователя переданого в калбек"""
     if user_id := callback_data.user_id:

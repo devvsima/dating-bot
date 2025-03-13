@@ -6,7 +6,7 @@ from aiogram.filters.state import StateFilter
 
 from app.handlers.message_text import admin_message_text as amt
 from app.keyboards.inline.admin import stats_ikb
-from app.routers import admin_router as router
+from app.routers import admin_router
 from database.services.stats import (
     get_match_statistics,
     get_profile_statistics,
@@ -15,8 +15,8 @@ from database.services.stats import (
 from utils.graphs import get_or_create_registration_graph
 
 
-@router.message(Command("stats"), StateFilter(None))
-@router.message(F.text == "📊 Statistics", StateFilter(None))
+@admin_router.message(Command("stats"), StateFilter(None))
+@admin_router.message(F.text == "📊 Statistics", StateFilter(None))
 async def _stats_command(message: types.Message, session) -> None:
     """Отправляет администратору меню статистики"""
     graph_path = await get_or_create_registration_graph(session)
@@ -33,7 +33,7 @@ async def _stats_command(message: types.Message, session) -> None:
     os.remove(graph_path)
 
 
-@router.callback_query(F.data.startswith("stats"), StateFilter(None))
+@admin_router.callback_query(F.data.startswith("stats"), StateFilter(None))
 async def _stats_callback(callback: types.CallbackQuery, session) -> None:
     """Отправляет администратору график и статистику"""
     graph_path = await get_or_create_registration_graph(session)

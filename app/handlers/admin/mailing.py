@@ -1,16 +1,16 @@
-from aiogram import F, types
+from aiogram import types
 from aiogram.exceptions import TelegramAPIError
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 from app.others.states import Mailing
-from app.routers import admin_router as router
+from app.routers import admin_router
 from database.services.user import User
 from loader import bot
 
 
-@router.message(Command("mailing"), StateFilter(None))
+@admin_router.message(Command("mailing"), StateFilter(None))
 async def users_mailing_panel(message: types.Message, state: FSMContext) -> None:
     """Admin panel for user mailing."""
     await message.answer(
@@ -20,7 +20,7 @@ async def users_mailing_panel(message: types.Message, state: FSMContext) -> None
     await state.set_state(Mailing.message)
 
 
-@router.message(StateFilter(Mailing.message))
+@admin_router.message(StateFilter(Mailing.message))
 async def start_mailing(message: types.Message, session) -> None:
     """Starts mailing to all users with text and media support."""
     users = await User.get_all(session)

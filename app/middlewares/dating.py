@@ -6,7 +6,7 @@ from aiogram.types import CallbackQuery, Message
 from database.services import User
 
 
-class UsersMiddleware(BaseMiddleware):
+class DatingMiddleware(BaseMiddleware):
     async def __call__(
         self, handler: Callable, message: Message | CallbackQuery, data: dict
     ) -> Any:
@@ -18,6 +18,9 @@ class UsersMiddleware(BaseMiddleware):
             language=message.from_user.language_code,
         )
         if not user.is_banned:
+            if user.profile:
+                if not user.profile.is_active:
+                    return
             data["user"] = user
             return await handler(message, data)
         return

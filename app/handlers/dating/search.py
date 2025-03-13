@@ -7,16 +7,15 @@ from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import search_kb
 from app.keyboards.inline.archive import check_archive_ikb
 from app.others.states import Search
-from app.routers import user_router as router
+from app.routers import dating_router
 from database.models import UserModel
-from database.services import Match, Profile
+from database.services import Match, Profile, User
 from database.services.search import search_profiles
-from database.services.user import User
 
-from .cancel import cancel_command
+from ..common.cancel import cancel_command
 
 
-@router.message(F.text == "🔍", StateFilter(None))
+@dating_router.message(F.text == "🔍", StateFilter(None))
 async def _search_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
@@ -34,7 +33,7 @@ async def _search_command(
         await menu(message.from_user.id)
 
 
-@router.message(F.text.in_(("❤️", "👎", "💢")), StateFilter(Search.search))
+@dating_router.message(F.text.in_(("❤️", "👎", "💢")), StateFilter(Search.search))
 async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
     """
     Пользователь может взаимодействовать с анкетами, предложенными ботом,

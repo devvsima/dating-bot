@@ -3,9 +3,10 @@ from aiogram.types import ErrorEvent
 
 from utils.logging import logger
 
-from .admin import router as admin_router
-from .user import router as user_router
-from .user.start import start_router
+from .admin import admin_router
+from .common import common_router
+from .dating import dating_router
+from .other import voide_router
 
 
 def setup_handlers(dp: Dispatcher) -> None:
@@ -14,4 +15,4 @@ def setup_handlers(dp: Dispatcher) -> None:
 
     dp.errors.register(_error)
 
-    dp.include_routers(start_router, user_router, admin_router)
+    dp.include_routers(common_router, dating_router, admin_router, voide_router)

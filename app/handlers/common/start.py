@@ -5,12 +5,12 @@ from aiogram.filters.state import StateFilter
 from app.handlers.bot_utils import menu
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.create_profile import start_kb
-from app.routers import start_router
+from app.routers import common_router
 from data.config import IMAGES_DIR
 from database.models import UserModel
 
 
-@start_router.message(CommandStart(), StateFilter(None))
+@common_router.message(CommandStart(), StateFilter(None))
 async def _start_command(message: types.Message, user: UserModel) -> None:
     """Стандартная команда /start для запуска бота и начала взаимодействия с ним"""
     if user.profile:

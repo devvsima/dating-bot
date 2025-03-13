@@ -5,20 +5,18 @@ from aiogram.fsm.context import FSMContext
 from app.handlers.bot_utils import generate_user_link, sending_user_contact
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import arhive_search_kb
-from app.others.states import DisableProfile, LikeResponse
-from app.routers import user_router as router
+from app.others.states import LikeResponse
+from app.routers import dating_router
 from database.models import UserModel
 from database.services import Match, Profile, User
 
-from .cancel import cancel_command
+from ..common.cancel import cancel_command
 from .profile import send_profile
 
 
-@router.message(F.text == "🗄", StateFilter("*"))
+@dating_router.message(F.text == "🗄", StateFilter("*"))
 async def like_profile(message: types.Message, state: FSMContext, user: UserModel, session) -> None:
     """Архив лайков анкеты пользовтеля"""
-    if await state.get_state() == DisableProfile.waiting:
-        return
     await User.update_username(session, user, message.from_user.username)  # needs to be redone
     await message.answer(text=umt.SEARCH, reply_markup=arhive_search_kb)
     await state.set_state(LikeResponse.response)
@@ -32,13 +30,11 @@ async def like_profile(message: types.Message, state: FSMContext, user: UserMode
         await cancel_command(message, state)
 
 
-@router.callback_query(F.data == "archive", StateFilter("*"))
+@dating_router.callback_query(F.data == "archive", StateFilter("*"))
 async def _like_profile(
     callback: types.CallbackQuery, state: FSMContext, user: UserModel, session
 ) -> None:
     """Архив лайков анкеты пользовтеля"""
-    if await state.get_state() == DisableProfile.waiting:
-        return
     await state.set_state(LikeResponse.response)
     await User.update_username(session, user, callback.from_user.username)  # needs to be redone
     await callback.message.answer(text=umt.SEARCH, reply_markup=arhive_search_kb)
@@ -53,7 +49,7 @@ async def _like_profile(
         await cancel_command(callback.message, state)
 
 
-@router.message(LikeResponse.response, F.text.in_(("❤️", "👎")))
+@dating_router.message(LikeResponse.response, F.text.in_(("❤️", "👎")))
 async def _like_response(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:

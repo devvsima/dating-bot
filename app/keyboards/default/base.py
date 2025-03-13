@@ -1,5 +1,4 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
-from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from database.models.profile import ProfileModel
 from loader import _
@@ -33,7 +32,7 @@ arhive_search_kb: ReplyKeyboardMarkup = kb_gen(
     ["💤"],
 )
 profile_return_kb: ReplyKeyboardMarkup = kb_gen(
-    ["🔙"],
+    ["/activate"],
 )
 
 
