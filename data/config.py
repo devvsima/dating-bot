@@ -28,14 +28,18 @@ class DatabaseSettings:
 
 # ---< Redis >---
 class RedisSettings:
+    DB: int = env.int("REDIS_DB", default=5)
     HOST: str = env.str("REDIS_HOST", default=None)
     PORT: int = env.int("REDIS_PORT", default=6379)
-    DB: int = env.int("REDIS_DB", default=5)
+    USER: int = env.int("REDIS_USER", default="default")
+    PASS: int = env.int("REDIS_PASS", default=None)
 
     URL: str = env.str("RD_URL", default=None)
 
-    if all([HOST, PORT, DB]):
+    if all([DB, HOST, PORT]):
         URL = f"redis://{HOST}:{PORT}/{DB}"
+        if all([USER, PASS]):
+            URL = f"redis://{USER}:{PASS}@{HOST}:{PORT}/{DB}"
 
 
 # ---< Telegram bot >---

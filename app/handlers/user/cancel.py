@@ -4,12 +4,14 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 from app.handlers.bot_utils import menu
-from app.others.states import LikeResponse, Search
+from app.others.states import LikeResponse, Mailing, Search
 from app.routers import user_router as router
 
 
-@router.message(F.text == "💤", StateFilter(Search.search, LikeResponse.response))
-@router.message(Command("cancel"), StateFilter(Search.search, LikeResponse.response))
+@router.message(F.text == "💤", StateFilter(Search.search, LikeResponse.response, Mailing.message))
+@router.message(
+    Command("cancel"), StateFilter(Search.search, LikeResponse.response, Mailing.message)
+)
 async def cancel_command(message: types.Message, state: FSMContext) -> None:
     """Сбрасывает состояния и отправляет меню пользователю"""
     await state.clear()
