@@ -6,8 +6,9 @@ from loader import _, bot, i18n
 def get_default_commands() -> list:
     commands = [
         BotCommand(command="/start", description="Start"),
-        BotCommand(command="/lang", description="🌍 Change language"),
-        BotCommand(command="/help", description="📝 Help & description"),
+        BotCommand(command="/lang", description="Change language"),
+        BotCommand(command="/help", description="Help"),
+        BotCommand(command="/cancel", description="Cancel"),
     ]
 
     return commands
@@ -17,11 +18,11 @@ def get_admins_commands() -> list:
     commands = get_default_commands()
     commands.extend(
         [
-            BotCommand(command="/stats", description="📊 View statistics"),
-            BotCommand(command="/mailing", description="📢 Send mailing to users"),
-            BotCommand(command="/ban", description="⛔ Block user"),
-            BotCommand(command="/unban", description="✅ Unblock user"),
-            BotCommand(command="/log", description="📄 Send logs"),
+            BotCommand(command="/stats", description="Stats"),
+            BotCommand(command="/mailing", description="Mailing"),
+            BotCommand(command="/ban", description="Ban user"),
+            BotCommand(command="/unban", description="Unban user"),
+            BotCommand(command="/log", description="Logs"),
         ]
     )
     return commands
