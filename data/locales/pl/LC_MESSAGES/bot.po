@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-13 17:18+0200\n"
-"PO-Revision-Date: 2025-03-13 17:19+0200\n"
+"POT-Creation-Date: 2025-03-20 16:30+0200\n"
+"PO-Revision-Date: 2025-03-20 16:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: pl <LL@li.org>\n"
 "Language: pl\n"
@@ -150,8 +150,8 @@ msgstr "Podaj swoje miasto: 🏙️"
 #: app/handlers/message_text.py:103
 msgid "Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝"
 msgstr ""
-"Opowiedz nam trochę o sobie! Dzięki temu inni będą mogli Cię lepiej "
-"poznać. 📝"
+"Opowiedz nam trochę o sobie! Dzięki temu inni będą mogli Cię lepiej poznać. "
+"📝"
 
 #: app/handlers/message_text.py:107
 msgid ""
@@ -165,16 +165,16 @@ msgstr ""
 
 #: app/handlers/message_text.py:113
 msgid ""
-"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь "
-"пользоваться ботом."
+"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
+"ботом."
 msgstr ""
-"✅ Twój profil został pomyślnie przywrócony! Teraz możesz ponownie "
-"używać bota."
+"✅ Twój profil został pomyślnie przywrócony! Teraz możesz ponownie używać "
+"bota."
 
 #: app/handlers/message_text.py:117
 msgid ""
-"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
-"правильно. 📝"
+"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. "
+"📝"
 msgstr ""
 "Nieprawidłowa odpowiedź. Proszę wybrać na klawiaturze lub napisać "
 "poprawnie. 📝"
@@ -183,19 +183,23 @@ msgstr ""
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr "Przekroczono limit znaków. Proszę skrócić wiadomość. ✂️"
 
-#: app/handlers/message_text.py:126
-msgid ""
-"Неверный формат фотографии! Пожалуйста, загрузите изображение в "
-"правильном формате. 🖼️"
-msgstr ""
-"Nieprawidłowy format zdjęcia! Proszę przesłać obraz w odpowiednim "
-"formacie. 🖼️"
+#: app/handlers/message_text.py:125
+msgid "Такой город не найдет :("
+msgstr "Nie znajdziesz takiego miasta :("
 
-#: app/handlers/message_text.py:131
+#: app/handlers/message_text.py:130
+msgid ""
+"Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном "
+"формате. 🖼️"
+msgstr ""
+"Nieprawidłowy format zdjęcia! Proszę przesłać obraz w odpowiednim formacie. "
+"🖼️"
+
+#: app/handlers/message_text.py:135
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr "Nieprawidłowy format, wiek należy podać jako liczbę. 🔢"
 
-#: app/handlers/message_text.py:136
+#: app/handlers/message_text.py:140
 #, python-brace-format
 msgid ""
 "Приглашай друзей и получай бонусы!\n"
@@ -212,28 +216,28 @@ msgstr ""
 "Link dla znajomych:\n"
 "<code>https://t.me/{}?start={}</code>"
 
-#: app/handlers/message_text.py:141
+#: app/handlers/message_text.py:145
 msgid "Выбери язык бота, на который хочешь переключиться: 🌐"
 msgstr "Wybierz język bota, na który chcesz się przełączyć: 🌐"
 
-#: app/handlers/message_text.py:144
+#: app/handlers/message_text.py:148
 msgid "Язык бота изменён! ✅"
 msgstr "Zmieniono język bota! ✅"
 
-#: app/handlers/message_text.py:149
+#: app/handlers/message_text.py:153
 #, python-brace-format
 msgid ""
-"Пользователь <code>{}</code> (@{}) отправил жалобу на анкету "
-"пользователя: <code>{}</code> (@{})"
+"Пользователь <code>{}</code> (@{}) отправил жалобу на анкету пользователя: "
+"<code>{}</code> (@{})"
 msgstr ""
 "Użytkownik <code>{}</code> (@{}) złożył skargę dotyczącą profilu "
 "użytkownika: <code>{}</code> (@{})"
 
-#: app/handlers/message_text.py:154
+#: app/handlers/message_text.py:158
 msgid "✅ Жалоба отправлена на рассмотрение!"
 msgstr "✅ Skarga została wysłana do rozpatrzenia!"
 
-#: app/handlers/message_text.py:158
+#: app/handlers/message_text.py:162
 msgid ""
 "\n"
 "Укажи причину жалобы:\n"
@@ -255,33 +259,37 @@ msgstr ""
 msgid "Отменить жалобу"
 msgstr "Anuluj skargę"
 
-#: app/keyboards/default/base.py:61
+#: app/keyboards/default/base.py:61 app/keyboards/default/create_profile.py:47
 msgid "Оставить предыдущее"
 msgstr "Pozostaw poprzednie"
 
-#: app/keyboards/default/create_profile.py:11
+#: app/keyboards/default/create_profile.py:13
 msgid "Создать анкету"
 msgstr "Utwórz profil"
 
-#: app/keyboards/default/create_profile.py:22
+#: app/keyboards/default/create_profile.py:24
 msgid "Парень"
 msgstr "Chłopak"
 
-#: app/keyboards/default/create_profile.py:22
+#: app/keyboards/default/create_profile.py:24
 msgid "Девушка"
 msgstr "Dziewczyna"
 
-#: app/keyboards/default/create_profile.py:33
+#: app/keyboards/default/create_profile.py:35
 msgid "Парней"
 msgstr "Chłopców"
 
-#: app/keyboards/default/create_profile.py:34
+#: app/keyboards/default/create_profile.py:36
 msgid "Девушек"
 msgstr "Dziewcząt"
 
-#: app/keyboards/default/create_profile.py:35
+#: app/keyboards/default/create_profile.py:37
 msgid "Всех"
 msgstr "Wszyscy"
+
+#: app/keyboards/default/create_profile.py:49
+msgid "📍 Отправить местоположение"
+msgstr "📍 Wyślij lokalizację"
 
 #: app/keyboards/inline/archive.py:10
 msgid "Посмотреть"
