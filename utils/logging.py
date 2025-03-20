@@ -2,15 +2,14 @@ from logging import getLogger
 
 from loguru import logger
 
-from data.config import DIR
+from data.config import LOG_FILE_PATH
 
-LOG_DIR = f"{DIR}/logs"
 FORMAT = "[{time}] [{level}] [{file.name}:{line}]  {message}"
 ROTATION = "1 month"
 COMPRESSION = "zip"
 
 logger.add(
-    f"{LOG_DIR}/logs.log",
+    LOG_FILE_PATH,
     format=FORMAT,
     level="DEBUG",
     rotation=ROTATION,

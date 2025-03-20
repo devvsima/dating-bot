@@ -54,9 +54,14 @@ TIME_ZONE = "UTC"
 I18N_DOMAIN = "bot"
 
 
-# ---< Other >---
-IMAGES_DIR = rf"{DIR}/images"
-LOCALES_DIR = f"{DIR}/data/locales"
+# ---< Path\Dir >---
+IMAGES_DIR: Path = DIR / "images"
+GRAPH_FILE_PATH: Path = IMAGES_DIR / "stats_graph.png"
 
+LOCALES_DIR: Path = DIR / "data" / "locales"
+
+LOG_FILE_PATH: Path = DIR / "logs" / "logs.log"
+
+# ---< Other >---
 database = DatabaseSettings()
 redis = RedisSettings()

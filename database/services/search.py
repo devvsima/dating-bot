@@ -4,13 +4,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models.profile import ProfileModel
 
-EARTH_RADIUS_KM = 6371
-
-from sqlalchemy import and_, func, or_, select
-
 
 async def search_profiles(
-    session: AsyncSession, profile: ProfileModel, age_range: int = 3, distance: float = 200.0
+    session: AsyncSession,
+    profile: ProfileModel,
+    age_range: int = 4,
+    distance: float = 200.0,  # Радиус поиска анкет
+    radius: int = 6371,  # Радиус Земли в километрах
 ) -> list:
     """
     Ищет подходящие анкеты для пользователя и возвращает список id пользователей,
@@ -35,8 +35,8 @@ async def search_profiles(
                 -1.0,  # Ограничение снизу
             )
         )
-        * 6371
-    )  # Радиус Земли в километрах
+        * radius
+    )
 
     stmt = (
         select(ProfileModel.user_id)
@@ -54,7 +54,7 @@ async def search_profiles(
     )
 
     result = await session.execute(stmt)
+    id_list = [row[0] for row in result.fetchall()]
 
-    logger.log("DATABASE", f"{profile.user_id}: начал поиск анкет")
-
-    return [row[0] for row in result.fetchall()]
+    logger.log("DATABASE", f"{profile.user_id} начал поиск анкет, результат: {id_list}")
+    return id_list

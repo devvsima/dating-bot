@@ -1,64 +1,119 @@
 from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
 
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+from matplotlib.patches import Circle
 
-from data.config import IMAGES_DIR
-from database.services.stats import get_all_users_registration_data
-
-registration_photo_path = f"{IMAGES_DIR}/registration_graph.png"
-
-from typing import Tuple
+from data.config import GRAPH_FILE_PATH
+from database.services.stats import Stats
 
 
-def get_day_period(days: int = 30):
-    """Возращает текущую дату, и дату 30 дней назад"""
-    today = datetime.today()
-    days_ago = today - timedelta(days)
-    return today, days_ago
+class StatsGraph:
+    @staticmethod
+    def get_day_period(days: int) -> Tuple[datetime, datetime]:
+        """Возвращает текущую дату и дату N дней назад"""
+        today = datetime.today()
+        days_ago = today - timedelta(days=days)
+        return today, days_ago
 
+    def create_user_registration_graph(
+        self, data: List[dict], path: Path = GRAPH_FILE_PATH, days: int = 30
+    ) -> None:
+        """Создает график новых пользователей за последние N дней"""
+        df = pd.DataFrame(data)
+        df["timestamp"] = pd.to_datetime(df["timestamp"])
+        df["date"] = df["timestamp"].dt.date
 
-async def get_or_create_registration_graph(session, data=None, path=registration_photo_path) -> str:
-    """Создает график регистрации пользователей и возращает путь к фотографии графика"""
-    if data is None:
-        data = await get_all_users_registration_data(session)
-    create_user_registration_graph(data, path)
-    return path
+        today, ago = self.get_day_period(days)
+        start_date = datetime(ago.year, ago.month, ago.day)
+        end_date = datetime(today.year, today.month, today.day)
 
+        all_dates = pd.date_range(start=start_date, end=end_date).date
+        daily_counts = df.groupby("date")["username"].nunique()
+        daily_counts_full = pd.Series(daily_counts, index=all_dates).fillna(0)
 
-def create_user_registration_graph(data, path) -> None:
-    """Создает график новых пользователей в заданом периоде"""
-    df = pd.DataFrame(data)
+        plt.figure(figsize=(12, 6))
+        sns.set_theme(style="whitegrid")
 
-    df["timestamp"] = pd.to_datetime(df["timestamp"])
+        sns.barplot(
+            x=daily_counts_full.index,
+            y=daily_counts_full,
+            palette="Blues_d",
+            hue=daily_counts_full.index,
+            legend=False,
+        )
 
-    df["date"] = df["timestamp"].dt.date
-    today, ago = get_day_period(30)
-    start_date = datetime(int(ago.year), int(ago.month), int(ago.day))
-    end_date = datetime(int(today.year), int(today.month), int(today.day))
-    all_dates = pd.date_range(start=start_date, end=end_date).date
+        plt.title(f"User arrivals in the last {days} days", fontsize=16, fontweight="bold")
+        plt.xlabel("Date", fontsize=12)
+        plt.ylabel("Number of unique users", fontsize=12)
+        plt.xticks(rotation=45)
+        plt.grid(axis="y", linestyle="--", alpha=0.7)
 
-    daily_counts = df.groupby("date")["username"].nunique()
+        plt.tight_layout()
+        plt.savefig(path)
+        plt.close()
 
-    daily_counts_full = pd.Series(daily_counts, index=all_dates).fillna(0)
+    def create_gender_pie_chart(
+        self, gender_count: Dict[str, int], path: Path = GRAPH_FILE_PATH
+    ) -> None:
+        """Создает круговую диаграмму по полу пользователей"""
+        labels = list(gender_count.keys())
+        sizes = list(gender_count.values())
+        total_users = sum(sizes)
 
-    plt.figure(figsize=(12, 6))
-    sns.set_theme(style="whitegrid")  # Установка стиля Seaborn
+        colors = ["#2980b9", "#e74c3c"]
+        lighter_colors = ["#85c1e9", "#f5b7b1"]
+        explode = (0.08, 0.08)
 
-    sns.barplot(
-        x=daily_counts_full.index,
-        y=daily_counts_full,
-        palette="Blues_d",
-        hue=daily_counts_full.index,
-        legend=False,
-    )
+        fig, ax = plt.subplots(figsize=(8, 8), facecolor="#F9F9F9")
 
-    plt.title("Приход пользователей за 30 дней", fontsize=16, fontweight="bold")
-    plt.xlabel("Дата", fontsize=12)
-    plt.ylabel("Количество уникальных пользователей", fontsize=12)
-    plt.xticks(rotation=45)
-    plt.grid(axis="y", linestyle="--", alpha=0.7)
+        wedges, texts, autotexts = ax.pie(
+            sizes,
+            labels=None,
+            explode=explode,
+            colors=lighter_colors,
+            autopct="%1.1f%%",
+            pctdistance=0.82,
+            shadow=False,
+            startangle=140,
+            wedgeprops={"linewidth": 2, "edgecolor": "white", "alpha": 0.9},
+            textprops={"fontsize": 14, "color": "black", "fontweight": "bold"},
+        )
 
-    plt.tight_layout()
-    plt.savefig(path)
+        center_circle = Circle((0, 0), 0.70, fc="white", edgecolor="gray", linewidth=2, alpha=0.8)
+        ax.add_artist(center_circle)
+
+        plt.text(
+            0,
+            0,
+            f"{total_users}",
+            ha="center",
+            va="center",
+            fontsize=20,
+            fontweight="bold",
+            color="#34495e",
+        )
+
+        ax.legend(
+            wedges,
+            labels,
+            title="Gender",
+            loc="upper right",
+            bbox_to_anchor=(1.2, 1),
+            fontsize=12,
+            frameon=False,
+            labelspacing=1.2,
+        )
+
+        plt.title(
+            "Distribution of users by gender",
+            fontsize=18,
+            fontweight="bold",
+            color="#2A3D66",
+            pad=20,
+        )
+        plt.savefig(path, dpi=120, bbox_inches="tight", transparent=True)
+        plt.close()

@@ -7,10 +7,12 @@ from ..models.profile import ProfileModel
 
 
 class Profile:
+    @staticmethod
     async def get(session: AsyncSession, user_id: int):
         """Возвращает профиль пользователя"""
         return await session.get(ProfileModel, user_id)
 
+    @staticmethod
     async def delete(session: AsyncSession, user_id: int):
         """Удаляет профиль пользователя"""
         stmt = delete(ProfileModel).where(ProfileModel.user_id == user_id)
@@ -18,6 +20,7 @@ class Profile:
         await session.commit()
         logger.log("DATABASE", f"{user_id}: удалил профиль")
 
+    @staticmethod
     async def update_isactive(
         session: AsyncSession, profile: ProfileModel, is_active: bool
     ) -> None:
@@ -26,18 +29,21 @@ class Profile:
         await session.commit()
         logger.log("DATABASE", f"{profile.user_id}: поменял статус профиля на - {is_active}")
 
+    @staticmethod
     async def update_photo(session: AsyncSession, profile: ProfileModel, photo: str):
         """Изменяет фотографию пользователя"""
         profile.photo = photo
         await session.commit()
         logger.log("DATABASE", f"{profile.user_id}: изменил фотографию")
 
+    @staticmethod
     async def update_description(session: AsyncSession, profile: ProfileModel, description: str):
         """Изменяет описание пользователя"""
         profile.description = description
         await session.commit()
         logger.log("DATABASE", f"{profile.user_id}: изменил описание на - {description}")
 
+    @staticmethod
     async def create(
         session: AsyncSession,
         user_id: int,

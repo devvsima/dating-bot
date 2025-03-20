@@ -204,8 +204,8 @@ class AdminMessageText:
 """
 
     @property
-    def LOG_SENDING(self):
-        return "Log sending..."
+    def SENDING(self):
+        return "Sending..."
 
     @property
     def USER_BANNED(self):
