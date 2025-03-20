@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 import app.filters.create_profile_filtres as filters
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import hints_kb, leave_previous_kb
-from app.keyboards.default.create_profile import find_gender_kb, gender_kb
+from app.keyboards.default.create_profile import find_gender_kb, gender_kb, location_kb
 from app.others.states import ProfileCreate, ProfileEdit
 from app.routers import dating_router
 from database.models.user import UserModel
@@ -103,10 +103,7 @@ async def _incorrect_name(message: types.Message):
 @dating_router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
 async def _age(message: types.Message, state: FSMContext, user: UserModel):
     await state.update_data(age=message.text)
-
-    kb = hints_kb(user.profile.city) if user.profile else None
-
-    await message.reply(umt.CITY, reply_markup=kb)
+    await message.reply(umt.CITY, reply_markup=location_kb(user.profile))
     await state.set_state(ProfileCreate.city)
 
 
@@ -117,12 +114,21 @@ async def _incorrect_age(message: types.Message):
 
 
 # < city >
-@dating_router.message(StateFilter(ProfileCreate.city), F.text, filters.IsCity())
-async def _city(message: types.Message, state: FSMContext, coordinates: dict, user: UserModel):
+@dating_router.message(StateFilter(ProfileCreate.city), F.text | F.location, filters.IsCity())
+async def _city(
+    message: types.Message, state: FSMContext, latitude: str, longitude: str, user: UserModel
+):
+    if not (latitude or longitude):
+        city = user.profile.city
+        latitude = user.profile.latitude
+        longitude = user.profile.longitude
+    else:
+        city = message.text if message.text else "📍"
+
     await state.update_data(
-        city=message.text,
-        latitude=coordinates[0],
-        longitude=coordinates[1],
+        city=city,
+        latitude=latitude,
+        longitude=longitude,
     )
     await message.reply(umt.DESCRIPTION, reply_markup=leave_previous_kb(user.profile))
     await state.set_state(ProfileCreate.desc)
@@ -131,7 +137,7 @@ async def _city(message: types.Message, state: FSMContext, coordinates: dict, us
 @dating_router.message(StateFilter(ProfileCreate.city))
 async def _incorrect_city(message: types.Message):
     """Ошибка фильтра города"""
-    await message.answer(umt.INVALID_LONG_RESPONSE)
+    await message.answer(umt.INVALID_CITY_RESPONSE)
 
 
 # < description >
@@ -143,7 +149,6 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
         await Profile.update_description(session, user.profile, message.text)
     else:
         data = await state.get_data()
-
         description = (
             user.profile.description
             if message.text in filters.leave_previous_tuple

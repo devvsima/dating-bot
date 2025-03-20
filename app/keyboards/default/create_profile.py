@@ -1,5 +1,7 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
+from database.models.profile import ProfileModel
 from loader import _
 
 
@@ -37,3 +39,15 @@ def find_gender_kb() -> ReplyKeyboardMarkup:
         ],
     )
     return kb
+
+
+def location_kb(profile: ProfileModel | None):
+    builder = ReplyKeyboardBuilder()
+    if profile and profile.city != "📍":
+        builder.button(text=_("Оставить предыдущее"))
+    builder.button(
+        text=_("📍 Отправить местоположение"),
+        request_location=True,
+    )
+    builder.adjust(1)
+    return builder.as_markup(resize_keyboard=True)

@@ -96,13 +96,27 @@ class IsAge(Filter):
 
 class IsCity(Filter):
     async def __call__(self, message: Message) -> bool:
-        if message.text.isdigit():
-            return False
-        elif coordinates := get_coordinates(message.text):
-            return {"coordinates": coordinates}
-        return False
+        if message.location:
+            latitude = message.location.latitude
+            longitude = message.location.longitude
+        if message.text:
+            if message.text.isdigit():
+                return False
+            if message.text in leave_previous_tuple:
+                latitude = None
+                longitude = None
+            elif coordinates := get_coordinates(message.text):
+                latitude = coordinates[0]
+                longitude = coordinates[1]
+            else:
+                return False
+
+        return {
+            "latitude": latitude,
+            "longitude": longitude,
+        }
 
 
 class IsDescription(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(len(message.text) < 1000)
+        return bool(len(message.text) < 3000)

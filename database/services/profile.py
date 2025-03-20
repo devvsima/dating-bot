@@ -47,8 +47,8 @@ class Profile:
         name: str,
         age: int,
         city: str,
-        latitude: str,
-        longitude: str,
+        latitude: float,
+        longitude: float,
         description: str,
     ):
         """Создает профиль пользователя, если профиль есть - удаляет его"""

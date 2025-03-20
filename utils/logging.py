@@ -2,9 +2,8 @@ from logging import getLogger
 
 from loguru import logger
 
-from data.config import DIR, TIME_ZONE
+from data.config import DIR
 
-# logger.level("MESSAGE", no=15, color="<blue>")
 LOG_DIR = f"{DIR}/logs"
 FORMAT = "[{time}] [{level}] [{file.name}:{line}]  {message}"
 ROTATION = "1 month"
