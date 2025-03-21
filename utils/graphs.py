@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -8,7 +8,6 @@ import seaborn as sns
 from matplotlib.patches import Circle
 
 from data.config import GRAPH_FILE_PATH
-from database.services.stats import Stats
 
 
 class StatsGraph:

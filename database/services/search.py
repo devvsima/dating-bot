@@ -12,7 +12,7 @@ async def search_profiles(
     profile: ProfileModel,
     age_range: int = 4,
     initial_distance: float = 200.0,  # Стартовый радиус
-    max_distance: float = 2000.0,  # Максимальный радиус
+    max_distance: float = 20000.0,  # Максимальный радиус
     radius_step: float = 200.0,  # Шаг увеличения радиуса
     min_profiles: int = 100,  # Минимальное количество анкет
     radius: int = 6371,  # Радиус Земли

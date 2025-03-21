@@ -1,13 +1,10 @@
 from aiogram import F, types
-from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.handlers.bot_utils import menu
 from app.handlers.message_text import user_message_text as umt
-from app.keyboards.default.base import profile_return_kb
 from app.others.states import ProfileEdit
-from app.routers import common_router, dating_router
+from app.routers import dating_router
 from database.models import UserModel
 from database.services import Profile
 
