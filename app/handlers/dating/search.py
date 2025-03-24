@@ -11,6 +11,7 @@ from app.routers import dating_router
 from database.models import UserModel
 from database.services import Match, Profile, User
 from database.services.search import search_profiles
+from utils.logging import logger
 
 from ..common.cancel import cancel_command
 
@@ -54,7 +55,9 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
                 reply_markup=check_archive_ikb(),
             )
         except:
-            ...
+            logger.info(
+                f"Пользователю {another_user.id} @{another_user.username}: не было отправлнно оповещение, вероятно из за блокироваки бота"
+            )
     elif message.text == "💢":
         await message.answer(umt.REPORT_TO_PROFILE)
         await complaint_to_profile(
