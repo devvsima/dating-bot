@@ -47,11 +47,14 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
 
     if message.text == "❤️":
         await Match.create(session, message.from_user.id, another_user.id)
-        await message.bot.send_message(
-            chat_id=another_user.id,
-            text=umt.LIKE_PROFILE(another_user.language),
-            reply_markup=check_archive_ikb(),
-        )
+        try:
+            await message.bot.send_message(
+                chat_id=another_user.id,
+                text=umt.LIKE_PROFILE(another_user.language),
+                reply_markup=check_archive_ikb(),
+            )
+        except:
+            ...
     elif message.text == "💢":
         await message.answer(umt.REPORT_TO_PROFILE)
         await complaint_to_profile(
