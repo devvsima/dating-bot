@@ -6,17 +6,18 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models.profile import ProfileModel
 
+age_range: int = 4
+initial_distance: float = 200.0  # Стартовый радиус
+max_distance: float = 10000.0  # Максимальный радиус
+radius_step: float = 200.0  # Шаг увеличения радиуса
+min_profiles: int = 100  # Минимальное количество анкет
+radius: int = 6371  # Радиус Земли
+block_size: float = 50.0  # Размер блока для перемешивания
+
 
 async def search_profiles(
     session: AsyncSession,
     profile: ProfileModel,
-    age_range: int = 4,
-    initial_distance: float = 200.0,  # Стартовый радиус
-    max_distance: float = 20000.0,  # Максимальный радиус
-    radius_step: float = 200.0,  # Шаг увеличения радиуса
-    min_profiles: int = 100,  # Минимальное количество анкет
-    radius: int = 6371,  # Радиус Земли
-    block_size: float = 50.0,  # Размер блока для перемешивания
 ) -> list:
     """
     Динамический поиск анкет: начинаем с малого радиуса и увеличиваем, пока не найдём достаточно анкет.

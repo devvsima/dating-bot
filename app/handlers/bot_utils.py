@@ -1,7 +1,6 @@
 import html
 import re
 
-from app.handlers.message_text import admin_message_text as amt
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import menu_kb
 from app.keyboards.inline.admin import block_user_ikb
@@ -75,7 +74,8 @@ async def new_user_alert_to_group(user: UserModel) -> None:
     if MODERATOR_GROUP:
         try:
             await bot.send_message(
-                chat_id=MODERATOR_GROUP, text=amt.NEW_USER.format(user.id, user.username)
+                chat_id=MODERATOR_GROUP,
+                text="New user!\n<code>{}</code> (@{})".format(user.id, user.username),
             )
         except:
             logger.error("Сообщение в модераторскую группу не отправленно")

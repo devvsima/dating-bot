@@ -4,7 +4,6 @@ from aiogram.filters.state import StateFilter
 
 from app.filters.kb_filter import BlockUserCallback
 from app.handlers.bot_utils import check_args_type
-from app.handlers.message_text import admin_message_text as amt
 from app.routers import admin_router
 from database.services import User
 
@@ -38,9 +37,26 @@ async def ban_unban_users_command(message: types.Message, command: CommandObject
 
 
 @admin_router.callback_query(BlockUserCallback.filter(), StateFilter(None))
-async def _complaint_user_callbackd(callback: types.CallbackQuery, callback_data, session) -> None:
+async def _complaint_user_callback(
+    callback: types.CallbackQuery, callback_data: BlockUserCallback, session
+) -> None:
     """Блокирует пользователя переданого в калбек"""
-    if user_id := callback_data.user_id:
+    user_id = callback_data.user_id
+    username = callback_data.username
+
+    if callback_data.ban:
         await User.set_user_ban_and_profile_status(session, user_id, True)
-        await callback.message.edit_text(amt.USER_BANNED.format(user_id))
-    await callback.message.edit_text(amt.USER_BANNED_CANCEL)
+        text = "⛔️ Administrator <code>{admin_id}</code> @{admin_username}:\
+        accepted a request to block user <code>{user_id}</code> @{user_username}"
+    else:
+        text = "Administrator <code>{admin_id}</code> @{admin_username}:\
+        rejected the complaint against user <code>{user_id}</code> @{user_username}"
+
+    await callback.message.edit_text(
+        text.format(
+            admin_id=callback.from_user.id,
+            admin_username=callback.from_user.username,
+            user_id=user_id,
+            user_username=username,
+        )
+    )
