@@ -4,6 +4,7 @@ import re
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import menu_kb
 from app.keyboards.inline.admin import block_user_ikb
+from app.keyboards.inline.archive import check_archive_ikb
 from data.config import MODERATOR_GROUP
 from database.models import ProfileModel, UserModel
 from database.services import User
@@ -94,9 +95,27 @@ def generate_user_link(user_id: int, username: str = None) -> str:
 
 async def sending_user_contact(chat_id: int, name: str, language: str, user_link: str) -> None:
     """Отправляет сообщение с контактом пользователя"""
+    try:
+        await bot.send_message(
+            chat_id=chat_id,
+            text=umt.LIKE_ACCEPT(language).format(user_link, html.escape(name)),
+            message_effect_id=effect_dict["🎉"],
+        )
+    except:
+        logger.info(
+            f"Пользователю {chat_id} не удалось отправить контакт. Скорее всего пользователь заблокировал бота"
+        )
 
-    await bot.send_message(
-        chat_id=chat_id,
-        text=umt.LIKE_ACCEPT(language).format(user_link, html.escape(name)),
-        message_effect_id=effect_dict["🎉"],
-    )
+
+async def send_user_like_alert(user: UserModel):
+    try:
+        await bot.send_message(
+            chat_id=user.id,
+            text=umt.LIKE_PROFILE(user.language),
+            reply_markup=check_archive_ikb(),
+        )
+    except:
+        logger.info(
+            f"Пользователю {user.id} @{user.username}:\
+            не было отправлнно оповещение, вероятно из за блокироваки бота"
+        )

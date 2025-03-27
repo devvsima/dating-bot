@@ -53,6 +53,14 @@ TIME_ZONE = "UTC"
 
 I18N_DOMAIN = "bot"
 
+# ---< Search >---
+AGE_RANGE: int = env.int("AGE_RANGE", default=4)
+INITIAL_DISTANCE: float = env.str("INITIAL_DISTANCE", default=200.0)  # Стартовый радиус
+MAX_DISTANCE: float = env.int("MAX_DISTANCE", default=10000.0)  # Максимальный радиус
+RADIUS_STEP: float = env.int("RADIUS_STEP", default=200.0)  # Шаг увеличения радиуса
+MIN_PROFILES: int = env.int("MIN_PROFILES", default=100)  # Минимальное количество анкет
+RADIUS: int = env.int("RADIUS", default=6371)  # Радиус Земли
+BLOCK_SIZE: float = env.float("BLOCK_SIZE", default=50.0)  # Размер блока для перемешивания
 
 # ---< Path\Dir >---
 IMAGES_DIR: Path = DIR / "images"

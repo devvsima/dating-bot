@@ -2,16 +2,14 @@ from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.handlers.bot_utils import complaint_to_profile, menu, send_profile
+from app.handlers.bot_utils import complaint_to_profile, menu, send_profile, send_user_like_alert
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import search_kb
-from app.keyboards.inline.archive import check_archive_ikb
 from app.others.states import Search
 from app.routers import dating_router
 from database.models import UserModel
 from database.services import Match, Profile, User
 from database.services.search import search_profiles
-from utils.logging import logger
 
 from ..common.cancel import cancel_command
 
@@ -48,16 +46,8 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
 
     if message.text == "❤️":
         await Match.create(session, message.from_user.id, another_user.id)
-        try:
-            await message.bot.send_message(
-                chat_id=another_user.id,
-                text=umt.LIKE_PROFILE(another_user.language),
-                reply_markup=check_archive_ikb(),
-            )
-        except:
-            logger.info(
-                f"Пользователю {another_user.id} @{another_user.username}: не было отправлнно оповещение, вероятно из за блокироваки бота"
-            )
+        await send_user_like_alert(another_user)
+
     elif message.text == "💢":
         await message.answer(umt.REPORT_TO_PROFILE)
         await complaint_to_profile(
