@@ -40,7 +40,6 @@ class StatsGraph:
         sns.barplot(
             x=daily_counts_full.index,
             y=daily_counts_full,
-            palette="Blues_d",
             legend=False,
         )
 
