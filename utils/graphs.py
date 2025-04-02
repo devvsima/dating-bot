@@ -31,7 +31,7 @@ class StatsGraph:
         end_date = datetime(today.year, today.month, today.day)
 
         all_dates = pd.date_range(start=start_date, end=end_date).date
-        daily_counts = df.groupby("date")["username"].nunique()
+        daily_counts = df.groupby("date").size()  # Подсчет всех записей для каждой даты
         daily_counts_full = pd.Series(daily_counts, index=all_dates).fillna(0)
 
         plt.figure(figsize=(12, 6))
@@ -41,13 +41,12 @@ class StatsGraph:
             x=daily_counts_full.index,
             y=daily_counts_full,
             palette="Blues_d",
-            hue=daily_counts_full.index,
             legend=False,
         )
 
         plt.title(f"User arrivals in the last {days} days", fontsize=16, fontweight="bold")
         plt.xlabel("Date", fontsize=12)
-        plt.ylabel("Number of unique users", fontsize=12)
+        plt.ylabel("Number of new users", fontsize=12)
         plt.xticks(rotation=45)
         plt.grid(axis="y", linestyle="--", alpha=0.7)
 

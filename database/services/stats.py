@@ -8,10 +8,10 @@ from ..models import MatchModel, ProfileModel, UserModel
 
 class Stats:
     @staticmethod
-    async def get_registration_data(session: AsyncSession, days: int = 30) -> list:
+    async def get_registration_data(session: AsyncSession) -> list:
         """Возвращает список пользователей с датой регистрации за последние 30 дней"""
         # Определяем дату 30 дней назад
-        days_ago = datetime.utcnow() - timedelta(days=days)
+        days_ago = datetime.utcnow() - timedelta(days=30)
 
         # Создаем запрос с фильтрацией по дате
         stmt = (
