@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from sqlalchemy import case, desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -6,14 +8,23 @@ from ..models import MatchModel, ProfileModel, UserModel
 
 class Stats:
     @staticmethod
-    async def get_registration_data(session: AsyncSession) -> list:
-        """Возвращает список пользователей с датой регистрации"""
-        stmt = select(UserModel.id, UserModel.username, UserModel.created_at).order_by(
-            UserModel.referral.desc()
+    async def get_registration_data(session: AsyncSession, days: int = 30) -> list:
+        """Возвращает список пользователей с датой регистрации за последние 30 дней"""
+        # Определяем дату 30 дней назад
+        days_ago = datetime.utcnow() - timedelta(days=days)
+
+        # Создаем запрос с фильтрацией по дате
+        stmt = (
+            select(UserModel.id, UserModel.username, UserModel.created_at)
+            .where(UserModel.created_at >= days_ago)  # Фильтрация по дате
+            .order_by(UserModel.created_at.asc())  # Сортировка по дате регистрации
         )
+
+        # Выполняем запрос
         result = await session.execute(stmt)
         users = result.fetchall()
 
+        # Преобразуем результат в список словарей
         return [{"username": user.username, "timestamp": user.created_at} for user in users]
 
     @staticmethod
