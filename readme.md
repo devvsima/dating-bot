@@ -1,29 +1,54 @@
 # <center>Telegram dating bot [Michelangelo](https://t.me/michalangelo_bot?start=Oj0wd) 💞</center>
+
+![Python](https://img.shields.io/badge/python-3.13-blue)
+![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-green)
+![Contributions](https://img.shields.io/badge/contributions-welcome-orange)
+![Aiogram](https://img.shields.io/badge/aiogram-3.x-blueviolet)
+![PostgreSQL](https://img.shields.io/badge/database-PostgreSQL-lightblue)
+![Redis](https://img.shields.io/badge/storage-Redis-red)
+
 - `Aiogram 3`
 - `i18n`
 - `SqlAlchemy`
 - `Matplotlib`, `Geopy`
-- `Redis`,` PostgreSQL \ Sqlite, `
+- `Redis`, `PostgreSQL \ Sqlite`
+
 <p align="center">
-
   <img src="https://i.ibb.co/PGwpsJGp/Screenshot-62.png" alt="diagram" width="1100">
-
 </p>
 
 ---
+
 ## Navigation
 
 - [Telegram dating bot Michelangelo 💞](#telegram-dating-bot-michelangelo-)
   - [Navigation](#navigation)
+  - [Features](#features)
   - [Install](#install)
     - [Windows](#windows)
     - [Linux](#linux)
+    - [UV](#uv)
   - [Settings](#settings)
     - [Bot](#bot)
     - [Database](#database)
     - [Redis](#redis)
   - [Migrations](#migrations)
   - [Startup](#startup)
+    - [Python](#python)
+    - [UV run](#uv-run)
+  - [Contributing](#contributing)
+  - [License](#license)
+
+---
+
+## Features
+
+- 💬 **Matchmaking**: Helps users find each other based on shared interests.
+- 🌍 **Geolocation**: Uses `Geopy` to determine user locations.
+- 📊 **Analytics**: Generates visual graphs with `Matplotlib`.
+- 🗂️ **Multilingual Support**: Supports multiple languages via `i18n`.
+- ⚡ **High Performance**: Utilizes `Redis` for FSM storage and `PostgreSQL` for database operations.
+- 🔒 **Secure**: Implements secure data handling and user privacy.
 
 ---
 ## Install
@@ -50,9 +75,14 @@ python -m venv .venv
 .venv\Scripts\activate
 
 pip install -r requirements.txt
-```
 
 > 💡 You may have to install apt install python3.10-venv or something like that.
+```
+### UV
+
+```bash
+uv sync
+```
 
 ---
 ## Settings
@@ -128,6 +158,31 @@ Ensure `alembic.ini` has the correct database URL before running migrations.
 
 First you need to [install dependencies](#Install) and do a [database migration](#Migrations) if you haven't already done one.
 
+### Python
 ```bash
 python main.py
 ```
+
+### UV run
+```bash
+uv run main.py
+```
+---
+
+## Contributing
+
+We welcome contributions from the community! To contribute:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature-name`.
+3. Make your changes and commit them: `git commit -m "Add your feature"`.
+4. Push your changes: `git push origin feature/your-feature-name`.
+5. Create a Pull Request.
+
+Please ensure your code adheres to the project's style and passes all tests.
+
+---
+
+## License
+
+This project is licensed under the **Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** license. See the [LICENSE](./LICENSE) file for details.
