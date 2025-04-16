@@ -45,8 +45,9 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
     another_user = await User.get_with_profile(session, profile_list[0])
 
     if message.text == "❤️":
-        await Match.create(session, message.from_user.id, another_user.id)
-        await send_user_like_alert(another_user)
+        is_create = await Match.create(session, message.from_user.id, another_user.id)
+        if is_create:
+            await send_user_like_alert(another_user)
 
     elif message.text == "💢":
         await message.answer(umt.REPORT_TO_PROFILE)

@@ -8,22 +8,27 @@ from ..models.match import MatchModel
 
 class Match:
     @staticmethod
-    async def create(session: AsyncSession, sender_id: int, receiver_id: int) -> None:
-        """Добавляет лайк в БД, если он уже есть - ничего не делает"""
-        result = await session.execute(
+    async def create(session: AsyncSession, sender_id: int, receiver_id: int) -> bool:
+        """
+        Добавляет лайк в БД, если он уже есть - ничего не делает.
+        Возвращает True, если запись была создана, иначе False.
+        """
+        existing_match = await session.execute(
             select(MatchModel).where(
-                MatchModel.sender_id == sender_id, MatchModel.receiver_id == receiver_id
+                (MatchModel.sender_id == sender_id) & (MatchModel.receiver_id == receiver_id)
             )
         )
-        existing_like = result.scalar()
-
-        if existing_like:
+        if existing_match.scalar():  # Если запись уже существует
             logger.log("DATABASE", f"{sender_id} & {receiver_id}: лайк повторился")
-        else:
-            stmt = insert(MatchModel).values(sender_id=sender_id, receiver_id=receiver_id)
-            await session.execute(stmt)
-            await session.commit()
-            logger.log("DATABASE", f"{sender_id}: лайкнул пользователя {receiver_id}")
+            return False
+
+        # Если записи нет, добавляем новую
+        stmt = insert(MatchModel).values(sender_id=sender_id, receiver_id=receiver_id)
+        await session.execute(stmt)
+        await session.commit()
+
+        logger.log("DATABASE", f"{sender_id}: лайкнул пользователя {receiver_id}")
+        return True
 
     @staticmethod
     async def get_all(session: AsyncSession, user_id: int) -> list:
