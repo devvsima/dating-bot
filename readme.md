@@ -7,6 +7,7 @@
 ![PostgreSQL](https://img.shields.io/badge/database-PostgreSQL-lightblue)
 ![Redis](https://img.shields.io/badge/storage-Redis-red)
 
+As support, you can put ⭐️ on the repository =)
 - `Aiogram 3`
 - `i18n`
 - `SqlAlchemy`
@@ -16,6 +17,7 @@
 <p align="center">
   <img src="https://i.ibb.co/PGwpsJGp/Screenshot-62.png" alt="diagram" width="1100">
 </p>
+
 
 ---
 
@@ -31,8 +33,9 @@
   - [Settings](#settings)
     - [Bot](#bot)
     - [Database](#database)
+      - [Migrations](#migrations)
     - [Redis](#redis)
-  - [Migrations](#migrations)
+    - [Localization](#localization)
   - [Startup](#startup)
     - [Python](#python)
     - [UV run](#uv-run)
@@ -111,21 +114,7 @@ You can specify a link to the database connection in the DB_URL field.
 | DB_PASS               | Database password                              | postgresql                                             |
 | DB_URL                | (Optional)Full link to connect to the database | postgresql+asyncpg://user:password@localhost:port/name |
 
-
-### Redis
-The radishes will be used as FSM storage. If redis is not connected the standard aiogram storage will be used.
-You can specify a link to the Redis connection in the `RD_URL` field at once.
-
-| <center>Name</center> | <center>Description</center>                   | <center>Example</center> |
-| --------------------- | ---------------------------------------------- | ------------------------ |
-| REDIS_HOST            | Database host                                  | localhost                |
-| REDIS_PORT            | Database port                                  | 6379                     |
-| REDIS_DB              | Database name                                  | 5                        |
-| RD_URL                | (Optional)Full link to connect to the database | redis://localhost:6379/5 |
-
----
-
-## Migrations
+#### Migrations
 
 This project uses **Alembic** for database migrations.
 
@@ -153,7 +142,47 @@ This project uses **Alembic** for database migrations.
 Ensure `alembic.ini` has the correct database URL before running migrations.
 
 
+### Redis
+The radishes will be used as FSM storage. If redis is not connected the standard aiogram storage will be used.
+You can specify a link to the Redis connection in the `RD_URL` field at once.
+
+| <center>Name</center> | <center>Description</center>                   | <center>Example</center> |
+| --------------------- | ---------------------------------------------- | ------------------------ |
+| REDIS_HOST            | Database host                                  | localhost                |
+| REDIS_PORT            | Database port                                  | 6379                     |
+| REDIS_DB              | Database name                                  | 5                        |
+| RD_URL                | (Optional)Full link to connect to the database | redis://localhost:6379/5 |
+
+### Localization
+The bot has localization for 6 languages: en, ru, uk, fr, pl, es
+
+- Collecting all the texts from the project
+```bash
+pybabel extract --input-dirs=. -o data/locales/bot.pot --project=bot
+```
+
+- Create files with translations into different languages
+```bash
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l en
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l ru
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l uk
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l fr
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l pl
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l es
+```
+
+
+- Once all the texts are translated, you need to compile all the translations
+```bash
+pybabel compile -d data/locales -D bot --statistics
+```
+
+```bash
+pybabel update -i data/locales/bot.pot -d data/locales -D bot
+```
+
 ---
+
 ## Startup
 
 First you need to [install dependencies](#Install) and do a [database migration](#Migrations) if you haven't already done one.
