@@ -3,14 +3,14 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
 
-ROLES = {
-    0: "banned",
-    1: "user",
-    2: "sponsor",
-    3: "moderator",
-    4: "admin",
-    5: "owner",
-}  # not currently in use
+
+class UserRole:
+    BANNED = 0
+    USER = 1
+    SPONSOR = 2
+    MODERATOR = 3
+    ADMIN = 4
+    OWNER = 5
 
 
 class UserModel(BaseModel):
@@ -22,6 +22,6 @@ class UserModel(BaseModel):
     referral: Mapped[int] = mapped_column(Integer, default=0)
     is_banned: Mapped[bool] = mapped_column(Boolean, default=False)
 
-    profile: Mapped["ProfileModel"] = relationship(
+    profile: Mapped["ProfileModel"] = relationship(  # type: ignore
         "ProfileModel", uselist=False, back_populates="user"
     )

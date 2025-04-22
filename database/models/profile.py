@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Integer, String, Text
+from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
@@ -18,11 +18,11 @@ class ProfileModel(BaseModel):
     longitude: Mapped[float] = mapped_column(nullable=False)
     photo: Mapped[str] = mapped_column(String(255), nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
-    description: Mapped[str] = mapped_column(Text, nullable=True)
+    description: Mapped[str] = mapped_column(String(900), nullable=True)
     instagram: Mapped[str] = mapped_column(String(200), nullable=True)
     is_active: Mapped[bool] = mapped_column(default=True)
 
-    user: Mapped["UserModel"] = relationship("UserModel", back_populates="profile")
+    user: Mapped["UserModel"] = relationship("UserModel", back_populates="profile")  # type: ignore
 
     __table_args__ = (
         CheckConstraint("gender IN ('male', 'female')", name="gender_check"),
