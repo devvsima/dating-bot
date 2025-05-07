@@ -9,14 +9,14 @@ from database.models import UserModel
 from database.services import User
 
 
-@common_router.message(Command("language"), StateFilter(None))
-@common_router.message(Command("lang"), StateFilter(None))
+@common_router.message(StateFilter(None), Command("language"))
+@common_router.message(StateFilter(None), Command("lang"))
 async def _lang(message: types.Message) -> None:
     """Отображает список доступных языков и позволяет выбрать предпочтительный"""
     await message.answer(umt.CHANGE_LANG, reply_markup=lang_ikb())
 
 
-@common_router.callback_query(LangCallback.filter(), StateFilter(None))
+@common_router.callback_query(StateFilter(None), LangCallback.filter())
 async def _change_lang(
     callback: types.CallbackQuery, callback_data: LangCallback, user: UserModel, session
 ) -> None:

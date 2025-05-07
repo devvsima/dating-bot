@@ -10,7 +10,7 @@ from database.services.user import User
 from loader import bot
 
 
-@admin_router.message(Command("mailing"), StateFilter(None))
+@admin_router.message(StateFilter(None), Command("mailing"))
 async def users_mailing_panel(message: types.Message, state: FSMContext) -> None:
     """Admin panel for user mailing."""
     await message.answer(

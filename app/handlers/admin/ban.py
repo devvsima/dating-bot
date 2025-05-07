@@ -8,8 +8,8 @@ from app.routers import admin_router
 from database.services import User
 
 
-@admin_router.message(Command("ban"), StateFilter(None))
-@admin_router.message(Command("unban"), StateFilter(None))
+@admin_router.message(StateFilter(None), Command("ban"))
+@admin_router.message(StateFilter(None), Command("unban"))
 async def ban_unban_users_command(message: types.Message, command: CommandObject, session) -> None:
     """Блокирует или разблокирует пользователей, принимает список user_id через ','"""
 
@@ -36,7 +36,7 @@ async def ban_unban_users_command(message: types.Message, command: CommandObject
         await message.answer(text_success)
 
 
-@admin_router.callback_query(BlockUserCallback.filter(), StateFilter(None))
+@admin_router.callback_query(StateFilter(None), BlockUserCallback.filter())
 async def _complaint_user_callback(
     callback: types.CallbackQuery, callback_data: BlockUserCallback, session
 ) -> None:

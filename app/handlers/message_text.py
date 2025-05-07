@@ -57,6 +57,10 @@ class UserMessageText:
         return _("🔍 Выполняется поиск...")
 
     @property
+    def ARCHIVE_SEARCH(self):
+        return _("Твоя анкета понравилась {} людям! Давай посмотрим, кто это:")
+
+    @property
     def INVALID_PROFILE_SEARCH(self):
         return _("Подходящих анкет нет. Попробуй указать другой город. 🌍")
 
@@ -65,10 +69,19 @@ class UserMessageText:
         return _("Больше анкет нет. Попробуйте позже! 😊")
 
     def LIKE_PROFILE(self, language: str):
-        return _("Кому-то понравилась тваоя анкета! Хочешь посмотреть? 👀", locale=language)
+        return _(
+            "Твоя анкета получила <b>{}</b> ❤️\n\n📭 Нажми, чтобы посмотреть",
+            locale=language,
+        )
 
     def LIKE_ACCEPT(self, language: str):
-        return _("Отлично! Надеюсь хорошо проведете время ;) <a href='{}'>{}</a>", locale=language)
+        return _("Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>", locale=language)
+
+    def LIKE_ACCEPT_ALERT(self, language: str):
+        return _(
+            "На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>",
+            locale=language,
+        )
 
     @property
     def LIKE_ARCHIVE(self):
@@ -149,9 +162,7 @@ class UserMessageText:
 
     @property
     def REPORT_TO_USER(self):
-        return _(
-            "Пользователь <code>{}</code> (@{}) отправил жалобу на анкету пользователя: <code>{}</code> (@{})"
-        )
+        return "User <code>{}</code> (@{}) sent a complaint about a user profile: <code>{}</code> (@{})"
 
     @property
     def REPORT_TO_PROFILE(self):

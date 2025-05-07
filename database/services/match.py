@@ -31,7 +31,7 @@ class Match:
         return True
 
     @staticmethod
-    async def get_all(session: AsyncSession, user_id: int) -> list:
+    async def get_user_matchs(session: AsyncSession, user_id: int) -> list:
         """Возвращает список пользователей, которые лайкнули анкету"""
         result = await session.execute(
             select(MatchModel.sender_id).where(MatchModel.receiver_id == user_id)

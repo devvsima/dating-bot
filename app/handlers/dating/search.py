@@ -14,7 +14,7 @@ from database.services.search import search_profiles
 from ..common.cancel import cancel_command
 
 
-@dating_router.message(F.text == "🔍", StateFilter(None))
+@dating_router.message(StateFilter(None), F.text == "🔍")
 async def _search_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
@@ -32,7 +32,7 @@ async def _search_command(
         await menu(message.from_user.id)
 
 
-@dating_router.message(F.text.in_(("❤️", "👎", "💢")), StateFilter(Search.search))
+@dating_router.message(StateFilter(Search.search), F.text.in_(("❤️", "👎", "💢")))
 async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
     """
     Пользователь может взаимодействовать с анкетами, предложенными ботом,
@@ -46,8 +46,11 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
 
     if message.text == "❤️":
         is_create = await Match.create(session, message.from_user.id, another_user.id)
+
         if is_create:
-            await send_user_like_alert(another_user)
+            matchs_count = len(await Match.get_user_matchs(session, message.from_user.id))
+            if matchs_count == 1 or matchs_count % 3 == 0:
+                await send_user_like_alert(session, another_user)
 
     elif message.text == "💢":
         await message.answer(umt.REPORT_TO_PROFILE)

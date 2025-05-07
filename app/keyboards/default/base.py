@@ -18,7 +18,7 @@ profile_kb: ReplyKeyboardMarkup = kb_gen(
 )
 
 menu_kb: ReplyKeyboardMarkup = kb_gen(
-    ["🔍", "👤", "🗄"],
+    ["🔍", "👤", "📭"],
     ["✉️"],
 )
 

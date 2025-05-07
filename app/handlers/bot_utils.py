@@ -11,7 +11,7 @@ from database.services import User
 from loader import bot
 from utils.logging import logger
 
-effect_dict = {
+effect_dict_id = {
     "🔥": "5104841245755180586",
     "👍": "5107584321108051014",
     "👎": "5104858069142078462",
@@ -93,13 +93,15 @@ def generate_user_link(user_id: int, username: str = None) -> str:
     return f"tg://user?id={user_id}"
 
 
-async def sending_user_contact(chat_id: int, name: str, language: str, user_link: str) -> None:
+async def send_message_with_effect(
+    chat_id: int, text: str, effect_id: str = effect_dict_id["🎉"]
+) -> None:
     """Отправляет сообщение с контактом пользователя"""
     try:
         await bot.send_message(
             chat_id=chat_id,
-            text=umt.LIKE_ACCEPT(language).format(user_link, html.escape(name)),
-            message_effect_id=effect_dict["🎉"],
+            text=text,
+            message_effect_id=effect_id,
         )
     except:
         logger.info(
@@ -107,12 +109,16 @@ async def sending_user_contact(chat_id: int, name: str, language: str, user_link
         )
 
 
-async def send_user_like_alert(user: UserModel):
+from database.services.match import Match
+
+
+async def send_user_like_alert(session, user: UserModel):
+    matchs = await Match.get_user_matchs(session, user.id)
     try:
         await bot.send_message(
             chat_id=user.id,
-            text=umt.LIKE_PROFILE(user.language),
-            reply_markup=check_archive_ikb(),
+            text=umt.LIKE_PROFILE(user.language).format(len(matchs)),
+            reply_markup=check_archive_ikb(user.language),
         )
     except:
         logger.info(

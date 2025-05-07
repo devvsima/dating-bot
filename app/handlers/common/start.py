@@ -10,7 +10,7 @@ from data.config import IMAGES_DIR
 from database.models import UserModel
 
 
-@common_router.message(CommandStart(), StateFilter(None))
+@common_router.message(StateFilter(None), CommandStart())
 async def _start_command(message: types.Message, user: UserModel) -> None:
     """Стандартная команда /start для запуска бота и начала взаимодействия с ним"""
     if user.profile:

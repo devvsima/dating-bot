@@ -31,8 +31,8 @@ PROFILE_STATS = """
 """
 
 
-@admin_router.message(Command("stats"), StateFilter(None))
-@admin_router.message(F.text == "📊 Statistics", StateFilter(None))
+@admin_router.message(StateFilter(None), Command("stats"))
+@admin_router.message(StateFilter(None), F.text == "📊 Statistics")
 async def _stats_command(message: types.Message, session) -> None:
     """Отправляет администратору меню статистики"""
     await message.answer("Stats sending...")
@@ -52,7 +52,7 @@ async def _stats_command(message: types.Message, session) -> None:
     await message.answer_photo(photo=photo, caption=text, reply_markup=stats_ikb("Profile"))
 
 
-@admin_router.callback_query(StatsCallback.filter(), StateFilter(None))
+@admin_router.callback_query(StateFilter(None), StatsCallback.filter())
 async def _stats_callback(
     callback: types.CallbackQuery, callback_data: StatsCallback, session
 ) -> None:

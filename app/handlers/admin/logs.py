@@ -7,8 +7,8 @@ from app.routers import admin_router
 from data.config import LOG_FILE_PATH
 
 
-@admin_router.message(Command("log"), StateFilter(None))
-@admin_router.message(Command("logs"), StateFilter(None))
+@admin_router.message(StateFilter(None), Command("log"))
+@admin_router.message(StateFilter(None), Command("logs"))
 async def _logs_command(message: types.Message) -> None:
     """Отправляет администратору последний файл логов бота"""
     await message.answer("Logs sending...")

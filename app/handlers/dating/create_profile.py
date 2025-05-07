@@ -15,8 +15,8 @@ from .profile import profile_command
 
 
 # create profile
-@dating_router.message(F.text == "🔄", StateFilter(None))
-@dating_router.message(filters.IsCreate(), StateFilter(None))
+@dating_router.message(StateFilter(None), F.text == "🔄")
+@dating_router.message(StateFilter(None), filters.IsCreate())
 async def _create_profile_command(message: types.Message, state: FSMContext):
     """Запускает процесс создания профиля пользователя.
     Также используется для пересоздания анкеты"""
