@@ -17,7 +17,7 @@ from .profile import send_profile
 
 
 @dating_router.message(StateFilter("*"), F.text == "📭")
-@dating_router.message(StateFilter("*"), F.text == "🗄")
+@dating_router.message(StateFilter("*"), F.text == "📭")
 async def match_archive(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
