@@ -69,14 +69,14 @@ async def _match_response(
     if message.text == "❤️":
         """Отправка пользователю который ответил на лайк"""
         link = generate_user_link(user_id=another_user.id, username=another_user.username)
-        text = umt.LIKE_ACCEPT(another_user.language).format(link, html.escape(user.profile.name))
+        text = umt.LIKE_ACCEPT(another_user.language).format(
+            link, html.escape(another_user.profile.name)
+        )
         await send_message_with_effect(chat_id=user.id, text=text)
 
         """Отправка пользователю которому ответили на лайк"""
         link = generate_user_link(user_id=user.id, username=user.username)
-        text = umt.LIKE_ACCEPT_ALERT(user.language).format(
-            link, html.escape(another_user.profile.name)
-        )
+        text = umt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
         await send_message_with_effect(chat_id=another_user.id, text=text)
 
     await Match.delete(session, user.id, another_user.id)
