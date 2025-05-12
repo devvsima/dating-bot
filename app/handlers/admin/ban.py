@@ -5,7 +5,7 @@ from aiogram.filters.state import StateFilter
 from app.filters.kb_filter import BlockUserCallback
 from app.handlers.bot_utils import check_args_type
 from app.routers import admin_router
-from database.services import User
+from database.services.user import User
 
 
 @admin_router.message(StateFilter(None), Command("ban"))
@@ -28,7 +28,10 @@ async def ban_unban_users_command(message: types.Message, command: CommandObject
     if args := check_args_type(type=int, data_list=command.args):
         for user_id in args:
             try:
-                await User.set_user_ban_and_profile_status(session, user_id, is_banned)
+                if is_banned:
+                    await User.ban(session, user_id)
+                else:
+                    await User.unban(session, user_id)
                 await message.answer(f"✅ User <code>{user_id}</code> has been {text_action}.")
             except Exception:
                 await message.answer(f"{text_error} for user <code>{user_id}</code>.")
@@ -45,7 +48,7 @@ async def _complaint_user_callback(
     username = callback_data.username
 
     if callback_data.ban:
-        await User.set_user_ban_and_profile_status(session, user_id, True)
+        await User.ban(session, user_id)
         text = "⛔️ Administrator <code>{admin_id}</code> @{admin_username}:\
         accepted a request to block user <code>{user_id}</code> @{user_username}"
     else:

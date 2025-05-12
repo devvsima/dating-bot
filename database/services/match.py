@@ -49,3 +49,14 @@ class Match:
         )
         await session.commit()
         logger.log("DATABASE", f"{sender_id} & {receiver_id}: лайк удален")
+
+    @staticmethod
+    async def delete_all_by_sender(session: AsyncSession, sender_id: int) -> None:
+        """
+        Удаляет все записи, где пользователь лайкнул кого-то (по sender_id).
+        """
+        await session.execute(
+            MatchModel.__table__.delete().where(MatchModel.sender_id == sender_id)
+        )
+        await session.commit()
+        logger.log("DATABASE", f"Все лайки пользователя {sender_id} были удалены")

@@ -1,3 +1,5 @@
+from ast import Match
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
@@ -83,3 +85,50 @@ class User:
         logger.log(
             "DATABASE", f"{user.id} (@{user.username}): статус блокировки изменен на - {is_banned}"
         )
+
+    async def ban(session: AsyncSession, user_id: int) -> None:
+        """
+        Блокирует пользователя:
+        - Меняет статус анкеты на неактивный.
+        - Меняет статус пользователя на заблокированный.
+        - Удаляет все лайки, которые пользователь поставил.
+        """
+        # Получаем пользователя и его анкету
+        user = await User.get_with_profile(session, user_id)
+        if not user:
+            logger.log("DATABASE", f"Пользователь с ID {user_id} не найден.")
+            return
+
+        # Меняем статус анкеты на неактивный
+        if user.profile:
+            await Profile.update_isactive(session, user.profile, is_active=False)
+
+        # Меняем статус пользователя на заблокированный
+        await User.update_isbanned(session, user, is_banned=True)
+
+        # Удаляем все лайки, которые пользователь поставил
+        await Match.delete_all_by_sender(session, sender_id=user_id)
+
+        logger.log("DATABASE", f"Пользователь {user_id} был заблокирован.")
+
+    @staticmethod
+    async def unban(session: AsyncSession, user_id: int) -> None:
+        """
+        Разблокирует пользователя:
+        - Меняет статус анкеты на активный.
+        - Меняет статус пользователя на разблокированный.
+        """
+        # Получаем пользователя и его анкету
+        user = await User.get_with_profile(session, user_id)
+        if not user:
+            logger.log("DATABASE", f"Пользователь с ID {user_id} не найден.")
+            return
+
+        # Меняем статус анкеты на активный
+        if user.profile:
+            await Profile.update_isactive(session, user.profile, is_active=True)
+
+        # Меняем статус пользователя на разблокированный
+        await User.update_isbanned(session, user, is_banned=False)
+
+        logger.log("DATABASE", f"Пользователь {user_id} был разблокирован.")
