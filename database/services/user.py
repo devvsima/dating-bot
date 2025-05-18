@@ -1,5 +1,3 @@
-from ast import Match
-
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
@@ -7,6 +5,7 @@ from sqlalchemy.orm import joinedload
 from utils.logging import logger
 
 from ..models.user import UserModel
+from .match import Match
 from .profile import Profile
 
 
