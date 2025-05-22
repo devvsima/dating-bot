@@ -15,7 +15,7 @@ cancel_kb: ReplyKeyboardMarkup = kb_gen(
 
 profile_kb: ReplyKeyboardMarkup = kb_gen(
     ["🔄", "🖼", "✍️", "❌"],
-    ["🔍"],
+    ["↩️"],
 )
 
 menu_kb: ReplyKeyboardMarkup = kb_gen(
