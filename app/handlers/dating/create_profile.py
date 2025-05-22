@@ -4,8 +4,13 @@ from aiogram.fsm.context import FSMContext
 
 import app.filters.create_profile_filtres as filters
 from app.handlers.message_text import user_message_text as umt
-from app.keyboards.default.base import hints_kb, leave_previous_kb
-from app.keyboards.default.create_profile import find_gender_kb, gender_kb, location_kb
+from app.keyboards.default.registration_form import (
+    find_gender_kb,
+    gender_kb,
+    hints_kb,
+    leave_previous_kb,
+    location_kb,
+)
 from app.others.states import ProfileCreate
 from app.routers import dating_router
 from database.models.user import UserModel

@@ -4,7 +4,7 @@ from aiogram.filters.state import StateFilter
 
 from app.handlers.bot_utils import menu
 from app.handlers.message_text import user_message_text as umt
-from app.keyboards.default.create_profile import start_kb
+from app.keyboards.default.registration_form import start_kb
 from app.routers import common_router
 from data.config import IMAGES_DIR
 from database.models import UserModel

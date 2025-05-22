@@ -33,7 +33,9 @@ async def _search_command(
 
 
 @dating_router.message(StateFilter(Search.search), F.text.in_(("❤️", "👎", "💢")))
-async def _search_profile(message: types.Message, state: FSMContext, session) -> None:
+async def _search_profile(
+    message: types.Message, state: FSMContext, user: UserModel, session
+) -> None:
     """
     Пользователь может взаимодействовать с анкетами, предложенными ботом,
     ставя лайк или дизлайк.
@@ -55,9 +57,8 @@ async def _search_profile(message: types.Message, state: FSMContext, session) ->
     elif message.text == "💢":
         await message.answer(umt.REPORT_TO_PROFILE)
         await complaint_to_profile(
-            session=session,
-            user=message.from_user,
-            profile=another_user.profile,
+            complainant=user,
+            complaint_profile=another_user.profile,
         )
     profile_list.pop(0)
     if profile_list:

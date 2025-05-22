@@ -4,9 +4,13 @@ from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.handlers.bot_utils import generate_user_link, send_message_with_effect
+from app.handlers.bot_utils import (
+    complaint_to_profile,
+    generate_user_link,
+    send_message_with_effect,
+)
 from app.handlers.message_text import user_message_text as umt
-from app.keyboards.default.base import arhive_search_kb
+from app.keyboards.default.base import search_kb
 from app.others.states import LikeResponse
 from app.routers import dating_router
 from database.models import UserModel
@@ -30,7 +34,7 @@ async def match_archive(
 
     if liker_ids := await Match.get_user_matchs(session, message.from_user.id):
         text = umt.ARCHIVE_SEARCH.format(len(liker_ids))
-        await message.answer(text=text, reply_markup=arhive_search_kb)
+        await message.answer(text=text, reply_markup=search_kb)
 
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
@@ -51,7 +55,7 @@ async def _match_atchive_callback(
         id=user.id,
         username=callback.from_user.username,
     )  # needs to be redone
-    await callback.message.answer(text=umt.SEARCH, reply_markup=arhive_search_kb)
+    await callback.message.answer(text=umt.SEARCH, reply_markup=search_kb)
     await callback.answer()
 
     if liker_ids := await Match.get_user_matchs(session, callback.from_user.id):
@@ -63,7 +67,7 @@ async def _match_atchive_callback(
         await cancel_command(callback.message, state)
 
 
-@dating_router.message(StateFilter(LikeResponse.response), F.text.in_(("❤️", "👎")))
+@dating_router.message(StateFilter(LikeResponse.response), F.text.in_(("❤️", "👎", "💢")))
 async def _match_response(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
@@ -85,7 +89,12 @@ async def _match_response(
         link = generate_user_link(id=user.id, username=user.username)
         text = umt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
         await send_message_with_effect(chat_id=another_user.id, text=text)
-
+    elif message.text == "💢":
+        await message.answer(umt.REPORT_TO_PROFILE)
+        await complaint_to_profile(
+            complainant=user,
+            complaint_profile=another_user.profile,
+        )
     await Match.delete(session, user.id, another_user.id)
 
     ids.pop(0)
