@@ -25,7 +25,7 @@ async def _update_photo(
     """Обновляет фотографию профиля"""
     await Profile.update_photo(
         session=session,
-        profile=user.profile,
+        id=user.id,
         photo=message.photo[0].file_id,
     )
     await state.clear()
@@ -35,18 +35,18 @@ async def _update_photo(
 @dating_router.message(StateFilter(None), F.text == "✍️")
 async def _edit_profile_description_command(message: types.Message, state: FSMContext) -> None:
     """Редактирует описание пользователя"""
-    await state.set_state(ProfileEdit.desc)
+    await state.set_state(ProfileEdit.description)
     await message.answer(umt.DESCRIPTION)
 
 
-@dating_router.message(StateFilter(ProfileEdit.desc))
+@dating_router.message(StateFilter(ProfileEdit.description))
 async def _update_photo(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
     """Обновляет описание профиля"""
-    await Profile.update_description(
+    await Profile.update(
         session=session,
-        profile=user.profile,
+        id=user.id,
         description=message.text,
     )
     await state.clear()
@@ -56,5 +56,9 @@ async def _update_photo(
 @dating_router.message(StateFilter(None), F.text == "❌")
 async def _disable_profile_command(message: types.Message, user: UserModel, session) -> None:
     """Отключает профиль пользователя, и не дает ему дальше пользоватся ботом до восстановления"""
-    await Profile.update_isactive(session, user.profile, False)
+    await Profile.update(
+        session=session,
+        id=user.id,
+        is_active=False,
+    )
     await message.answer(text=umt.DISABLE_PROFILE)

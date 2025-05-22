@@ -42,7 +42,7 @@ async def _incorrect_city(message: types.Message):
     await message.answer(umt.INVALID_CITY_RESPONSE)
 
 
-@dating_router.message(StateFilter(ProfileCreate.desc, ProfileEdit.desc))
+@dating_router.message(StateFilter(ProfileCreate.description, ProfileEdit.description))
 async def _incorrect_description(message: types.Message):
     """Ошибка фильтра описания"""
     await message.answer(umt.INVALID_LONG_RESPONSE)

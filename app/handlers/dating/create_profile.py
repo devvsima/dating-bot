@@ -95,20 +95,20 @@ async def _city(
         longitude=longitude,
     )
     await message.reply(umt.DESCRIPTION, reply_markup=leave_previous_kb(user.profile))
-    await state.set_state(ProfileCreate.desc)
+    await state.set_state(ProfileCreate.description)
 
 
 # < description >
-@dating_router.message(StateFilter(ProfileCreate.desc), F.text, filters.IsDescription())
+@dating_router.message(StateFilter(ProfileCreate.description), F.text, filters.IsDescription())
 async def _description(message: types.Message, state: FSMContext, user: UserModel, session):
     data = await state.get_data()
     description = (
         user.profile.description if message.text in filters.leave_previous_tuple else message.text
     )
 
-    await Profile.create(
+    await Profile.create_or_update(
         session=session,
-        user_id=message.from_user.id,
+        id=message.from_user.id,
         gender=data["gender"],
         find_gender=data["find_gender"],
         photo=data["photo"],

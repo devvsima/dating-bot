@@ -90,7 +90,7 @@ class Stats:
 
         # Основная статистика
         stmt = select(
-            func.count(ProfileModel.user_id).label("count"),
+            func.count(ProfileModel.id).label("count"),
             func.sum(case((ProfileModel.gender == "male", 1), else_=0)).label("male_count"),
             func.sum(case((ProfileModel.gender == "female", 1), else_=0)).label("female_count"),
             func.sum(case((ProfileModel.is_active == False, 1), else_=0)).label("inactive_profile"),

@@ -22,5 +22,9 @@ async def _change_lang(
 ) -> None:
     """Обрабатывает выбранный пользователем язык, и устанавливает его"""
     language = callback_data.lang
-    await User.update_language(session, user, language)
+    await User.update(
+        session=session,
+        id=user.id,
+        language=language,
+    )
     await callback.message.edit_text(umt.DONE_CHANGE_LANG(language))

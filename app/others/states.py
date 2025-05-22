@@ -12,12 +12,12 @@ class ProfileCreate(StatesGroup):
     name = State()
     age = State()
     city = State()
-    desc = State()
+    description = State()
 
 
 class ProfileEdit(StatesGroup):
     photo = State()
-    desc = State()
+    description = State()
 
 
 class Search(StatesGroup):

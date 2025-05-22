@@ -49,7 +49,7 @@ async def search_profiles(
         )
 
         stmt = (
-            select(ProfileModel.user_id, distance_expr.label("distance"))
+            select(ProfileModel.id, distance_expr.label("distance"))
             .where(
                 and_(
                     ProfileModel.is_active == True,
@@ -60,7 +60,7 @@ async def search_profiles(
                         ProfileModel.find_gender == "all",
                     ),
                     ProfileModel.age.between(profile.age - AGE_RANGE, profile.age + AGE_RANGE),
-                    ProfileModel.user_id != profile.user_id,
+                    ProfileModel.id != profile.id,
                 )
             )
             .order_by(distance_expr)
@@ -74,17 +74,17 @@ async def search_profiles(
 
     # Разделение на блоки и перемешивание
     blocks = {}
-    for user_id, dist in found_profiles:
+    for id, dist in found_profiles:
         block_key = int(dist // BLOCK_SIZE)
-        blocks.setdefault(block_key, []).append(user_id)
+        blocks.setdefault(block_key, []).append(id)
 
     for key in blocks:
         random.shuffle(blocks[key])
 
-    id_list = [user_id for key in sorted(blocks.keys()) for user_id in blocks[key]]
+    id_list = [id for key in sorted(blocks.keys()) for id in blocks[key]]
 
     logger.log(
         "DATABASE",
-        f"{profile.user_id} начал поиск анкет, результат: {id_list}, радиус: {current_distance - RADIUS_STEP} км",
+        f"{profile.id} начал поиск анкет, результат: {id_list}, радиус: {current_distance - RADIUS_STEP} км",
     )
     return id_list

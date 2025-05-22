@@ -6,7 +6,7 @@ class LangCallback(CallbackData, prefix="lang"):
 
 
 class BlockUserCallback(CallbackData, prefix="ban"):
-    user_id: int
+    id: int
     username: str | None
     ban: bool
 

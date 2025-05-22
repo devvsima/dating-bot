@@ -17,13 +17,16 @@ from .profile import send_profile
 
 
 @dating_router.message(StateFilter("*"), F.text == "📭")
-@dating_router.message(StateFilter("*"), F.text == "📭")
 async def match_archive(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
     """Архив лайков анкеты пользовтеля"""
-    await User.update_username(session, user, message.from_user.username)  # needs to be redone
     await state.set_state(LikeResponse.response)
+    await User.update(
+        session,
+        id=user.id,
+        username=message.from_user.username,
+    )  # needs to be redone
 
     if liker_ids := await Match.get_user_matchs(session, message.from_user.id):
         text = umt.ARCHIVE_SEARCH.format(len(liker_ids))
@@ -43,7 +46,11 @@ async def _match_atchive_callback(
 ) -> None:
     """Архив лайков анкеты пользовтеля"""
     await state.set_state(LikeResponse.response)
-    await User.update_username(session, user, callback.from_user.username)  # needs to be redone
+    await User.update(
+        session,
+        id=user.id,
+        username=callback.from_user.username,
+    )  # needs to be redone
     await callback.message.answer(text=umt.SEARCH, reply_markup=arhive_search_kb)
     await callback.answer()
 
@@ -68,14 +75,14 @@ async def _match_response(
 
     if message.text == "❤️":
         """Отправка пользователю который ответил на лайк"""
-        link = generate_user_link(user_id=another_user.id, username=another_user.username)
+        link = generate_user_link(id=another_user.id, username=another_user.username)
         text = umt.LIKE_ACCEPT(another_user.language).format(
             link, html.escape(another_user.profile.name)
         )
         await send_message_with_effect(chat_id=user.id, text=text)
 
         """Отправка пользователю которому ответили на лайк"""
-        link = generate_user_link(user_id=user.id, username=user.username)
+        link = generate_user_link(id=user.id, username=user.username)
         text = umt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
         await send_message_with_effect(chat_id=another_user.id, text=text)
 

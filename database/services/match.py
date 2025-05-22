@@ -1,12 +1,15 @@
 from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from database.services.base import BaseService
 from utils.logging import logger
 
 from ..models.match import MatchModel
 
 
-class Match:
+class Match(BaseService):
+    model = MatchModel
+
     @staticmethod
     async def create(session: AsyncSession, sender_id: int, receiver_id: int) -> bool:
         """
@@ -31,10 +34,10 @@ class Match:
         return True
 
     @staticmethod
-    async def get_user_matchs(session: AsyncSession, user_id: int) -> list:
+    async def get_user_matchs(session: AsyncSession, id: int) -> list:
         """Возвращает список пользователей, которые лайкнули анкету"""
         result = await session.execute(
-            select(MatchModel.sender_id).where(MatchModel.receiver_id == user_id)
+            select(MatchModel.sender_id).where(MatchModel.receiver_id == id)
         )
 
         return [row[0] for row in result.fetchall()]

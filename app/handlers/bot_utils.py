@@ -42,17 +42,17 @@ async def complaint_to_profile(user: UserModel, profile: ProfileModel, session) 
     if MODERATOR_GROUP:
         try:
             await send_profile(MODERATOR_GROUP, profile)
-            reported_user = await User.get(session, profile.user_id)
+            reported_user = await User.get(session, profile.id)
 
             text = umt.REPORT_TO_USER.format(
-                user.id, user.username, profile.user_id, reported_user.username
+                user.id, user.username, profile.id, reported_user.username
             )
 
             await bot.send_message(
                 chat_id=MODERATOR_GROUP,
                 text=text,
                 reply_markup=block_user_ikb(
-                    user_id=profile.user_id,
+                    id=profile.id,
                     username=reported_user.username,
                 ),
             )
@@ -82,15 +82,15 @@ async def new_user_alert_to_group(user: UserModel) -> None:
             logger.error("Сообщение в модераторскую группу не отправленно")
 
 
-def generate_user_link(user_id: int, username: str = None) -> str:
+def generate_user_link(id: int, username: str = None) -> str:
     """
     Генерирует ссылку на пользователя
     Если указан username, создается ссылка https://t.me/username,
-    иначе используется tg://user?id=user_id.
+    иначе используется tg://user?id=id.
     """
     if username:
         return f"https://t.me/{username}"
-    return f"tg://user?id={user_id}"
+    return f"tg://user?id={id}"
 
 
 async def send_message_with_effect(

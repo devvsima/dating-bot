@@ -7,7 +7,7 @@ from .base import BaseModel
 class ProfileModel(BaseModel):
     __tablename__ = "profiles"
 
-    user_id: Mapped[int] = mapped_column(
+    id: Mapped[int] = mapped_column(
         BigInteger, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
     )
     name: Mapped[str] = mapped_column(String(200), nullable=False)
