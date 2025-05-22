@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-07 11:22+0300\n"
-"PO-Revision-Date: 2025-05-07 11:23+0300\n"
+"POT-Creation-Date: 2025-05-22 13:54+0300\n"
+"PO-Revision-Date: 2025-05-22 14:08+0300\n"
 "Last-Translator: \n"
 "Language-Team: pl <LL@li.org>\n"
 "Language: pl\n"
@@ -171,8 +171,8 @@ msgstr "Podaj swoje miasto: 🏙️"
 #: app/handlers/message_text.py:116
 msgid "Расскажи немного о себе! Это поможет другим лучше тебя узнать. 📝"
 msgstr ""
-"Opowiedz nam trochę o sobie! Dzięki temu inni będą mogli Cię lepiej poznać. "
-"📝"
+"Opowiedz nam trochę o sobie! Dzięki temu inni będą mogli Cię lepiej "
+"poznać. 📝"
 
 #: app/handlers/message_text.py:120
 msgid ""
@@ -186,16 +186,16 @@ msgstr ""
 
 #: app/handlers/message_text.py:126
 msgid ""
-"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
-"ботом."
+"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь "
+"пользоваться ботом."
 msgstr ""
-"✅ Twój profil został pomyślnie przywrócony! Teraz możesz ponownie używać "
-"bota."
+"✅ Twój profil został pomyślnie przywrócony! Teraz możesz ponownie "
+"używać bota."
 
 #: app/handlers/message_text.py:130
 msgid ""
-"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. "
-"📝"
+"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
+"правильно. 📝"
 msgstr ""
 "Nieprawidłowa odpowiedź. Proszę wybrać na klawiaturze lub napisać "
 "poprawnie. 📝"
@@ -210,11 +210,11 @@ msgstr "Nie znajdziesz takiego miasta :("
 
 #: app/handlers/message_text.py:143
 msgid ""
-"Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном "
-"формате. 🖼️"
+"Неверный формат фотографии! Пожалуйста, загрузите изображение в "
+"правильном формате. 🖼️"
 msgstr ""
-"Nieprawidłowy format zdjęcia! Proszę przesłać obraz w odpowiednim formacie. "
-"🖼️"
+"Nieprawidłowy format zdjęcia! Proszę przesłać obraz w odpowiednim "
+"formacie. 🖼️"
 
 #: app/handlers/message_text.py:148
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
@@ -245,11 +245,11 @@ msgstr "Wybierz język bota, na który chcesz się przełączyć: 🌐"
 msgid "Язык бота изменён! ✅"
 msgstr "Zmieniono język bota! ✅"
 
-#: app/handlers/message_text.py:169
+#: app/handlers/message_text.py:174
 msgid "✅ Жалоба отправлена на рассмотрение!"
 msgstr "✅ Skarga została wysłana do rozpatrzenia!"
 
-#: app/handlers/message_text.py:173
+#: app/handlers/message_text.py:178
 msgid ""
 "\n"
 "Укажи причину жалобы:\n"
@@ -257,49 +257,46 @@ msgid ""
 "💰 Реклама\n"
 "🔫 Другое\n"
 "\n"
-"Если жалоба ошибочная, то можете вернутся назад.\n"
+"↩️ Вернутся назад\n"
 msgstr ""
 "\n"
-"Proszę podać powód swojej skargi:\n"
+"\vProszę podać powód skargi:\n"
 "🔞 Materiał nieprzyzwoity\n"
 "💰 Reklama\n"
 "🔫 Inne\n"
 "\n"
-"Jeśli skarga jest niesłuszna, możesz się wycofać.\n"
+"↩️ Wrócę\n"
 
-#: app/keyboards/default/base.py:45
-msgid "Отменить жалобу"
-msgstr "Anuluj skargę"
-
-#: app/keyboards/default/base.py:61 app/keyboards/default/create_profile.py:47
-msgid "Оставить предыдущее"
-msgstr "Pozostaw poprzednie"
-
-#: app/keyboards/default/create_profile.py:13
+#: app/keyboards/default/registration_form.py:15
 msgid "Создать анкету"
 msgstr "Utwórz profil"
 
-#: app/keyboards/default/create_profile.py:24
+#: app/keyboards/default/registration_form.py:26
 msgid "Парень"
 msgstr "Chłopak"
 
-#: app/keyboards/default/create_profile.py:24
+#: app/keyboards/default/registration_form.py:26
 msgid "Девушка"
 msgstr "Dziewczyna"
 
-#: app/keyboards/default/create_profile.py:35
+#: app/keyboards/default/registration_form.py:37
 msgid "Парней"
 msgstr "Chłopców"
 
-#: app/keyboards/default/create_profile.py:36
+#: app/keyboards/default/registration_form.py:38
 msgid "Девушек"
 msgstr "Dziewcząt"
 
-#: app/keyboards/default/create_profile.py:37
+#: app/keyboards/default/registration_form.py:39
 msgid "Всех"
 msgstr "Wszyscy"
 
-#: app/keyboards/default/create_profile.py:49
+#: app/keyboards/default/registration_form.py:49
+#: app/keyboards/default/registration_form.py:68
+msgid "Оставить предыдущее"
+msgstr "Pozostaw poprzednie"
+
+#: app/keyboards/default/registration_form.py:51
 msgid "📍 Отправить местоположение"
 msgstr "📍 Wyślij lokalizację"
 
@@ -316,3 +313,6 @@ msgstr "Patrzeć"
 #~ msgstr ""
 #~ "Użytkownik <code>{}</code> (@{}) złożył skargę dotyczącą profilu "
 #~ "użytkownika: <code>{}</code> (@{})"
+
+#~ msgid "Отменить жалобу"
+#~ msgstr "Anuluj skargę"

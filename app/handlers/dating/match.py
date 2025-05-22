@@ -4,6 +4,7 @@ from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
+from app.filters.search import SearchFilter
 from app.handlers.bot_utils import (
     complaint_to_profile,
     generate_user_link,
@@ -11,6 +12,7 @@ from app.handlers.bot_utils import (
 )
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import search_kb
+from app.keyboards.default.report import report_kb
 from app.others.states import LikeResponse
 from app.routers import dating_router
 from database.models import UserModel
@@ -67,7 +69,7 @@ async def _match_atchive_callback(
         await cancel_command(callback.message, state)
 
 
-@dating_router.message(StateFilter(LikeResponse.response), F.text.in_(("❤️", "👎", "💢")))
+@dating_router.message(StateFilter(LikeResponse.response), SearchFilter())
 async def _match_response(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
@@ -89,12 +91,20 @@ async def _match_response(
         link = generate_user_link(id=user.id, username=user.username)
         text = umt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
         await send_message_with_effect(chat_id=another_user.id, text=text)
+    elif message.text == "👎":
+        pass
     elif message.text == "💢":
-        await message.answer(umt.REPORT_TO_PROFILE)
+        await message.answer(umt.COMPLAINT, reply_markup=report_kb())
+        return
+    elif message.text in ("🔞", "💰", "🔫"):
+        await message.answer(umt.REPORT_TO_PROFILE, reply_markup=search_kb)
         await complaint_to_profile(
             complainant=user,
+            reason=message.text,
             complaint_profile=another_user.profile,
         )
+    elif message.text == "↩️":
+        await message.answer(umt.SEARCH, reply_markup=search_kb)
     await Match.delete(session, user.id, another_user.id)
 
     ids.pop(0)

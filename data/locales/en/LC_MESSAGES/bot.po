@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-07 11:22+0300\n"
-"PO-Revision-Date: 2025-05-07 11:26+0300\n"
+"POT-Creation-Date: 2025-05-22 13:54+0300\n"
+"PO-Revision-Date: 2025-05-22 14:11+0300\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -236,11 +236,11 @@ msgstr "Select the bot language you want to switch to: 🌐"
 msgid "Язык бота изменён! ✅"
 msgstr "Bot language changed! ✅"
 
-#: app/handlers/message_text.py:169
+#: app/handlers/message_text.py:174
 msgid "✅ Жалоба отправлена на рассмотрение!"
 msgstr "✅ Complaint sent for review!"
 
-#: app/handlers/message_text.py:173
+#: app/handlers/message_text.py:178
 msgid ""
 "\n"
 "Укажи причину жалобы:\n"
@@ -248,49 +248,46 @@ msgid ""
 "💰 Реклама\n"
 "🔫 Другое\n"
 "\n"
-"Если жалоба ошибочная, то можете вернутся назад.\n"
+"↩️ Вернутся назад\n"
 msgstr ""
 "\n"
-"State the reason for the complaint:\n"
+"\vSpecify the reason for the complaint:\n"
 "🔞 Indecent material\n"
 "💰 Advertising\n"
 "🔫 Other\n"
 "\n"
-"If the complaint is wrong, you can go back.\n"
+"↩️ Go back\n"
 
-#: app/keyboards/default/base.py:45
-msgid "Отменить жалобу"
-msgstr "Cancel the complaint"
-
-#: app/keyboards/default/base.py:61 app/keyboards/default/create_profile.py:47
-msgid "Оставить предыдущее"
-msgstr "Leave previous"
-
-#: app/keyboards/default/create_profile.py:13
+#: app/keyboards/default/registration_form.py:15
 msgid "Создать анкету"
 msgstr "Create a profile"
 
-#: app/keyboards/default/create_profile.py:24
+#: app/keyboards/default/registration_form.py:26
 msgid "Парень"
 msgstr "Boy"
 
-#: app/keyboards/default/create_profile.py:24
+#: app/keyboards/default/registration_form.py:26
 msgid "Девушка"
 msgstr "Girl"
 
-#: app/keyboards/default/create_profile.py:35
+#: app/keyboards/default/registration_form.py:37
 msgid "Парней"
 msgstr "Boys"
 
-#: app/keyboards/default/create_profile.py:36
+#: app/keyboards/default/registration_form.py:38
 msgid "Девушек"
 msgstr "Girls"
 
-#: app/keyboards/default/create_profile.py:37
+#: app/keyboards/default/registration_form.py:39
 msgid "Всех"
 msgstr "Everyone"
 
-#: app/keyboards/default/create_profile.py:49
+#: app/keyboards/default/registration_form.py:49
+#: app/keyboards/default/registration_form.py:68
+msgid "Оставить предыдущее"
+msgstr "Leave previous"
+
+#: app/keyboards/default/registration_form.py:51
 msgid "📍 Отправить местоположение"
 msgstr "📍 Send location"
 
@@ -307,3 +304,6 @@ msgstr "View"
 #~ msgstr ""
 #~ "User <code>{}</code> (@{}) sent a complaint about a user profile: <code>{}</"
 #~ "code> (@{})"
+
+#~ msgid "Отменить жалобу"
+#~ msgstr "Cancel the complaint"

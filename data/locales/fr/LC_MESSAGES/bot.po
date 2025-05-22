@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-07 11:22+0300\n"
-"PO-Revision-Date: 2025-05-07 11:25+0300\n"
+"POT-Creation-Date: 2025-05-22 13:54+0300\n"
+"PO-Revision-Date: 2025-05-22 14:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -227,11 +227,11 @@ msgid ""
 "Ссылка для друзей:\n"
 "<code>https://t.me/{}?start={}</code>"
 msgstr ""
-"Приглашай друзей и получай бонусы!\n"
+"Invitez vos amis et obtenez des bonus !\n"
 "\n"
-"Приглашенные пользователи: <b>{}</b>\n"
+"Utilisateurs invités : <b>{}</b>\n"
 "\n"
-"Ссылка для друзей:\n"
+"Amis Lien :\n"
 "<code>https://t.me/{}?start={}</code>"
 
 #: app/handlers/message_text.py:158
@@ -242,11 +242,11 @@ msgstr "Choisissez la langue du robot vers laquelle vous souhaitez basculer: �
 msgid "Язык бота изменён! ✅"
 msgstr "La langue bot a changé ! ✅"
 
-#: app/handlers/message_text.py:169
+#: app/handlers/message_text.py:174
 msgid "✅ Жалоба отправлена на рассмотрение!"
 msgstr "✅  La plainte a été envoyée pour examen !"
 
-#: app/handlers/message_text.py:173
+#: app/handlers/message_text.py:178
 msgid ""
 "\n"
 "Укажи причину жалобы:\n"
@@ -254,49 +254,46 @@ msgid ""
 "💰 Реклама\n"
 "🔫 Другое\n"
 "\n"
-"Если жалоба ошибочная, то можете вернутся назад.\n"
+"↩️ Вернутся назад\n"
 msgstr ""
 "\n"
-"Indiquez le motif de la plainte :\n"
+"\vVeuillez indiquer le motif de la réclamation :\n"
 "🔞 Matériel indécent\n"
 "💰 Publicité\n"
 "🔫 Autre\n"
 "\n"
-"Si la plainte est erronée, vous pouvez revenir en arrière.\n"
+"↩️ J'y retournerai\n"
 
-#: app/keyboards/default/base.py:45
-msgid "Отменить жалобу"
-msgstr "Annulation de la plainte"
-
-#: app/keyboards/default/base.py:61 app/keyboards/default/create_profile.py:47
-msgid "Оставить предыдущее"
-msgstr "Laisser le précédent"
-
-#: app/keyboards/default/create_profile.py:13
+#: app/keyboards/default/registration_form.py:15
 msgid "Создать анкету"
 msgstr "Créer un profil"
 
-#: app/keyboards/default/create_profile.py:24
+#: app/keyboards/default/registration_form.py:26
 msgid "Парень"
 msgstr "Garçon"
 
-#: app/keyboards/default/create_profile.py:24
+#: app/keyboards/default/registration_form.py:26
 msgid "Девушка"
 msgstr "Fille"
 
-#: app/keyboards/default/create_profile.py:35
+#: app/keyboards/default/registration_form.py:37
 msgid "Парней"
 msgstr "Garçons"
 
-#: app/keyboards/default/create_profile.py:36
+#: app/keyboards/default/registration_form.py:38
 msgid "Девушек"
 msgstr "Filles"
 
-#: app/keyboards/default/create_profile.py:37
+#: app/keyboards/default/registration_form.py:39
 msgid "Всех"
 msgstr "Tous"
 
-#: app/keyboards/default/create_profile.py:49
+#: app/keyboards/default/registration_form.py:49
+#: app/keyboards/default/registration_form.py:68
+msgid "Оставить предыдущее"
+msgstr "Laisser le précédent"
+
+#: app/keyboards/default/registration_form.py:51
 msgid "📍 Отправить местоположение"
 msgstr "📍 Envoyer le lieu"
 
@@ -313,3 +310,6 @@ msgstr "Voir"
 #~ msgstr ""
 #~ "L'utilisateur <code>{}</code> (@{}) a envoyé une plainte concernant le profil "
 #~ "de l'utilisateur: <code>{}</code> (@{})"
+
+#~ msgid "Отменить жалобу"
+#~ msgstr "Annulation de la plainte"

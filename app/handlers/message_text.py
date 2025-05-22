@@ -162,21 +162,26 @@ class UserMessageText:
 
     @property
     def REPORT_TO_USER(self):
-        return "User <code>{}</code> (@{}) sent a complaint about a user profile: <code>{}</code> (@{})"
+        return """
+User <code>{}</code> (@{}) sent a complaint
+about a user profile:<code>{}</code> (@{})
+
+The reason: {}
+"""
 
     @property
     def REPORT_TO_PROFILE(self):
         return _("✅ Жалоба отправлена на рассмотрение!")
 
     @property
-    def RESON_OF_REPORTING(self):
+    def COMPLAINT(self):
         return _("""
 Укажи причину жалобы:
 🔞 Неприличный материал
 💰 Реклама
 🔫 Другое
 
-Если жалоба ошибочная, то можете вернутся назад.
+↩️ Вернутся назад
 """)
 
 

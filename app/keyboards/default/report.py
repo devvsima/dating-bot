@@ -9,7 +9,7 @@ def report_kb() -> ReplyKeyboardMarkup:
         one_time_keyboard=True,
         keyboard=[
             [KeyboardButton(text="🔞"), KeyboardButton(text="💰"), KeyboardButton(text="🔫")],
-            [KeyboardButton(text=_("Отменить жалобу"))],
+            [KeyboardButton(text="↩️")],
         ],
     )
     return kb
