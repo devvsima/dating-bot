@@ -69,7 +69,7 @@ msgstr ""
 "✍️ Cambiar la descripción\n"
 "❌ Desactivar perfil\n"
 "\n"
-"↩️Volveré\n"
+"↩️ Volveré\n"
 
 #: app/handlers/message_text.py:42
 msgid "Неизвестная команда. Если заблудился, напиши /start."
