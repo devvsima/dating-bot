@@ -42,7 +42,7 @@ async def complaint_to_profile(user: UserModel, profile: ProfileModel, session) 
     if MODERATOR_GROUP:
         try:
             await send_profile(MODERATOR_GROUP, profile)
-            reported_user = await User.get(session, profile.id)
+            reported_user = await User.get_by_id(session, profile.id)
 
             text = umt.REPORT_TO_USER.format(
                 user.id, user.username, profile.id, reported_user.username
