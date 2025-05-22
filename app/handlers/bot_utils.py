@@ -1,4 +1,3 @@
-import html
 import re
 
 from app.handlers.message_text import user_message_text as umt
@@ -7,7 +6,8 @@ from app.keyboards.inline.admin import block_user_ikb
 from app.keyboards.inline.archive import check_archive_ikb
 from data.config import MODERATOR_GROUP
 from database.models import ProfileModel, UserModel
-from database.services import User
+from database.services.match import Match
+from database.services.search import haversine_distance
 from loader import bot
 from utils.logging import logger
 
@@ -75,6 +75,23 @@ async def send_profile(chat_id: int, profile: ProfileModel) -> None:
     )
 
 
+async def send_profile_with_dist(user: UserModel, profile: ProfileModel) -> None:
+    """Отправляет профиль пользователя с расстоянием до него в киломтерах"""
+    if profile.city == "📍":
+        distance = haversine_distance(
+            user.profile.latitude, user.profile.longitude, profile.latitude, profile.longitude
+        )
+        city = f"📍 {round(distance, 2)} km"
+    else:
+        city = profile.city
+    await bot.send_photo(
+        chat_id=user.id,
+        photo=profile.photo,
+        caption=f"{profile.name}, {profile.age}, {city}\n{profile.description}",
+        parse_mode=None,
+    )
+
+
 async def new_user_alert_to_group(user: UserModel) -> None:
     """Отправляет уведомление в модераторскую группу о новом пользователе"""
     if MODERATOR_GROUP:
@@ -112,9 +129,6 @@ async def send_message_with_effect(
         logger.info(
             f"Пользователю {chat_id} не удалось отправить контакт. Скорее всего пользователь заблокировал бота"
         )
-
-
-from database.services.match import Match
 
 
 async def send_user_like_alert(session, user: UserModel):

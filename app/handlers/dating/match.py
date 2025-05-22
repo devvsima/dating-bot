@@ -9,6 +9,7 @@ from app.handlers.bot_utils import (
     complaint_to_profile,
     generate_user_link,
     send_message_with_effect,
+    send_profile_with_dist,
 )
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import search_kb
@@ -19,7 +20,6 @@ from database.models import UserModel
 from database.services import Match, Profile, User
 
 from ..common.cancel import cancel_command
-from .profile import send_profile
 
 
 @dating_router.message(StateFilter("*"), F.text == "📭")
@@ -40,7 +40,7 @@ async def match_archive(
 
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
-        await send_profile(message.from_user.id, profile)
+        await send_profile_with_dist(user, profile)
     else:
         await message.answer(umt.LIKE_ARCHIVE)
         await cancel_command(message, state)
@@ -63,7 +63,7 @@ async def _match_atchive_callback(
     if liker_ids := await Match.get_user_matchs(session, callback.from_user.id):
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
-        await send_profile(callback.from_user.id, profile)
+        await send_profile_with_dist(user, profile)
     else:
         await callback.message.answer(umt.LIKE_ARCHIVE)
         await cancel_command(callback.message, state)
@@ -111,7 +111,7 @@ async def _match_response(
     await state.update_data(ids=ids)
     if ids:
         profile = await Profile.get(session, ids[0])
-        await send_profile(user.id, profile)
+        await send_profile_with_dist(user, profile)
     else:
         await message.answer(umt.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
