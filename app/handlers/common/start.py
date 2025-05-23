@@ -6,7 +6,7 @@ from app.handlers.bot_utils import menu
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.registration_form import start_kb
 from app.routers import common_router
-from data.config import IMAGES_DIR
+from data.config import LOGO_DIR
 from database.models import UserModel
 
 
@@ -16,7 +16,7 @@ async def _start_command(message: types.Message, user: UserModel) -> None:
     if user.profile:
         await menu(user.id)
     else:
-        photo = types.FSInputFile(f"{IMAGES_DIR}/new_logo.webp")
+        photo = types.FSInputFile(LOGO_DIR)
         await message.answer_photo(
             photo=photo,
             caption=umt.WELCOME,

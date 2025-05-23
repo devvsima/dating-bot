@@ -64,6 +64,8 @@ BLOCK_SIZE: float = env.float("BLOCK_SIZE", default=50.0)  # Размер бло
 
 # ---< Path\Dir >---
 IMAGES_DIR: Path = DIR / "images"
+LOGO_DIR = f"{IMAGES_DIR}/logo.png"
+
 GRAPH_FILE_PATH: Path = IMAGES_DIR / "stats_graph.png"
 
 LOCALES_DIR: Path = DIR / "data" / "locales"

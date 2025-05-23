@@ -8,14 +8,9 @@
 ![Redis](https://img.shields.io/badge/storage-Redis-red)
 
 As support, you can put ⭐️ on the repository =)
-- `Aiogram 3`
-- `i18n`
-- `SqlAlchemy`
-- `Matplotlib`, `Geopy`
-- `Redis`, `PostgreSQL \ Sqlite`
 
 <p align="center">
-  <img src="https://i.ibb.co/PGwpsJGp/Screenshot-62.png" alt="diagram" width="1100">
+  <img src="./images/logo.png" alt="diagram" width="512" height="512>
 </p>
 
 
