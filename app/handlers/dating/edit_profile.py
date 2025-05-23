@@ -23,7 +23,7 @@ async def _update_photo(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
     """Обновляет фотографию профиля"""
-    await Profile.update_photo(
+    await Profile.update(
         session=session,
         id=user.id,
         photo=message.photo[0].file_id,
