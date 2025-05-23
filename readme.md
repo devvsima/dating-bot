@@ -10,7 +10,7 @@
 As support, you can put ⭐️ on the repository =)
 
 <p align="center">
-  <img src="./images/logo.png" alt="diagram" width="512" height="512>
+  <img src="./images/logo.png" alt="diagram" width="512" height="512">
 </p>
 
 
