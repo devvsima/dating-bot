@@ -1,17 +1,24 @@
 <p align="center">
-  <img src="./images/logo.png" alt="diagram" width="256" height="256">
+  <img src="./images/logo.png" alt="diagram" width="150" style="border-radius: 20%;">
+</p>
+<h1 align="center" style="border-bottom: none">
+    <b>
+        <a href="https://t.me/michalangelo_bot?start=Oj0wd">Michelangelo</a><br>
+    </b>
+    Telegram dating bot 💞<br>
+</h1>
+
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.13-blue" alt="Python"/>
+  <img src="https://img.shields.io/badge/aiogram-3.x-blueviolet" alt="Aiogram"/>
+  <img src="https://img.shields.io/badge/database-PostgreSQL-lightblue" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/storage-Redis-red" alt="Redis"/>
+  <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-green" alt="License"/>
 </p>
 
-# <center>Telegram dating bot [Michelangelo](https://t.me/michalangelo_bot?start=Oj0wd) 💞</center>
-
-![Python](https://img.shields.io/badge/python-3.13-blue)
-![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-green)
-![Contributions](https://img.shields.io/badge/contributions-welcome-orange)
-![Aiogram](https://img.shields.io/badge/aiogram-3.x-blueviolet)
-![PostgreSQL](https://img.shields.io/badge/database-PostgreSQL-lightblue)
-![Redis](https://img.shields.io/badge/storage-Redis-red)
-
-As support, you can put ⭐️ on the repository =)
+Hi, I made my own telegram dating bot, I hope it will be useful for someone. If you want to support me, you can put a star on the repository ; )
 
 
 <p align="center">
@@ -22,22 +29,21 @@ As support, you can put ⭐️ on the repository =)
 
 ## Navigation
 
-- [Telegram dating bot Michelangelo 💞](#telegram-dating-bot-michelangelo-)
-  - [Navigation](#navigation)
-  - [Features](#features)
-  - [Technical Features](#technical-features)
-  - [Install](#install)
-    - [Settings](#settings)
-      - [Bot](#bot)
-      - [Database](#database)
-        - [Migrations](#migrations)
-      - [Redis](#redis)
-      - [Localization](#localization)
-    - [Startup](#startup)
-      - [Windows](#windows)
-      - [Linux](#linux)
-      - [UV](#uv)
-  - [License](#license)
+- [Navigation](#navigation)
+- [Features](#features)
+- [Technical Features](#technical-features)
+- [Install](#install)
+  - [Settings](#settings)
+    - [Bot](#bot)
+    - [Database](#database)
+    - [Migrations](#migrations)
+    - [Redis](#redis)
+    - [Localization](#localization)
+  - [Startup](#startup)
+    - [Windows](#windows)
+    - [Linux](#linux)
+    - [UV](#uv)
+- [License](#license)
 
 ---
 
@@ -94,7 +100,7 @@ You can specify a link to the database connection in the DB_URL field.
 | DB_PASS               | Database password                              | postgresql                                             |
 | DB_URL                | (Optional)Full link to connect to the database | postgresql+asyncpg://user:password@localhost:port/name |
 
-##### Migrations
+#### Migrations
 
 This project uses **Alembic** for database migrations.
 
