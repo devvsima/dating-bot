@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./images/logo.png" alt="diagram" width="150" style="border-radius: 20%;">
+  <img src="./images/rounded_logo.png" alt="diagram" width="150">
 </p>
 <h1 align="center" style="border-bottom: none">
     <b>
