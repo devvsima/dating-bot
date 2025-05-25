@@ -49,7 +49,7 @@ async def complaint_to_profile(
                 complainant.id,
                 complainant.username,
                 complaint_profile.id,
-                complainant.username,
+                complaint_profile.username,
                 reason,
             )
 
@@ -58,7 +58,7 @@ async def complaint_to_profile(
                 text=text,
                 reply_markup=block_user_ikb(
                     id=complaint_profile.id,
-                    username=complainant.username,
+                    username=complaint_profile.username,
                 ),
             )
         except:
