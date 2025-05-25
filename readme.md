@@ -8,7 +8,8 @@
     Telegram dating bot 💞<br>
 </h1>
 
----
+<b> Hi, I made my own telegram dating bot, I hope it will be useful for someone. If you want to support me, you can put a star on the repository ; ) </b>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.13-blue" alt="Python"/>
@@ -18,7 +19,7 @@
   <img src="https://img.shields.io/badge/license-CC%20BY--NC%204.0-green" alt="License"/>
 </p>
 
-Hi, I made my own telegram dating bot, I hope it will be useful for someone. If you want to support me, you can put a star on the repository ; )
+
 
 
 <p align="center">
@@ -26,6 +27,7 @@ Hi, I made my own telegram dating bot, I hope it will be useful for someone. If 
 
 </p>
 
+---
 
 ## Navigation
 
