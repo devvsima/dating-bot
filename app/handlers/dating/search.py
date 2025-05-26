@@ -77,7 +77,7 @@ async def _search_profile(
         await complaint_to_profile(
             complainant=user,
             reason=message.text,
-            complaint_profile=another_user.profile,
+            complaint_user=another_user,
         )
     elif message.text == "↩️":
         await message.answer(umt.SEARCH, reply_markup=search_kb)

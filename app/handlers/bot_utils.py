@@ -37,32 +37,32 @@ async def menu(chat_id: int) -> None:
 
 
 async def complaint_to_profile(
-    complainant: UserModel, reason: str, complaint_profile: ProfileModel
+    complainant: UserModel, reason: str, complaint_user: UserModel
 ) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
     if MODERATOR_GROUP:
-        try:
-            await send_profile(MODERATOR_GROUP, complaint_profile)
+        # try:
+        await send_profile(MODERATOR_GROUP, complaint_user.profile)
 
-            text = umt.REPORT_TO_USER.format(
-                complainant.id,
-                complainant.username,
-                complaint_profile.id,
-                complaint_profile.username,
-                reason,
-            )
+        text = umt.REPORT_TO_USER.format(
+            complainant.id,
+            complainant.username,
+            complaint_user.id,
+            complaint_user.username,
+            reason,
+        )
 
-            await bot.send_message(
-                chat_id=MODERATOR_GROUP,
-                text=text,
-                reply_markup=block_user_ikb(
-                    id=complaint_profile.id,
-                    username=complaint_profile.username,
-                ),
-            )
-        except:
-            logger.error("Сообщение в модераторскую группу не отправленно")
+        await bot.send_message(
+            chat_id=MODERATOR_GROUP,
+            text=text,
+            reply_markup=block_user_ikb(
+                id=complaint_user.id,
+                username=complaint_user.username,
+            ),
+        )
+    # except:
+    #     logger.error("Сообщение в модераторскую группу не отправленно")
 
 
 async def send_profile(chat_id: int, profile: ProfileModel) -> None:
