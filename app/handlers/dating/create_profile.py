@@ -52,12 +52,19 @@ async def _find_gender(
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext, user: UserModel):
     photo = (
-        user.profile.photo
+        user.profile.photos
         if message.text in filters.leave_previous_tuple
         else message.photo[0].file_id
     )
     kb = hints_kb(user.profile.name) if user.profile else None
-
+    data = await state.get_data()
+    photos = data.get("photos", [])
+    if len(photos) >= 3:
+        await message.answer("Вы уже отправили 3 фото. Напишите /done для завершения.")
+        return
+    # Берём file_id самого большого фото
+    file_id = message.photo[-1].file_id
+    photos.append(file_id)
     await state.update_data(photo=photo)
     await message.reply(umt.NAME, reply_markup=kb)
     await state.set_state(ProfileCreate.name)

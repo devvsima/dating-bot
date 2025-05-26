@@ -1,5 +1,7 @@
 import re
 
+from aiogram.types import InputMediaPhoto
+
 from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.base import menu_kb
 from app.keyboards.inline.admin import block_user_ikb
@@ -66,13 +68,18 @@ async def complaint_to_profile(
 
 
 async def send_profile(chat_id: int, profile: ProfileModel) -> None:
-    """Отправляет пользователю переданный в функцию профиль"""
-    await bot.send_photo(
-        chat_id=chat_id,
-        photo=profile.photo,
-        caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
-        parse_mode=None,
-    )
+    """Отправляет профиль с несколькими фотографиями"""
+
+    text = f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}"
+    media = [
+        InputMediaPhoto(
+            media=photo.photo,
+            caption=text if i == 0 else None,
+            parse_mode=None,
+        )
+        for i, photo in enumerate(profile.photos)
+    ]
+    await bot.send_media_group(chat_id=chat_id, media=media)
 
 
 async def send_profile_with_dist(user: UserModel, profile: ProfileModel) -> None:
@@ -84,12 +91,17 @@ async def send_profile_with_dist(user: UserModel, profile: ProfileModel) -> None
         city = f"📍 {round(distance, 2)} km"
     else:
         city = profile.city
-    await bot.send_photo(
-        chat_id=user.id,
-        photo=profile.photo,
-        caption=f"{profile.name}, {profile.age}, {city}\n{profile.description}",
-        parse_mode=None,
-    )
+    text = f"{profile.name}, {profile.age}, {city}\n{profile.description}"
+
+    media = [
+        InputMediaPhoto(
+            media=photo.photo,
+            caption=text if i == 0 else None,
+            parse_mode=None,
+        )
+        for i, photo in enumerate(profile.photos)
+    ]
+    await bot.send_media_group(chat_id=user.id, media=media)
 
 
 async def new_user_alert_to_group(user: UserModel) -> None:

@@ -2,6 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
+from database.models.profile import ProfileModel
 from database.services.base import BaseService
 from utils.logging import logger
 
@@ -15,11 +16,13 @@ class User(BaseService):
 
     @staticmethod
     async def get_with_profile(session: AsyncSession, id: int):
-        """Возвращает пользователя и его профиль"""
+        """Возвращает пользователя, его профиль и фотографии профиля"""
         result = await session.execute(
-            select(UserModel).options(joinedload(UserModel.profile)).where(UserModel.id == id)
+            select(UserModel)
+            .options(joinedload(UserModel.profile).joinedload(ProfileModel.photos))
+            .where(UserModel.id == id)
         )
-        return result.scalar_one_or_none()
+        return result.unique().scalar_one_or_none()
 
     @staticmethod
     async def get_or_create(

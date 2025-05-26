@@ -11,6 +11,7 @@ from database.models import UserModel
 @dating_router.message(StateFilter(None), F.text == "👤")
 async def profile_command(message: types.Message, user: UserModel) -> None:
     """Отправляет профиль пользователя"""
+
     await send_profile(message.from_user.id, user.profile)
     await message.answer(umt.PROFILE_MENU, reply_markup=profile_kb)
 

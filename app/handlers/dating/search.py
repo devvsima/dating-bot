@@ -34,13 +34,7 @@ async def _search_command(
 
         another_profile = await Profile.get(session, profile_list[0])
         await send_profile_with_dist(user, another_profile)
-        dist = haversine_distance(
-            user.profile.latitude,
-            user.profile.longitude,
-            another_profile.latitude,
-            another_profile.longitude,
-        )
-        print(f"Расстояние до анкеты: {dist} км")
+
     else:
         await message.answer(umt.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
