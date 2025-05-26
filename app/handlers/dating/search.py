@@ -40,7 +40,6 @@ async def _search_command(
             another_profile.latitude,
             another_profile.longitude,
         )
-        print(f"Расстояние до анкеты: {dist} км")
     else:
         await message.answer(umt.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
