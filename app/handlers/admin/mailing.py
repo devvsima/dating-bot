@@ -21,7 +21,7 @@ async def users_mailing_panel(message: types.Message, state: FSMContext) -> None
 
 
 @admin_router.message(StateFilter(Mailing.message))
-async def start_mailing(message: types.Message, session) -> None:
+async def start_mailing(message: types.Message, state: FSMContext, session) -> None:
     """Starts mailing to all users with text and media support."""
     users = await User.get_all(session)
     sent_count, failed_count = 0, 0
@@ -44,3 +44,4 @@ async def start_mailing(message: types.Message, session) -> None:
             failed_count += 1
 
     await message.answer(f"✅ Mailing completed!\n📬 Sent: {sent_count}\n⚠️ Failed: {failed_count}")
+    await state.clear()
