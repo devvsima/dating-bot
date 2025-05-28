@@ -28,16 +28,17 @@ async def start_mailing(message: types.Message, state: FSMContext, session) -> N
 
     for user in users:
         try:
-            if message.text:
-                await bot.send_message(user.id, message.text)
-            elif message.photo:
-                await bot.send_photo(user.id, message.photo[-1].file_id, caption=message.caption)
-            elif message.video:
-                await bot.send_video(user.id, message.video.file_id, caption=message.caption)
-            elif message.document:
-                await bot.send_document(user.id, message.document.file_id, caption=message.caption)
-            else:
-                continue
+            await message.copy_to(chat_id=user.id, reply_markup=None)
+            # if message.text:
+            #     await bot.send_message(user.id, message.text)
+            # elif message.photo:
+            #     await bot.send_photo(user.id, message.photo[-1].file_id, caption=message.caption)
+            # elif message.video:
+            #     await bot.send_video(user.id, message.video.file_id, caption=message.caption)
+            # elif message.document:
+            #     await bot.send_document(user.id, message.document.file_id, caption=message.caption)
+            # else:
+            #     continue
 
             sent_count += 1
         except TelegramAPIError:
