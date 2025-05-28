@@ -39,7 +39,7 @@ async def match_archive(
 
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
-        match_data = await Match.get(session, user.id, liker_ids[0])
+        match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user, profile)
         await message.answer(umt.MESSAGE_TO_YOU.format(match_data.message))
     else:
@@ -64,7 +64,9 @@ async def _match_atchive_callback(
     if liker_ids := await Match.get_user_matchs(session, callback.from_user.id):
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
+        match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user, profile)
+        await callback.message.answer(umt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await callback.message.answer(umt.LIKE_ARCHIVE)
         await cancel_command(callback.message, state)
@@ -114,7 +116,9 @@ async def _match_response(
     await state.update_data(ids=ids)
     if ids:
         profile = await Profile.get(session, ids[0])
+        match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user, profile)
+        await message.answer(umt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(umt.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
