@@ -120,3 +120,8 @@ class IsCity(Filter):
 class IsDescription(Filter):
     async def __call__(self, message: Message) -> bool:
         return bool(len(message.text) < 900)
+
+
+class IsMessageToUser(Filter):
+    async def __call__(self, message: Message) -> bool:
+        return bool(len(message.text) < 250)

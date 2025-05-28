@@ -1,6 +1,5 @@
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove
 
-from database.models.profile import ProfileModel
 from loader import _
 
 from .kb_generator import simple_kb_generator as kb_gen
@@ -24,6 +23,11 @@ menu_kb: ReplyKeyboardMarkup = kb_gen(
 )
 
 search_kb: ReplyKeyboardMarkup = kb_gen(
-    ["❤️", "💢", "👎"],
+    ["❤️", "📩", "👎"],
+    ["💢"],
     ["💤"],
+)
+
+cancel_mailing_to_user_kb: ReplyKeyboardMarkup = kb_gen(
+    ["↩️"],
 )

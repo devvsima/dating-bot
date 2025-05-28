@@ -22,6 +22,7 @@ class ProfileEdit(StatesGroup):
 
 class Search(StatesGroup):
     search = State()
+    message = State()
 
 
 class Mailing(StatesGroup):

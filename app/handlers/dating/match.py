@@ -4,7 +4,6 @@ from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.filters.search import SearchFilter
 from app.handlers.bot_utils import (
     complaint_to_profile,
     generate_user_link,
@@ -22,7 +21,7 @@ from database.services import Match, Profile, User
 from ..common.cancel import cancel_command
 
 
-@dating_router.message(StateFilter("*"), F.text == "📭")
+@dating_router.message(StateFilter(None), F.text == "📭")
 async def match_archive(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
@@ -40,7 +39,9 @@ async def match_archive(
 
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
+        match_data = await Match.get(session, user.id, liker_ids[0])
         await send_profile_with_dist(user, profile)
+        await message.answer(umt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(umt.LIKE_ARCHIVE)
         await cancel_command(message, state)
@@ -69,7 +70,9 @@ async def _match_atchive_callback(
         await cancel_command(callback.message, state)
 
 
-@dating_router.message(StateFilter(LikeResponse.response), SearchFilter())
+@dating_router.message(
+    StateFilter(LikeResponse.response), F.text.in_(("❤️", "👎", "💢", "↩️", "🔞", "💰", "🔫"))
+)
 async def _match_response(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:

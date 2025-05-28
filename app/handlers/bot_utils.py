@@ -75,7 +75,7 @@ async def send_profile(chat_id: int, profile: ProfileModel) -> None:
     )
 
 
-async def send_profile_with_dist(user: UserModel, profile: ProfileModel) -> None:
+async def send_profile_with_dist(user: UserModel, profile: ProfileModel, keyboard=None) -> None:
     """Отправляет профиль пользователя с расстоянием до него в киломтерах"""
     if profile.city == "📍":
         distance = haversine_distance(
@@ -88,6 +88,7 @@ async def send_profile_with_dist(user: UserModel, profile: ProfileModel) -> None
         chat_id=user.id,
         photo=profile.photo,
         caption=f"{profile.name}, {profile.age}, {city}\n{profile.description}",
+        reply_markup=keyboard,
         parse_mode=None,
     )
 
