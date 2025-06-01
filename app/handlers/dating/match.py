@@ -11,7 +11,7 @@ from app.handlers.bot_utils import (
     send_profile_with_dist,
 )
 from app.handlers.message_text import user_message_text as umt
-from app.keyboards.default.base import search_kb
+from app.keyboards.default.base import match_kb
 from app.keyboards.default.report import report_kb
 from app.others.states import LikeResponse
 from app.routers import dating_router
@@ -35,7 +35,7 @@ async def match_archive(
 
     if liker_ids := await Match.get_user_matchs(session, message.from_user.id):
         text = umt.ARCHIVE_SEARCH.format(len(liker_ids))
-        await message.answer(text=text, reply_markup=search_kb)
+        await message.answer(text=text, reply_markup=match_kb)
 
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
@@ -59,7 +59,7 @@ async def _match_atchive_callback(
         id=user.id,
         username=callback.from_user.username,
     )  # needs to be redone
-    await callback.message.answer(text=umt.SEARCH, reply_markup=search_kb)
+    await callback.message.answer(text=umt.SEARCH, reply_markup=match_kb)
     await callback.answer()
 
     if liker_ids := await Match.get_user_matchs(session, callback.from_user.id):
@@ -104,14 +104,14 @@ async def _match_response(
         await message.answer(umt.COMPLAINT, reply_markup=report_kb())
         return
     elif message.text in ("🔞", "💰", "🔫"):
-        await message.answer(umt.REPORT_TO_PROFILE, reply_markup=search_kb)
+        await message.answer(umt.REPORT_TO_PROFILE, reply_markup=match_kb)
         await complaint_to_profile(
             complainant=user,
             reason=message.text,
             complaint_user=another_user,
         )
     elif message.text == "↩️":
-        await message.answer(umt.SEARCH, reply_markup=search_kb)
+        await message.answer(umt.SEARCH, reply_markup=match_kb)
     await Match.delete(session, user.id, another_user.id)
 
     ids.pop(0)
