@@ -21,7 +21,7 @@ class CommonMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.role < UserRole.USER:
+        if user.is_banned:
             return
 
         data["user"] = user
