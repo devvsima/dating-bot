@@ -84,7 +84,7 @@ Now you need to customize the `.env` file
 
 | <center>Name</center> | <center>Description</center>                                                  | <center>Example</center> |
 | --------------------- | ----------------------------------------------------------------------------- | ------------------------ |
-| TOKEN                 | Bot Token from [@BotFather](https://t.me/BotFather)                           | 1234567:ASDSFDkjdjdsedmD |
+| TELEGRAM_BOT_TOKEN                 | Bot Token from [@BotFather](https://t.me/BotFather)                           | 1234567:ASDSFDkjdjdsedmD |
 | ADMINS                | List of administrator id's                                                    | 2345678,12345677         |
 | MODERATOR_GROUP_ID    | (Optional) ID of the administrator group, where user complaints will be sent. | -100123456789            |
 | SKIP_UPDATES          | Option whether the bot will skip updates while not active                     | True, False              |

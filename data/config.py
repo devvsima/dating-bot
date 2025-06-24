@@ -43,7 +43,7 @@ class RedisSettings:
 
 
 # ---< Telegram bot >---
-BOT_TOKEN: str = env.str("TOKEN", default=None)
+BOT_TOKEN: str = env.str("TELEGRAM_BOT_TOKEN", default=None)
 SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
 
 ADMINS: list = env.list("ADMINS", default=None, subcast=int)

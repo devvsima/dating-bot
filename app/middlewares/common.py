@@ -4,7 +4,6 @@ from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
 from app.handlers.bot_utils import new_user_alert_to_group
-from database.models.user import UserRole
 from database.services import User
 from database.services.profile import Profile
 from utils.base62 import decode_base62

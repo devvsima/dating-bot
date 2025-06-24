@@ -13,7 +13,7 @@ from database.services import Profile
 from .profile import profile_command
 
 
-# <--- Create profile --->
+# ---< Create profile >---
 @dating_router.message(StateFilter(None), F.text == "🔄")
 @dating_router.message(StateFilter(None), filters.IsCreate())
 async def _create_profile_command(message: types.Message, state: FSMContext):
@@ -24,7 +24,7 @@ async def _create_profile_command(message: types.Message, state: FSMContext):
     await state.set_state(ProfileCreate.gender)
 
 
-# <--- Gender --->
+# ---< Gender >---
 @dating_router.message(StateFilter(ProfileCreate.gender), F.text, filters.IsGender())
 async def _gender(message: types.Message, state: FSMContext, gender: str):
     await state.update_data(gender=gender)
@@ -38,7 +38,7 @@ async def _gender(message: types.Message, state: FSMContext, gender: str):
     await state.set_state(ProfileCreate.find_gender)
 
 
-# <--- Find gender --->
+# ---< Find gender >---
 @dating_router.message(StateFilter(ProfileCreate.find_gender), F.text, filters.IsFindGender())
 async def _find_gender(
     message: types.Message, state: FSMContext, find_gender: str, user: UserModel
@@ -54,7 +54,7 @@ async def _find_gender(
     await state.set_state(ProfileCreate.photo)
 
 
-# <--- Photo --->
+# ---< Photo >---
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext, user: UserModel):
     photo = (
@@ -72,12 +72,11 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel):
     await state.set_state(ProfileCreate.name)
 
 
-# <--- Name --->
+# ---< Name >---
 @dating_router.message(StateFilter(ProfileCreate.name), F.text, filters.IsName())
 async def _name(message: types.Message, state: FSMContext, user: UserModel):
     await state.update_data(name=message.text)
 
-    # kb = hints_kb(str(user.profile.age)) if user.profile else None
     kb = RegistrationFormKb.age(user)
     await message.reply(
         text=umt.AGE,
@@ -86,7 +85,7 @@ async def _name(message: types.Message, state: FSMContext, user: UserModel):
     await state.set_state(ProfileCreate.age)
 
 
-# <--- Age --->
+# ---< Age >---
 @dating_router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
 async def _age(message: types.Message, state: FSMContext, user: UserModel):
     await state.update_data(age=message.text)
@@ -100,7 +99,7 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
     await state.set_state(ProfileCreate.city)
 
 
-# <--- City --->
+# ---< City >---
 @dating_router.message(StateFilter(ProfileCreate.city), F.text | F.location, filters.IsCity())
 async def _city(
     message: types.Message, state: FSMContext, latitude: str, longitude: str, user: UserModel
@@ -126,7 +125,7 @@ async def _city(
     await state.set_state(ProfileCreate.description)
 
 
-# <--- Description --->
+# ---< Description >---
 @dating_router.message(StateFilter(ProfileCreate.description), F.text, filters.IsDescription())
 async def _description(message: types.Message, state: FSMContext, user: UserModel, session):
     data = await state.get_data()
