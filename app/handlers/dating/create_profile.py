@@ -3,10 +3,10 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 import app.filters.create_profile_filtres as filters
-from app.handlers.message_text import user_message_text as umt
 from app.keyboards.default.registration_form import RegistrationFormKb
-from app.others.states import ProfileCreate
 from app.routers import dating_router
+from app.states.default import ProfileCreate
+from app.text import message_text as mt
 from database.models.user import UserModel
 from database.services import Profile
 
@@ -20,7 +20,7 @@ async def _create_profile_command(message: types.Message, state: FSMContext):
     """Запускает процесс создания профиля пользователя.
     Также используется для пересоздания анкеты"""
     kb = RegistrationFormKb.gender()
-    await message.answer(umt.GENDER, reply_markup=kb)
+    await message.answer(mt.GENDER, reply_markup=kb)
     await state.set_state(ProfileCreate.gender)
 
 
@@ -31,7 +31,7 @@ async def _gender(message: types.Message, state: FSMContext, gender: str):
 
     kb = RegistrationFormKb.find_gender()
     await message.reply(
-        text=umt.FIND_GENDER,
+        text=mt.FIND_GENDER,
         reply_markup=kb,
     )
 
@@ -47,7 +47,7 @@ async def _find_gender(
 
     kb = RegistrationFormKb.photo(user)
     await message.reply(
-        text=umt.PHOTO,
+        text=mt.PHOTO,
         reply_markup=kb,
     )
 
@@ -66,7 +66,7 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel):
 
     kb = RegistrationFormKb.name(user)
     await message.reply(
-        text=umt.NAME,
+        text=mt.NAME,
         reply_markup=kb,
     )
     await state.set_state(ProfileCreate.name)
@@ -79,7 +79,7 @@ async def _name(message: types.Message, state: FSMContext, user: UserModel):
 
     kb = RegistrationFormKb.age(user)
     await message.reply(
-        text=umt.AGE,
+        text=mt.AGE,
         reply_markup=kb,
     )
     await state.set_state(ProfileCreate.age)
@@ -92,7 +92,7 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 
     kb = RegistrationFormKb.location(user)
     await message.reply(
-        text=umt.CITY,
+        text=mt.CITY,
         reply_markup=kb,
     )
 
@@ -119,7 +119,7 @@ async def _city(
 
     kb = RegistrationFormKb.description(user)
     await message.reply(
-        text=umt.DESCRIPTION,
+        text=mt.DESCRIPTION,
         reply_markup=kb,
     )
     await state.set_state(ProfileCreate.description)

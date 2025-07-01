@@ -18,7 +18,7 @@ class DatabaseSettings:
 
     URL: str = env.str("DB_URL", default=f"sqlite+aiosqlite:///{DIR}/database/db.sqlite3")
 
-    if all([NAME, HOST, PORT, USER, PASS]):
+    if all((NAME, HOST, PORT, USER, PASS)):
         URL = f"postgresql+asyncpg://{USER}:{PASS}@{HOST}:{PORT}/{NAME}"
 
     ECHO = False
@@ -36,15 +36,16 @@ class RedisSettings:
 
     URL: str = env.str("RD_URL", default=None)
 
-    if all([DB, HOST, PORT]):
+    if all((DB, HOST, PORT)):
         URL = f"redis://{HOST}:{PORT}/{DB}"
-        if all([USER, PASS]):
+        if all((USER, PASS)):
             URL = f"redis://{USER}:{PASS}@{HOST}:{PORT}/{DB}"
 
 
 # ---< Telegram bot >---
 BOT_TOKEN: str = env.str("TELEGRAM_BOT_TOKEN", default=None)
 SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
+NEW_USER_ALET_TO_GROUP: bool = env.bool("NEW_USER_ALET_TO_GROUP", default=True)
 
 ADMINS: list = env.list("ADMINS", default=None, subcast=int)
 MODERATOR_GROUP: int = env.int("MODERATOR_GROUP_ID", default=None)

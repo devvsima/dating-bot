@@ -1,11 +1,11 @@
 from loader import _
 
 """
-Текст вынес в отдельный файл для более удобного редактирования
+Текст вынес в отдельный файл для удобного редактирования
 """
 
 
-class UserMessageText:
+class MessageText:
     @property
     def WELCOME(self):
         return _("""
@@ -198,5 +198,14 @@ The reason: {}
 ↩️ Назад
 """)
 
+    @property
+    def REPORT_TO_USER(self):
+        return """
+User <code>{}</code> (@{}) sent a complaint
+about a user profile:<code>{}</code> (@{})
 
-user_message_text = UserMessageText()
+The reason: {}
+"""
+
+
+message_text = MessageText()

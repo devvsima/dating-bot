@@ -1,10 +1,11 @@
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 
-from app.handlers.bot_utils import menu, send_profile
-from app.handlers.message_text import user_message_text as umt
+from app.business.menu_service import menu
+from app.business.profile_service import send_profile
 from app.keyboards.default.base import profile_kb
 from app.routers import dating_router
+from app.text import message_text as mt
 from database.models import UserModel
 
 
@@ -12,7 +13,7 @@ from database.models import UserModel
 async def profile_command(message: types.Message, user: UserModel) -> None:
     """Отправляет профиль пользователя"""
     await send_profile(message.from_user.id, user.profile)
-    await message.answer(umt.PROFILE_MENU, reply_markup=profile_kb)
+    await message.answer(mt.PROFILE_MENU, reply_markup=profile_kb)
 
 
 @dating_router.message(StateFilter(None), F.text == "↩️")

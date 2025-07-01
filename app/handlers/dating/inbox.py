@@ -1,22 +1,23 @@
 import html
+from ast import Match
+from cProfile import Profile
 
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.handlers.bot_utils import (
-    complaint_to_profile,
-    generate_user_link,
-    send_message_with_effect,
-    send_profile_with_dist,
-)
-from app.handlers.message_text import user_message_text as umt
+from app.business.complain_service import complaint_to_profile
+from app.business.profile_service import send_profile_with_dist
+from app.constans import EFFECTS_DICTIONARY
+from app.handlers.common.cancel import cancel_command
 from app.keyboards.default.base import match_kb
 from app.keyboards.default.report import report_kb
-from app.others.states import LikeResponse
 from app.routers import dating_router
+from app.states.default import LikeResponse
+from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Match, Profile, User
+from loader import bot
 
 from ..common.cancel import cancel_command
 
@@ -34,7 +35,7 @@ async def match_archive(
     )  # needs to be redone
 
     if liker_ids := await Match.get_user_matchs(session, message.from_user.id):
-        text = umt.ARCHIVE_SEARCH.format(len(liker_ids))
+        text = mt.ARCHIVE_SEARCH.format(len(liker_ids))
         await message.answer(text=text, reply_markup=match_kb)
 
         await state.update_data(ids=liker_ids)
@@ -42,9 +43,9 @@ async def match_archive(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user, profile)
         if match_data.message:
-            await message.answer(umt.MESSAGE_TO_YOU.format(match_data.message))
+            await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
-        await message.answer(umt.LIKE_ARCHIVE)
+        await message.answer(mt.LIKE_ARCHIVE)
         await cancel_command(message, state)
 
 
@@ -59,7 +60,7 @@ async def _match_atchive_callback(
         id=user.id,
         username=callback.from_user.username,
     )  # needs to be redone
-    await callback.message.answer(text=umt.SEARCH, reply_markup=match_kb)
+    await callback.message.answer(text=mt.SEARCH, reply_markup=match_kb)
     await callback.answer()
 
     if liker_ids := await Match.get_user_matchs(session, callback.from_user.id):
@@ -68,9 +69,9 @@ async def _match_atchive_callback(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user, profile)
         if match_data.message:
-            await callback.message.answer(umt.MESSAGE_TO_YOU.format(match_data.message))
+            await callback.message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
-        await callback.message.answer(umt.LIKE_ARCHIVE)
+        await callback.message.answer(mt.LIKE_ARCHIVE)
         await cancel_command(callback.message, state)
 
 
@@ -87,31 +88,32 @@ async def _match_response(
     another_user = await User.get_with_profile(session, ids[0])
 
     if message.text == "❤️":
+        effect_id = EFFECTS_DICTIONARY["🎉"]
         """Отправка пользователю который ответил на лайк"""
         link = generate_user_link(id=another_user.id, username=another_user.username)
-        text = umt.LIKE_ACCEPT(another_user.language).format(
+        text = mt.LIKE_ACCEPT(another_user.language).format(
             link, html.escape(another_user.profile.name)
         )
-        await send_message_with_effect(chat_id=user.id, text=text)
+        await bot.send_message(chat_id=user.id, text=text, message_effect_id=effect_id)
 
         """Отправка пользователю которому ответили на лайк"""
         link = generate_user_link(id=user.id, username=user.username)
-        text = umt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
-        await send_message_with_effect(chat_id=another_user.id, text=text)
+        text = mt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
+        await bot.send_message(chat_id=another_user.id, text=text, message_effect_id=effect_id)
     elif message.text == "👎":
         pass
     elif message.text == "💢":
-        await message.answer(umt.COMPLAINT, reply_markup=report_kb())
+        await message.answer(mt.COMPLAINT, reply_markup=report_kb())
         return
     elif message.text in ("🔞", "💰", "🔫"):
-        await message.answer(umt.REPORT_TO_PROFILE, reply_markup=match_kb)
+        await message.answer(mt.REPORT_TO_PROFILE, reply_markup=match_kb)
         await complaint_to_profile(
             complainant=user,
             reason=message.text,
             complaint_user=another_user,
         )
     elif message.text == "↩️":
-        await message.answer(umt.SEARCH, reply_markup=match_kb)
+        await message.answer(mt.SEARCH, reply_markup=match_kb)
     await Match.delete(session, user.id, another_user.id)
 
     ids.pop(0)
@@ -121,7 +123,18 @@ async def _match_response(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user, profile)
         if match_data.message:
-            await message.answer(umt.MESSAGE_TO_YOU.format(match_data.message))
+            await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
-        await message.answer(umt.EMPTY_PROFILE_SEARCH)
+        await message.answer(mt.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
+
+
+def generate_user_link(id: int, username: str = None) -> str:
+    """
+    Генерирует ссылку на пользователя
+    Если указан username, создается ссылка https://t.me/username,
+    иначе используется tg://user?id=id.
+    """
+    if username:
+        return f"https://t.me/{username}"
+    return f"tg://user?id={id}"

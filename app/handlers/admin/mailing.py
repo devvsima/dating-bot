@@ -6,8 +6,8 @@ from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.others.states import Mailing
 from app.routers import admin_router
+from app.states.admin import Mailing
 from database.services.user import User
 
 

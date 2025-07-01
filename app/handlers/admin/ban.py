@@ -1,9 +1,10 @@
+import re
+
 from aiogram import types
 from aiogram.filters import Command, CommandObject
 from aiogram.filters.state import StateFilter
 
 from app.filters.kb_filter import BlockUserCallback
-from app.handlers.bot_utils import check_args_type
 from app.routers import admin_router
 from database.services.user import User
 
@@ -63,3 +64,10 @@ async def _complaint_user_callback(
             user_username=username,
         )
     )
+
+
+def check_args_type(type: type, data_list: str) -> list | bool:
+    try:
+        return list(map(type, re.split(r"[ ,]+", data_list)))
+    except:
+        return False

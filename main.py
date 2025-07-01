@@ -2,9 +2,9 @@ import asyncio
 
 from aiogram.methods import DeleteWebhook
 
+from app.commands import set_default_commands
 from app.handlers import setup_handlers
 from app.middlewares import setup_middlewares
-from app.others.commands import set_default_commands
 from data.config import SKIP_UPDATES
 from loader import bot, dp
 from utils.logging import logger

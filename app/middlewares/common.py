@@ -3,7 +3,7 @@ from typing import Any, Callable
 from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
-from app.handlers.bot_utils import new_user_alert_to_group
+from app.business.moderation_service import new_user_alert_to_group
 from database.services import User
 from database.services.profile import Profile
 from utils.base62 import decode_base62
@@ -26,10 +26,11 @@ class CommonMiddleware(BaseMiddleware):
         data["user"] = user
         if isinstance(message, Message):
             if is_create:
-                await new_user_alert_to_group(user)
+                inviter = None
                 if inviter_code := getattr(data.get("command"), "args", None):
                     if inviter := await User.get_by_id(session, decode_base62(inviter_code)):
                         await User.increment_referral_count(session, inviter)
+                await new_user_alert_to_group(user, inviter)
 
             if user.profile and not user.profile.is_active:
                 await Profile.update(

@@ -3,17 +3,15 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 import app.filters.create_profile_filtres as filters
-from app.handlers.bot_utils import (
-    complaint_to_profile,
-    menu,
-    send_profile_with_dist,
-    send_user_like_alert,
-)
-from app.handlers.message_text import user_message_text as umt
+from app.business.complain_service import complaint_to_profile
+from app.business.dating_service import send_user_like_alert
+from app.business.menu_service import menu
+from app.business.profile_service import send_profile_with_dist
 from app.keyboards.default.base import cancel_mailing_to_user_kb, search_kb
 from app.keyboards.default.report import report_kb
-from app.others.states import Search
 from app.routers import dating_router
+from app.states.default import Search
+from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Match, Profile, User
 from database.services.search import search_profiles
@@ -26,7 +24,7 @@ async def _search_command(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
     """Бот подбирает анкеты, соответствующие предпочтениям пользователя, и предлагает их"""
-    await message.answer(umt.SEARCH, reply_markup=search_kb)
+    await message.answer(mt.SEARCH, reply_markup=search_kb)
 
     if profile_list := await search_profiles(session, user.profile):
         await state.set_state(Search.search)
@@ -35,7 +33,7 @@ async def _search_command(
         another_profile = await Profile.get(session, profile_list[0])
         await send_profile_with_dist(user, another_profile)
     else:
-        await message.answer(umt.INVALID_PROFILE_SEARCH)
+        await message.answer(mt.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
 
 
@@ -66,11 +64,11 @@ async def _search_profile(
         pass
     elif message.text == "📩":
         await state.set_state(Search.message)
-        await message.answer(umt.MAILING_TO_USER, reply_markup=cancel_mailing_to_user_kb)
+        await message.answer(mt.MAILING_TO_USER, reply_markup=cancel_mailing_to_user_kb)
         return
 
     if message.text == "💢":
-        await message.answer(umt.COMPLAINT, reply_markup=report_kb())
+        await message.answer(mt.COMPLAINT, reply_markup=report_kb())
         return
     await next_profile(session, message, profile_list, user, state)
 
@@ -85,14 +83,14 @@ async def _search_profile_report(
     another_user = await User.get_with_profile(session, profile_list[0])
 
     if message.text in ("🔞", "💰", "🔫"):
-        await message.answer(umt.REPORT_TO_PROFILE, reply_markup=search_kb)
+        await message.answer(mt.REPORT_TO_PROFILE, reply_markup=search_kb)
         await complaint_to_profile(
             complainant=user,
             reason=message.text,
             complaint_user=another_user,
         )
     elif message.text == "↩️":
-        await message.answer(umt.SEARCH, reply_markup=search_kb)
+        await message.answer(mt.SEARCH, reply_markup=search_kb)
     await next_profile(session, message, profile_list, user, state)
 
 
@@ -121,7 +119,7 @@ async def _search_profile_mailing_(
 @dating_router.message(StateFilter(Search.message))
 async def _search_profile_mailing_error(message: types.Message) -> None:
     """Ловит ошибку, если пользователь отправляет сообщение не по шаблону"""
-    await message.answer(umt.INVALID_MAILING_TO_USER)
+    await message.answer(mt.INVALID_MAILING_TO_USER)
 
 
 async def next_profile(
@@ -137,7 +135,7 @@ async def next_profile(
         await state.update_data(ids=profile_list)
         await send_profile_with_dist(user, profile)
     else:
-        await message.answer(umt.EMPTY_PROFILE_SEARCH)
+        await message.answer(mt.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
 
 

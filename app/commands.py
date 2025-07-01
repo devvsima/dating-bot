@@ -14,6 +14,16 @@ def get_default_commands() -> list:
     return commands
 
 
+async def set_default_commands() -> None:
+    await bot.set_my_commands(get_default_commands(), scope=BotCommandScopeDefault())
+    for lang in i18n.available_locales:
+        await bot.set_my_commands(
+            get_default_commands(),
+            scope=BotCommandScopeDefault(),
+            language_code=lang,
+        )
+
+
 def get_admins_commands() -> list:
     commands = get_default_commands()
     commands.extend(
@@ -26,16 +36,6 @@ def get_admins_commands() -> list:
         ]
     )
     return commands
-
-
-async def set_default_commands() -> None:
-    await bot.set_my_commands(get_default_commands(), scope=BotCommandScopeDefault())
-    for lang in i18n.available_locales:
-        await bot.set_my_commands(
-            get_default_commands(),
-            scope=BotCommandScopeDefault(),
-            language_code=lang,
-        )
 
 
 async def set_admins_commands(id: int) -> None:

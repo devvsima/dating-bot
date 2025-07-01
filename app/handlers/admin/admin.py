@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 
-from app.others.commands import set_admins_commands
+from app.commands import set_admins_commands
 from app.routers import admin_router
 
 

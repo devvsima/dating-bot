@@ -1,4 +1,3 @@
-from geopy.distance import geodesic
 from geopy.geocoders import Nominatim
 
 
