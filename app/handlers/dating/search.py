@@ -3,10 +3,9 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 import app.filters.create_profile_filtres as filters
-from app.business.complain_service import complaint_to_profile
 from app.business.dating_service import send_user_like_alert
 from app.business.menu_service import menu
-from app.business.profile_service import send_profile_with_dist
+from app.business.profile_service import complaint_to_profile, send_profile_with_dist
 from app.keyboards.default.base import cancel_mailing_to_user_kb, search_kb
 from app.keyboards.default.report import report_kb
 from app.routers import dating_router
