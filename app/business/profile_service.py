@@ -7,8 +7,6 @@ from database.services.search import haversine_distance
 from loader import bot
 from utils.logging import logger
 
-from .profile_service import send_profile
-
 
 async def send_profile(chat_id: int, profile: ProfileModel) -> None:
     """Отправляет пользователю переданный в функцию профиль"""

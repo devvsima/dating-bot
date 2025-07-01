@@ -6,8 +6,7 @@ from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.business.complain_service import complaint_to_profile
-from app.business.profile_service import send_profile_with_dist
+from app.business.profile_service import complaint_to_profile, send_profile_with_dist
 from app.constans import EFFECTS_DICTIONARY
 from app.handlers.common.cancel import cancel_command
 from app.keyboards.default.base import match_kb
