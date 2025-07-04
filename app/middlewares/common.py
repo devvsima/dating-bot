@@ -26,11 +26,10 @@ class CommonMiddleware(BaseMiddleware):
         data["user"] = user
         if isinstance(message, Message):
             if is_create:
-                inviter = None
                 if inviter_code := getattr(data.get("command"), "args", None):
                     if inviter := await User.get_by_id(session, decode_base62(inviter_code)):
                         await User.increment_referral_count(session, inviter)
-                await new_user_alert_to_group(user, inviter)
+                await new_user_alert_to_group(user)
 
             if user.profile and not user.profile.is_active:
                 await Profile.update(
