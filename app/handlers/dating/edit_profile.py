@@ -51,14 +51,3 @@ async def _update_photo(
     )
     await state.clear()
     await profile_command(message, user)
-
-
-@dating_router.message(StateFilter(None), F.text == "❌")
-async def _disable_profile_command(message: types.Message, user: UserModel, session) -> None:
-    """Отключает профиль пользователя, и не дает ему дальше пользоватся ботом до восстановления"""
-    await Profile.update(
-        session=session,
-        id=user.id,
-        is_active=False,
-    )
-    await message.answer(text=mt.DISABLE_PROFILE)

@@ -9,7 +9,7 @@ from .base import del_kb
 from .kb_generator import simple_kb_generator as kb_gen
 
 
-def start_kb() -> ReplyKeyboardMarkup:
+def create_profile_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         keyboard=[
