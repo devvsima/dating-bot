@@ -4,9 +4,13 @@ from typing import Annotated
 from sqlalchemy import DateTime, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-created_at = Annotated[datetime, mapped_column(DateTime, default=func.now(), nullable=True)]
+created_at = Annotated[
+    datetime,
+    mapped_column(DateTime, server_default=func.now(), nullable=True),
+]
 updated_at = Annotated[
-    datetime, mapped_column(DateTime, default=func.now(), onupdate=func.now(), nullable=True)
+    datetime,
+    mapped_column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=True),
 ]
 
 

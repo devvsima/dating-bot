@@ -3,6 +3,7 @@ from typing import Any, Callable
 from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
+from database.models.user import UserStatus
 from database.services import User
 
 
@@ -17,7 +18,8 @@ class VoideMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if not user.is_banned:
-            data["user"] = user
-            return await handler(message, data)
-        return
+        if user.status == UserStatus.Banned:
+            return
+
+        data["user"] = user
+        return await handler(message, data)

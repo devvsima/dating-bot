@@ -4,6 +4,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
 from app.business.alert_service import new_user_alert_to_group
+from database.models.user import UserModel, UserStatus
 from database.services import User
 from database.services.profile import Profile
 from utils.base62 import decode_base62
@@ -20,7 +21,7 @@ class CommonMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.is_banned:
+        if user.status == UserStatus.Banned:
             return
 
         data["user"] = user

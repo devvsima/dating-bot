@@ -44,7 +44,7 @@ class Stats:
         # Основная статистика
         stmt = select(
             func.count(UserModel.id).label("count"),
-            func.sum(case((UserModel.is_banned == True, 1), else_=0)).label("banned_count"),
+            func.sum(case((UserModel.status == 0, 1), else_=0)).label("banned_count"),
             func.sum(UserModel.referral).label("total_referrals"),
         )
         result = await session.execute(stmt)

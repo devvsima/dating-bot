@@ -5,7 +5,7 @@ from sqlalchemy.orm import joinedload
 from database.services.base import BaseService
 from utils.logging import logger
 
-from ..models.user import UserModel
+from ..models.user import UserModel, UserStatus
 from .match import Match
 from .profile import Profile
 
@@ -72,7 +72,7 @@ class User(BaseService):
         await User.update(
             session=session,
             id=id,
-            is_banned=True,
+            status=UserStatus.Banned,
         )
 
         # Удаляем все лайки, которые пользователь поставил
@@ -103,7 +103,7 @@ class User(BaseService):
         await User.update(
             session=session,
             id=id,
-            is_banned=False,
+            status=UserStatus.Banned,
         )
 
         logger.log("DATABASE", f"Пользователь {id} был разблокирован.")
