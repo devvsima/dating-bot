@@ -93,12 +93,17 @@ async def _match_response(
         text = mt.LIKE_ACCEPT(another_user.language).format(
             link, html.escape(another_user.profile.name)
         )
-        await bot.send_message(chat_id=user.id, text=text, message_effect_id=effect_id)
-
+        try:
+            await bot.send_message(chat_id=user.id, text=text, message_effect_id=effect_id)
+        except:
+            ...
         """Отправка пользователю которому ответили на лайк"""
         link = generate_user_link(id=user.id, username=user.username)
         text = mt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
-        await bot.send_message(chat_id=another_user.id, text=text, message_effect_id=effect_id)
+        try:
+            await bot.send_message(chat_id=another_user.id, text=text, message_effect_id=effect_id)
+        except:
+            ...
     elif message.text == "👎":
         pass
     elif message.text == "💢":
