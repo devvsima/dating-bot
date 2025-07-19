@@ -19,7 +19,6 @@ class UserModel(BaseModel):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     username: Mapped[str] = mapped_column(String(70), nullable=True)
     language: Mapped[str] = mapped_column(String(10), server_default="en")
-    referral: Mapped[int] = mapped_column(Integer, server_default="0")
     status: Mapped[int] = mapped_column(Integer, server_default="1")
 
     profile: Mapped["ProfileModel"] = relationship(  # type: ignore

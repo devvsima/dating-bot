@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import case, desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..models import MatchModel, ProfileModel, UserModel
+from ..models import MatchModel, ProfileModel, ReferalModel, UserModel
 
 
 class Stats:
@@ -41,14 +41,18 @@ class Stats:
     async def user_stats(session: AsyncSession) -> dict:
         """Возвращает количество пользователей, заблокированных пользователей, самый популярный язык и общее количество рефералов"""
 
-        # Основная статистика
+        # Основная статистика по пользователям
         stmt = select(
             func.count(UserModel.id).label("count"),
             func.sum(case((UserModel.status == 0, 1), else_=0)).label("banned_count"),
-            func.sum(UserModel.referral).label("total_referrals"),
         )
         result = await session.execute(stmt)
         stats = result.fetchone()
+
+        # Получаем общее количество рефералов из таблицы referals
+        referral_stmt = select(func.count(ReferalModel.id))
+        referral_result = await session.execute(referral_stmt)
+        total_referrals = referral_result.scalar() or 0
 
         # Самый популярный язык
         language_stmt = (
@@ -63,7 +67,7 @@ class Stats:
         return {
             "count": stats[0],
             "banned_count": stats[1],
-            "total_referrals": stats[2] if stats[2] else 0,
+            "total_referrals": total_referrals,
             "most_popular_language": popular_language[0] if popular_language else None,
         }
 
@@ -119,3 +123,30 @@ class Stats:
             else None,  # Округление до 1 знака после запятой
             "most_popular_city": popular_city[0] if popular_city else None,
         }
+
+    @staticmethod
+    async def referral_stats(session: AsyncSession) -> dict:
+        """Возвращает статистику по рефералам - количество приглашений по источникам"""
+
+        # Получаем общее количество рефералов
+        total_stmt = select(func.count(ReferalModel.id))
+        total_result = await session.execute(total_stmt)
+        total_referrals = total_result.scalar() or 0
+
+        # Получаем статистику по источникам
+        source_stmt = (
+            select(ReferalModel.source, func.count(ReferalModel.id).label("count"))
+            .group_by(ReferalModel.source)
+            .order_by(desc("count"))
+        )
+        source_result = await session.execute(source_stmt)
+        sources = source_result.fetchall()
+
+        # Преобразуем в удобный формат
+        sources_data = {}
+        for source_row in sources:
+            source_name = source_row[0] or "Unknown"
+            count = source_row[1]
+            sources_data[source_name] = count
+
+        return {"total_referrals": total_referrals, "sources": sources_data}

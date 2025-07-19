@@ -164,7 +164,7 @@ class MessageText:
     @property
     def INVITE_FRIENDS(self):
         return _(
-            "Приглашай друзей и получай бонусы!\n\nПриглашенные пользователи: <b>{}</b>\n\nСсылка для друзей:\n<code>https://t.me/{}?start={}</code>"
+            "Приглашай друзей и получай бонусы!\n\nПриглашенные пользователи: <b>{}</b>\n\nСсылка для друзей:\n<code>{}</code>"
         )
 
     @property
