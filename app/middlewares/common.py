@@ -30,7 +30,7 @@ class CommonMiddleware(BaseMiddleware):
         data["user"] = user
         if isinstance(message, Message):
             if is_create:
-                code = "oth"
+                code = "unk"
                 try:
                     if inviter_code := getattr(data.get("command"), "args", None):
                         code, inviter_id = inviter_code.split("_")

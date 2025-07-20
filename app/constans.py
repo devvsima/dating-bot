@@ -22,5 +22,6 @@ REFERAL_SOURCES = {
     "yt": "YouTube",
     "tt": "TikTok",
     "lw": "Landing website",
+    "unk": "Unknown",
     "oth": "Other",
 }
