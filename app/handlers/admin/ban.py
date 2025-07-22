@@ -16,15 +16,7 @@ async def ban_unban_users_command(message: types.Message, command: CommandObject
 
     command_name = command.command.lower()
     is_banned = command_name == "ban"
-
-    text_success = (
-        "✅ Send user IDs separated by ',' to ban users.\nExample: <code>/ban 123456, 789012</code>"
-        if is_banned
-        else "✅ Send user IDs separated by ',' to unban users.\nExample: <code>/unban 123456, 789012</code>"
-    )
-
-    text_action = "🔒 Banned" if is_banned else "🔓 Unbanned"
-    text_error = "⚠️ Error while updating status"
+    text_success, text_action, text_error = get_ban_text(is_banned)
 
     if args := check_args_type(type=int, data_list=command.args):
         for id in args:
@@ -71,3 +63,15 @@ def check_args_type(type: type, data_list: str) -> list | bool:
         return list(map(type, re.split(r"[ ,]+", data_list)))
     except:
         return False
+
+
+def get_ban_text(is_banned: bool):
+    text_success = (
+        "✅ Send user IDs separated by ',' to ban users.\nExample: <code>/ban 123456, 789012</code>"
+        if is_banned
+        else "✅ Send user IDs separated by ',' to unban users.\nExample: <code>/unban 123456, 789012</code>"
+    )
+
+    text_action = "🔒 Banned" if is_banned else "🔓 Unbanned"
+    text_error = "⚠️ Error while updating status"
+    return text_success, text_action, text_error

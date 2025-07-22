@@ -3,7 +3,7 @@
 </p>
 <h1 align="center" style="border-bottom: none">
     <b>
-        <a href="https://t.me/michalangelo_bot?start=git_Oj0wd>Michelangelo</a><br>
+        <a href="https://t.me/michalangelo_bot?start=git_Oj0wd">Michelangelo</a><br>
     </b>
     Telegram dating bot 💞<br>
 </h1>
