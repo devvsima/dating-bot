@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-28 12:33+0300\n"
-"PO-Revision-Date: 2025-05-28 12:59+0300\n"
+"POT-Creation-Date: 2025-07-26 15:54+0300\n"
+"PO-Revision-Date: 2025-07-26 15:55+0300\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.17.0\n"
 "X-Generator: Poedit 3.5\n"
 
-#: app/handlers/message_text.py:11
+#: app/text.py:11
 msgid ""
 "\n"
 "Привет! 👋\n"
@@ -37,7 +37,7 @@ msgstr ""
 "\n"
 "We wish you pleasant dating and interesting meetings!\n"
 
-#: app/handlers/message_text.py:22
+#: app/text.py:22
 msgid ""
 "\n"
 "🔍 Смотреть анкеты\n"
@@ -53,7 +53,7 @@ msgstr ""
 "\n"
 "✉️ Invite friends"
 
-#: app/handlers/message_text.py:31
+#: app/text.py:31
 msgid ""
 "\n"
 "🔄 Заполнить анкету заново\n"
@@ -71,11 +71,11 @@ msgstr ""
 "\n"
 "️↩️ Back\n"
 
-#: app/handlers/message_text.py:42
+#: app/text.py:42
 msgid "Неизвестная команда. Если заблудился, напиши /start."
 msgstr "Unknown command. If you get lost, write /start."
 
-#: app/handlers/message_text.py:46
+#: app/text.py:46
 msgid ""
 "\n"
 "👋\n"
@@ -97,24 +97,24 @@ msgstr ""
 "\n"
 "For questions and suggestions you can write here: @devvsima.\n"
 
-#: app/handlers/message_text.py:57
+#: app/text.py:57
 msgid "🔍 Выполняется поиск..."
 msgstr "🔍 Searching..."
 
-#: app/handlers/message_text.py:61
+#: app/text.py:61
 #, python-brace-format
 msgid "Твоя анкета понравилась {} людям! Давай посмотрим, кто это:"
 msgstr "Your profile has been liked by {} people! Let's see who it is:"
 
-#: app/handlers/message_text.py:65
+#: app/text.py:65
 msgid "Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍"
 msgstr "No suitable profiles found. Try to choose another city. 🌍"
 
-#: app/handlers/message_text.py:69
+#: app/text.py:69
 msgid "Анкеты закончились. Попробуй позже! 😊"
 msgstr "The questionnaires are out. Try again later! 😊"
 
-#: app/handlers/message_text.py:73
+#: app/text.py:73
 #, python-brace-format
 msgid ""
 "Твоя анкета получила <b>{}</b> ❤️\n"
@@ -125,7 +125,7 @@ msgstr ""
 "\n"
 "📭 Click to view"
 
-#: app/handlers/message_text.py:79
+#: app/text.py:79
 #, python-brace-format
 msgid ""
 "Сообщение для тебя:\n"
@@ -134,12 +134,12 @@ msgstr ""
 "Message for you:\n"
 "{}"
 
-#: app/handlers/message_text.py:82
+#: app/text.py:82
 #, python-brace-format
 msgid "Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr "Hope you have a good time ;) <a href='{}'>{}</a>"
 
-#: app/handlers/message_text.py:86
+#: app/text.py:86
 #, python-brace-format
 msgid ""
 "На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
@@ -147,40 +147,40 @@ msgid ""
 msgstr ""
 "Your like was reciprocated, hope you have a good time ;) <a href='{}'>{}</a>"
 
-#: app/handlers/message_text.py:92
+#: app/text.py:92
 msgid "Пока никто не поставил тебе лайк, но всё ещё впереди!"
 msgstr "No one has given you a like yet, but there's more to come!"
 
-#: app/handlers/message_text.py:96
+#: app/text.py:96
 msgid "Укажи, свой пол: 👤"
 msgstr "State your gender 👤"
 
-#: app/handlers/message_text.py:100
+#: app/text.py:100
 msgid "Выбери, кого ты ищешь: 💕"
 msgstr "Pick who you're looking for 💕"
 
-#: app/handlers/message_text.py:104
+#: app/text.py:104
 msgid "Пришли своё фото! 📸"
 msgstr "Send in your photo! 📸"
 
-#: app/handlers/message_text.py:108
+#: app/text.py:108
 msgid "Как тебя зовут? ✍️"
 msgstr "What's your name? ✍️"
 
-#: app/handlers/message_text.py:112
+#: app/text.py:112
 msgid "Сколько тебе лет? 🎂"
 msgstr "How old are you? 🎂"
 
-#: app/handlers/message_text.py:116
+#: app/text.py:116
 msgid "Укажи свой город: 🏙️"
 msgstr "Enter your city: 🏙️"
 
-#: app/handlers/message_text.py:120
+#: app/text.py:120
 msgid "Расскажи немного о себе — это поможет другим узнать тебя лучше! 📝"
 msgstr ""
 "Tell us a little about yourself - it will help others get to know you better! 📝"
 
-#: app/handlers/message_text.py:125
+#: app/text.py:125
 msgid ""
 "Можешь написать пользователю, до 250 символов. ✉️\n"
 "\n"
@@ -190,11 +190,11 @@ msgstr ""
 "\n"
 "If you don't want to write, click the button below."
 
-#: app/handlers/message_text.py:130
+#: app/text.py:130
 msgid "Не корректное сообщение. Пожалуйста, напиши до 250 символов."
 msgstr "Incorrect message. Please write up to 250 characters."
 
-#: app/handlers/message_text.py:134
+#: app/text.py:134
 msgid ""
 "\n"
 "❌ Твоя анкета отключена, некоторые функции теперь недоступны.\n"
@@ -204,36 +204,36 @@ msgstr ""
 "❌ Your profile has been deactivated and some features are no longer available.\n"
 "💬 To reactivate your profile, send the /start command."
 
-#: app/handlers/message_text.py:140
+#: app/text.py:140
 msgid ""
 "✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться ботом."
 msgstr ""
 "✅ Your profile has been successfully restored! Now you can use the bot again."
 
-#: app/handlers/message_text.py:144
+#: app/text.py:144
 msgid ""
 "Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝"
 msgstr "Incorrect answer. Please choose on your keyboard or write it correctly. 📝"
 
-#: app/handlers/message_text.py:148
+#: app/text.py:148
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr "The character limit has been exceeded. Please shorten the message. ✂️"
 
-#: app/handlers/message_text.py:152
+#: app/text.py:152
 msgid "Такой город не найдет :("
 msgstr "You won't find a city like this :("
 
-#: app/handlers/message_text.py:157
+#: app/text.py:157
 msgid ""
 "Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном "
 "формате. 🖼️"
 msgstr "Incorrect photo format! Please upload the image in the correct format. 🖼️"
 
-#: app/handlers/message_text.py:162
+#: app/text.py:162
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr "Incorrect format, age should be given in numbers. 🔢"
 
-#: app/handlers/message_text.py:167
+#: app/text.py:167
 #, python-brace-format
 msgid ""
 "Приглашай друзей и получай бонусы!\n"
@@ -241,28 +241,37 @@ msgid ""
 "Приглашенные пользователи: <b>{}</b>\n"
 "\n"
 "Ссылка для друзей:\n"
-"<code>https://t.me/{}?start={}</code>"
+"<code>{}</code>"
 msgstr ""
 "Invite friends and get bonuses!\n"
 "\n"
 "Invited users: <b>{}</b>\n"
 "\n"
 "Link for friends:\n"
-"<code>https://t.me/{}?start={}</code>"
+"<code>{}</code>"
 
-#: app/handlers/message_text.py:172
+#: app/text.py:172
+#, python-brace-format
+msgid ""
+"Наш канал:\n"
+"{}"
+msgstr ""
+"Our channel:\n"
+"{}"
+
+#: app/text.py:176
 msgid "Выбери язык бота, на который хочешь переключиться: 🌐"
 msgstr "Select the bot language you want to switch to: 🌐"
 
-#: app/handlers/message_text.py:175
+#: app/text.py:179
 msgid "Язык бота изменён! ✅"
 msgstr "Bot language changed! ✅"
 
-#: app/handlers/message_text.py:188
+#: app/text.py:192
 msgid "✅ Жалоба успешно отправлена на рассмотрение!"
 msgstr "✅ Complaint successfully sent for review!"
 
-#: app/handlers/message_text.py:192
+#: app/text.py:196
 msgid ""
 "\n"
 "Укажи причину жалобы:\n"
@@ -280,36 +289,36 @@ msgstr ""
 "\n"
 "️↩️ Back\n"
 
-#: app/keyboards/default/registration_form.py:16
+#: app/keyboards/default/registration_form.py:17
 msgid "Создать анкету"
 msgstr "Create a profile"
 
-#: app/keyboards/default/registration_form.py:27
+#: app/keyboards/default/registration_form.py:30
 msgid "Парень"
 msgstr "Boy"
 
-#: app/keyboards/default/registration_form.py:27
+#: app/keyboards/default/registration_form.py:30
 msgid "Девушка"
 msgstr "Girl"
 
-#: app/keyboards/default/registration_form.py:38
+#: app/keyboards/default/registration_form.py:41
 msgid "Парней"
 msgstr "Boys"
 
-#: app/keyboards/default/registration_form.py:39
+#: app/keyboards/default/registration_form.py:42
 msgid "Девушек"
 msgstr "Girls"
 
-#: app/keyboards/default/registration_form.py:40
+#: app/keyboards/default/registration_form.py:43
 msgid "Всех"
 msgstr "Everyone"
 
-#: app/keyboards/default/registration_form.py:50
-#: app/keyboards/default/registration_form.py:69
+#: app/keyboards/default/registration_form.py:77
+#: app/keyboards/default/registration_form.py:92
 msgid "Оставить предыдущее"
 msgstr "Leave previous"
 
-#: app/keyboards/default/registration_form.py:52
+#: app/keyboards/default/registration_form.py:79
 msgid "📍 Отправить местоположение"
 msgstr "📍 Send location"
 
