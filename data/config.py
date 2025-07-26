@@ -49,6 +49,7 @@ NEW_USER_ALET_TO_GROUP: bool = env.bool("NEW_USER_ALET_TO_GROUP", default=True)
 
 ADMINS: list = env.list("ADMINS", default=None, subcast=int)
 MODERATOR_GROUP: int = env.int("MODERATOR_GROUP_ID", default=None)
+BOT_CHANNEL_URL: str = env.str("BOT_CHANNEL_URL", default=None)
 
 TIME_ZONE = "UTC"
 

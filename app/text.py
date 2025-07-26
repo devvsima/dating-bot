@@ -168,6 +168,10 @@ class MessageText:
         )
 
     @property
+    def CHANNEL(self):
+        return _("Наш канал:\n{}")
+
+    @property
     def CHANGE_LANG(self):
         return _("Выбери язык бота, на который хочешь переключиться: 🌐")
 
