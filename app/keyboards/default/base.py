@@ -37,6 +37,6 @@ match_kb: ReplyKeyboardMarkup = kb_gen(
     ["💤"],
 )
 
-cancel_mailing_to_user_kb: ReplyKeyboardMarkup = kb_gen(
+return_to_menu_kb: ReplyKeyboardMarkup = kb_gen(
     ["↩️"],
 )

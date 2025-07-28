@@ -2,6 +2,7 @@ from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.utils.deep_linking import create_start_link
 
+from app.keyboards.default.base import return_to_menu_kb
 from app.routers import common_router
 from app.text import message_text as mt
 from database.models import UserModel
@@ -18,4 +19,6 @@ async def _invite_link_command(message: types.Message, user: UserModel, session)
     url = await create_start_link(bot, f"usr_{user_code}")
     invites_count = await Referal.get_invites_count(session, user.id)
 
-    await message.answer(mt.INVITE_FRIENDS.format(invites_count, url))
+    await message.answer(
+        mt.INVITE_FRIENDS.format(invites_count, url), reply_markup=return_to_menu_kb
+    )

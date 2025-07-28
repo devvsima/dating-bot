@@ -16,26 +16,33 @@ from .profile import profile_command
 # ---< Create profile >---
 @dating_router.message(StateFilter(None), F.text == "🔄")
 @dating_router.message(StateFilter(None), filters.IsCreate())
-async def _create_profile_command(message: types.Message, state: FSMContext):
+async def _create_profile_command(message: types.Message, state: FSMContext, user: UserModel):
     """Запускает процесс создания профиля пользователя.
     Также используется для пересоздания анкеты"""
-    kb = RegistrationFormKb.gender()
-    await message.answer(mt.GENDER, reply_markup=kb)
+    await state.set_state(ProfileCreate.name)
+
+    kb = RegistrationFormKb.name(user)
+    await message.answer(text=mt.NAME, reply_markup=kb)
+
+
+# ---< Name >---
+@dating_router.message(StateFilter(ProfileCreate.name), F.text, filters.IsName())
+async def _name(message: types.Message, state: FSMContext):
     await state.set_state(ProfileCreate.gender)
+    await state.update_data(name=message.text)
+
+    kb = RegistrationFormKb.gender()
+    await message.answer(text=mt.GENDER, reply_markup=kb)
 
 
 # ---< Gender >---
 @dating_router.message(StateFilter(ProfileCreate.gender), F.text, filters.IsGender())
 async def _gender(message: types.Message, state: FSMContext, gender: str):
+    await state.set_state(ProfileCreate.find_gender)
     await state.update_data(gender=gender)
 
     kb = RegistrationFormKb.find_gender()
-    await message.reply(
-        text=mt.FIND_GENDER,
-        reply_markup=kb,
-    )
-
-    await state.set_state(ProfileCreate.find_gender)
+    await message.answer(text=mt.FIND_GENDER, reply_markup=kb)
 
 
 # ---< Find gender >---
@@ -43,60 +50,11 @@ async def _gender(message: types.Message, state: FSMContext, gender: str):
 async def _find_gender(
     message: types.Message, state: FSMContext, find_gender: str, user: UserModel
 ):
+    await state.set_state(ProfileCreate.city)
     await state.update_data(find_gender=find_gender)
 
-    kb = RegistrationFormKb.photo(user)
-    await message.reply(
-        text=mt.PHOTO,
-        reply_markup=kb,
-    )
-
-    await state.set_state(ProfileCreate.photo)
-
-
-# ---< Photo >---
-@dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
-async def _photo(message: types.Message, state: FSMContext, user: UserModel):
-    photo = (
-        user.profile.photo
-        if message.text in filters.leave_previous_tuple
-        else message.photo[0].file_id
-    )
-    await state.update_data(photo=photo)
-
-    kb = RegistrationFormKb.name(user)
-    await message.reply(
-        text=mt.NAME,
-        reply_markup=kb,
-    )
-    await state.set_state(ProfileCreate.name)
-
-
-# ---< Name >---
-@dating_router.message(StateFilter(ProfileCreate.name), F.text, filters.IsName())
-async def _name(message: types.Message, state: FSMContext, user: UserModel):
-    await state.update_data(name=message.text)
-
-    kb = RegistrationFormKb.age(user)
-    await message.reply(
-        text=mt.AGE,
-        reply_markup=kb,
-    )
-    await state.set_state(ProfileCreate.age)
-
-
-# ---< Age >---
-@dating_router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
-async def _age(message: types.Message, state: FSMContext, user: UserModel):
-    await state.update_data(age=message.text)
-
-    kb = RegistrationFormKb.location(user)
-    await message.reply(
-        text=mt.CITY,
-        reply_markup=kb,
-    )
-
-    await state.set_state(ProfileCreate.city)
+    kb = RegistrationFormKb.city(user)
+    await message.answer(text=mt.CITY, reply_markup=kb)
 
 
 # ---< City >---
@@ -111,14 +69,40 @@ async def _city(
     else:
         city = message.text if message.text else "📍"
 
+    await state.set_state(ProfileCreate.age)
     await state.update_data(
         city=city,
         latitude=latitude,
         longitude=longitude,
     )
 
+    kb = RegistrationFormKb.age(user)
+    await message.answer(text=mt.AGE, reply_markup=kb)
+
+
+# ---< Age >---
+@dating_router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
+async def _age(message: types.Message, state: FSMContext, user: UserModel):
+    await state.set_state(ProfileCreate.photo)
+    await state.update_data(age=message.text)
+
+    kb = RegistrationFormKb.photo(user)
+    await message.answer(text=mt.PHOTO, reply_markup=kb)
+
+
+# ---< Photo >---
+@dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
+async def _photo(message: types.Message, state: FSMContext, user: UserModel):
+    photo = (
+        user.profile.photo
+        if message.text in filters.leave_previous_tuple
+        else message.photo[0].file_id
+    )
+    await state.update_data(photo=photo)
+
     kb = RegistrationFormKb.description(user)
-    await message.reply(
+
+    await message.answer(
         text=mt.DESCRIPTION,
         reply_markup=kb,
     )
@@ -150,3 +134,24 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
     await state.clear()
     await session.refresh(user)
     await profile_command(message, user)
+
+
+# -< OLD >-
+
+# 1. -< Gender >-
+# 2. -< Find gender >-
+# 3. -< Photo >-
+# 4. -< Name >-
+# 5. -< Age >-
+# 6. -< City >-
+# 7. -< Description >-
+
+# -< NEW >-
+
+# 1. -< Name >-
+# 2. -< Gender >-
+# 3. -< Find gender >-
+# 4. -< City >-
+# 5. -< Age >-
+# 6. -< Photo >-
+# 7. -< Description >-

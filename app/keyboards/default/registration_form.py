@@ -47,11 +47,11 @@ class RegistrationFormKb:
         return kb
 
     @staticmethod
-    def photo(user) -> ReplyKeyboardMarkup:
+    def photo(user: UserModel) -> ReplyKeyboardMarkup:
         return RegistrationFormKb.leave_previous(user.profile)
 
     @staticmethod
-    def age(user) -> ReplyKeyboardMarkup:
+    def age(user: UserModel) -> ReplyKeyboardMarkup:
         try:
             kb = kb_gen([str(user.profile.age)])
         except:
@@ -67,11 +67,11 @@ class RegistrationFormKb:
         return kb
 
     @staticmethod
-    def description(user) -> ReplyKeyboardMarkup:
+    def description(user: UserModel) -> ReplyKeyboardMarkup:
         return RegistrationFormKb.leave_previous(user.profile)
 
     @staticmethod
-    def location(user: UserModel | None):
+    def city(user: UserModel | None):
         builder = ReplyKeyboardBuilder()
         if user.profile and user.profile.city != "📍":
             builder.button(text=_("Оставить предыдущее"))

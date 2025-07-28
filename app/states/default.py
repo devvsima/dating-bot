@@ -6,12 +6,12 @@ class LikeResponse(StatesGroup):
 
 
 class ProfileCreate(StatesGroup):
+    name = State()
     gender = State()
     find_gender = State()
-    photo = State()
-    name = State()
     age = State()
     city = State()
+    photo = State()
     description = State()
 
 
