@@ -126,6 +126,10 @@ class MessageText:
         )
 
     @property
+    def MAILING_LIKE(self):
+        return _("Отправил сообщение, ждем ответа.")
+
+    @property
     def INVALID_MAILING_TO_USER(self):
         return _("Не корректное сообщение. Пожалуйста, напиши до 250 символов.")
 

@@ -112,6 +112,7 @@ async def _search_profile_mailing_(
         another_user=another_user,
         mail_text=message.text,
     )
+    await message.answer(mt.MAILING_LIKE, reply_markup=search_kb)
     await next_profile(session, message, profile_list, user, state)
 
 
