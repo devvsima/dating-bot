@@ -4,19 +4,19 @@ case "$1" in
     run)
         uv run main.py
         ;;
-    mapply)
+    mapp)
         uv run alembic upgrade head
         ;;
     mgen)
         uv run alembic revision --autogenerate
         ;;
-    lcollect)
+    lcoll)
         uv run pybabel extract --input-dirs=. -o data/locales/bot.pot --project=bot
         ;;
-    lupdate)
+    lupd)
         uv run pybabel update -i data/locales/bot.pot -d data/locales -D bot
         ;;
-    lcompile)
+    lcom)
         uv run pybabel compile -d data/locales -D bot --statistics
         ;;
     *)

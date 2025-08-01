@@ -3,6 +3,7 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
 import app.filters.create_profile_filtres as filters
+from app.business.menu_service import menu
 from app.keyboards.default.registration_form import RegistrationFormKb
 from app.routers import dating_router
 from app.states.default import ProfileCreate
@@ -133,7 +134,8 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
 
     await state.clear()
     await session.refresh(user)
-    await profile_command(message, user)
+    await message.answer(mt.PROFILE_CREATED)
+    await menu(chat_id=user.id)
 
 
 # -< OLD >-
