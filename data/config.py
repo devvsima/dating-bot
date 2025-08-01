@@ -32,7 +32,7 @@ class RedisSettings:
     HOST: str = env.str("REDIS_HOST", default=None)
     PORT: int = env.int("REDIS_PORT", default=6379)
     USER: int = env.int("REDIS_USER", default="default")
-    PASS: int = env.int("REDIS_PASS", default=None)
+    PASS: int = env.str("REDIS_PASS", default=None)
 
     URL: str = env.str("RD_URL", default=None)
 
