@@ -115,6 +115,7 @@ async def _match_response(
             complainant=user,
             reason=message.text,
             complaint_user=another_user,
+            session=session,
         )
     elif message.text == "↩️":
         await message.answer(mt.SEARCH, reply_markup=match_kb)

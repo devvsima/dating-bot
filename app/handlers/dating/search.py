@@ -88,6 +88,7 @@ async def _search_profile_report(
             complainant=user,
             reason=message.text,
             complaint_user=another_user,
+            session=session,
         )
     elif message.text == "↩️":
         await message.answer(mt.SEARCH, reply_markup=search_kb)

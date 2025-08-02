@@ -45,13 +45,13 @@ async def send_profile_with_dist(
 
 
 async def complaint_to_profile(
-    complainant: UserModel, reason: str, complaint_user: UserModel
+    complainant: UserModel, reason: str, complaint_user: UserModel, session
 ) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
     if MODERATOR_GROUP:
         try:
-            await send_profile(MODERATOR_GROUP, complaint_user.profile)
+            await send_profile(MODERATOR_GROUP, complaint_user.profile, session)
 
             text = mt.REPORT_TO_USER.format(
                 complainant.id,
