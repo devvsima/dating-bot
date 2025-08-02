@@ -12,10 +12,10 @@ from utils.logging import logger
 async def send_profile(chat_id: int, profile: ProfileModel, session) -> None:
     """Отправляет пользователю переданный в функцию профиль"""
     media = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
-    for i, photo in enumerate(media):
+    for i in media:
         await bot.send_photo(
             chat_id=chat_id,
-            photo=photo.media,
+            photo=i.media,
             caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
             parse_mode=None,
         )
@@ -34,10 +34,10 @@ async def send_profile_with_dist(
         city = f"📍 {round(distance, 2)} km"
     else:
         city = profile.city
-    for i, photo in enumerate(media):
+    for i in media:
         await bot.send_photo(
             chat_id=user.id,
-            photo=photo.media,
+            photo=i.media,
             caption=f"{profile.name}, {profile.age}, {city}\n{profile.description}",
             reply_markup=keyboard,
             parse_mode=None,
