@@ -40,7 +40,7 @@ async def match_archive(
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
         match_data = await Match.get(session, user.id, profile.id)
-        await send_profile_with_dist(user, profile)
+        await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data.message:
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
@@ -66,7 +66,7 @@ async def _match_atchive_callback(
         await state.update_data(ids=liker_ids)
         profile = await Profile.get(session, liker_ids[0])
         match_data = await Match.get(session, user.id, profile.id)
-        await send_profile_with_dist(user, profile)
+        await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data.message:
             await callback.message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
@@ -125,7 +125,7 @@ async def _match_response(
     if ids:
         profile = await Profile.get(session, ids[0])
         match_data = await Match.get(session, user.id, profile.id)
-        await send_profile_with_dist(user, profile)
+        await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data.message:
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:

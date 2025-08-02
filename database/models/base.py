@@ -25,5 +25,5 @@ class BaseModel(DeclarativeBase):
         cols = []
         for idx, col in enumerate(self.__table__.columns.keys()):
             if col in self.repr_cols or idx < self.repr_cols_num:
-                col.append(f"{col}={getattr(self, col)}")
-        return f"<{self.__class__.name} {', '.join(cols)}>"
+                cols.append(f"{col}={getattr(self, col)}")
+        return f"<{self.__class__.__name__} {', '.join(cols)}>"

@@ -1,3 +1,5 @@
+from typing import List
+
 from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -16,13 +18,16 @@ class ProfileModel(BaseModel):
     city: Mapped[str] = mapped_column(String(200), nullable=False)
     latitude: Mapped[float] = mapped_column(nullable=False)
     longitude: Mapped[float] = mapped_column(nullable=False)
-    photo: Mapped[str] = mapped_column(String(255), nullable=False)
+    # photo: Mapped[str] = mapped_column(String(255), nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     description: Mapped[str] = mapped_column(String(900), nullable=True)
     instagram: Mapped[str] = mapped_column(String(200), nullable=True)
     is_active: Mapped[bool] = mapped_column(server_default="True")
 
     user: Mapped["UserModel"] = relationship("UserModel", back_populates="profile")  # type: ignore
+    profile_media: Mapped[List["ProfileMediaModel"]] = relationship(  # type: ignore
+        back_populates="profile", cascade="all, delete-orphan"
+    )
 
     __table_args__ = (
         CheckConstraint("gender IN ('male', 'female')", name="gender_check"),

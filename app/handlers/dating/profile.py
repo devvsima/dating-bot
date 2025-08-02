@@ -10,9 +10,9 @@ from database.models import UserModel
 
 
 @dating_router.message(StateFilter(None), F.text == "👤")
-async def profile_command(message: types.Message, user: UserModel) -> None:
+async def profile_command(message: types.Message, user: UserModel, session) -> None:
     """Отправляет профиль пользователя"""
-    await send_profile(message.from_user.id, user.profile)
+    await send_profile(message.from_user.id, user.profile, session)
     await message.answer(mt.PROFILE_MENU, reply_markup=profile_kb)
 
 

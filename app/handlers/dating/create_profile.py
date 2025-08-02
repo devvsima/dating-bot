@@ -10,6 +10,7 @@ from app.states.default import ProfileCreate
 from app.text import message_text as mt
 from database.models.user import UserModel
 from database.services import Profile
+from database.services.profile_media import ProfileMedia
 
 from .profile import profile_command
 
@@ -93,12 +94,15 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 
 # -< Photo >-
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
-async def _photo(message: types.Message, state: FSMContext, user: UserModel):
-    photo = (
-        user.profile.photo
-        if message.text in filters.leave_previous_tuple
-        else message.photo[0].file_id
-    )
+async def _photo(message: types.Message, state: FSMContext, user: UserModel, session):
+    if message.text in filters.leave_previous_tuple:
+        # Получаем первое фото из профиля пользователя
+        first_photo = await ProfileMedia.get_first_photo(session, user.id)
+        photo = first_photo.media if first_photo else None
+    else:
+        # Новое фото от пользователя
+        photo = message.photo[0].file_id
+
     await state.update_data(photo=photo)
 
     kb = RegistrationFormKb.description(user)
@@ -123,7 +127,7 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
         id=message.from_user.id,
         gender=data["gender"],
         find_gender=data["find_gender"],
-        photo=data["photo"],
+        photo=data["photo"],  # Это будет обработано отдельно в сервисе
         name=data["name"],
         age=int(data["age"]),
         city=data["city"],

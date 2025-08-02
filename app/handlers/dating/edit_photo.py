@@ -10,6 +10,7 @@ from app.states.default import ProfileEdit
 from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Profile
+from database.services.profile_media import ProfileMedia
 
 
 @dating_router.message(StateFilter(None), F.text == "🖼")
@@ -31,11 +32,24 @@ async def _update_photo(
     message: types.Message, state: FSMContext, user: UserModel, session
 ) -> None:
     """Обновляет фотографию профиля"""
-    photo = (
-        user.profile.photo
-        if message.text in filters.leave_previous_tuple
-        else message.photo[0].file_id
-    )
-    await Profile.update(session=session, id=user.id, photo=photo)
+    if message.text in filters.leave_previous_tuple:
+        # Пользователь хочет оставить текущее фото - ничего не делаем
+        pass
+    else:
+        # Пользователь загрузил новое фото
+        new_photo_url = message.photo[0].file_id
+
+        # Удаляем все старые фото (но не видео)
+        await ProfileMedia.delete_profile_photos(session, user.id)
+
+        # Добавляем новое фото
+        await ProfileMedia.add_media(
+            session=session,
+            profile_id=user.id,
+            media_url=new_photo_url,
+            media_type="photo",
+            order=1,
+        )
+
     await state.clear()
-    await profile_command(message, user)
+    await profile_command(message, user, session)

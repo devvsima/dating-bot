@@ -2,6 +2,7 @@ from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.services.base import BaseService
+from database.services.profile_media import ProfileMedia
 from utils.logging import logger
 
 from ..models.profile import ProfileModel
@@ -25,13 +26,36 @@ class Profile(BaseService):
 
     @classmethod
     async def create_or_update(cls, session: AsyncSession, **kwargs):
-        """Создает профиль пользователя, если профиль есть - удаляет его"""
-        obj = await cls.get_by_id(session, kwargs["id"])
+        """Создает профиль пользователя, если профиль есть - обновляет его"""
+        profile_id = kwargs.pop("id")  # Извлекаем id профиля
+        photo_url = kwargs.pop("photo", None)  # Извлекаем photo, если есть
+
+        obj = await cls.get_by_id(session, profile_id)
+        is_new = False
+
         if obj:
+            # Обновляем существующий профиль
             for key, value in kwargs.items():
                 setattr(obj, key, value)
             await session.commit()
-            return obj, False
-        obj = await cls.create(session, **kwargs)
-        logger.log("DATABASE", f"{id}: создал анкету")
-        return obj, True
+        else:
+            # Создаем новый профиль
+            obj = await cls.create(session, id=profile_id, **kwargs)
+            is_new = True
+            logger.log("DATABASE", f"{profile_id}: создал анкету")
+
+        # Обрабатываем фото, если оно передано
+        if photo_url:
+            # Удаляем все старые фото профиля
+            await ProfileMedia.delete_profile_media(session, profile_id)
+
+            # Добавляем новое фото
+            await ProfileMedia.add_media(
+                session=session,
+                profile_id=profile_id,
+                media_url=photo_url,
+                media_type="photo",
+                order=1,
+            )
+
+        return obj, is_new

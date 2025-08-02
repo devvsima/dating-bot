@@ -30,7 +30,8 @@ async def _search_command(
         await state.update_data(ids=profile_list)
 
         another_profile = await Profile.get(session, profile_list[0])
-        await send_profile_with_dist(user, another_profile)
+        await send_profile_with_dist(user=user, profile=another_profile, session=session)
+
     else:
         await message.answer(mt.INVALID_PROFILE_SEARCH)
         await menu(message.from_user.id)
@@ -104,7 +105,13 @@ async def _search_profile_mailing_(
     await state.set_state(Search.search)
 
     if message.text == "↩️":
-        await send_profile_with_dist(user, another_user.profile, keyboard=search_kb)
+        await send_profile_with_dist(
+            user=user,
+            profile=another_user.profile,
+            keyboard=search_kb,
+            session=session,
+        )
+
         return
     await like_profile(
         session=session,
@@ -133,7 +140,7 @@ async def next_profile(
     if profile_list:
         profile = await Profile.get(session, profile_list[0])
         await state.update_data(ids=profile_list)
-        await send_profile_with_dist(user, profile)
+        await send_profile_with_dist(user=user, profile=profile, session=session)
     else:
         await message.answer(mt.EMPTY_PROFILE_SEARCH)
         await cancel_command(message, state)
