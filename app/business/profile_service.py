@@ -1,3 +1,5 @@
+from aiogram.types import InputMediaPhoto
+
 from app.keyboards.inline.admin import block_user_ikb
 from app.text import message_text as mt
 from data.config import MODERATOR_GROUP
@@ -11,21 +13,22 @@ from utils.logging import logger
 
 async def send_profile(chat_id: int, profile: ProfileModel, session) -> None:
     """Отправляет пользователю переданный в функцию профиль"""
-    media = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
-    for i in media:
-        await bot.send_photo(
-            chat_id=chat_id,
-            photo=i.media,
-            caption=f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}",
-            parse_mode=None,
-        )
+    media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
+    text = f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}"
+
+    media_list = []
+    for i, media_obj in enumerate(media_items):
+        if i == 0:
+            media_list.append(InputMediaPhoto(media=media_obj.media, caption=text, parse_mode=None))
+        else:
+            media_list.append(InputMediaPhoto(media=media_obj.media))
+
+    await bot.send_media_group(chat_id=chat_id, media=media_list)
 
 
-async def send_profile_with_dist(
-    user: UserModel, profile: ProfileModel, session, keyboard=None
-) -> None:
+async def send_profile_with_dist(user: UserModel, profile: ProfileModel, session) -> None:
     """Отправляет профиль пользователя с расстоянием до него в киломтерах"""
-    media = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
+    media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
 
     if profile.city == "📍":
         distance = haversine_distance(
@@ -34,14 +37,16 @@ async def send_profile_with_dist(
         city = f"📍 {round(distance, 2)} km"
     else:
         city = profile.city
-    for i in media:
-        await bot.send_photo(
-            chat_id=user.id,
-            photo=i.media,
-            caption=f"{profile.name}, {profile.age}, {city}\n{profile.description}",
-            reply_markup=keyboard,
-            parse_mode=None,
-        )
+    text = f"{profile.name}, {profile.age}, {city}\n{profile.description}"
+
+    media_list = []
+    for i, media_obj in enumerate(media_items):
+        if i == 0:
+            media_list.append(InputMediaPhoto(media=media_obj.media, caption=text, parse_mode=None))
+        else:
+            media_list.append(InputMediaPhoto(media=media_obj.media))
+
+    await bot.send_media_group(chat_id=user.id, media=media_list)
 
 
 async def complaint_to_profile(
