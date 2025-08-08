@@ -1,6 +1,7 @@
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
+from sqlalchemy.ext.asyncio import AsyncSession
 
 import app.filters.create_profile_filtres as filters
 from app.handlers.dating.profile import profile_command
@@ -9,7 +10,6 @@ from app.routers import dating_router
 from app.states.default import ProfileEdit
 from app.text import message_text as mt
 from database.models import UserModel
-from database.services import Profile
 from database.services.profile_media import ProfileMedia
 
 
@@ -29,7 +29,7 @@ async def _edit_profile_photo_command(
 
 @dating_router.message(StateFilter(ProfileEdit.photo), filters.IsPhoto())
 async def _update_photo(
-    message: types.Message, state: FSMContext, user: UserModel, session
+    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Обновляет фотографию профиля"""
     if message.text in filters.leave_previous_tuple:

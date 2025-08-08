@@ -1,6 +1,7 @@
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
+from sqlalchemy.ext.asyncio import AsyncSession
 
 import app.filters.create_profile_filtres as filters
 from app.business.menu_service import menu
@@ -94,7 +95,7 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 
 # -< Photo >-
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
-async def _photo(message: types.Message, state: FSMContext, user: UserModel, session):
+async def _photo(message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession):
     if message.text in filters.leave_previous_tuple:
         # Получаем первое фото из профиля пользователя
         first_photo = await ProfileMedia.get_first_photo(session, user.id)
@@ -116,7 +117,9 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
 
 # -< Description >-
 @dating_router.message(StateFilter(ProfileCreate.description), F.text, filters.IsDescription())
-async def _description(message: types.Message, state: FSMContext, user: UserModel, session):
+async def _description(
+    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+):
     data = await state.get_data()
     description = (
         user.profile.description if message.text in filters.leave_previous_tuple else message.text

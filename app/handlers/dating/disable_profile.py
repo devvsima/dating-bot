@@ -1,5 +1,6 @@
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.keyboards.default.base import start_kb
 from app.routers import dating_router
@@ -9,7 +10,9 @@ from database.services import Profile
 
 
 @dating_router.message(StateFilter(None), F.text == "❌")
-async def _disable_profile_command(message: types.Message, user: UserModel, session) -> None:
+async def _disable_profile_command(
+    message: types.Message, user: UserModel, session: AsyncSession
+) -> None:
     """Отключает профиль пользователя, и не дает ему дальше пользоватся ботом до восстановления"""
     await Profile.update(
         session=session,

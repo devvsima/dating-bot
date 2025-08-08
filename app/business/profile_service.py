@@ -1,4 +1,5 @@
 from aiogram.types import InputMediaPhoto
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.keyboards.inline.admin import block_user_ikb
 from app.text import message_text as mt
@@ -11,7 +12,7 @@ from loader import bot
 from utils.logging import logger
 
 
-async def send_profile(chat_id: int, profile: ProfileModel, session) -> None:
+async def send_profile(chat_id: int, profile: ProfileModel, session: AsyncSession) -> None:
     """Отправляет пользователю переданный в функцию профиль"""
     media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
     text = f"{profile.name}, {profile.age}, {profile.city}\n{profile.description}"
@@ -26,7 +27,9 @@ async def send_profile(chat_id: int, profile: ProfileModel, session) -> None:
     await bot.send_media_group(chat_id=chat_id, media=media_list)
 
 
-async def send_profile_with_dist(user: UserModel, profile: ProfileModel, session) -> None:
+async def send_profile_with_dist(
+    user: UserModel, profile: ProfileModel, session: AsyncSession
+) -> None:
     """Отправляет профиль пользователя с расстоянием до него в киломтерах"""
     media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
 
@@ -50,7 +53,7 @@ async def send_profile_with_dist(user: UserModel, profile: ProfileModel, session
 
 
 async def complaint_to_profile(
-    complainant: UserModel, reason: str, complaint_user: UserModel, session
+    complainant: UserModel, reason: str, complaint_user: UserModel, session: AsyncSession
 ) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""

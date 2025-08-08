@@ -1,6 +1,7 @@
 from aiogram import F, types
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.filters.kb_filter import StatsCallback
 from app.keyboards.inline.admin import stats_ikb
@@ -41,7 +42,7 @@ REFERRAL_STATS = """
 
 @admin_router.message(StateFilter(None), Command("stats"))
 @admin_router.message(StateFilter(None), F.text == "📊 Statistics")
-async def _stats_command(message: types.Message, session) -> None:
+async def _stats_command(message: types.Message, session: AsyncSession) -> None:
     """Отправляет администратору меню статистики"""
     await message.answer("Stats sending...")
 
@@ -62,7 +63,7 @@ async def _stats_command(message: types.Message, session) -> None:
 
 @admin_router.callback_query(StateFilter(None), StatsCallback.filter())
 async def _stats_callback(
-    callback: types.CallbackQuery, callback_data: StatsCallback, session
+    callback: types.CallbackQuery, callback_data: StatsCallback, session: AsyncSession
 ) -> None:
     """Отправляет администратору график и статистику"""
     if callback_data.type == "User":

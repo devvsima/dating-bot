@@ -3,6 +3,7 @@ import re
 from aiogram import types
 from aiogram.filters import Command, CommandObject
 from aiogram.filters.state import StateFilter
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.filters.kb_filter import BlockUserCallback
 from app.routers import admin_router
@@ -11,7 +12,9 @@ from database.services.user import User
 
 @admin_router.message(StateFilter(None), Command("ban"))
 @admin_router.message(StateFilter(None), Command("unban"))
-async def ban_unban_users_command(message: types.Message, command: CommandObject, session) -> None:
+async def ban_unban_users_command(
+    message: types.Message, command: CommandObject, session: AsyncSession
+) -> None:
     """Блокирует или разблокирует пользователей, принимает список id через ','"""
 
     command_name = command.command.lower()
@@ -34,7 +37,7 @@ async def ban_unban_users_command(message: types.Message, command: CommandObject
 
 @admin_router.callback_query(StateFilter(None), BlockUserCallback.filter())
 async def _complaint_user_callback(
-    callback: types.CallbackQuery, callback_data: BlockUserCallback, session
+    callback: types.CallbackQuery, callback_data: BlockUserCallback, session: AsyncSession
 ) -> None:
     """Блокирует пользователя переданого в калбек"""
     id = callback_data.id

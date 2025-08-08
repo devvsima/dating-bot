@@ -5,6 +5,7 @@ from cProfile import Profile
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.business.profile_service import complaint_to_profile, send_profile_with_dist
 from app.constans import EFFECTS_DICTIONARY
@@ -23,7 +24,7 @@ from ..common.cancel import cancel_command
 
 @dating_router.message(StateFilter(None), F.text == "📭")
 async def match_archive(
-    message: types.Message, state: FSMContext, user: UserModel, session
+    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Архив лайков анкеты пользовтеля"""
     await state.set_state(LikeResponse.response)
@@ -50,7 +51,7 @@ async def match_archive(
 
 @dating_router.callback_query(StateFilter("*"), F.data == "archive")
 async def _match_atchive_callback(
-    callback: types.CallbackQuery, state: FSMContext, user: UserModel, session
+    callback: types.CallbackQuery, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Архив лайков анкеты пользовтеля"""
     await state.set_state(LikeResponse.response)
@@ -78,7 +79,7 @@ async def _match_atchive_callback(
     StateFilter(LikeResponse.response), F.text.in_(("❤️", "👎", "💢", "↩️", "🔞", "💰", "🔫"))
 )
 async def _match_response(
-    message: types.Message, state: FSMContext, user: UserModel, session
+    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """'Свайпы' людей которые лайкнули анкету пользователя"""
     data = await state.get_data()

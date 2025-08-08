@@ -5,6 +5,7 @@ from aiogram.exceptions import TelegramAPIError
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.routers import admin_router
 from app.states.admin import Mailing
@@ -22,7 +23,7 @@ async def users_mailing_panel(message: types.Message, state: FSMContext) -> None
 
 
 @admin_router.message(StateFilter(Mailing.message))
-async def start_mailing(message: types.Message, state: FSMContext, session) -> None:
+async def start_mailing(message: types.Message, state: FSMContext, session: AsyncSession) -> None:
     users = await User.get_all(session)
     sent_count, failed_count = 0, 0
     batch_size = 25  # чуть меньше лимита
