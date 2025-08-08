@@ -140,7 +140,7 @@ async def next_profile(
         await send_profile_with_dist(user=user, profile=profile, session=session)
     else:
         await message.answer(mt.EMPTY_PROFILE_SEARCH)
-        await start_command(message, state, user)
+        await start_command(messag=message, user=user, state=state)
 
 
 async def like_profile(

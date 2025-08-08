@@ -44,7 +44,7 @@ async def match_archive(
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(mt.LIKE_ARCHIVE)
-        await start_command(message, state, user)
+        await start_command(message=message, user=user, state=state)
 
 
 @dating_router.callback_query(StateFilter("*"), F.data == "archive")
@@ -70,7 +70,7 @@ async def _match_atchive_callback(
             await callback.message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await callback.message.answer(mt.LIKE_ARCHIVE)
-        await start_command(callback.message, state, user)
+        await start_command(callback.message, user=user, state=state)
 
 
 @dating_router.message(
@@ -130,7 +130,7 @@ async def _match_response(
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(mt.EMPTY_PROFILE_SEARCH)
-        await start_command(message, state, user)
+        await start_command(message=message, user=user, state=state)
 
 
 def generate_user_link(id: int, username: str = None) -> str:
