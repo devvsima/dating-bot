@@ -7,17 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-02 18:39+0300\n"
-"PO-Revision-Date: 2025-08-02 18:37+0300\n"
+"POT-Creation-Date: 2025-08-08 19:16+0300\n"
+"PO-Revision-Date: 2025-08-08 19:22+0300\n"
 "Last-Translator: \n"
-"Language: pl\n"
 "Language-Team: pl <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.5\n"
 
 #: app/text.py:12
 msgid ""
@@ -44,8 +45,8 @@ msgid ""
 "Немного информации о боте:\n"
 "Этот бот был создан по аналогии с популярным ботом для знакомств <a "
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
-"Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
-"/dating-bot'>GitHub</a>\n"
+"Весь код бота открыт и доступен на <a href='https://github.com/devvsima/"
+"dating-bot'>GitHub</a>\n"
 "\n"
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
@@ -54,8 +55,8 @@ msgstr ""
 "Trochę informacji o bocie:  \n"
 "Ten bot został stworzony na wzór popularnego bota randkowego <a "
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Dajwinczyk</a>.  \n"
-"Cały kod bota jest otwarty i dostępny na <a "
-"href='https://github.com/devvsima/dating-bot'>GitHub</a>.  \n"
+"Cały kod bota jest otwarty i dostępny na <a href='https://github.com/"
+"devvsima/dating-bot'>GitHub</a>.  \n"
 "\n"
 "W razie pytań lub sugestii możesz napisać tutaj: @devvsima.\n"
 
@@ -111,8 +112,8 @@ msgid "Выбери, кого ты ищешь: 💕"
 msgstr "Wybierz kogo szukasz: 💕"
 
 #: app/text.py:67
-msgid "Пришли своё фото! 📸"
-msgstr "Wyślij swoje zdjęcie! 📸"
+msgid "Загрузи своё фото! Можно отправить до 3 фотографий одновременно 📸"
+msgstr "Prześlij swoje zdjęcie! Możesz wysłać do 3 zdjęć jednocześnie 📸"
 
 #: app/text.py:71
 msgid "Как тебя зовут? ✍️"
@@ -318,6 +319,64 @@ msgstr ""
 msgid "✅ Жалоба успешно отправлена на рассмотрение!"
 msgstr "reklamacja została pomyślnie wysłana do rozpatrzenia!"
 
+#: app/text.py:229
+msgid "Загрузи новые фото! Можно отправить до 3 фотографий 📸"
+msgstr "Prześlij nowe zdjęcia! Możesz wysłać do 3 zdjęć 📸"
+
+#: app/text.py:233
+msgid "Фотографии остались без изменений"
+msgstr "Zdjęcia pozostały bez zmian"
+
+#: app/text.py:237
+msgid "Вы не загрузили ни одного фото. Попробуйте еще раз."
+msgstr "Nie przesłałeś żadnego zdjęcia. Spróbuj ponownie."
+
+#: app/text.py:241
+msgid "❌ Ошибка при сохранении фото. Попробуйте еще раз."
+msgstr "❌ Błąd podczas zapisywania zdjęcia. Spróbuj ponownie."
+
+#: app/keyboards/default/registration_form.py:56 app/text.py:245
+#: app/text.py:253
+msgid "Это все, сохранить фото"
+msgstr "To wszystko, zachowaj zdjęcie"
+
+#: app/text.py:249
+#, python-brace-format
+msgid ""
+"📸 Фото {current}/{total} загружено!\n"
+"\n"
+"Можете загрузить еще {remaining} фото или нажать '{finish_button}'"
+msgstr ""
+"📸 Zdjęcie {current}/{total} zostało przesłane!\n"
+"\n"
+"Możesz przesłać jeszcze {remaining} zdjęcie(a) lub nacisnąć "
+"'{finish_button}'"
+
+#: app/text.py:262
+#, python-brace-format
+msgid "Сохранено {} фото!"
+msgstr "Zapisano {} zdjęcie(a)!"
+
+#: app/text.py:265
+#, python-brace-format
+msgid "Все {} фото загружены!"
+msgstr "Wszystkie {} zdjęcia zostały przesłane!"
+
+#: app/text.py:270
+msgid ""
+"❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
+msgstr ""
+"❌ Maksymalnie 3 zdjęcia! Naciśnij 'To wszystko, zapisz zdjęcie' aby "
+"zapisać."
+
+#: app/text.py:274
+msgid "📸 Отправьте фотографию или выберите действие из меню"
+msgstr "📸 Prześlij zdjęcie lub wybierz akcję z menu"
+
+#: app/text.py:278
+msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
+msgstr "❌ Aby utworzyć profil, musisz przesłać co najmniej jedno zdjęcie!"
+
 #: app/keyboards/default/registration_form.py:17
 msgid "Создать анкету"
 msgstr "Utwórz profil"
@@ -342,12 +401,12 @@ msgstr "Dziewcząt"
 msgid "Всех"
 msgstr "Wszyscy"
 
-#: app/keyboards/default/registration_form.py:77
-#: app/keyboards/default/registration_form.py:92
+#: app/keyboards/default/registration_form.py:84
+#: app/keyboards/default/registration_form.py:99
 msgid "Оставить предыдущее"
 msgstr "Pozostaw poprzednie"
 
-#: app/keyboards/default/registration_form.py:79
+#: app/keyboards/default/registration_form.py:86
 msgid "📍 Отправить местоположение"
 msgstr "📍 Wyślij lokalizację"
 
@@ -359,14 +418,14 @@ msgstr "Patrzeć"
 #~ msgstr "Komuś spodobał się Twój profil! Chcesz zobaczyć? 👀"
 
 #~ msgid ""
-#~ "Пользователь <code>{}</code> (@{}) отправил "
-#~ "жалобу на анкету пользователя: <code>{}</code>"
-#~ " (@{})"
+#~ "Пользователь <code>{}</code> (@{}) отправил жалобу на анкету "
+#~ "пользователя: <code>{}</code> (@{})"
 #~ msgstr ""
-#~ "Użytkownik <code>{}</code> (@{}) złożył skargę"
-#~ " dotyczącą profilu użytkownika: <code>{}</code>"
-#~ " (@{})"
+#~ "Użytkownik <code>{}</code> (@{}) złożył skargę dotyczącą profilu "
+#~ "użytkownika: <code>{}</code> (@{})"
 
 #~ msgid "Отменить жалобу"
 #~ msgstr "Anuluj skargę"
 
+#~ msgid "Пришли своё фото! 📸"
+#~ msgstr "Wyślij swoje zdjęcie! 📸"

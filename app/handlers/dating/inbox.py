@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.business.profile_service import complaint_to_profile, send_profile_with_dist
 from app.constans import EFFECTS_DICTIONARY
-from app.handlers.common.cancel import cancel_command
+from app.handlers.common.start import start_command
 from app.keyboards.default.base import match_kb
 from app.keyboards.default.report import report_kb
 from app.routers import dating_router
@@ -18,8 +18,6 @@ from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Match, Profile, User
 from loader import bot
-
-from ..common.cancel import cancel_command
 
 
 @dating_router.message(StateFilter(None), F.text == "📭")
@@ -46,7 +44,7 @@ async def match_archive(
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(mt.LIKE_ARCHIVE)
-        await cancel_command(message, state)
+        await (message, state)
 
 
 @dating_router.callback_query(StateFilter("*"), F.data == "archive")
@@ -72,7 +70,7 @@ async def _match_atchive_callback(
             await callback.message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await callback.message.answer(mt.LIKE_ARCHIVE)
-        await cancel_command(callback.message, state)
+        await start_command(callback.message, state, user)
 
 
 @dating_router.message(
@@ -132,7 +130,7 @@ async def _match_response(
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(mt.EMPTY_PROFILE_SEARCH)
-        await cancel_command(message, state)
+        await start_command(message, state, user)
 
 
 def generate_user_link(id: int, username: str = None) -> str:

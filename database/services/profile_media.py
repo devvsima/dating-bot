@@ -104,6 +104,7 @@ class ProfileMedia(BaseService):
         cls, session: AsyncSession, profile_id: int, media_url: str, media_type: str, order: int = 1
     ) -> ProfileMediaModel:
         """Добавляет новое медиа к профилю"""
+
         media_data = {
             "profile_id": profile_id,
             "media_type": media_type,

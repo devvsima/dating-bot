@@ -28,7 +28,10 @@ class Profile(BaseService):
     async def create_or_update(cls, session: AsyncSession, **kwargs):
         """Создает профиль пользователя, если профиль есть - обновляет его"""
         profile_id = kwargs.pop("id")  # Извлекаем id профиля
-        photo_url = kwargs.pop("photo", None)  # Извлекаем photo, если есть
+        photo_url = kwargs.pop(
+            "photo", None
+        )  # Извлекаем photo, если есть (для обратной совместимости)
+        photos = kwargs.pop("photos", None)  # Извлекаем список фото
 
         obj = await cls.get_by_id(session, profile_id)
         is_new = False
@@ -44,12 +47,24 @@ class Profile(BaseService):
             is_new = True
             logger.log("DATABASE", f"{profile_id}: создал анкету")
 
-        # Обрабатываем фото, если оно передано
-        if photo_url:
+        # Обрабатываем фото
+        if photos:
             # Удаляем все старые фото профиля
-            await ProfileMedia.delete_profile_media(session, profile_id)
+            await ProfileMedia.delete_profile_photos(session, profile_id)
 
-            # Добавляем новое фото
+            # Добавляем новые фото
+            for i, photo_file_id in enumerate(photos, 1):
+                await ProfileMedia.add_media(
+                    session=session,
+                    profile_id=profile_id,
+                    media_url=photo_file_id,
+                    media_type="photo",
+                    order=i,
+                )
+        elif photo_url:
+            # Обратная совместимость - если передано одно фото
+            await ProfileMedia.delete_profile_photos(session, profile_id)
+
             await ProfileMedia.add_media(
                 session=session,
                 profile_id=profile_id,

@@ -13,8 +13,6 @@ from database.models.user import UserModel
 from database.services import Profile
 from database.services.profile_media import ProfileMedia
 
-from .profile import profile_command
-
 
 # -< Create profile >-
 @dating_router.message(StateFilter(None), F.text == "🔄")
@@ -89,6 +87,9 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
     await state.set_state(ProfileCreate.photo)
     await state.update_data(age=message.text)
 
+    # Инициализируем состояние для фото
+    await state.update_data(photos=[], photo_count=0)
+
     kb = RegistrationFormKb.photo(user)
     await message.answer(text=mt.PHOTO, reply_markup=kb)
 
@@ -96,23 +97,61 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 # -< Photo >-
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession):
+    data = await state.get_data()
+    photos = data.get("photos", [])
+
     if message.text in filters.leave_previous_tuple:
-        # Получаем первое фото из профиля пользователя
-        first_photo = await ProfileMedia.get_first_photo(session, user.id)
-        photo = first_photo.media if first_photo else None
+        # Получаем существующие фото из профиля пользователя
+        existing_photos = await ProfileMedia.get_profile_photos(session, user.id)
+        if existing_photos:
+            photos = [photo.media for photo in existing_photos]
+            await state.update_data(photos=photos)
+
+        # Переходим к описанию
+        kb = RegistrationFormKb.description(user)
+        await message.answer(text=mt.DESCRIPTION, reply_markup=kb)
+        await state.set_state(ProfileCreate.description)
+        return
+
+    elif message.text == mt.PHOTO_SAVE_FINISH_BUTTON:
+        if not photos:
+            await message.answer(mt.PHOTO_NO_UPLOADED)
+            return
+
+        # Переходим к описанию
+        kb = RegistrationFormKb.description(user)
+        await message.answer(text=mt.DESCRIPTION, reply_markup=kb)
+        await state.set_state(ProfileCreate.description)
+        return
+
+    elif message.photo:
+        # Проверяем лимит фотографий
+        if len(photos) >= 3:
+            await message.answer(mt.PHOTO_LIMIT_REACHED)
+            return
+
+        # Добавляем новое фото в список
+        new_photo = message.photo[-1].file_id  # Берем фото лучшего качества
+        photos.append(new_photo)
+
+        await state.update_data(photos=photos)
+
+        # Обновляем счетчик и отправляем сообщение
+        new_count = len(photos)
+
+        if new_count < 3:
+            await message.answer(
+                text=mt.PHOTO_PROGRESS(new_count), reply_markup=RegistrationFormKb.photo_add()
+            )
+        else:
+            # Загружены все 3 фото - переходим к описанию
+            await message.answer(mt.PHOTO_ALL_UPLOADED())
+
+            kb = RegistrationFormKb.description(user)
+            await message.answer(text=mt.DESCRIPTION, reply_markup=kb)
+            await state.set_state(ProfileCreate.description)
     else:
-        # Новое фото от пользователя
-        photo = message.photo[0].file_id
-
-    await state.update_data(photo=photo)
-
-    kb = RegistrationFormKb.description(user)
-
-    await message.answer(
-        text=mt.DESCRIPTION,
-        reply_markup=kb,
-    )
-    await state.set_state(ProfileCreate.description)
+        await message.answer(mt.PHOTO_UPLOAD_INSTRUCTION)
 
 
 # -< Description >-
@@ -125,19 +164,30 @@ async def _description(
         user.profile.description if message.text in filters.leave_previous_tuple else message.text
     )
 
-    await Profile.create_or_update(
-        session=session,
-        id=message.from_user.id,
-        gender=data["gender"],
-        find_gender=data["find_gender"],
-        photo=data["photo"],  # Это будет обработано отдельно в сервисе
-        name=data["name"],
-        age=int(data["age"]),
-        city=data["city"],
-        latitude=float(data["latitude"]),
-        longitude=float(data["longitude"]),
-        description=description,
-    )
+    # Получаем список фото из состояния
+    photos = data.get("photos", [])
+
+    # Проверяем, что есть хотя бы одно фото
+    if not photos:
+        await message.answer(mt.PHOTO_REQUIRED_FOR_PROFILE)
+
+        # Возвращаем пользователя к загрузке фото
+        await state.set_state(ProfileCreate.photo)
+        kb = RegistrationFormKb.photo(user)
+        await message.answer(text=mt.PHOTO, reply_markup=kb)
+        return await Profile.create_or_update(
+            session=session,
+            id=message.from_user.id,
+            gender=data["gender"],
+            find_gender=data["find_gender"],
+            photos=photos,  # Передаем список фото вместо одного фото
+            name=data["name"],
+            age=int(data["age"]),
+            city=data["city"],
+            latitude=float(data["latitude"]),
+            longitude=float(data["longitude"]),
+            description=description,
+        )
 
     await state.clear()
     await session.refresh(user)

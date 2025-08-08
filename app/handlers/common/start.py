@@ -1,5 +1,5 @@
-from aiogram import types
-from aiogram.filters import CommandStart
+from aiogram import F, types
+from aiogram.filters import Command, CommandStart
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
@@ -11,8 +11,10 @@ from data.config import LOGO_DIR
 from database.models import UserModel
 
 
+@common_router.message(StateFilter("*"), F.text == "💤")
+@common_router.message(StateFilter("*"), Command("cancel"))
 @common_router.message(StateFilter("*"), CommandStart())
-async def _start_command(message: types.Message, user: UserModel, state: FSMContext) -> None:
+async def start_command(message: types.Message, user: UserModel, state: FSMContext) -> None:
     """
     Команда /start запускает бота и возвращает пользователя в начальное меню.
     Сброс состояния помогает, если пользователь запутался — всегда можно начать сначала.

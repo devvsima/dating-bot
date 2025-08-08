@@ -1,8 +1,10 @@
 from aiogram import types
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
+from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.handlers.common.start import start_command
 from app.keyboards.inline.lang import LangCallback, lang_ikb
 from app.routers import common_router
 from app.text import message_text as mt
@@ -22,6 +24,7 @@ async def _change_lang(
     callback: types.CallbackQuery,
     callback_data: LangCallback,
     user: UserModel,
+    state: FSMContext,
     session: AsyncSession,
 ) -> None:
     """Обрабатывает выбранный пользователем язык, и устанавливает его"""

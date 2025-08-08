@@ -7,6 +7,7 @@ import app.filters.create_profile_filtres as filters
 from app.business.dating_service import send_user_like_alert
 from app.business.menu_service import menu
 from app.business.profile_service import complaint_to_profile, send_profile_with_dist
+from app.handlers.common.start import start_command
 from app.keyboards.default.base import return_to_menu_kb, search_kb
 from app.keyboards.default.report import report_kb
 from app.routers import dating_router
@@ -15,8 +16,6 @@ from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Match, Profile, User
 from database.services.search import search_profiles
-
-from ..common.cancel import cancel_command
 
 
 @dating_router.message(StateFilter(None), F.text == "🔍")
@@ -141,7 +140,7 @@ async def next_profile(
         await send_profile_with_dist(user=user, profile=profile, session=session)
     else:
         await message.answer(mt.EMPTY_PROFILE_SEARCH)
-        await cancel_command(message, state)
+        await start_command(message, state, user)
 
 
 async def like_profile(

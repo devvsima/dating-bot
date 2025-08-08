@@ -8,7 +8,7 @@ from data.config import BOT_CHANNEL_URL
 
 
 @common_router.message(StateFilter("*"), Command("channel"))
-async def cancel_command(message: types.Message) -> None:
+async def channel_command(message: types.Message) -> None:
     """Отправляет ссылку на канал бота"""
     if url := BOT_CHANNEL_URL:
         await message.answer(mt.CHANNEL.format(url))

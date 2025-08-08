@@ -51,6 +51,13 @@ class RegistrationFormKb:
         return RegistrationFormKb.leave_previous(user.profile)
 
     @staticmethod
+    def photo_add() -> ReplyKeyboardMarkup:
+        builder = ReplyKeyboardBuilder()
+        builder.button(text=_("Это все, сохранить фото"))
+        builder.adjust(1)
+        return builder.as_markup(resize_keyboard=True)
+
+    @staticmethod
     def age(user: UserModel) -> ReplyKeyboardMarkup:
         try:
             kb = kb_gen([str(user.profile.age)])

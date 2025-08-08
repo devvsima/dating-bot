@@ -10,6 +10,7 @@ from app.routers import dating_router
 from app.states.default import ProfileEdit
 from app.text import message_text as mt
 from database.models import UserModel
+from database.models.profile_media import MediaTypes
 from database.services.profile_media import ProfileMedia
 
 
@@ -20,36 +21,98 @@ async def _edit_profile_photo_command(
     """Редактирует фотографию пользователя"""
     await state.set_state(ProfileEdit.photo)
 
-    kb = RegistrationFormKb.photo(user)
-    await message.answer(
-        text=mt.PHOTO,
-        reply_markup=kb,
+    # Инициализируем состояние
+    await state.update_data(
+        photos=[],
+        photo_count=0,
     )
+
+    kb = RegistrationFormKb.photo(user)
+    await message.answer(text=mt.PHOTO_EDIT_START, reply_markup=kb)
 
 
 @dating_router.message(StateFilter(ProfileEdit.photo), filters.IsPhoto())
 async def _update_photo(
     message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
-    """Обновляет фотографию профиля"""
+    """Обрабатывает загрузку фотографий"""
+    data = await state.get_data()
+    photos = data.get("photos", [])
+
     if message.text in filters.leave_previous_tuple:
-        # Пользователь хочет оставить текущее фото - ничего не делаем
-        pass
-    else:
-        # Пользователь загрузил новое фото
-        new_photo_url = message.photo[0].file_id
+        # Пользователь хочет оставить текущие фото - завершаем без изменений
+        await state.clear()
+        await message.answer(mt.PHOTO_UNCHANGED)
+        await profile_command(message, user, session)
+        return
 
-        # Удаляем все старые фото (но не видео)
-        await ProfileMedia.delete_profile_photos(session, user.id)
+    elif message.text == mt.PHOTO_SAVE_FINISH_BUTTON:
+        if not photos:
+            await message.answer(mt.PHOTO_NO_UPLOADED)
+            return
 
-        # Добавляем новое фото
-        await ProfileMedia.add_media(
-            session=session,
-            profile_id=user.id,
-            media_url=new_photo_url,
-            media_type="photo",
-            order=1,
-        )
+        try:
+            await ProfileMedia.delete_profile_photos(session, user.id)
+            for i, photo_file_id in enumerate(photos, 1):
+                await ProfileMedia.add_media(
+                    session=session,
+                    profile_id=user.id,
+                    media_url=photo_file_id,
+                    media_type=MediaTypes.Photo,
+                    order=i,
+                )
 
-    await state.clear()
-    await profile_command(message, user, session)
+            await state.clear()
+
+            await message.answer(mt.PHOTO_SAVED(len(photos)))
+            await profile_command(message, user, session)
+
+        except Exception as e:
+            await session.rollback()
+            await message.answer(mt.PHOTO_SAVE_ERROR)
+            print(f"Error saving photos: {e}")
+
+        return
+
+    elif message.photo:
+        # Проверяем лимит фотографий
+        if len(photos) >= 3:
+            await message.answer("❌ Максимум 3 фото! Ваши фото уже сохранены.")
+            return
+
+        # Добавляем новое фото в список
+        new_photo = message.photo[-1].file_id  # Берем фото лучшего качества
+        photos.append(new_photo)
+
+        await state.update_data(photos=photos)
+
+        # Обновляем счетчик и отправляем сообщение
+        new_count = len(photos)
+        remaining = 3 - new_count
+
+        if remaining > 0:
+            await message.answer(
+                text=mt.PHOTO_PROGRESS(new_count), reply_markup=RegistrationFormKb.photo_add()
+            )
+        else:
+            # Загружены все 3 фото - автоматически сохраняем
+            try:
+                await ProfileMedia.delete_profile_photos(session, user.id)
+                for i, photo_file_id in enumerate(photos, 1):
+                    await ProfileMedia.add_media(
+                        session=session,
+                        profile_id=user.id,
+                        media_url=photo_file_id,
+                        media_type=MediaTypes.Photo,
+                        order=i,
+                    )
+
+                await state.clear()
+
+                await message.answer(mt.PHOTO_ALL_UPLOADED())
+                await profile_command(message, user, session)
+
+            except Exception as e:
+                await session.rollback()
+                await message.answer(mt.PHOTO_SAVE_ERROR)
+                print(f"Error saving photos: {e}")

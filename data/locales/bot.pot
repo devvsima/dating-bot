@@ -1,14 +1,14 @@
-# Translations template for bot.
+# Translations template for PROJECT.
 # Copyright (C) 2025 ORGANIZATION
-# This file is distributed under the same license as the bot project.
+# This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: bot VERSION\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-02 18:39+0300\n"
+"POT-Creation-Date: 2025-08-08 19:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgid "Выбери, кого ты ищешь: 💕"
 msgstr ""
 
 #: app/text.py:67
-msgid "Пришли своё фото! 📸"
+msgid "Загрузи своё фото! Можно отправить до 3 фотографий одновременно 📸"
 msgstr ""
 
 #: app/text.py:71
@@ -245,6 +245,57 @@ msgstr ""
 msgid "✅ Жалоба успешно отправлена на рассмотрение!"
 msgstr ""
 
+#: app/text.py:229
+msgid "Загрузи новые фото! Можно отправить до 3 фотографий 📸"
+msgstr ""
+
+#: app/text.py:233
+msgid "Фотографии остались без изменений"
+msgstr ""
+
+#: app/text.py:237
+msgid "Вы не загрузили ни одного фото. Попробуйте еще раз."
+msgstr ""
+
+#: app/text.py:241
+msgid "❌ Ошибка при сохранении фото. Попробуйте еще раз."
+msgstr ""
+
+#: app/keyboards/default/registration_form.py:56 app/text.py:245
+#: app/text.py:253
+msgid "Это все, сохранить фото"
+msgstr ""
+
+#: app/text.py:249
+#, python-brace-format
+msgid ""
+"📸 Фото {current}/{total} загружено!\n"
+"\n"
+"Можете загрузить еще {remaining} фото или нажать '{finish_button}'"
+msgstr ""
+
+#: app/text.py:262
+#, python-brace-format
+msgid "Сохранено {} фото!"
+msgstr ""
+
+#: app/text.py:265
+#, python-brace-format
+msgid "Все {} фото загружены!"
+msgstr ""
+
+#: app/text.py:270
+msgid "❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
+msgstr ""
+
+#: app/text.py:274
+msgid "📸 Отправьте фотографию или выберите действие из меню"
+msgstr ""
+
+#: app/text.py:278
+msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
+msgstr ""
+
 #: app/keyboards/default/registration_form.py:17
 msgid "Создать анкету"
 msgstr ""
@@ -269,12 +320,12 @@ msgstr ""
 msgid "Всех"
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:77
-#: app/keyboards/default/registration_form.py:92
+#: app/keyboards/default/registration_form.py:84
+#: app/keyboards/default/registration_form.py:99
 msgid "Оставить предыдущее"
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:79
+#: app/keyboards/default/registration_form.py:86
 msgid "📍 Отправить местоположение"
 msgstr ""
 

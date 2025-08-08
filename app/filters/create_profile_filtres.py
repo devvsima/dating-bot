@@ -58,6 +58,14 @@ start_command_tuple = (
     "Crear un perfil",  # Испанский
     "Utwórz profil",  # Польский
 )
+save_photo_tuple = (
+    "Это все, сохранить фото",  # Русский
+    "That's it, keep the photo",  # Английский
+    "Це все, зберегти фото",  # Украинский
+    "C'est tout, gardez la photo",  # Французский
+    "Eso es todo, guardar foto",  # Испанский
+    "To wszystko, zachowaj zdjęcie",  # Польский
+)
 
 
 class IsCreate(Filter):
@@ -81,7 +89,11 @@ class IsFindGender(Filter):
 
 class IsPhoto(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(message.photo or message.text in leave_previous_tuple)
+        return bool(
+            message.photo
+            or message.text in leave_previous_tuple
+            or message.text in save_photo_tuple
+        )
 
 
 class IsName(Filter):

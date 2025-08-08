@@ -64,7 +64,7 @@ class MessageText:
 
     @property
     def PHOTO(self):
-        return _("Пришли своё фото! 📸")
+        return _("Загрузи своё фото! Можно отправить до 3 фотографий одновременно 📸")
 
     @property
     def NAME(self):
@@ -222,6 +222,60 @@ The reason: {}
     @property
     def REPORT_TO_PROFILE(self):
         return _("✅ Жалоба успешно отправлена на рассмотрение!")
+
+    # Редактирование фотографий
+    @property
+    def PHOTO_EDIT_START(self):
+        return _("Загрузи новые фото! Можно отправить до 3 фотографий 📸")
+
+    @property
+    def PHOTO_UNCHANGED(self):
+        return _("Фотографии остались без изменений")
+
+    @property
+    def PHOTO_NO_UPLOADED(self):
+        return _("Вы не загрузили ни одного фото. Попробуйте еще раз.")
+
+    @property
+    def PHOTO_SAVE_ERROR(self):
+        return _("❌ Ошибка при сохранении фото. Попробуйте еще раз.")
+
+    @property
+    def PHOTO_SAVE_FINISH_BUTTON(self):
+        return _("Это все, сохранить фото")
+
+    @property
+    def PHOTO_PROGRESS_TEMPLATE(self):
+        return _("📸 Фото {current}/{total} загружено!\n\nМожете загрузить еще {remaining} фото или нажать '{finish_button}'")
+    
+    def PHOTO_PROGRESS(self, current: int, total: int = 3):
+        remaining = total - current
+        finish_button_text = _("Это все, сохранить фото")
+        return self.PHOTO_PROGRESS_TEMPLATE.format(
+            current=current, 
+            total=total, 
+            remaining=remaining, 
+            finish_button=finish_button_text
+        )
+
+    def PHOTO_SAVED(self, count: int):
+        return _("Сохранено {} фото!").format(count)
+
+    def PHOTO_ALL_UPLOADED(self, count: int = 3):
+        return _("Все {} фото загружены!").format(count)
+
+    # Дополнительные тексты для редактирования фото
+    @property
+    def PHOTO_LIMIT_REACHED(self):
+        return _("❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения.")
+
+    @property
+    def PHOTO_UPLOAD_INSTRUCTION(self):
+        return _("📸 Отправьте фотографию или выберите действие из меню")
+
+    @property
+    def PHOTO_REQUIRED_FOR_PROFILE(self):
+        return _("❌ Для создания профиля необходимо загрузить хотя бы одно фото!")
 
 
 message_text = MessageText()
