@@ -6,6 +6,7 @@ from aiogram.utils.i18n import I18n
 from data.config import BOT_TOKEN, I18N_DOMAIN, LOCALES_DIR, redis
 from utils.logging import logger
 
+# -< FSM Storage>-
 if redis.URL:
     from aiogram.fsm.storage.redis import RedisStorage
     from redis.asyncio.client import Redis
@@ -18,10 +19,15 @@ elif not redis.URL:
     storage = MemoryStorage()
     logger.log("BOT", "Storage: Default")
 
+# -< Bot >-
+bot_properties = DefaultBotProperties(
+    parse_mode=ParseMode.HTML,
+)
 bot = Bot(
     token=BOT_TOKEN,
-    default=DefaultBotProperties(parse_mode=ParseMode.HTML),
+    default=bot_properties,
 )
+
 dp = Dispatcher(bot=bot, storage=storage)
 
 i18n = I18n(path=LOCALES_DIR, domain=I18N_DOMAIN)

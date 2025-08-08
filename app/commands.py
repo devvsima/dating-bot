@@ -8,7 +8,6 @@ def get_default_commands() -> list:
         BotCommand(command="/start", description="Start"),
         BotCommand(command="/lang", description="Change language"),
         BotCommand(command="/help", description="Help"),
-        BotCommand(command="/cancel", description="Cancel"),
     ]
 
     return commands
