@@ -44,7 +44,7 @@ async def match_archive(
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(mt.LIKE_ARCHIVE)
-        await (message, state)
+        await start_command(message, state, user)
 
 
 @dating_router.callback_query(StateFilter("*"), F.data == "archive")

@@ -246,16 +246,15 @@ The reason: {}
 
     @property
     def PHOTO_PROGRESS_TEMPLATE(self):
-        return _("📸 Фото {current}/{total} загружено!\n\nМожете загрузить еще {remaining} фото или нажать '{finish_button}'")
-    
+        return _(
+            "📸 Фото {current}/{total} загружено!\n\nМожете загрузить еще {remaining} фото или нажать '{finish_button}'"
+        )
+
     def PHOTO_PROGRESS(self, current: int, total: int = 3):
         remaining = total - current
         finish_button_text = _("Это все, сохранить фото")
         return self.PHOTO_PROGRESS_TEMPLATE.format(
-            current=current, 
-            total=total, 
-            remaining=remaining, 
-            finish_button=finish_button_text
+            current=current, total=total, remaining=remaining, finish_button=finish_button_text
         )
 
     def PHOTO_SAVED(self, count: int):
