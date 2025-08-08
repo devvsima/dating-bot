@@ -24,6 +24,13 @@ async def search_profiles(
     Динамический поиск анкет: начинаем с малого радиуса и увеличиваем, пока не найдём достаточно анкет.
     """
 
+    # Проверяем, что профиль существует и имеет необходимые данные
+    if not profile:
+        return []
+
+    if not profile.latitude or not profile.longitude:
+        return []
+
     found_profiles = []
     current_distance = INITIAL_DISTANCE
 

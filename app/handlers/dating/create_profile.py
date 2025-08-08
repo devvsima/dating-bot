@@ -12,9 +12,11 @@ from app.text import message_text as mt
 from database.models.user import UserModel
 from database.services import Profile
 from database.services.profile_media import ProfileMedia
+from database.services.user import User
+
+from .profile import profile_command
 
 
-# -< Create profile >-
 @dating_router.message(StateFilter(None), F.text == "🔄")
 @dating_router.message(StateFilter(None), filters.IsCreate())
 async def _create_profile_command(message: types.Message, state: FSMContext, user: UserModel):
@@ -64,9 +66,15 @@ async def _city(
     message: types.Message, state: FSMContext, latitude: str, longitude: str, user: UserModel
 ):
     if not (latitude or longitude):
-        city = user.profile.city
-        latitude = user.profile.latitude
-        longitude = user.profile.longitude
+        # Если пользователь выбрал "Оставить предыдущее" и у него есть профиль
+        if user.profile:
+            city = user.profile.city
+            latitude = user.profile.latitude
+            longitude = user.profile.longitude
+        else:
+            # Если профиля нет, просим ввести город
+            await message.answer("Пожалуйста, укажите ваш город или отправьте геолокацию")
+            return
     else:
         city = message.text if message.text else "📍"
 
@@ -161,7 +169,9 @@ async def _description(
 ):
     data = await state.get_data()
     description = (
-        user.profile.description if message.text in filters.leave_previous_tuple else message.text
+        user.profile.description
+        if message.text in filters.leave_previous_tuple and user.profile
+        else message.text
     )
 
     # Получаем список фото из состояния
@@ -175,24 +185,30 @@ async def _description(
         await state.set_state(ProfileCreate.photo)
         kb = RegistrationFormKb.photo(user)
         await message.answer(text=mt.PHOTO, reply_markup=kb)
-        return await Profile.create_or_update(
-            session=session,
-            id=message.from_user.id,
-            gender=data["gender"],
-            find_gender=data["find_gender"],
-            photos=photos,  # Передаем список фото вместо одного фото
-            name=data["name"],
-            age=int(data["age"]),
-            city=data["city"],
-            latitude=float(data["latitude"]),
-            longitude=float(data["longitude"]),
-            description=description,
-        )
+        return
+
+    # Создаем или обновляем профиль
+    await Profile.create_or_update(
+        session=session,
+        id=message.from_user.id,
+        gender=data["gender"],
+        find_gender=data["find_gender"],
+        photos=photos,  # Передаем список фото вместо одного фото
+        name=data["name"],
+        age=int(data["age"]),
+        city=data["city"],
+        latitude=float(data["latitude"]),
+        longitude=float(data["longitude"]),
+        description=description,
+    )
 
     await state.clear()
-    await session.refresh(user)
+
+    # Получаем обновленного пользователя с профилем
+    updated_user = await User.get_with_profile(session, message.from_user.id)
+
     await message.answer(mt.PROFILE_CREATED)
-    await menu(chat_id=user.id)
+    await menu(chat_id=updated_user.id)
 
 
 # -< OLD >-

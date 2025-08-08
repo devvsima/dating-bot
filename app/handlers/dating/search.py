@@ -23,6 +23,7 @@ async def _search_command(
     message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Бот подбирает анкеты, соответствующие предпочтениям пользователя, и предлагает их"""
+
     await message.answer(mt.SEARCH, reply_markup=search_kb)
 
     if profile_list := await search_profiles(session, user.profile):

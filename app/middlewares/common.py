@@ -24,10 +24,14 @@ class CommonMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.status == UserStatus.Banned:
+
+        # Получаем пользователя с профилем
+        user_with_profile = await User.get_with_profile(session, user.id)
+
+        if user_with_profile.status == UserStatus.Banned:
             return
 
-        data["user"] = user
+        data["user"] = user_with_profile
         if isinstance(message, Message):
             if is_create:
                 code = "unk"
