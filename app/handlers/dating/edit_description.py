@@ -35,4 +35,4 @@ async def _update_photo(
         description=message.text,
     )
     await state.clear()
-    await profile_command(message, user)
+    await profile_command(message, user, session)
