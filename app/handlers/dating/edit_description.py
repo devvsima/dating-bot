@@ -19,8 +19,7 @@ async def _edit_profile_description_command(
     """Редактирует описание пользователя"""
     await state.set_state(ProfileEdit.description)
 
-    kb = RegistrationFormKb.description(user)
-
+    kb = RegistrationFormKb.description(user=user)
     await message.answer(text=mt.DESCRIPTION, reply_markup=kb)
 
 
@@ -35,4 +34,4 @@ async def _update_photo(
         description=message.text,
     )
     await state.clear()
-    await profile_command(message, user, session)
+    await profile_command(message=message, user=user, session=session)

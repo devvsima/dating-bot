@@ -66,14 +66,11 @@ async def _city(
     message: types.Message, state: FSMContext, latitude: str, longitude: str, user: UserModel
 ):
     if not (latitude or longitude):
-        # Если пользователь выбрал "Оставить предыдущее" и у него есть профиль
         if user.profile:
             city = user.profile.city
             latitude = user.profile.latitude
             longitude = user.profile.longitude
         else:
-            # Если профиля нет, просим ввести город
-            await message.answer("Пожалуйста, укажите ваш город или отправьте геолокацию")
             return
     else:
         city = message.text if message.text else "📍"
@@ -95,9 +92,6 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
     await state.set_state(ProfileCreate.photo)
     await state.update_data(age=message.text)
 
-    # Инициализируем состояние для фото
-    await state.update_data(photos=[], photo_count=0)
-
     kb = RegistrationFormKb.photo(user)
     await message.answer(text=mt.PHOTO, reply_markup=kb)
 
@@ -106,6 +100,7 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession):
     data = await state.get_data()
+    await state.update_data(photos=[], photo_count=0)
     photos = data.get("photos", [])
 
     if message.text in filters.leave_previous_tuple:
@@ -138,18 +133,16 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
             await message.answer(mt.PHOTO_LIMIT_REACHED)
             return
 
-        # Добавляем новое фото в список
-        new_photo = message.photo[-1].file_id  # Берем фото лучшего качества
+        new_photo = message.photo[-1].file_id
         photos.append(new_photo)
-
         await state.update_data(photos=photos)
 
-        # Обновляем счетчик и отправляем сообщение
         new_count = len(photos)
 
         if new_count < 3:
             await message.answer(
-                text=mt.PHOTO_PROGRESS(new_count), reply_markup=RegistrationFormKb.photo_add()
+                text=mt.PHOTO_PROGRESS(current=new_count),
+                reply_markup=RegistrationFormKb.photo_add(),
             )
         else:
             # Загружены все 3 фото - переходим к описанию
@@ -168,32 +161,20 @@ async def _description(
     message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ):
     data = await state.get_data()
+    photos = data.get("photos", [])
     description = (
         user.profile.description
         if message.text in filters.leave_previous_tuple and user.profile
         else message.text
     )
+    await state.clear()
 
-    # Получаем список фото из состояния
-    photos = data.get("photos", [])
-
-    # Проверяем, что есть хотя бы одно фото
-    if not photos:
-        await message.answer(mt.PHOTO_REQUIRED_FOR_PROFILE)
-
-        # Возвращаем пользователя к загрузке фото
-        await state.set_state(ProfileCreate.photo)
-        kb = RegistrationFormKb.photo(user)
-        await message.answer(text=mt.PHOTO, reply_markup=kb)
-        return
-
-    # Создаем или обновляем профиль
     await Profile.create_or_update(
         session=session,
         id=message.from_user.id,
         gender=data["gender"],
         find_gender=data["find_gender"],
-        photos=photos,  # Передаем список фото вместо одного фото
+        photos=photos,
         name=data["name"],
         age=int(data["age"]),
         city=data["city"],
@@ -202,9 +183,6 @@ async def _description(
         description=description,
     )
 
-    await state.clear()
-
-    # Получаем обновленного пользователя с профилем
     updated_user = await User.get_with_profile(session, message.from_user.id)
 
     await message.answer(mt.PROFILE_CREATED)

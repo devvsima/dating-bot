@@ -6,8 +6,9 @@ from loader import _, bot, i18n
 def get_default_commands() -> list:
     commands = [
         BotCommand(command="/start", description="Start"),
-        BotCommand(command="/lang", description="Change language"),
         BotCommand(command="/help", description="Help"),
+        BotCommand(command="/lang", description="Change language"),
+        BotCommand(command="/channel", description="Telegram channel"),
     ]
 
     return commands
