@@ -24,7 +24,12 @@ async def send_profile(chat_id: int, profile: ProfileModel, session: AsyncSessio
         else:
             media_list.append(InputMediaPhoto(media=media_obj.media))
 
-    await bot.send_media_group(chat_id=chat_id, media=media_list)
+    # Проверяем, есть ли медиа для отправки
+    if media_list:
+        await bot.send_media_group(chat_id=chat_id, media=media_list)
+    else:
+        # Если нет медиа, отправляем просто текстовое сообщение
+        await bot.send_message(chat_id=chat_id, text=f"📷 Нет фото\n\n{text}")
 
 
 async def send_profile_with_dist(
@@ -49,7 +54,12 @@ async def send_profile_with_dist(
         else:
             media_list.append(InputMediaPhoto(media=media_obj.media))
 
-    await bot.send_media_group(chat_id=user.id, media=media_list)
+    # Проверяем, есть ли медиа для отправки
+    if media_list:
+        await bot.send_media_group(chat_id=user.id, media=media_list)
+    else:
+        # Если нет медиа, отправляем просто текстовое сообщение
+        await bot.send_message(chat_id=user.id, text=text)
 
 
 async def complaint_to_profile(
