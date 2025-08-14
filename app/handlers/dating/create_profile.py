@@ -24,6 +24,9 @@ async def _create_profile_command(message: types.Message, state: FSMContext, use
     Также используется для пересоздания анкеты"""
     await state.set_state(ProfileCreate.name)
 
+    # Инициализируем список фотографий
+    await state.update_data(photos=[])
+
     kb = RegistrationFormKb.name(user)
     await message.answer(text=mt.NAME, reply_markup=kb)
 
@@ -100,7 +103,6 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession):
     data = await state.get_data()
-    await state.update_data(photos=[], photo_count=0)
     photos = data.get("photos", [])
 
     if message.text in filters.leave_previous_tuple:
@@ -120,6 +122,9 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
         if not photos:
             await message.answer(mt.PHOTO_NO_UPLOADED)
             return
+
+        # Обновляем данные состояния с текущими фото
+        await state.update_data(photos=photos)
 
         # Переходим к описанию
         kb = RegistrationFormKb.description(user)
@@ -167,6 +172,10 @@ async def _description(
         if message.text in filters.leave_previous_tuple and user.profile
         else message.text
     )
+
+    # Логируем количество фотографий для отладки
+    print(f"DEBUG: Creating profile for user {user.id} with {len(photos)} photos: {photos}")
+
     await state.clear()
 
     await Profile.create_or_update(
