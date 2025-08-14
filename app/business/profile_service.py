@@ -29,7 +29,7 @@ async def send_profile(chat_id: int, profile: ProfileModel, session: AsyncSessio
         await bot.send_media_group(chat_id=chat_id, media=media_list)
     else:
         # Если нет медиа, отправляем просто текстовое сообщение
-        await bot.send_message(chat_id=chat_id, text=f"📷 Нет фото\n\n{text}")
+        await bot.send_message(chat_id=chat_id, text=text)
 
 
 async def send_profile_with_dist(
