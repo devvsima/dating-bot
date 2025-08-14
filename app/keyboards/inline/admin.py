@@ -17,7 +17,7 @@ def stats_ikb(current_type: str = "User") -> InlineKeyboardMarkup:
             text = f"🔹 {text}"
         builder.button(text=text, callback_data=StatsCallback(type=callback_type))
 
-    builder.adjust(3)  # Размещаем кнопки в ряд
+    builder.adjust(2)  # Размещаем кнопки в ряд
     return builder.as_markup()
 
 
