@@ -1,4 +1,4 @@
-from aiogram.exceptions import BotBlocked
+from aiogram.exceptions import TelegramBadRequest, TelegramForbiddenError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.keyboards.inline.archive import check_archive_ikb
@@ -18,7 +18,7 @@ async def send_user_like_alert(session: AsyncSession, user: UserModel):
             text=mt.LIKE_PROFILE(user.language).format(len(matchs)),
             reply_markup=check_archive_ikb(user.language),
         )
-    except BotBlocked:
+    except TelegramForbiddenError:
         logger.info(
             f"Пользователь {user.id} @{user.username} заблокировал бота. Оповещение не отправлено."
         )
