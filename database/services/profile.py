@@ -49,7 +49,6 @@ class Profile(BaseService):
 
         # Обрабатываем фото
         if photos:
-            print(f"DEBUG: Processing {len(photos)} photos for profile {profile_id}: {photos}")
             # Удаляем все старые фото профиля
             await ProfileMedia.delete_profile_photos(session, profile_id)
 
@@ -63,7 +62,6 @@ class Profile(BaseService):
                     order=i,
                 )
         elif photo_url:
-            print(f"DEBUG: Processing single photo for profile {profile_id}: {photo_url}")
             # Обратная совместимость - если передано одно фото
             await ProfileMedia.delete_profile_photos(session, profile_id)
 
@@ -75,6 +73,5 @@ class Profile(BaseService):
                 order=1,
             )
         else:
-            print(f"DEBUG: No photos provided for profile {profile_id}")
-
+            logger.log("DATABASE", "Error to creating profile")
         return obj, is_new

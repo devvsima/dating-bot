@@ -173,9 +173,6 @@ async def _description(
         else message.text
     )
 
-    # Логируем количество фотографий для отладки
-    print(f"DEBUG: Creating profile for user {user.id} with {len(photos)} photos: {photos}")
-
     await state.clear()
 
     await Profile.create_or_update(
