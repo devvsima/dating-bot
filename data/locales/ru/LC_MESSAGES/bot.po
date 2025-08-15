@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-08 19:16+0300\n"
+"POT-Creation-Date: 2025-08-15 17:50+0300\n"
 "PO-Revision-Date: 2025-03-04 16:06+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -264,11 +264,11 @@ msgid "❌ Ошибка при сохранении фото. Попробуйт
 msgstr ""
 
 #: app/keyboards/default/registration_form.py:56 app/text.py:245
-#: app/text.py:253
+#: app/text.py:255
 msgid "Это все, сохранить фото"
 msgstr ""
 
-#: app/text.py:249
+#: app/text.py:250
 #, python-brace-format
 msgid ""
 "📸 Фото {current}/{total} загружено!\n"
@@ -276,25 +276,25 @@ msgid ""
 "Можете загрузить еще {remaining} фото или нажать '{finish_button}'"
 msgstr ""
 
-#: app/text.py:262
+#: app/text.py:261
 #, python-brace-format
 msgid "Сохранено {} фото!"
 msgstr ""
 
-#: app/text.py:265
+#: app/text.py:264
 #, python-brace-format
 msgid "Все {} фото загружены!"
 msgstr ""
 
-#: app/text.py:270
+#: app/text.py:269
 msgid "❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
 msgstr ""
 
-#: app/text.py:274
+#: app/text.py:273
 msgid "📸 Отправьте фотографию или выберите действие из меню"
 msgstr ""
 
-#: app/text.py:278
+#: app/text.py:277
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr ""
 
@@ -322,12 +322,17 @@ msgstr ""
 msgid "Всех"
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:84
-#: app/keyboards/default/registration_form.py:99
+#: app/keyboards/default/registration_form.py:80
+#: app/keyboards/default/registration_form.py:92
+#: app/keyboards/default/registration_form.py:107
 msgid "Оставить предыдущее"
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:86
+#: app/keyboards/default/registration_form.py:82
+msgid "Пропустить"
+msgstr ""
+
+#: app/keyboards/default/registration_form.py:94
 msgid "📍 Отправить местоположение"
 msgstr ""
 

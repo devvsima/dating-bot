@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-08 19:16+0300\n"
-"PO-Revision-Date: 2025-08-08 19:22+0300\n"
+"POT-Creation-Date: 2025-08-15 17:50+0300\n"
+"PO-Revision-Date: 2025-08-15 17:51+0300\n"
 "Last-Translator: \n"
 "Language-Team: pl <LL@li.org>\n"
 "Language: pl\n"
@@ -336,11 +336,11 @@ msgid "❌ Ошибка при сохранении фото. Попробуйт
 msgstr "❌ Błąd podczas zapisywania zdjęcia. Spróbuj ponownie."
 
 #: app/keyboards/default/registration_form.py:56 app/text.py:245
-#: app/text.py:253
+#: app/text.py:255
 msgid "Это все, сохранить фото"
 msgstr "To wszystko, zachowaj zdjęcie"
 
-#: app/text.py:249
+#: app/text.py:250
 #, python-brace-format
 msgid ""
 "📸 Фото {current}/{total} загружено!\n"
@@ -352,28 +352,28 @@ msgstr ""
 "Możesz przesłać jeszcze {remaining} zdjęcie(a) lub nacisnąć "
 "'{finish_button}'"
 
-#: app/text.py:262
+#: app/text.py:261
 #, python-brace-format
 msgid "Сохранено {} фото!"
 msgstr "Zapisano {} zdjęcie(a)!"
 
-#: app/text.py:265
+#: app/text.py:264
 #, python-brace-format
 msgid "Все {} фото загружены!"
 msgstr "Wszystkie {} zdjęcia zostały przesłane!"
 
-#: app/text.py:270
+#: app/text.py:269
 msgid ""
 "❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
 msgstr ""
 "❌ Maksymalnie 3 zdjęcia! Naciśnij 'To wszystko, zapisz zdjęcie' aby "
 "zapisać."
 
-#: app/text.py:274
+#: app/text.py:273
 msgid "📸 Отправьте фотографию или выберите действие из меню"
 msgstr "📸 Prześlij zdjęcie lub wybierz akcję z menu"
 
-#: app/text.py:278
+#: app/text.py:277
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr "❌ Aby utworzyć profil, musisz przesłać co najmniej jedno zdjęcie!"
 
@@ -401,12 +401,17 @@ msgstr "Dziewcząt"
 msgid "Всех"
 msgstr "Wszyscy"
 
-#: app/keyboards/default/registration_form.py:84
-#: app/keyboards/default/registration_form.py:99
+#: app/keyboards/default/registration_form.py:80
+#: app/keyboards/default/registration_form.py:92
+#: app/keyboards/default/registration_form.py:107
 msgid "Оставить предыдущее"
 msgstr "Pozostaw poprzednie"
 
-#: app/keyboards/default/registration_form.py:86
+#: app/keyboards/default/registration_form.py:82
+msgid "Пропустить"
+msgstr "Pomiń"
+
+#: app/keyboards/default/registration_form.py:94
 msgid "📍 Отправить местоположение"
 msgstr "📍 Wyślij lokalizację"
 

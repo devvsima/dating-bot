@@ -105,7 +105,7 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.text in filters.leave_previous_tuple:
+    if message.text in filters.LEAVE_PREVIOUS_OPTIONS:
         # Получаем существующие фото из профиля пользователя
         existing_photos = await ProfileMedia.get_profile_photos(session, user.id)
         if existing_photos:
@@ -167,11 +167,12 @@ async def _description(
 ):
     data = await state.get_data()
     photos = data.get("photos", [])
-    description = (
-        user.profile.description
-        if message.text in filters.leave_previous_tuple and user.profile
-        else message.text
-    )
+    if message.text in filters.SKIP_OPTIONS:
+        description = ""
+    elif message.text in filters.LEAVE_PREVIOUS_OPTIONS and user.profile:
+        description = user.profile.description
+    else:
+        description = message.text
 
     await state.clear()
 
@@ -189,10 +190,8 @@ async def _description(
         description=description,
     )
 
-    updated_user = await User.get_with_profile(session, message.from_user.id)
-
     await message.answer(mt.PROFILE_CREATED)
-    await menu(chat_id=updated_user.id)
+    await menu(chat_id=user.id)
 
 
 # -< OLD >-

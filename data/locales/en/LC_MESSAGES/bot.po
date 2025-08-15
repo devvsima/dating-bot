@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-08 19:16+0300\n"
-"PO-Revision-Date: 2025-08-08 19:18+0300\n"
+"POT-Creation-Date: 2025-08-15 17:50+0300\n"
+"PO-Revision-Date: 2025-08-15 17:52+0300\n"
 "Last-Translator: \n"
 "Language-Team: en <LL@li.org>\n"
 "Language: en\n"
@@ -318,11 +318,11 @@ msgstr "You have not uploaded any photos. Try again."
 msgid "❌ Ошибка при сохранении фото. Попробуйте еще раз."
 msgstr "❌ Error saving photo. Try again."
 
-#: app/keyboards/default/registration_form.py:56 app/text.py:245 app/text.py:253
+#: app/keyboards/default/registration_form.py:56 app/text.py:245 app/text.py:255
 msgid "Это все, сохранить фото"
 msgstr "That's it, keep the photo"
 
-#: app/text.py:249
+#: app/text.py:250
 #, python-brace-format
 msgid ""
 "📸 Фото {current}/{total} загружено!\n"
@@ -333,25 +333,25 @@ msgstr ""
 "\n"
 "You can upload {remaining} more photo(s) or press '{finish_button}'"
 
-#: app/text.py:262
+#: app/text.py:261
 #, python-brace-format
 msgid "Сохранено {} фото!"
 msgstr "{} photo(s) saved!"
 
-#: app/text.py:265
+#: app/text.py:264
 #, python-brace-format
 msgid "Все {} фото загружены!"
 msgstr "All {} photo(s) uploaded!"
 
-#: app/text.py:270
+#: app/text.py:269
 msgid "❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
 msgstr "❌ Maximum 3 photos! Press 'That's all, save photo' to save."
 
-#: app/text.py:274
+#: app/text.py:273
 msgid "📸 Отправьте фотографию или выберите действие из меню"
 msgstr "📸 Send a photo or choose an action from the menu"
 
-#: app/text.py:278
+#: app/text.py:277
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr "❌ To create a profile, you must upload at least one photo!"
 
@@ -379,12 +379,17 @@ msgstr "Girls"
 msgid "Всех"
 msgstr "Everyone"
 
-#: app/keyboards/default/registration_form.py:84
-#: app/keyboards/default/registration_form.py:99
+#: app/keyboards/default/registration_form.py:80
+#: app/keyboards/default/registration_form.py:92
+#: app/keyboards/default/registration_form.py:107
 msgid "Оставить предыдущее"
 msgstr "Leave previous"
 
-#: app/keyboards/default/registration_form.py:86
+#: app/keyboards/default/registration_form.py:82
+msgid "Пропустить"
+msgstr "Skip"
+
+#: app/keyboards/default/registration_form.py:94
 msgid "📍 Отправить местоположение"
 msgstr "📍 Send location"
 

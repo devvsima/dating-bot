@@ -75,7 +75,13 @@ class RegistrationFormKb:
 
     @staticmethod
     def description(user: UserModel) -> ReplyKeyboardMarkup:
-        return RegistrationFormKb.leave_previous(user.profile)
+        builder = ReplyKeyboardBuilder()
+        if user.profile and user.profile.description:
+            builder.button(text=_("Оставить предыдущее"))
+        builder.button(text=_("Пропустить"))
+
+        builder.adjust(1)
+        return builder.as_markup(resize_keyboard=True)
 
     @staticmethod
     def city(user: UserModel | None):

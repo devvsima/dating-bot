@@ -3,7 +3,7 @@ from aiogram.types import Message
 
 from utils.geopy import get_coordinates
 
-gender_map = {
+GENDER_MAP = {
     "Парень": "male",  # Русский
     "Хлопець": "male",  # Украинский
     "Boy": "male",  # Английский
@@ -18,7 +18,7 @@ gender_map = {
     "Dziewczyna": "female",  # Польский
 }
 
-find_gender_map = {
+FIND_GENDER_MAP = {
     "Парней": "male",  # Русский
     "Хлопців": "male",  # Украинский
     "Boys": "male",  # Английский
@@ -39,8 +39,7 @@ find_gender_map = {
     "Wszyscy": "all",  # Польский
 }
 
-
-leave_previous_tuple = (
+LEAVE_PREVIOUS_OPTIONS = (
     "Оставить предыдущее",  # Русский
     "Leave previous",  # Английский
     "Залишити попереднє",  # Украинский
@@ -49,7 +48,16 @@ leave_previous_tuple = (
     "Pozostaw poprzednie",  # Польский
 )
 
-start_command_tuple = (
+SKIP_OPTIONS = (
+    "Пропустить",  # Русский
+    "Skip",  # Английский
+    "Пропустити",  # Украинский
+    "Passer",  # Французский
+    "Saltar",  # Испанский
+    "Pomiń",  # Польский
+)
+
+START_COMMAND_OPTIONS = (
     "/create",
     "Создать анкету",  # Русский
     "Create a profile",  # Английский
@@ -58,7 +66,8 @@ start_command_tuple = (
     "Crear un perfil",  # Испанский
     "Utwórz profil",  # Польский
 )
-save_photo_tuple = (
+
+SAVE_PHOTO_OPTIONS = (
     "Это все, сохранить фото",  # Русский
     "That's it, keep the photo",  # Английский
     "Це все, зберегти фото",  # Украинский
@@ -70,20 +79,20 @@ save_photo_tuple = (
 
 class IsCreate(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(message.text in start_command_tuple)
+        return bool(message.text in START_COMMAND_OPTIONS)
 
 
 class IsGender(Filter):
     async def __call__(self, message: Message) -> dict | bool:
-        if message.text in gender_map:
-            return {"gender": gender_map[message.text]}
+        if message.text in GENDER_MAP:
+            return {"gender": GENDER_MAP[message.text]}
         return
 
 
 class IsFindGender(Filter):
     async def __call__(self, message: Message) -> dict | bool:
-        if message.text in find_gender_map:
-            return {"find_gender": find_gender_map[message.text]}
+        if message.text in FIND_GENDER_MAP:
+            return {"find_gender": FIND_GENDER_MAP[message.text]}
         return False
 
 
@@ -91,8 +100,8 @@ class IsPhoto(Filter):
     async def __call__(self, message: Message) -> bool:
         return bool(
             message.photo
-            or message.text in leave_previous_tuple
-            or message.text in save_photo_tuple
+            or message.text in LEAVE_PREVIOUS_OPTIONS
+            or message.text in SAVE_PHOTO_OPTIONS
         )
 
 
@@ -114,7 +123,7 @@ class IsCity(Filter):
         if message.text:
             if message.text.isdigit():
                 return False
-            if message.text in leave_previous_tuple:
+            if message.text in LEAVE_PREVIOUS_OPTIONS:
                 latitude = None
                 longitude = None
             elif coordinates := get_coordinates(message.text):
@@ -131,7 +140,9 @@ class IsCity(Filter):
 
 class IsDescription(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(len(message.text) < 900)
+        return bool(
+            len(message.text) < 900 or message.text in SKIP_OPTIONS,
+        )
 
 
 class IsMessageToUser(Filter):
