@@ -2,6 +2,11 @@
 
 IF "%1"=="run" (
     uv run main.py
+    uv run web_start.py
+) ELSE IF "%1"=="runweb" (
+    uv run web_start.py
+) ELSE IF "%1"=="runbot" (
+    uv run main.py
 ) ELSE IF "%1"=="mapp" (
     uv run alembic upgrade head
 ) ELSE IF "%1"=="mgen" (

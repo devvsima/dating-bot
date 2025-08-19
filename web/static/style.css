@@ -1,0 +1,99 @@
+/* Additional styles for admin panel */
+body {
+  background-color: #f8f9fa;
+}
+
+.stat-card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 10px 10px 0 0 !important;
+  border: none;
+}
+
+.progress {
+  height: 20px;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  border-radius: 10px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+}
+
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #667eea;
+  color: white;
+  border: none;
+}
+
+.table tbody tr:hover {
+  background-color: #f0f7ff;
+}
+
+.chart-container {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Loading animation */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .stat-card {
+    margin-bottom: 20px;
+  }
+
+  .chart-container {
+    height: 300px !important;
+  }
+}
+
+/* Color scheme for statistics */
+.text-users {
+  color: #007bff;
+}
+.text-blocked {
+  color: #dc3545;
+}
+.text-profiles {
+  color: #28a745;
+}
+.text-matches {
+  color: #ffc107;
+}
+.text-referrals {
+  color: #17a2b8;
+}

@@ -1,6 +1,6 @@
 import asyncio
 
-from aiogram import types
+from aiogram import F, types
 from aiogram.exceptions import TelegramAPIError, TelegramBadRequest, TelegramForbiddenError
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
@@ -15,6 +15,7 @@ from utils.logging import logger
 
 
 @admin_router.message(StateFilter(None), Command("mailing"))
+@admin_router.message(StateFilter(None), F.text == "📨 Mailing")
 async def users_mailing_panel(message: types.Message, state: FSMContext) -> None:
     """Admin panel for user mailing."""
     await message.answer(

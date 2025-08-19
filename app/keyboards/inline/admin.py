@@ -17,7 +17,7 @@ def stats_ikb(current_type: str = "User") -> InlineKeyboardMarkup:
             text = f"🔹 {text}"
         builder.button(text=text, callback_data=StatsCallback(type=callback_type))
 
-    builder.adjust(2)  # Размещаем кнопки в ряд
+    builder.adjust(2)
     return builder.as_markup()
 
 
@@ -27,9 +27,10 @@ def block_user_ikb(id: int, username: str) -> InlineKeyboardMarkup:
         text="☠️ Block user {}".format(username),
         callback_data=BlockUserCallback(id=id, username=username, ban=True),
     )
+    # Хотелось бы здесь реализовать отправку предупредительного сообщения
     builder.button(
         text="Dismiss",
         callback_data=BlockUserCallback(id=id, username=username, ban=False),
     )
-
+    builder.adjust(1)
     return builder.as_markup()

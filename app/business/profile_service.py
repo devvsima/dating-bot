@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.keyboards.inline.admin import block_user_ikb
 from app.text import message_text as mt
-from data.config import MODERATOR_GROUP
+from data.config import tgbot
 from database.models.profile import ProfileModel
 from database.models.user import UserModel
 from database.services.profile_media import ProfileMedia
@@ -67,9 +67,9 @@ async def complaint_to_profile(
 ) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
-    if MODERATOR_GROUP:
+    if tgbot.MODERATOR_GROUP_ID:
         try:
-            await send_profile(MODERATOR_GROUP, complaint_user.profile, session)
+            await send_profile(tgbot.MODERATOR_GROUP_ID, complaint_user.profile, session)
 
             text = mt.REPORT_TO_USER.format(
                 complainant.id,
@@ -80,7 +80,7 @@ async def complaint_to_profile(
             )
 
             await bot.send_message(
-                chat_id=MODERATOR_GROUP,
+                chat_id=tgbot.MODERATOR_GROUP_ID,
                 text=text,
                 reply_markup=block_user_ikb(
                     id=complaint_user.id,

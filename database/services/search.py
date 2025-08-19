@@ -4,15 +4,7 @@ from loguru import logger
 from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from data.config import (
-    AGE_RANGE,
-    BLOCK_SIZE,
-    INITIAL_DISTANCE,
-    MAX_DISTANCE,
-    MIN_PROFILES,
-    RADIUS,
-    RADIUS_STEP,
-)
+from data.config import search
 from database.models.profile import ProfileModel
 
 
@@ -32,9 +24,9 @@ async def search_profiles(
         return []
 
     found_profiles = []
-    current_distance = INITIAL_DISTANCE
+    current_distance = search.INITIAL_DISTANCE
 
-    while current_distance <= MAX_DISTANCE and len(found_profiles) < MIN_PROFILES:
+    while current_distance <= search.MAX_DISTANCE and len(found_profiles) < search.MIN_PROFILES:
         # Расчёт расстояния
         distance_expr = (
             func.acos(
@@ -52,7 +44,7 @@ async def search_profiles(
                     -1.0,
                 )
             )
-            * RADIUS
+            * search.RADIUS
         )
 
         stmt = (
@@ -66,7 +58,9 @@ async def search_profiles(
                         profile.gender == ProfileModel.find_gender,
                         ProfileModel.find_gender == "all",
                     ),
-                    ProfileModel.age.between(profile.age - AGE_RANGE, profile.age + AGE_RANGE),
+                    ProfileModel.age.between(
+                        profile.age - search.AGE_RANGE, profile.age + search.AGE_RANGE
+                    ),
                     ProfileModel.id != profile.id,
                 )
             )
@@ -77,12 +71,12 @@ async def search_profiles(
         found_profiles = result.fetchall()
 
         # Если анкет мало — увеличиваем радиус и пробуем снова
-        current_distance += RADIUS_STEP
+        current_distance += search.RADIUS_STEP
 
     # Разделение на блоки и перемешивание
     blocks = {}
     for id, dist in found_profiles:
-        block_key = int(dist // BLOCK_SIZE)
+        block_key = int(dist // search.BLOCK_SIZE)
         blocks.setdefault(block_key, []).append(id)
 
     for key in blocks:
@@ -92,7 +86,7 @@ async def search_profiles(
 
     logger.log(
         "DATABASE",
-        f"{profile.id} начал поиск анкет, результат: {id_list}, радиус: {current_distance - RADIUS_STEP} км",
+        f"{profile.id} начал поиск анкет, результат: {id_list}, радиус: {current_distance - search.RADIUS_STEP} км",
     )
     return id_list
 
