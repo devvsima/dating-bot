@@ -19,7 +19,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 # Add root directory to path for importing bot modules
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from data.config import ADMINS, BOT_TOKEN, WEBAPP_ADMIN_PASSWORD, WEBAPP_ADMIN_USERNAME
+from data.config import tgbot, webapp
 from database.connect import get_session
 from database.services.stats import Stats
 
@@ -54,7 +54,9 @@ def verify_telegram_web_app_data(init_data: str) -> Optional[Dict]:
         check_string = "\n".join(sorted(check_string_items))
 
         # Create secret key
-        secret_key = hmac.new("WebAppData".encode(), BOT_TOKEN.encode(), hashlib.sha256).digest()
+        secret_key = hmac.new(
+            "WebAppData".encode(), tgbot.BOT_TOKEN.encode(), hashlib.sha256
+        ).digest()
 
         # Calculate hash
         calculated_hash = hmac.new(secret_key, check_string.encode(), hashlib.sha256).hexdigest()
@@ -76,7 +78,7 @@ def authenticate_telegram_user(init_data: Optional[str] = Query(None, alias="tgW
     """Authentication via Telegram Web App"""
     if init_data:
         user_info = verify_telegram_web_app_data(init_data)
-        if user_info and user_info.get("id") in ADMINS:
+        if user_info and user_info.get("id") in tgbot.ADMINS:
             return user_info
 
     raise HTTPException(
@@ -87,8 +89,8 @@ def authenticate_telegram_user(init_data: Optional[str] = Query(None, alias="tgW
 
 def authenticate_admin(credentials: HTTPBasicCredentials = Depends(security)):
     """Simple admin authentication (fallback)"""
-    is_correct_username = secrets.compare_digest(credentials.username, WEBAPP_ADMIN_USERNAME)
-    is_correct_password = secrets.compare_digest(credentials.password, WEBAPP_ADMIN_PASSWORD)
+    is_correct_username = secrets.compare_digest(credentials.username, webapp.ADMIN_USERNAME)
+    is_correct_password = secrets.compare_digest(credentials.password, webapp.ADMIN_PASSWORD)
 
     if not (is_correct_username and is_correct_password):
         raise HTTPException(
