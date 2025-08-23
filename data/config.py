@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from pathlib import Path
 
 from environs import Env
@@ -69,16 +70,18 @@ class WebAppSettings:
 
 # -< Search >-
 class SearchSettings:
-    AGE_RANGE: int = env.int("AGE_RANGE", default=4)
-    INITIAL_DISTANCE: float = env.str("INITIAL_DISTANCE", default=200.0)  # Стартовый радиус
-    MAX_DISTANCE: float = env.int("MAX_DISTANCE", default=10000.0)  # Максимальный радиус
-    RADIUS_STEP: float = env.int("RADIUS_STEP", default=200.0)  # Шаг увеличения радиуса
+    INITIAL_DISTANCE: float = env.float("INITIAL_DISTANCE", default=200.0)  # Стартовый радиус
+    MAX_DISTANCE: float = env.float("MAX_DISTANCE", default=10000.0)  # Максимальный радиус
+    RADIUS_STEP: float = env.float("RADIUS_STEP", default=200.0)  # Шаг увеличения радиуса
     MIN_PROFILES: int = env.int("MIN_PROFILES", default=100)  # Минимальное количество анкет
     RADIUS: int = env.int("RADIUS", default=6371)  # Радиус Земли
-    BLOCK_SIZE: float = env.float("BLOCK_SIZE", default=50.0)
+    BLOCK_SIZE: float = env.float("BLOCK_SIZE", default=15.0)  # Размер блока для перемешивания
 
-
-# Размер блока для перемешивания
+    AGE_RANGE_MULTIPLIER: float = env.float(
+        "AGE_RANGE_MULTIPLIER", default=0.15
+    )  # Коэффициент для расчета диапазона
+    MIN_AGE_RANGE: int = env.int("MIN_AGE_RANGE", default=2)  # Минимальный возрастной диапазон
+    MAX_AGE_RANGE: int = env.int("MAX_AGE_RANGE", default=15)  # Максимальный возрастной диапазон
 
 
 # -< Path\Dir >-

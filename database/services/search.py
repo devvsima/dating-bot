@@ -1,3 +1,4 @@
+import math
 import random
 
 from loguru import logger
@@ -8,12 +9,31 @@ from data.config import search
 from database.models.profile import ProfileModel
 
 
+def calculate_age_range(age: int) -> int:
+    """
+    Вычисляет динамический возрастной диапазон на основе возраста пользователя.
+
+    Формула: max(MIN_AGE_RANGE, возраст * AGE_RANGE_MULTIPLIER)
+    Ограничения: минимум MIN_AGE_RANGE лет, максимум MAX_AGE_RANGE лет
+
+    Примеры:
+    - 16 лет → 3 года
+    - 25 лет → 4 года
+    - 30 лет → 5 лет
+    - 50 лет → 8 лет
+    - 60+ лет → 15 лет (максимум)
+    """
+    calculated_range = max(search.MIN_AGE_RANGE, age * search.AGE_RANGE_MULTIPLIER)
+    return min(search.MAX_AGE_RANGE, round(calculated_range))
+
+
 async def search_profiles(
     session: AsyncSession,
     profile: ProfileModel,
 ) -> list:
     """
     Динамический поиск анкет: начинаем с малого радиуса и увеличиваем, пока не найдём достаточно анкет.
+    Использует умный расчет возрастного диапазона.
     """
 
     # Проверяем, что профиль существует и имеет необходимые данные
@@ -22,6 +42,14 @@ async def search_profiles(
 
     if not profile.latitude or not profile.longitude:
         return []
+
+    # Вычисляем динамический возрастной диапазон
+    dynamic_age_range = calculate_age_range(profile.age)
+
+    logger.log(
+        "DATABASE",
+        f"User {profile.id} (age {profile.age}): using age range ±{dynamic_age_range} years",
+    )
 
     found_profiles = []
     current_distance = search.INITIAL_DISTANCE
@@ -58,8 +86,9 @@ async def search_profiles(
                         profile.gender == ProfileModel.find_gender,
                         ProfileModel.find_gender == "all",
                     ),
+                    # Используем динамический возрастной диапазон
                     ProfileModel.age.between(
-                        profile.age - search.AGE_RANGE, profile.age + search.AGE_RANGE
+                        profile.age - dynamic_age_range, profile.age + dynamic_age_range
                     ),
                     ProfileModel.id != profile.id,
                 )
@@ -86,12 +115,9 @@ async def search_profiles(
 
     logger.log(
         "DATABASE",
-        f"{profile.id} начал поиск анкет, результат: {id_list}, радиус: {current_distance - search.RADIUS_STEP} км",
+        f"User {profile.id} (age {profile.age}, ±{dynamic_age_range} years) found {len(id_list)} profiles within {current_distance - search.RADIUS_STEP} km",
     )
     return id_list
-
-
-import math
 
 
 def haversine_distance(lat1, lon1, lat2, lon2):
