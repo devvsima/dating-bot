@@ -36,6 +36,7 @@ async def search_profiles(
     min_profiles: int = search.MIN_PROFILES,
     block_size: float = search.BLOCK_SIZE,
     earth_radius: int = search.EARTH_RADIUS,
+    force_shuffle: bool = True,
 ) -> list:
     """
     Динамический поиск анкет: начинаем с малого радиуса и увеличиваем, пока не найдём достаточно анкет.
@@ -50,6 +51,7 @@ async def search_profiles(
         min_profiles: Минимальное количество профилей для поиска
         block_size: Размер блока для перемешивания (км)
         earth_radius: Радиус Земли в км
+        force_shuffle: Принудительное перемешивание при каждом вызове
     """
 
     # Проверяем, что профиль существует и имеет необходимые данные
@@ -135,16 +137,30 @@ async def search_profiles(
         blocks.setdefault(block_key, []).append(id)
 
     # Перемешиваем профили внутри каждого блока
+    if force_shuffle:
+        # Добавляем timestamp для обеспечения разного seed при каждом вызове
+        import time
+
+        random.seed(int(time.time() * 1000000) % 2147483647)
+
     for key in blocks:
         random.shuffle(blocks[key])
 
     # Собираем отсортированный по блокам список с перемешанным содержимым
     id_list = [id for key in sorted(blocks.keys()) for id in blocks[key]]
 
+    logger.log(
+        "DATABASE",
+        f"User {profile.id} (age {profile.age}, ±{dynamic_age_range} years) found {len(id_list)} profiles "
+        f"in radius {current_distance - radius_step:.1f}km, shuffled={'Yes' if force_shuffle else 'No'}",
+    )
+
     return id_list
 
 
-def debug_shuffle_logic(found_profiles: list, block_size: float) -> dict:
+def debug_shuffle_logic(
+    found_profiles: list, block_size: float, force_shuffle: bool = True
+) -> dict:
     """
     Отладочная функция для анализа работы перемешивания.
     Возвращает детальную информацию о блоках.
@@ -153,6 +169,7 @@ def debug_shuffle_logic(found_profiles: list, block_size: float) -> dict:
     debug_info = {
         "total_profiles": len(found_profiles),
         "block_size": block_size,
+        "force_shuffle": force_shuffle,
         "blocks": {},
         "shuffled_order": [],
     }
@@ -161,6 +178,12 @@ def debug_shuffle_logic(found_profiles: list, block_size: float) -> dict:
     for i, (id, dist) in enumerate(found_profiles):
         block_key = int(dist // block_size)
         blocks.setdefault(block_key, []).append((id, dist, i))
+
+    # Принудительно устанавливаем новый seed для обеспечения разного порядка
+    if force_shuffle:
+        import time
+
+        random.seed(int(time.time() * 1000000) % 2147483647)
 
     # Подготавливаем информацию о блоках
     for block_key, profiles in blocks.items():
@@ -173,7 +196,8 @@ def debug_shuffle_logic(found_profiles: list, block_size: float) -> dict:
 
         # Перемешиваем
         profile_ids = [p[0] for p in profiles]
-        random.shuffle(profile_ids)
+        if force_shuffle:
+            random.shuffle(profile_ids)
         debug_info["blocks"][block_key]["shuffled_order"] = profile_ids
 
         # Добавляем в общий список
@@ -255,7 +279,7 @@ async def search_profiles_with_debug(
     result = await session.execute(stmt)
     found_profiles = result.fetchall()
 
-    debug_info = debug_shuffle_logic(found_profiles, block_size)
+    debug_info = debug_shuffle_logic(found_profiles, block_size, force_shuffle=True)
 
     return id_list, debug_info
 
