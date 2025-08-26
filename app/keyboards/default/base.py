@@ -28,7 +28,7 @@ menu_kb: ReplyKeyboardMarkup = kb_gen(
 search_kb: ReplyKeyboardMarkup = kb_gen(
     ["❤️", "📩", "👎"],
     ["💢"],
-    ["↩️"],
+    ["💤"],
 )
 
 admin_kb: ReplyKeyboardMarkup = kb_gen(
