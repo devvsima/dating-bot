@@ -30,6 +30,6 @@ bot = Bot(
 
 dp = Dispatcher(bot=bot, storage=storage)
 
-i18n = I18n(path=LOCALES_DIR, domain=tgbot.I18N_DOMAIN)
+i18n = I18n(path=LOCALES_DIR, domain=tgbot.I18N_DOMAIN, default_locale="en")
 _ = i18n.gettext
 __ = i18n.lazy_gettext
