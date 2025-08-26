@@ -74,7 +74,7 @@ class SearchSettings:
     MAX_DISTANCE: float = env.float("MAX_DISTANCE", default=10000.0)  # Максимальный радиус
     RADIUS_STEP: float = env.float("RADIUS_STEP", default=200.0)  # Шаг увеличения радиуса
     MIN_PROFILES: int = env.int("MIN_PROFILES", default=100)  # Минимальное количество анкет
-    RADIUS: int = env.int("RADIUS", default=6371)  # Радиус Земли
+    EARTH_RADIUS: int = env.int("EARTH_RADIUS", default=6371)  # Радиус Земли
     BLOCK_SIZE: float = env.float("BLOCK_SIZE", default=15.0)  # Размер блока для перемешивания
 
     AGE_RANGE_MULTIPLIER: float = env.float(

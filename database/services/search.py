@@ -30,10 +30,26 @@ def calculate_age_range(age: int) -> int:
 async def search_profiles(
     session: AsyncSession,
     profile: ProfileModel,
+    initial_distance: float = search.INITIAL_DISTANCE,
+    max_distance: float = search.MAX_DISTANCE,
+    radius_step: float = search.RADIUS_STEP,
+    min_profiles: int = search.MIN_PROFILES,
+    block_size: float = search.BLOCK_SIZE,
+    earth_radius: int = search.RADIUS,
 ) -> list:
     """
     Динамический поиск анкет: начинаем с малого радиуса и увеличиваем, пока не найдём достаточно анкет.
-    Использует умный расчет возрастного диапазона.
+    Использует умный расчет возрастного диапазона и блочное перемешивание.
+
+    Args:
+        session: Сессия базы данных
+        profile: Профиль пользователя для поиска
+        initial_distance: Начальная дистанция поиска (км)
+        max_distance: Максимальная дистанция поиска (км)
+        radius_step: Шаг увеличения радиуса (км)
+        min_profiles: Минимальное количество профилей для поиска
+        block_size: Размер блока для перемешивания (км)
+        earth_radius: Радиус Земли в км
     """
 
     # Проверяем, что профиль существует и имеет необходимые данные
@@ -43,18 +59,28 @@ async def search_profiles(
     if not profile.latitude or not profile.longitude:
         return []
 
+    # Используем переданные параметры или значения по умолчанию из конфига
+    initial_distance = initial_distance or search.INITIAL_DISTANCE
+    max_distance = max_distance or search.MAX_DISTANCE
+    radius_step = radius_step or search.RADIUS_STEP
+    min_profiles = min_profiles or search.MIN_PROFILES
+    block_size = block_size or search.BLOCK_SIZE
+    earth_radius = earth_radius or search.RADIUS
+
     # Вычисляем динамический возрастной диапазон
     dynamic_age_range = calculate_age_range(profile.age)
 
     logger.log(
         "DATABASE",
-        f"User {profile.id} (age {profile.age}): using age range ±{dynamic_age_range} years",
+        f"Search parameters: initial_distance={initial_distance}km, max_distance={max_distance}km, "
+        f"radius_step={radius_step}km, min_profiles={min_profiles}, block_size={block_size}km, "
+        f"age_range=±{dynamic_age_range} years for user {profile.id} (age {profile.age})",
     )
 
     found_profiles = []
-    current_distance = search.INITIAL_DISTANCE
+    current_distance = initial_distance
 
-    while current_distance <= search.MAX_DISTANCE and len(found_profiles) < search.MIN_PROFILES:
+    while current_distance <= max_distance and len(found_profiles) < min_profiles:
         # Расчёт расстояния
         distance_expr = (
             func.acos(
@@ -72,7 +98,7 @@ async def search_profiles(
                     -1.0,
                 )
             )
-            * search.RADIUS
+            * earth_radius
         )
 
         stmt = (
@@ -100,24 +126,138 @@ async def search_profiles(
         found_profiles = result.fetchall()
 
         # Если анкет мало — увеличиваем радиус и пробуем снова
-        current_distance += search.RADIUS_STEP
+        current_distance += radius_step
 
     # Разделение на блоки и перемешивание
     blocks = {}
     for id, dist in found_profiles:
-        block_key = int(dist // search.BLOCK_SIZE)
+        block_key = int(dist // block_size)
         blocks.setdefault(block_key, []).append(id)
 
+    # Перемешиваем профили внутри каждого блока
     for key in blocks:
         random.shuffle(blocks[key])
 
+    # Собираем отсортированный по блокам список с перемешанным содержимым
     id_list = [id for key in sorted(blocks.keys()) for id in blocks[key]]
+
+    return id_list
+
+
+def debug_shuffle_logic(found_profiles: list, block_size: float) -> dict:
+    """
+    Отладочная функция для анализа работы перемешивания.
+    Возвращает детальную информацию о блоках.
+    """
+    blocks = {}
+    debug_info = {
+        "total_profiles": len(found_profiles),
+        "block_size": block_size,
+        "blocks": {},
+        "shuffled_order": [],
+    }
+
+    # Разделяем на блоки
+    for i, (id, dist) in enumerate(found_profiles):
+        block_key = int(dist // block_size)
+        blocks.setdefault(block_key, []).append((id, dist, i))
+
+    # Подготавливаем информацию о блоках
+    for block_key, profiles in blocks.items():
+        debug_info["blocks"][block_key] = {
+            "count": len(profiles),
+            "distance_range": f"{min(p[1] for p in profiles):.1f} - {max(p[1] for p in profiles):.1f} km",
+            "original_order": [p[0] for p in profiles],
+            "original_positions": [p[2] for p in profiles],
+        }
+
+        # Перемешиваем
+        profile_ids = [p[0] for p in profiles]
+        random.shuffle(profile_ids)
+        debug_info["blocks"][block_key]["shuffled_order"] = profile_ids
+
+        # Добавляем в общий список
+        debug_info["shuffled_order"].extend(profile_ids)
 
     logger.log(
         "DATABASE",
-        f"User {profile.id} (age {profile.age}, ±{dynamic_age_range} years) found {len(id_list)} profiles within {current_distance - search.RADIUS_STEP} km",
+        f"Shuffle debug: {len(blocks)} blocks created, "
+        f"total profiles: {debug_info['total_profiles']}",
     )
-    return id_list
+
+    return debug_info
+
+
+async def search_profiles_with_debug(
+    session: AsyncSession, profile: ProfileModel, debug: bool = False, **kwargs
+) -> tuple[list, dict]:
+    """
+    Версия search_profiles с отладочной информацией.
+    Возвращает (id_list, debug_info) если debug=True, иначе только id_list.
+    """
+    # Все те же параметры как в основной функции
+    initial_distance = kwargs.get("initial_distance") or search.INITIAL_DISTANCE
+    max_distance = kwargs.get("max_distance") or search.MAX_DISTANCE
+    radius_step = kwargs.get("radius_step") or search.RADIUS_STEP
+    min_profiles = kwargs.get("min_profiles") or search.MIN_PROFILES
+    block_size = kwargs.get("block_size") or search.BLOCK_SIZE
+    earth_radius = kwargs.get("earth_radius") or search.RADIUS
+
+    # Получаем результаты поиска
+    id_list = await search_profiles(session, profile, **kwargs)
+
+    if not debug:
+        return id_list, {}
+
+    # Для отладки нужно повторить запрос и получить расстояния
+    dynamic_age_range = calculate_age_range(profile.age)
+    current_distance = max_distance  # Берем максимальный радиус для полного анализа
+
+    distance_expr = (
+        func.acos(
+            func.greatest(
+                func.least(
+                    func.cos(func.radians(profile.latitude))
+                    * func.cos(func.radians(ProfileModel.latitude))
+                    * func.cos(
+                        func.radians(ProfileModel.longitude) - func.radians(profile.longitude)
+                    )
+                    + func.sin(func.radians(profile.latitude))
+                    * func.sin(func.radians(ProfileModel.latitude)),
+                    1.0,
+                ),
+                -1.0,
+            )
+        )
+        * earth_radius
+    )
+
+    stmt = (
+        select(ProfileModel.id, distance_expr.label("distance"))
+        .where(
+            and_(
+                ProfileModel.is_active == True,
+                distance_expr < current_distance,
+                or_(ProfileModel.gender == profile.find_gender, profile.find_gender == "all"),
+                or_(
+                    profile.gender == ProfileModel.find_gender,
+                    ProfileModel.find_gender == "all",
+                ),
+                ProfileModel.age.between(
+                    profile.age - dynamic_age_range, profile.age + dynamic_age_range
+                ),
+                ProfileModel.id != profile.id,
+            )
+        )
+        .order_by(distance_expr)
+    )
+
+    result = await session.execute(stmt)
+    found_profiles = result.fetchall()
+
+    debug_info = debug_shuffle_logic(found_profiles, block_size)
+
+    return id_list, debug_info
 
 
 def haversine_distance(lat1, lon1, lat2, lon2):
