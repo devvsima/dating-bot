@@ -35,7 +35,7 @@ async def search_profiles(
     radius_step: float = search.RADIUS_STEP,
     min_profiles: int = search.MIN_PROFILES,
     block_size: float = search.BLOCK_SIZE,
-    earth_radius: int = search.RADIUS,
+    earth_radius: int = search.EARTH_RADIUS,
 ) -> list:
     """
     Динамический поиск анкет: начинаем с малого радиуса и увеличиваем, пока не найдём достаточно анкет.
