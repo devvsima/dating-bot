@@ -39,7 +39,7 @@ async def _update_photo(
     data = await state.get_data()
     photos = data.get("photos", [])
 
-    if message.text in filters.leave_previous_tuple:
+    if message.text in filters.LEAVE_PREVIOUS_OPTIONS:
         # Пользователь хочет оставить текущие фото - завершаем без изменений
         await state.clear()
         await message.answer(mt.PHOTO_UNCHANGED)
