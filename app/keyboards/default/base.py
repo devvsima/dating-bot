@@ -33,7 +33,7 @@ search_kb: ReplyKeyboardMarkup = kb_gen(
 
 admin_kb: ReplyKeyboardMarkup = kb_gen(
     ["📊 Statistics", "📨 Mailing"],
-    ["🌐 Web Admin", "📝 Logs"],
+    ["📝 Logs"],
     ["↩️"],
 )
 
