@@ -58,16 +58,6 @@ class TelegramBotSettings:
     I18N_DOMAIN = "bot"
 
 
-# -< WebApp >-
-class WebAppSettings:
-    PORT: int = env.int("WEBAPP_PORT", default=8000)
-    DOMEN: str = env.str("WEBAPP_DOMEN", default=None)
-    HOST: str = env.str("WEBAPP_HOST", default="127.0.0.1")
-    URL: str = env.str("WEBAPP_URL", default=None)
-    ADMIN_USERNAME: str = env.str("WEBAPP_ADMIN_USERNAME", default="admin")
-    ADMIN_PASSWORD: str = env.str("WEBAPP_ADMIN_PASSWORD", default=None)
-
-
 # -< Search >-
 class SearchSettings:
     INITIAL_DISTANCE: float = env.float("INITIAL_DISTANCE", default=200.0)  # Стартовый радиус
@@ -98,5 +88,4 @@ LOG_FILE_PATH: Path = DIR / "logs" / "logs.log"
 database = DatabaseSettings()
 redis = RedisSettings()
 tgbot = TelegramBotSettings()
-webapp = WebAppSettings()
 search = SearchSettings()
