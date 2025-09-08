@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-15 17:50+0300\n"
+"POT-Creation-Date: 2025-09-08 17:45+0300\n"
 "PO-Revision-Date: 2025-03-04 16:06+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -206,7 +206,7 @@ msgstr ""
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr ""
 
-#: app/text.py:186
+#: app/text.py:185
 #, python-brace-format
 msgid ""
 "Приглашай друзей и получай бонусы!\n"
@@ -217,22 +217,22 @@ msgid ""
 "<code>{}</code>"
 msgstr ""
 
-#: app/text.py:191
+#: app/text.py:190
 #, python-brace-format
 msgid ""
 "Наш канал:\n"
 "{}"
 msgstr ""
 
-#: app/text.py:196
+#: app/text.py:195
 msgid "Выбери язык бота, на который хочешь переключиться: 🌐"
 msgstr ""
 
-#: app/text.py:199
+#: app/text.py:198
 msgid "Язык бота изменён! ✅"
 msgstr ""
 
-#: app/text.py:204
+#: app/text.py:203
 msgid ""
 "\n"
 "Укажи причину жалобы:\n"
@@ -243,32 +243,32 @@ msgid ""
 "↩️ Назад\n"
 msgstr ""
 
-#: app/text.py:224
+#: app/text.py:223
 msgid "✅ Жалоба успешно отправлена на рассмотрение!"
 msgstr ""
 
-#: app/text.py:229
+#: app/text.py:228
 msgid "Загрузи новые фото! Можно отправить до 3 фотографий 📸"
 msgstr ""
 
-#: app/text.py:233
+#: app/text.py:232
 msgid "Фотографии остались без изменений"
 msgstr ""
 
-#: app/text.py:237
+#: app/text.py:236
 msgid "Вы не загрузили ни одного фото. Попробуйте еще раз."
 msgstr ""
 
-#: app/text.py:241
+#: app/text.py:240
 msgid "❌ Ошибка при сохранении фото. Попробуйте еще раз."
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:56 app/text.py:245
-#: app/text.py:255
+#: app/keyboards/default/registration_form.py:56 app/text.py:244
+#: app/text.py:254
 msgid "Это все, сохранить фото"
 msgstr ""
 
-#: app/text.py:250
+#: app/text.py:249
 #, python-brace-format
 msgid ""
 "📸 Фото {current}/{total} загружено!\n"
@@ -276,25 +276,25 @@ msgid ""
 "Можете загрузить еще {remaining} фото или нажать '{finish_button}'"
 msgstr ""
 
-#: app/text.py:261
+#: app/text.py:260
 #, python-brace-format
 msgid "Сохранено {} фото!"
 msgstr ""
 
-#: app/text.py:264
+#: app/text.py:263
 #, python-brace-format
 msgid "Все {} фото загружены!"
 msgstr ""
 
-#: app/text.py:269
+#: app/text.py:268
 msgid "❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
 msgstr ""
 
-#: app/text.py:273
+#: app/text.py:272
 msgid "📸 Отправьте фотографию или выберите действие из меню"
 msgstr ""
 
-#: app/text.py:277
+#: app/text.py:276
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr ""
 
@@ -323,16 +323,16 @@ msgid "Всех"
 msgstr ""
 
 #: app/keyboards/default/registration_form.py:80
-#: app/keyboards/default/registration_form.py:92
-#: app/keyboards/default/registration_form.py:107
+#: app/keyboards/default/registration_form.py:90
+#: app/keyboards/default/registration_form.py:105
 msgid "Оставить предыдущее"
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:82
+#: app/keyboards/default/registration_form.py:81
 msgid "Пропустить"
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:94
+#: app/keyboards/default/registration_form.py:92
 msgid "📍 Отправить местоположение"
 msgstr ""
 

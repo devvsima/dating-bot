@@ -10,12 +10,14 @@ GENDER_MAP = {
     "Garçon": "male",  # Французский
     "Chico": "male",  # Испанский
     "Chłopak": "male",  # Польский
+    "Laki-laki": "male",  # Индонезийский
     "Девушка": "female",  # Русский
     "Дівчина": "female",  # Украинский
     "Girl": "female",  # Английский
     "Fille": "female",  # Французский
     "Chica": "female",  # Испанский
     "Dziewczyna": "female",  # Польский
+    "Perempuan": "female",  # Индонезийский
 }
 
 FIND_GENDER_MAP = {
@@ -25,18 +27,21 @@ FIND_GENDER_MAP = {
     "Garçons": "male",  # Французский
     "Chicos": "male",  # Испанский
     "Chłopców": "male",  # Польский
+    "Laki-laki": "male",  # Индонезийский (множественное число такое же)
     "Девушек": "female",  # Русский
     "Дівчат": "female",  # Украинский
     "Girls": "female",  # Английский
     "Filles": "female",  # Французский
     "Chicas": "female",  # Испанский
     "Dziewcząt": "female",  # Польский
+    "Perempuan": "female",  # Индонезийский (множественное число такое же)
     "Всех": "all",  # Русский
     "Усіх": "all",  # Украинский
     "Everyone": "all",  # Английский
     "Tous": "all",  # Французский
     "Todos": "all",  # Испанский
     "Wszyscy": "all",  # Польский
+    "Semua": "all",  # Индонезийский
 }
 
 LEAVE_PREVIOUS_OPTIONS = (
@@ -46,6 +51,7 @@ LEAVE_PREVIOUS_OPTIONS = (
     "Laisser le précédent",  # Французский
     "Dejar el anterior",  # Испанский
     "Pozostaw poprzednie",  # Польский
+    "Biarkan yang sebelumnya",  # Индонезийский (исправлено с "Biarkan sebelumnya")
 )
 
 SKIP_OPTIONS = (
@@ -55,6 +61,7 @@ SKIP_OPTIONS = (
     "Passer",  # Французский
     "Saltar",  # Испанский
     "Pomiń",  # Польский
+    "Lewati",  # Индонезийский
 )
 
 START_COMMAND_OPTIONS = (
@@ -65,6 +72,7 @@ START_COMMAND_OPTIONS = (
     "Créer un profil",  # Французский
     "Crear un perfil",  # Испанский
     "Utwórz profil",  # Польский
+    "Buat profil",  # Индонезийский
 )
 
 SAVE_PHOTO_OPTIONS = (
@@ -74,6 +82,7 @@ SAVE_PHOTO_OPTIONS = (
     "C'est tout, gardez la photo",  # Французский
     "Eso es todo, guardar foto",  # Испанский
     "To wszystko, zachowaj zdjęcie",  # Польский
+    "Selesai, simpan foto",  # Индонезийский (исправлено с "Sudah, simpan foto")
 )
 
 

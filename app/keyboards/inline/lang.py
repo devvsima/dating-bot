@@ -10,6 +10,7 @@ language_dict = {
     "es": "🇪🇸 Español",
     "pl": "🇵🇱 Polski",
     "fr": "🇫🇷 Français",
+    "id": "🇮🇩 Bahasa Indonesia",
 }
 
 
@@ -19,6 +20,6 @@ def lang_ikb():
         builder.button(text=language_dict[lang], callback_data=LangCallback(lang=lang))
         for lang in i18n.available_locales
     ]
-    builder.adjust(3)
+    builder.adjust(2)
 
     return builder.as_markup()

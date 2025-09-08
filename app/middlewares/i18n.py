@@ -9,6 +9,7 @@ pybabel init -i data/locales/bot.pot -d data/locales -D bot -l uk
 pybabel init -i data/locales/bot.pot -d data/locales -D bot -l fr
 pybabel init -i data/locales/bot.pot -d data/locales -D bot -l pl
 pybabel init -i data/locales/bot.pot -d data/locales -D bot -l es
+pybabel init -i data/locales/bot.pot -d data/locales -D bot -l id
 
 - После того как все текста переведены, нужно скомпилировать все переводы
 pybabel compile -d data/locales -D bot --statistics

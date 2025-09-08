@@ -11,6 +11,7 @@ from database.services import User
 from database.services.profile import Profile
 from database.services.referal import Referal
 from utils.base62 import decode_base62
+from utils.language import get_supported_language
 
 
 class CommonMiddleware(BaseMiddleware):
@@ -18,11 +19,15 @@ class CommonMiddleware(BaseMiddleware):
         self, handler: Callable, message: Message | CallbackQuery, data: dict
     ) -> Any:
         session = data["session"]
+        
+        # Определяем поддерживаемый язык
+        user_language = get_supported_language(message.from_user.language_code)
+        
         user, is_create = await User.get_or_create(
             session=session,
             id=message.from_user.id,
             username=message.from_user.username,
-            language=message.from_user.language_code,
+            language=user_language,
         )
 
         # Получаем пользователя с профилем
