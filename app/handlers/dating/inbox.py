@@ -1,6 +1,4 @@
 import html
-from ast import Match
-from cProfile import Profile
 
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
@@ -40,7 +38,7 @@ async def match_archive(
         profile = await Profile.get(session, liker_ids[0])
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
-        if match_data.message:
+        if match_data and match_data.message:
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(mt.LIKE_ARCHIVE)
@@ -66,7 +64,7 @@ async def _match_atchive_callback(
         profile = await Profile.get(session, liker_ids[0])
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
-        if match_data.message:
+        if match_data and match_data.message:
             await callback.message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await callback.message.answer(mt.LIKE_ARCHIVE)
@@ -126,7 +124,7 @@ async def _match_response(
         profile = await Profile.get(session, ids[0])
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
-        if match_data.message:
+        if match_data and match_data.message:
             await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         await message.answer(mt.EMPTY_PROFILE_SEARCH)

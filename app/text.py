@@ -179,7 +179,6 @@ class MessageText:
     def INVALID_AGE(self):
         return _("Неверный формат, возраст нужно указывать цифрами. 🔢")
 
-    # Приглашения и бонусы
     @property
     def INVITE_FRIENDS(self):
         return _(
