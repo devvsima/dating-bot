@@ -18,7 +18,6 @@ class ProfileModel(BaseModel):
     city: Mapped[str] = mapped_column(String(200), nullable=False)
     latitude: Mapped[float] = mapped_column(nullable=False)
     longitude: Mapped[float] = mapped_column(nullable=False)
-    # photo: Mapped[str] = mapped_column(String(255), nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     description: Mapped[str] = mapped_column(String(900), nullable=True)
     instagram: Mapped[str] = mapped_column(String(200), nullable=True)

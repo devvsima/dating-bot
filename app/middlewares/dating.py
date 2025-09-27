@@ -18,11 +18,8 @@ class DatingMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.status == UserStatus.Banned:
+        if user.status == UserStatus.Banned and user.profile and user.profile.is_active:
             return
 
-        if user.profile:
-            if not user.profile.is_active:
-                return
         data["user"] = user
         return await handler(message, data)
