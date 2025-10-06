@@ -5,25 +5,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
 
-REFERAL_SOURCES = {
-    "usr": "Telegram user",
-    "git": "Github",
-    "kab": "Kabanchik",
-    "fre": "Freelancehunt",
-    "upw": "Upwork",
-    "djш": "Djinni",
-    "lin": "Linkedin",
-    "fb": "Facebook",
-    "ig": "Instagram",
-    "tw": "Twitter",
-    "tgc": "Telegram channel",
-    "yt": "YouTube",
-    "tt": "TikTok",
-    "lw": "Landing website",
-    "unk": "Unknown",
-    "oth": "Other",
-}
-
 
 class ProfileModel(BaseModel):
     __tablename__ = "profiles"

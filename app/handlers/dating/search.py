@@ -15,6 +15,7 @@ from app.states.default import Search
 from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Match, Profile, User
+from database.services.complaint import Compleint
 from database.services.search import search_profiles
 
 
@@ -85,11 +86,12 @@ async def _search_profile_compleint(
 
     if message.text in ("🔞", "💰", "🔫"):
         await message.answer(mt.REPORT_TO_PROFILE, reply_markup=search_kb)
+
         await complaint_to_profile(
-            complainant=user,
-            reason=message.text,
-            complaint_user=another_user,
             session=session,
+            sender=user,
+            receiver=another_user,
+            reason=message.text,
         )
     elif message.text == "↩️":
         await message.answer(mt.SEARCH, reply_markup=search_kb)

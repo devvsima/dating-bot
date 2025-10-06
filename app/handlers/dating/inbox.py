@@ -109,10 +109,10 @@ async def _match_response(
     elif message.text in ("🔞", "💰", "🔫"):
         await message.answer(mt.REPORT_TO_PROFILE, reply_markup=match_kb)
         await complaint_to_profile(
-            complainant=user,
-            reason=message.text,
-            complaint_user=another_user,
             session=session,
+            sender=user,
+            receiver=another_user,
+            reason=message.text,
         )
     elif message.text == "↩️":
         await message.answer(mt.SEARCH, reply_markup=match_kb)

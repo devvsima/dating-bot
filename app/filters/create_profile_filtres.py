@@ -1,7 +1,7 @@
 from aiogram.filters import Filter
 from aiogram.types import Message
 
-from utils.geopy import get_coordinates
+from utils.geopy import get_city_name, get_coordinates
 
 GENDER_MAP = {
     "Парень": "male",  # Русский
@@ -126,24 +126,34 @@ class IsAge(Filter):
 
 class IsCity(Filter):
     async def __call__(self, message: Message) -> bool:
+        latitude: float = None
+        longitude: float = None
+        city: str = None
+        is_shared_location: bool = None
+
         if message.location:
             latitude = message.location.latitude
             longitude = message.location.longitude
+            city = get_city_name(latitude=latitude, longitude=longitude)
+            is_shared_location = True
         if message.text:
-            if message.text.isdigit():
+            if message.text.isdigit() and len(message.text) <= 1:
                 return False
             if message.text in LEAVE_PREVIOUS_OPTIONS:
-                latitude = None
-                longitude = None
+                pass
             elif coordinates := get_coordinates(message.text):
                 latitude = coordinates[0]
                 longitude = coordinates[1]
+                city = message.text
+                is_shared_location = False
             else:
                 return False
 
         return {
             "latitude": latitude,
             "longitude": longitude,
+            "city": city,
+            "is_shared_location": is_shared_location,
         }
 
 

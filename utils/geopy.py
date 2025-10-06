@@ -19,14 +19,10 @@ def get_coordinates(city_name: str) -> list | None:
 def get_city_name(latitude: float, longitude: float) -> str | None:
     """Возвращает название города по координатам"""
     try:
-        # Обратное геокодирование - получаем адрес по координатам
         location = geolocator.reverse((latitude, longitude), timeout=geopy_timeout)
 
         if location and location.address:
-            # Парсим адрес для извлечения города
             address_parts = location.raw.get("address", {})
-
-            # Ищем город в разных возможных полях
             city = (
                 address_parts.get("city")
                 or address_parts.get("town")
