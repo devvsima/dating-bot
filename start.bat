@@ -2,8 +2,8 @@
 
 IF "%1"=="run" (
     uv run main.py
-) ELSE IF "%1"=="web" (
-    uv run webapp.py
+) ELSE IF "%1"=="api" (
+    uv run uvicorn run_api:app --host 0.0.0.0 --port 8080 --reload
 ) ELSE IF "%1"=="mapp" (
     uv run alembic upgrade head
 ) ELSE IF "%1"=="mgen" (
@@ -16,5 +16,5 @@ IF "%1"=="run" (
     uv run pybabel compile -d data/locales -D bot --statistics
 ) ELSE (
     echo !Unknown command
-    echo "Available commands: run, mapply, mgen, lcollect, lupdate, lcompile"
+    echo "Available commands: run, api, mapply, mgen, lcollect, lupdate, lcompile"
 )

@@ -53,7 +53,7 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        "webapp:app",
+        "run_api:app",
         host=webapp.HOST,
         port=webapp.PORT,
         reload=True,
