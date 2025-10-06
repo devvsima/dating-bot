@@ -1,19 +1,28 @@
+from typing import List
+
 from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import BaseModel
 
-
-class ProfilePhotoModel(BaseModel):
-    __tablename__ = "profile_photos"
-
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    profile_id: Mapped[int] = mapped_column(
-        BigInteger, ForeignKey("profiles.id", ondelete="CASCADE")
-    )
-    photo: Mapped[str] = mapped_column(String(255), nullable=False)
-
-    profile = relationship("ProfileModel", back_populates="photos")
+REFERAL_SOURCES = {
+    "usr": "Telegram user",
+    "git": "Github",
+    "kab": "Kabanchik",
+    "fre": "Freelancehunt",
+    "upw": "Upwork",
+    "djш": "Djinni",
+    "lin": "Linkedin",
+    "fb": "Facebook",
+    "ig": "Instagram",
+    "tw": "Twitter",
+    "tgc": "Telegram channel",
+    "yt": "YouTube",
+    "tt": "TikTok",
+    "lw": "Landing website",
+    "unk": "Unknown",
+    "oth": "Other",
+}
 
 
 class ProfileModel(BaseModel):
@@ -28,15 +37,16 @@ class ProfileModel(BaseModel):
     city: Mapped[str] = mapped_column(String(200), nullable=False)
     latitude: Mapped[float] = mapped_column(nullable=False)
     longitude: Mapped[float] = mapped_column(nullable=False)
-    photos = relationship(
-        "ProfilePhotoModel", back_populates="profile", cascade="all, delete-orphan"
-    )
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     description: Mapped[str] = mapped_column(String(900), nullable=True)
     instagram: Mapped[str] = mapped_column(String(200), nullable=True)
-    is_active: Mapped[bool] = mapped_column(default=True)
+    is_shared_location: Mapped[bool] = mapped_column(server_default="False", nullable=False)
+    is_active: Mapped[bool] = mapped_column(server_default="True", nullable=False)
 
     user: Mapped["UserModel"] = relationship("UserModel", back_populates="profile")  # type: ignore
+    profile_media: Mapped[List["ProfileMediaModel"]] = relationship(  # type: ignore
+        back_populates="profile", cascade="all, delete-orphan"
+    )
 
     __table_args__ = (
         CheckConstraint("gender IN ('male', 'female')", name="gender_check"),

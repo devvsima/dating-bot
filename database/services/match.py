@@ -11,7 +11,9 @@ class Match(BaseService):
     model = MatchModel
 
     @staticmethod
-    async def create(session: AsyncSession, sender_id: int, receiver_id: int) -> bool:
+    async def create(
+        session: AsyncSession, sender_id: int, receiver_id: int, mail_text: str | None
+    ) -> bool:
         """
         Добавляет лайк в БД, если он уже есть - ничего не делает.
         Возвращает True, если запись была создана, иначе False.
@@ -26,7 +28,9 @@ class Match(BaseService):
             return False
 
         # Если записи нет, добавляем новую
-        stmt = insert(MatchModel).values(sender_id=sender_id, receiver_id=receiver_id)
+        stmt = insert(MatchModel).values(
+            sender_id=sender_id, receiver_id=receiver_id, message=mail_text
+        )
         await session.execute(stmt)
         await session.commit()
 
@@ -41,6 +45,18 @@ class Match(BaseService):
         )
 
         return [row[0] for row in result.fetchall()]
+
+    @staticmethod
+    async def get(session: AsyncSession, receiver_id: int, sender_id: int) -> MatchModel | None:
+        """
+        Возвращает Match по receiver_id и sender_id, если найден.
+        """
+        result = await session.execute(
+            select(MatchModel).where(
+                (MatchModel.receiver_id == receiver_id) & (MatchModel.sender_id == sender_id)
+            )
+        )
+        return result.scalar_one_or_none()
 
     @staticmethod
     async def delete(session: AsyncSession, receiver_id: int, sender_id: int) -> None:

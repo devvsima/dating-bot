@@ -1,12 +1,11 @@
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-from sqlalchemy.orm import joinedload
 
 from database.services.base import BaseService
+from database.services.profile_media import ProfileMedia
 from utils.logging import logger
 
-from ..models.profile import ProfileModel, ProfilePhotoModel
+from ..models.profile import ProfileModel
 
 
 class Profile(BaseService):
@@ -14,13 +13,8 @@ class Profile(BaseService):
 
     @staticmethod
     async def get(session: AsyncSession, id: int):
-        """Возвращает профиль пользователя с фотографиями"""
-        result = await session.execute(
-            select(ProfileModel)
-            .options(joinedload(ProfileModel.photos))
-            .where(ProfileModel.id == id)
-        )
-        return result.unique().scalar_one_or_none()
+        """Возвращает профиль пользователя"""
+        return await session.get(ProfileModel, id)
 
     @staticmethod
     async def delete(session: AsyncSession, id: int):
@@ -32,24 +26,52 @@ class Profile(BaseService):
 
     @classmethod
     async def create_or_update(cls, session: AsyncSession, **kwargs):
-        """Создает или обновляет профиль пользователя с фотографиями"""
-        photos = kwargs.pop("photos", None)  # список строк (пути/имена файлов)
-        obj = await cls.get_by_id(session, kwargs["id"])
+        """Создает профиль пользователя, если профиль есть - обновляет его"""
+        profile_id = kwargs.pop("id")  # Извлекаем id профиля
+        photo_url = kwargs.pop(
+            "photo", None
+        )  # Извлекаем photo, если есть (для обратной совместимости)
+        photos = kwargs.pop("photos", None)  # Извлекаем список фото
+
+        obj = await cls.get_by_id(session, profile_id)
+        is_new = False
+
         if obj:
+            # Обновляем существующий профиль
             for key, value in kwargs.items():
                 setattr(obj, key, value)
-            if photos is not None:
-                # Удаляем старые фото
-                obj.photos.clear()
-                # Добавляем новые фото (до 3)
-                for photo in photos[:3]:
-                    obj.photos.append(ProfilePhotoModel(photo=photo))
             await session.commit()
-            return obj, False
-        obj = await cls.create(session, **kwargs)
-        if photos is not None:
-            for photo in photos[:3]:
-                obj.photos.append(ProfilePhotoModel(photo=photo))
-            await session.commit()
-        logger.log("DATABASE", f"{kwargs['id']}: создал анкету")
-        return obj, True
+        else:
+            # Создаем новый профиль
+            obj = await cls.create(session, id=profile_id, **kwargs)
+            is_new = True
+            logger.log("DATABASE", f"{profile_id}: создал анкету")
+
+        # Обрабатываем фото
+        if photos:
+            # Удаляем все старые фото профиля
+            await ProfileMedia.delete_profile_photos(session, profile_id)
+
+            # Добавляем новые фото
+            for i, photo_file_id in enumerate(photos, 1):
+                await ProfileMedia.add_media(
+                    session=session,
+                    profile_id=profile_id,
+                    media_url=photo_file_id,
+                    media_type="photo",
+                    order=i,
+                )
+        elif photo_url:
+            # Обратная совместимость - если передано одно фото
+            await ProfileMedia.delete_profile_photos(session, profile_id)
+
+            await ProfileMedia.add_media(
+                session=session,
+                profile_id=profile_id,
+                media_url=photo_url,
+                media_type="photo",
+                order=1,
+            )
+        else:
+            logger.log("DATABASE", "Error to creating profile")
+        return obj, is_new

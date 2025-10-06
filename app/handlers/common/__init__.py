@@ -1,4 +1,4 @@
-from .cancel import common_router
+from .channel import common_router
 from .help import common_router
 from .invite import common_router
 from .lang import common_router

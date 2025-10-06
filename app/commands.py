@@ -6,12 +6,22 @@ from loader import _, bot, i18n
 def get_default_commands() -> list:
     commands = [
         BotCommand(command="/start", description="Start"),
-        BotCommand(command="/lang", description="Change language"),
         BotCommand(command="/help", description="Help"),
-        BotCommand(command="/cancel", description="Cancel"),
+        BotCommand(command="/lang", description="Change language"),
+        BotCommand(command="/channel", description="Telegram channel"),
     ]
 
     return commands
+
+
+async def set_default_commands() -> None:
+    await bot.set_my_commands(get_default_commands(), scope=BotCommandScopeDefault())
+    for lang in i18n.available_locales:
+        await bot.set_my_commands(
+            get_default_commands(),
+            scope=BotCommandScopeDefault(),
+            language_code=lang,
+        )
 
 
 def get_admins_commands() -> list:
@@ -26,16 +36,6 @@ def get_admins_commands() -> list:
         ]
     )
     return commands
-
-
-async def set_default_commands() -> None:
-    await bot.set_my_commands(get_default_commands(), scope=BotCommandScopeDefault())
-    for lang in i18n.available_locales:
-        await bot.set_my_commands(
-            get_default_commands(),
-            scope=BotCommandScopeDefault(),
-            language_code=lang,
-        )
 
 
 async def set_admins_commands(id: int) -> None:

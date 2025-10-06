@@ -2,11 +2,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from database.models.profile import ProfileModel
 from database.services.base import BaseService
 from utils.logging import logger
 
-from ..models.user import UserModel
+from ..models.user import UserModel, UserStatus
 from .match import Match
 from .profile import Profile
 
@@ -16,13 +15,11 @@ class User(BaseService):
 
     @staticmethod
     async def get_with_profile(session: AsyncSession, id: int):
-        """Возвращает пользователя, его профиль и фотографии профиля"""
+        """Возвращает пользователя и его профиль"""
         result = await session.execute(
-            select(UserModel)
-            .options(joinedload(UserModel.profile).joinedload(ProfileModel.photos))
-            .where(UserModel.id == id)
+            select(UserModel).options(joinedload(UserModel.profile)).where(UserModel.id == id)
         )
-        return result.unique().scalar_one_or_none()
+        return result.scalar_one_or_none()
 
     @staticmethod
     async def get_or_create(
@@ -75,7 +72,7 @@ class User(BaseService):
         await User.update(
             session=session,
             id=id,
-            is_banned=True,
+            status=UserStatus.Banned,
         )
 
         # Удаляем все лайки, которые пользователь поставил
@@ -106,7 +103,7 @@ class User(BaseService):
         await User.update(
             session=session,
             id=id,
-            is_banned=False,
+            status=UserStatus.Banned,
         )
 
         logger.log("DATABASE", f"Пользователь {id} был разблокирован.")

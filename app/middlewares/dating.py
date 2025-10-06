@@ -3,6 +3,7 @@ from typing import Any, Callable
 from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
+from database.models.user import UserStatus
 from database.services import User
 
 
@@ -17,10 +18,8 @@ class DatingMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if not user.is_banned:
-            if user.profile:
-                if not user.profile.is_active:
-                    return
-            data["user"] = user
-            return await handler(message, data)
-        return
+        if user.status == UserStatus.Banned and user.profile and user.profile.is_active:
+            return
+
+        data["user"] = user
+        return await handler(message, data)

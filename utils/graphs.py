@@ -114,3 +114,65 @@ class StatsGraph:
         )
         plt.savefig(path, dpi=120, bbox_inches="tight", transparent=True)
         plt.close()
+
+    def create_referral_sources_chart(
+        self, sources_data: Dict[str, int], path: Path = GRAPH_FILE_PATH
+    ) -> None:
+        """Создает горизонтальную гистограмму по источникам рефералов"""
+        if not sources_data:
+            # Если нет данных, создаем пустой график
+            plt.figure(figsize=(10, 6))
+            plt.text(
+                0.5,
+                0.5,
+                "No referral data available",
+                ha="center",
+                va="center",
+                transform=plt.gca().transAxes,
+                fontsize=16,
+            )
+            plt.title("Referral Sources", fontsize=18, fontweight="bold")
+            plt.savefig(path, dpi=120, bbox_inches="tight", transparent=True)
+            plt.close()
+            return
+
+        # Подготавливаем данные
+        sources = list(sources_data.keys())
+        counts = list(sources_data.values())
+        total = sum(counts)
+
+        # Создаем цветовую палитру
+        colors = sns.color_palette("viridis", len(sources))
+
+        plt.figure(figsize=(12, max(6, len(sources) * 0.5)))
+        sns.set_theme(style="whitegrid")
+
+        # Создаем горизонтальную гистограмму
+        bars = plt.barh(sources, counts, color=colors, alpha=0.8, edgecolor="white", linewidth=1)
+
+        # Добавляем значения на бары
+        for i, (bar, count) in enumerate(zip(bars, counts)):
+            percentage = (count / total * 100) if total > 0 else 0
+            plt.text(
+                bar.get_width() + max(counts) * 0.01,
+                bar.get_y() + bar.get_height() / 2,
+                f"{count} ({percentage:.1f}%)",
+                ha="left",
+                va="center",
+                fontweight="bold",
+                fontsize=10,
+            )
+
+        plt.title(
+            "Referral Sources Distribution", fontsize=18, fontweight="bold", color="#2A3D66", pad=20
+        )
+        plt.xlabel("Number of Referrals", fontsize=12)
+        plt.ylabel("Sources", fontsize=12)
+
+        # Устанавливаем границы оси X
+        plt.xlim(0, max(counts) * 1.2 if counts else 1)
+
+        plt.grid(axis="x", linestyle="--", alpha=0.7)
+        plt.tight_layout()
+        plt.savefig(path, dpi=120, bbox_inches="tight", transparent=True)
+        plt.close()

@@ -1,16 +1,21 @@
-from aiogram import types
-from aiogram.exceptions import TelegramAPIError
+import asyncio
+
+from aiogram import F, types
+from aiogram.exceptions import TelegramAPIError, TelegramBadRequest, TelegramForbiddenError
 from aiogram.filters import Command
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.others.states import Mailing
 from app.routers import admin_router
+from app.states.admin import Mailing
+from database.services.profile import Profile
 from database.services.user import User
-from loader import bot
+from utils.logging import logger
 
 
 @admin_router.message(StateFilter(None), Command("mailing"))
+@admin_router.message(StateFilter(None), F.text == "📨 Mailing")
 async def users_mailing_panel(message: types.Message, state: FSMContext) -> None:
     """Admin panel for user mailing."""
     await message.answer(
@@ -21,26 +26,33 @@ async def users_mailing_panel(message: types.Message, state: FSMContext) -> None
 
 
 @admin_router.message(StateFilter(Mailing.message))
-async def start_mailing(message: types.Message, session) -> None:
-    """Starts mailing to all users with text and media support."""
+async def start_mailing(message: types.Message, state: FSMContext, session: AsyncSession) -> None:
     users = await User.get_all(session)
-    sent_count, failed_count = 0, 0
+    sent_count, failed_count, blocked_count = 0, 0, 0
+    batch_size = 25  # чуть меньше лимита
+    delay = 1  # секунда
 
-    for user in users:
+    for i, user in enumerate(users, 1):
         try:
-            if message.text:
-                await bot.send_message(user.id, message.text)
-            elif message.photo:
-                await bot.send_photo(user.id, message.photo[-1].file_id, caption=message.caption)
-            elif message.video:
-                await bot.send_video(user.id, message.video.file_id, caption=message.caption)
-            elif message.document:
-                await bot.send_document(user.id, message.document.file_id, caption=message.caption)
-            else:
-                continue
-
+            await message.copy_to(chat_id=user.id, reply_markup=None)
             sent_count += 1
-        except TelegramAPIError:
+        except TelegramForbiddenError:
+            # Бот заблокирован пользователем
+            blocked_count += 1
+            await Profile.update(session=session, id=user.id, is_active=False)
+            logger.log("MAILING", f"User {user.id} blocked bot - profile deactivated")
+        except (TelegramBadRequest, TelegramAPIError) as e:
+            # Другие ошибки (пользователь удален, чат не найден и т.д.)
             failed_count += 1
+            logger.log("MAILING", f"Failed to send to user {user.id}: {e}")
 
-    await message.answer(f"✅ Mailing completed!\n📬 Sent: {sent_count}\n⚠️ Failed: {failed_count}")
+        if i % batch_size == 0:
+            await asyncio.sleep(delay)  # пауза после каждой пачки
+
+    await message.answer(
+        f"✅ Mailing completed!\n"
+        f"📬 Sent: {sent_count}\n"
+        f"🚫 Blocked (deactivated): {blocked_count}\n"
+        f"⚠️ Other failures: {failed_count}"
+    )
+    await state.clear()

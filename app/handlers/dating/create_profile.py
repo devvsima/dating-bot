@@ -1,129 +1,185 @@
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
+from sqlalchemy.ext.asyncio import AsyncSession
 
 import app.filters.create_profile_filtres as filters
-from app.handlers.message_text import user_message_text as umt
-from app.keyboards.default.registration_form import (
-    find_gender_kb,
-    gender_kb,
-    hints_kb,
-    leave_previous_kb,
-    location_kb,
-)
-from app.others.states import ProfileCreate
+from app.business.menu_service import menu
+from app.keyboards.default.registration_form import RegistrationFormKb
 from app.routers import dating_router
+from app.states.default import ProfileCreate
+from app.text import message_text as mt
 from database.models.user import UserModel
 from database.services import Profile
+from database.services.profile_media import ProfileMedia
+from database.services.user import User
 
 from .profile import profile_command
 
 
-# create profile
 @dating_router.message(StateFilter(None), F.text == "🔄")
 @dating_router.message(StateFilter(None), filters.IsCreate())
-async def _create_profile_command(message: types.Message, state: FSMContext):
+async def _create_profile_command(message: types.Message, state: FSMContext, user: UserModel):
     """Запускает процесс создания профиля пользователя.
     Также используется для пересоздания анкеты"""
-    await message.answer(umt.GENDER, reply_markup=gender_kb())
+    await state.set_state(ProfileCreate.name)
+
+    kb = RegistrationFormKb.name(user)
+    await message.answer(text=mt.NAME, reply_markup=kb)
+
+
+# -< Name >-
+@dating_router.message(StateFilter(ProfileCreate.name), F.text, filters.IsName())
+async def _name(message: types.Message, state: FSMContext):
     await state.set_state(ProfileCreate.gender)
+    await state.update_data(name=message.text)
+
+    kb = RegistrationFormKb.gender()
+    await message.answer(text=mt.GENDER, reply_markup=kb)
 
 
-# < gender >
+# -< Gender >-
 @dating_router.message(StateFilter(ProfileCreate.gender), F.text, filters.IsGender())
 async def _gender(message: types.Message, state: FSMContext, gender: str):
-    await state.update_data(gender=gender)
-    await message.reply(umt.FIND_GENDER, reply_markup=find_gender_kb())
     await state.set_state(ProfileCreate.find_gender)
+    await state.update_data(gender=gender)
+
+    kb = RegistrationFormKb.find_gender()
+    await message.answer(text=mt.FIND_GENDER, reply_markup=kb)
 
 
-# < find gender >
+# -< Find gender >-
 @dating_router.message(StateFilter(ProfileCreate.find_gender), F.text, filters.IsFindGender())
 async def _find_gender(
     message: types.Message, state: FSMContext, find_gender: str, user: UserModel
 ):
+    await state.set_state(ProfileCreate.city)
     await state.update_data(find_gender=find_gender)
 
-    await message.reply(umt.PHOTO, reply_markup=leave_previous_kb(user.profile))
-    await state.set_state(ProfileCreate.photo)
+    kb = RegistrationFormKb.city(user)
+    await message.answer(text=mt.CITY, reply_markup=kb)
 
 
-# < photo >
-@dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
-async def _photo(message: types.Message, state: FSMContext, user: UserModel):
-    photo = (
-        user.profile.photos
-        if message.text in filters.leave_previous_tuple
-        else message.photo[0].file_id
-    )
-    kb = hints_kb(user.profile.name) if user.profile else None
-    data = await state.get_data()
-    photos = data.get("photos", [])
-    if len(photos) >= 3:
-        await message.answer("Вы уже отправили 3 фото. Напишите /done для завершения.")
-        return
-    # Берём file_id самого большого фото
-    file_id = message.photo[-1].file_id
-    photos.append(file_id)
-    await state.update_data(photo=photo)
-    await message.reply(umt.NAME, reply_markup=kb)
-    await state.set_state(ProfileCreate.name)
-
-
-# < name >
-@dating_router.message(StateFilter(ProfileCreate.name), F.text, filters.IsName())
-async def _name(message: types.Message, state: FSMContext, user: UserModel):
-    await state.update_data(name=message.text)
-
-    kb = hints_kb(str(user.profile.age)) if user.profile else None
-
-    await message.reply(umt.AGE, reply_markup=kb)
-    await state.set_state(ProfileCreate.age)
-
-
-# < age >
-@dating_router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
-async def _age(message: types.Message, state: FSMContext, user: UserModel):
-    await state.update_data(age=message.text)
-    await message.reply(umt.CITY, reply_markup=location_kb(user.profile))
-    await state.set_state(ProfileCreate.city)
-
-
-# < city >
+# -< City >-
 @dating_router.message(StateFilter(ProfileCreate.city), F.text | F.location, filters.IsCity())
 async def _city(
     message: types.Message, state: FSMContext, latitude: str, longitude: str, user: UserModel
 ):
     if not (latitude or longitude):
-        city = user.profile.city
-        latitude = user.profile.latitude
-        longitude = user.profile.longitude
+        if user.profile:
+            city = user.profile.city
+            latitude = user.profile.latitude
+            longitude = user.profile.longitude
+        else:
+            return
     else:
         city = message.text if message.text else "📍"
 
+    await state.set_state(ProfileCreate.age)
     await state.update_data(
         city=city,
         latitude=latitude,
         longitude=longitude,
     )
-    await message.reply(umt.DESCRIPTION, reply_markup=leave_previous_kb(user.profile))
-    await state.set_state(ProfileCreate.description)
+
+    kb = RegistrationFormKb.age(user)
+    await message.answer(text=mt.AGE, reply_markup=kb)
 
 
-# < description >
-@dating_router.message(StateFilter(ProfileCreate.description), F.text, filters.IsDescription())
-async def _description(message: types.Message, state: FSMContext, user: UserModel, session):
+# -< Age >-
+@dating_router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
+async def _age(message: types.Message, state: FSMContext, user: UserModel):
+    await state.set_state(ProfileCreate.photo)
+    await state.update_data(age=message.text)
+
+    kb = RegistrationFormKb.photo(user)
+    await message.answer(text=mt.PHOTO, reply_markup=kb)
+
+
+# -< Photo >-
+@dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
+async def _photo(message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession):
+    await state.update_data(photos=[])
     data = await state.get_data()
-    description = (
-        user.profile.description if message.text in filters.leave_previous_tuple else message.text
-    )
+    photos = data.get("photos", [])
+
+    if message.text in filters.LEAVE_PREVIOUS_OPTIONS:
+        # Получаем существующие фото из профиля пользователя
+        existing_photos = await ProfileMedia.get_profile_photos(session, user.id)
+        if existing_photos:
+            photos = [photo.media for photo in existing_photos]
+            await state.update_data(photos=photos)
+
+        # Переходим к описанию
+        kb = RegistrationFormKb.description(user)
+        await message.answer(text=mt.DESCRIPTION, reply_markup=kb)
+        await state.set_state(ProfileCreate.description)
+        return
+
+    elif message.text == mt.PHOTO_SAVE_FINISH_BUTTON:
+        if not photos:
+            await message.answer(mt.PHOTO_NO_UPLOADED)
+            return
+
+        # Обновляем данные состояния с текущими фото
+        await state.update_data(photos=photos)
+
+        # Переходим к описанию
+        kb = RegistrationFormKb.description(user)
+        await message.answer(text=mt.DESCRIPTION, reply_markup=kb)
+        await state.set_state(ProfileCreate.description)
+        return
+
+    elif message.photo:
+        # Проверяем лимит фотографий
+        if len(photos) >= 3:
+            await message.answer(mt.PHOTO_LIMIT_REACHED)
+            return
+
+        new_photo = message.photo[-1].file_id
+        photos.append(new_photo)
+        await state.update_data(photos=photos)
+
+        new_count = len(photos)
+
+        if new_count < 3:
+            await message.answer(
+                text=mt.PHOTO_PROGRESS(current=new_count),
+                reply_markup=RegistrationFormKb.photo_add(),
+            )
+        else:
+            # Загружены все 3 фото - переходим к описанию
+            await message.answer(mt.PHOTO_ALL_UPLOADED())
+
+            kb = RegistrationFormKb.description(user)
+            await message.answer(text=mt.DESCRIPTION, reply_markup=kb)
+            await state.set_state(ProfileCreate.description)
+    else:
+        await message.answer(mt.PHOTO_UPLOAD_INSTRUCTION)
+
+
+# -< Description >-
+@dating_router.message(StateFilter(ProfileCreate.description), F.text, filters.IsDescription())
+async def _description(
+    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+):
+    data = await state.get_data()
+    photos = data.get("photos", [])
+    if message.text in filters.SKIP_OPTIONS:
+        description = ""
+    elif message.text in filters.LEAVE_PREVIOUS_OPTIONS and user.profile:
+        description = user.profile.description
+    else:
+        description = message.text
+
+    await state.clear()
 
     await Profile.create_or_update(
         session=session,
         id=message.from_user.id,
         gender=data["gender"],
         find_gender=data["find_gender"],
-        photo=data["photo"],
+        photos=photos,
         name=data["name"],
         age=int(data["age"]),
         city=data["city"],
@@ -132,6 +188,26 @@ async def _description(message: types.Message, state: FSMContext, user: UserMode
         description=description,
     )
 
-    await state.clear()
-    await session.refresh(user)
-    await profile_command(message, user)
+    await message.answer(mt.PROFILE_CREATED)
+    await menu(chat_id=user.id)
+
+
+# -< OLD >-
+
+# 1. -< Gender >-
+# 2. -< Find gender >-
+# 3. -< Photo >-
+# 4. -< Name >-
+# 5. -< Age >-
+# 6. -< City >-
+# 7. -< Description >-
+
+# -< NEW >-
+
+# 1. -< Name >-
+# 2. -< Gender >-
+# 3. -< Find gender >-
+# 4. -< City >-
+# 5. -< Age >-
+# 6. -< Photo >-
+# 7. -< Description >-
