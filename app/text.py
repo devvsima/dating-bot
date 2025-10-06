@@ -213,7 +213,7 @@ class MessageText:
     def REPORT_TO_USER(self):
         return """
 User <code>{}</code> (@{}) sent a complaint
-about a user profile:<code>{}</code> (@{})
+about a user profile: <code>{}</code> (@{})
 
 The reason: {}
 """

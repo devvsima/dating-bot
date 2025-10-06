@@ -7,6 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.filters.kb_filter import BlockUserCallback
 from app.routers import admin_router
+from database.models.complaint import CompleintStatus
+from database.services.complaint import Compleint
 from database.services.user import User
 
 
@@ -40,24 +42,43 @@ async def _complaint_user_callback(
     callback: types.CallbackQuery, callback_data: BlockUserCallback, session: AsyncSession
 ) -> None:
     """Блокирует пользователя переданого в калбек"""
-    id = callback_data.id
-    username = callback_data.username
+    complaint_id = callback_data.complaint_id
+    receiver_id = callback_data.receiver_id
+    receiver_username = callback_data.receiver_username
+
+    # Получаем информацию о жалобе, включая отправителя
+    complaint = await Compleint.get_by_id(session=session, id=complaint_id)
+    sender_user = (
+        await User.get_by_id(session=session, id=complaint.sender_id) if complaint else None
+    )
 
     if callback_data.ban:
-        await User.ban(session, id)
-        text = "⛔️ Administrator <code>{admin_id}</code> @{admin_username}:\
-        accepted a request to block user <code>{id}</code> @{user_username}"
+        await User.ban(session=session, id=receiver_id)
+        await Compleint.update(session=session, id=complaint_id, status=CompleintStatus.Accepted)
+        text = "⛔️ Administrator <code>{admin_id}</code> @{admin_username} \
+accepted a request to block user <code>{receiver_id}</code> @{receiver_username}\n\n\
+📋 Complaint from: <code>{sender_id}</code> @{sender_username}\n\
+📝 Reason: {reason}"
     else:
-        text = "Administrator <code>{admin_id}</code> @{admin_username}:\
-        rejected the complaint against user <code>{id}</code> @{user_username}"
+        await Compleint.update(session=session, id=complaint_id, status=CompleintStatus.Rejected)
+        text = "❌ Administrator <code>{admin_id}</code> @{admin_username} \
+rejected the complaint against user <code>{receiver_id}</code> @{receiver_username}\n\n\
+📋 Complaint from: <code>{sender_id}</code> @{sender_username}\n\
+📝 Reason: {reason}"
 
     await callback.message.edit_text(
         text.format(
             admin_id=callback.from_user.id,
-            admin_username=callback.from_user.username,
-            id=id,
-            user_username=username,
-        )
+            admin_username=callback.from_user.username or "unknown",
+            receiver_id=receiver_id,
+            receiver_username=receiver_username or "unknown",
+            sender_id=complaint.sender_id if complaint else "unknown",
+            sender_username=sender_user.username
+            if sender_user and sender_user.username
+            else "unknown",
+            reason=complaint.reason if complaint and complaint.reason else "No reason provided",
+        ),
+        parse_mode="HTML",
     )
 
 

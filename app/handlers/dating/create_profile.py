@@ -63,23 +63,29 @@ async def _find_gender(
 # -< City >-
 @dating_router.message(StateFilter(ProfileCreate.city), F.text | F.location, filters.IsCity())
 async def _city(
-    message: types.Message, state: FSMContext, latitude: str, longitude: str, user: UserModel
+    message: types.Message,
+    state: FSMContext,
+    latitude: str,
+    longitude: str,
+    city: str,
+    is_shared_location: bool,
+    user: UserModel,
 ):
     if not (latitude or longitude):
         if user.profile:
             city = user.profile.city
             latitude = user.profile.latitude
             longitude = user.profile.longitude
+            is_shared_location = user.profile.is_shared_location
         else:
             return
-    else:
-        city = message.text if message.text else "📍"
 
     await state.set_state(ProfileCreate.age)
     await state.update_data(
         city=city,
         latitude=latitude,
         longitude=longitude,
+        is_shared_location=is_shared_location,
     )
 
     kb = RegistrationFormKb.age(user)
@@ -92,6 +98,7 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
     await state.set_state(ProfileCreate.photo)
     await state.update_data(age=message.text)
 
+    await state.update_data(photos=[])
     kb = RegistrationFormKb.photo(user)
     await message.answer(text=mt.PHOTO, reply_markup=kb)
 
@@ -99,7 +106,6 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 # -< Photo >-
 @dating_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
 async def _photo(message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession):
-    await state.update_data(photos=[])
     data = await state.get_data()
     photos = data.get("photos", [])
 
@@ -185,6 +191,7 @@ async def _description(
         city=data["city"],
         latitude=float(data["latitude"]),
         longitude=float(data["longitude"]),
+        is_shared_location=bool(data["is_shared_location"]),
         description=description,
     )
 

@@ -9,7 +9,7 @@ from app.business.profile_service import complaint_to_profile, send_profile_with
 from app.constans import EFFECTS_DICTIONARY
 from app.handlers.common.start import start_command
 from app.keyboards.default.base import match_kb
-from app.keyboards.default.report import report_kb
+from app.keyboards.default.compleint import compleint_kb
 from app.routers import dating_router
 from app.states.default import LikeResponse
 from app.text import message_text as mt
@@ -104,15 +104,15 @@ async def _match_response(
     elif message.text == "👎":
         pass
     elif message.text == "💢":
-        await message.answer(mt.COMPLAINT, reply_markup=report_kb())
+        await message.answer(mt.COMPLAINT, reply_markup=compleint_kb())
         return
     elif message.text in ("🔞", "💰", "🔫"):
         await message.answer(mt.REPORT_TO_PROFILE, reply_markup=match_kb)
         await complaint_to_profile(
-            complainant=user,
-            reason=message.text,
-            complaint_user=another_user,
             session=session,
+            sender=user,
+            receiver=another_user,
+            reason=message.text,
         )
     elif message.text == "↩️":
         await message.answer(mt.SEARCH, reply_markup=match_kb)

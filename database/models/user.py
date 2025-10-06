@@ -1,10 +1,10 @@
 from sqlalchemy import BigInteger, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import BaseModel
+from .base import BaseModel, StatusMixin
 
 
-class UserStatus:
+class UserStatus(StatusMixin):
     Banned = 0
     User = 1
     Sponsor = 2

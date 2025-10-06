@@ -1,12 +1,29 @@
 import math
 import random
+import time
 
-from loguru import logger
 from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from data.config import search
 from database.models.profile import ProfileModel
+from utils.logging import logger
+
+
+def haversine_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> int:
+    """
+    Возвращает примерное расстояние между двумя точками (в километрах)
+    по координатам широты и долготы.
+    """
+    phi1 = math.radians(lat1)
+    phi2 = math.radians(lat2)
+    d_phi = math.radians(lat2 - lat1)
+    d_lambda = math.radians(lon2 - lon1)
+
+    a = math.sin(d_phi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(d_lambda / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    return round(search.EARTH_RADIUS * c)
 
 
 def calculate_age_range(age: int) -> int:
@@ -72,13 +89,6 @@ async def search_profiles(
     # Вычисляем динамический возрастной диапазон
     dynamic_age_range = calculate_age_range(profile.age)
 
-    logger.log(
-        "DATABASE",
-        f"Search parameters: initial_distance={initial_distance}km, max_distance={max_distance}km, "
-        f"radius_step={radius_step}km, min_profiles={min_profiles}, block_size={block_size}km, "
-        f"age_range=±{dynamic_age_range} years for user {profile.id} (age {profile.age})",
-    )
-
     found_profiles = []
     current_distance = initial_distance
 
@@ -138,9 +148,6 @@ async def search_profiles(
 
     # Перемешиваем профили внутри каждого блока
     if force_shuffle:
-        # Добавляем timestamp для обеспечения разного seed при каждом вызове
-        import time
-
         random.seed(int(time.time() * 1000000) % 2147483647)
 
     for key in blocks:
@@ -156,146 +163,3 @@ async def search_profiles(
     )
 
     return id_list
-
-
-def debug_shuffle_logic(
-    found_profiles: list, block_size: float, force_shuffle: bool = True
-) -> dict:
-    """
-    Отладочная функция для анализа работы перемешивания.
-    Возвращает детальную информацию о блоках.
-    """
-    blocks = {}
-    debug_info = {
-        "total_profiles": len(found_profiles),
-        "block_size": block_size,
-        "force_shuffle": force_shuffle,
-        "blocks": {},
-        "shuffled_order": [],
-    }
-
-    # Разделяем на блоки
-    for i, (id, dist) in enumerate(found_profiles):
-        block_key = int(dist // block_size)
-        blocks.setdefault(block_key, []).append((id, dist, i))
-
-    # Принудительно устанавливаем новый seed для обеспечения разного порядка
-    if force_shuffle:
-        import time
-
-        random.seed(int(time.time() * 1000000) % 2147483647)
-
-    # Подготавливаем информацию о блоках
-    for block_key, profiles in blocks.items():
-        debug_info["blocks"][block_key] = {
-            "count": len(profiles),
-            "distance_range": f"{min(p[1] for p in profiles):.1f} - {max(p[1] for p in profiles):.1f} km",
-            "original_order": [p[0] for p in profiles],
-            "original_positions": [p[2] for p in profiles],
-        }
-
-        # Перемешиваем
-        profile_ids = [p[0] for p in profiles]
-        if force_shuffle:
-            random.shuffle(profile_ids)
-        debug_info["blocks"][block_key]["shuffled_order"] = profile_ids
-
-        # Добавляем в общий список
-        debug_info["shuffled_order"].extend(profile_ids)
-
-    logger.log(
-        "DATABASE",
-        f"Shuffle debug: {len(blocks)} blocks created, "
-        f"total profiles: {debug_info['total_profiles']}",
-    )
-
-    return debug_info
-
-
-async def search_profiles_with_debug(
-    session: AsyncSession, profile: ProfileModel, debug: bool = False, **kwargs
-) -> tuple[list, dict]:
-    """
-    Версия search_profiles с отладочной информацией.
-    Возвращает (id_list, debug_info) если debug=True, иначе только id_list.
-    """
-    # Все те же параметры как в основной функции
-    initial_distance = kwargs.get("initial_distance") or search.INITIAL_DISTANCE
-    max_distance = kwargs.get("max_distance") or search.MAX_DISTANCE
-    radius_step = kwargs.get("radius_step") or search.RADIUS_STEP
-    min_profiles = kwargs.get("min_profiles") or search.MIN_PROFILES
-    block_size = kwargs.get("block_size") or search.BLOCK_SIZE
-    earth_radius = kwargs.get("earth_radius") or search.RADIUS
-
-    # Получаем результаты поиска
-    id_list = await search_profiles(session, profile, **kwargs)
-
-    if not debug:
-        return id_list, {}
-
-    # Для отладки нужно повторить запрос и получить расстояния
-    dynamic_age_range = calculate_age_range(profile.age)
-    current_distance = max_distance  # Берем максимальный радиус для полного анализа
-
-    distance_expr = (
-        func.acos(
-            func.greatest(
-                func.least(
-                    func.cos(func.radians(profile.latitude))
-                    * func.cos(func.radians(ProfileModel.latitude))
-                    * func.cos(
-                        func.radians(ProfileModel.longitude) - func.radians(profile.longitude)
-                    )
-                    + func.sin(func.radians(profile.latitude))
-                    * func.sin(func.radians(ProfileModel.latitude)),
-                    1.0,
-                ),
-                -1.0,
-            )
-        )
-        * earth_radius
-    )
-
-    stmt = (
-        select(ProfileModel.id, distance_expr.label("distance"))
-        .where(
-            and_(
-                ProfileModel.is_active == True,
-                distance_expr < current_distance,
-                or_(ProfileModel.gender == profile.find_gender, profile.find_gender == "all"),
-                or_(
-                    profile.gender == ProfileModel.find_gender,
-                    ProfileModel.find_gender == "all",
-                ),
-                ProfileModel.age.between(
-                    profile.age - dynamic_age_range, profile.age + dynamic_age_range
-                ),
-                ProfileModel.id != profile.id,
-            )
-        )
-        .order_by(distance_expr)
-    )
-
-    result = await session.execute(stmt)
-    found_profiles = result.fetchall()
-
-    debug_info = debug_shuffle_logic(found_profiles, block_size, force_shuffle=True)
-
-    return id_list, debug_info
-
-
-def haversine_distance(lat1, lon1, lat2, lon2):
-    """
-    Возвращает примерное расстояние между двумя точками (в километрах)
-    по координатам широты и долготы.
-    """
-    R = 6371  # Радиус Земли в километрах
-    phi1 = math.radians(lat1)
-    phi2 = math.radians(lat2)
-    d_phi = math.radians(lat2 - lat1)
-    d_lambda = math.radians(lon2 - lon1)
-
-    a = math.sin(d_phi / 2) ** 2 + math.cos(phi1) * math.cos(phi2) * math.sin(d_lambda / 2) ** 2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-
-    return round(R * c)

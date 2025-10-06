@@ -21,7 +21,8 @@ class ProfileModel(BaseModel):
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     description: Mapped[str] = mapped_column(String(900), nullable=True)
     instagram: Mapped[str] = mapped_column(String(200), nullable=True)
-    is_active: Mapped[bool] = mapped_column(server_default="True")
+    is_shared_location: Mapped[bool] = mapped_column(server_default="False", nullable=False)
+    is_active: Mapped[bool] = mapped_column(server_default="True", nullable=False)
 
     user: Mapped["UserModel"] = relationship("UserModel", back_populates="profile")  # type: ignore
     profile_media: Mapped[List["ProfileMediaModel"]] = relationship(  # type: ignore

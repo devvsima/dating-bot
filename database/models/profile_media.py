@@ -1,12 +1,10 @@
-from typing import List
-
 from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import BaseModel
+from .base import BaseModel, StatusMixin
 
 
-class MediaTypes:
+class MediaTypes(StatusMixin):
     Photo = "photo"
     Video = "video"
 
@@ -22,6 +20,8 @@ class ProfileMediaModel(BaseModel):
     order: Mapped[int] = mapped_column(Integer, server_default="1", nullable=False)
     media: Mapped[str] = mapped_column(String(300), nullable=False)
 
-    profile: Mapped["ProfileModel"] = relationship(back_populates="profile_media")
+    profile: Mapped["ProfileModel"] = relationship(  # type: ignore
+        back_populates="profile_media"
+    )
 
     __table_args__ = (CheckConstraint("media_type IN ('photo', 'video')", name="media_type_check"),)

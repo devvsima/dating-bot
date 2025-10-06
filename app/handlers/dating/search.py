@@ -9,12 +9,13 @@ from app.business.menu_service import menu
 from app.business.profile_service import complaint_to_profile, send_profile_with_dist
 from app.handlers.common.start import start_command
 from app.keyboards.default.base import return_to_menu_kb, search_kb
-from app.keyboards.default.report import report_kb
+from app.keyboards.default.compleint import compleint_kb
 from app.routers import dating_router
 from app.states.default import Search
 from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Match, Profile, User
+from database.services.complaint import Compleint
 from database.services.search import search_profiles
 
 
@@ -69,13 +70,13 @@ async def _search_profile(
         return
 
     if message.text == "💢":
-        await message.answer(mt.COMPLAINT, reply_markup=report_kb())
+        await message.answer(mt.COMPLAINT, reply_markup=compleint_kb())
         return
     await next_profile(session, message, profile_list, user, state)
 
 
 @dating_router.message(StateFilter(Search.search), F.text.in_(("🔞", "💰", "🔫", "↩️")))
-async def _search_profile_report(
+async def _search_profile_compleint(
     message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Пользователь может отправить жалобу на анкету, если она содержит нежелательный контент."""
@@ -85,11 +86,12 @@ async def _search_profile_report(
 
     if message.text in ("🔞", "💰", "🔫"):
         await message.answer(mt.REPORT_TO_PROFILE, reply_markup=search_kb)
+
         await complaint_to_profile(
-            complainant=user,
-            reason=message.text,
-            complaint_user=another_user,
             session=session,
+            sender=user,
+            receiver=another_user,
+            reason=message.text,
         )
     elif message.text == "↩️":
         await message.answer(mt.SEARCH, reply_markup=search_kb)
