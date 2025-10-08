@@ -52,9 +52,10 @@ class Match(BaseService):
         Возвращает Match по receiver_id и sender_id, если найден.
         """
         result = await session.execute(
-            select(MatchModel).where(
-                (MatchModel.receiver_id == receiver_id) & (MatchModel.sender_id == sender_id)
-            )
+            select(MatchModel)
+            .where((MatchModel.receiver_id == receiver_id) & (MatchModel.sender_id == sender_id))
+            .order_by(MatchModel.created_at.desc())  # or whatever timestamp field you have
+            .limit(1)
         )
         return result.scalar_one_or_none()
 
