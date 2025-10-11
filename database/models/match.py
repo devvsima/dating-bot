@@ -19,3 +19,4 @@ class MatchModel(BaseModel):
     receiver_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     message: Mapped[str] = mapped_column(String(250), nullable=True)
     status: Mapped[int] = mapped_column(Integer, server_default="1")
+    is_active: Mapped[bool] = mapped_column(server_default="True", nullable=False)

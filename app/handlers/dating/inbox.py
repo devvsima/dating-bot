@@ -3,8 +3,10 @@ import html
 from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.business.dating_service import send_user_like_alert
 from app.business.profile_service import complaint_to_profile, send_profile_with_dist
 from app.constans import EFFECTS_DICTIONARY
 from app.handlers.common.start import start_command
@@ -14,8 +16,48 @@ from app.routers import dating_router
 from app.states.default import LikeResponse
 from app.text import message_text as mt
 from database.models import UserModel
+from database.models.match import MatchModel, MatchStatus
 from database.services import Match, Profile, User
 from loader import bot
+
+
+async def _send_mutual_like_notifications(session: AsyncSession, user: UserModel) -> None:
+    """
+    Отправляет уведомления о взаимных лайках для матчей со статусом Accepted,
+    которые исходят от пользователя
+    """
+    effect_id = EFFECTS_DICTIONARY["🎉"]
+
+    # Найти все матчи со статусом Accepted, где пользователь является отправителем
+    result = await session.execute(
+        select(MatchModel)
+        .where(MatchModel.sender_id == user.id)
+        .where(MatchModel.status == MatchStatus.Accepted)
+        .where(MatchModel.is_active == True)
+    )
+    accepted_matches = result.scalars().all()
+    for match in accepted_matches:
+        try:
+            # Получаем профиль получателя
+            receiver = await User.get_with_profile(session, match.receiver_id)
+            await send_profile_with_dist(session=session, user=user, profile=receiver.profile)
+            if receiver and receiver.profile:
+                # Генерируем ссылку и текст
+                link = generate_user_link(id=receiver.id, username=receiver.username)
+                text = mt.LIKE_ACCEPT(user.language).format(
+                    link, html.escape(receiver.profile.name)
+                )
+
+                # Отправляем уведомление
+                await bot.send_message(
+                    chat_id=user.id, text=text, message_effect_id=effect_id, parse_mode="HTML"
+                )
+
+                # Деактивируем матч, чтобы не отправлять уведомление повторно
+                await Match.update(session=session, id=match.id, is_active=False)
+
+        except Exception as e:
+            pass
 
 
 @dating_router.message(StateFilter(None), F.text == "📭")
@@ -30,8 +72,11 @@ async def match_archive(
         username=message.from_user.username,
     )  # needs to be redone
 
+    # Проверяем и отправляем уведомления о взаимных лайках
+    await _send_mutual_like_notifications(session, user)
+
     if liker_ids := await Match.get_user_matchs(session, message.from_user.id):
-        text = mt.ARCHIVE_SEARCH.format(len(liker_ids))
+        text = mt.ARCHIVE_SEARCH(user.language).format(len(liker_ids))
         await message.answer(text=text, reply_markup=match_kb)
 
         await state.update_data(ids=liker_ids)
@@ -39,9 +84,9 @@ async def match_archive(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
-            await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
+            await message.answer(mt.MESSAGE_TO_YOU(user.language).format(match_data.message))
     else:
-        await message.answer(mt.LIKE_ARCHIVE)
+        await message.answer(mt.LIKE_ARCHIVE(user.language))
         await start_command(message=message, user=user, state=state)
 
 
@@ -56,8 +101,11 @@ async def _match_atchive_callback(
         id=user.id,
         username=callback.from_user.username,
     )  # needs to be redone
-    await callback.message.answer(text=mt.SEARCH, reply_markup=match_kb)
+    await callback.message.answer(text=mt.SEARCH(user.language), reply_markup=match_kb)
     await callback.answer()
+
+    # Проверяем и отправляем уведомления о взаимных лайках
+    await _send_mutual_like_notifications(session, user)
 
     if liker_ids := await Match.get_user_matchs(session, callback.from_user.id):
         await state.update_data(ids=liker_ids)
@@ -65,10 +113,19 @@ async def _match_atchive_callback(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
-            await callback.message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
+            await callback.message.answer(
+                mt.MESSAGE_TO_YOU(user.language).format(match_data.message)
+            )
     else:
-        await callback.message.answer(mt.LIKE_ARCHIVE)
-        await start_command(callback.message, user=user, state=state)
+        # from app.keyboards.default.base import menu_kb
+
+        await callback.message.answer(mt.LIKE_ARCHIVE(user.language))
+        # await state.clear()
+        # await callback.message.answer(
+        #     mt.MENU,
+        #     reply_markup=menu_kb,
+        # )
+        await start_command(message=callback.message, user=user, state=state)
 
 
 @dating_router.message(
@@ -82,27 +139,24 @@ async def _match_response(
     ids = data.get("ids")
 
     another_user = await User.get_with_profile(session, ids[0])
+    match_data = await Match.get(session, user.id, another_user.id)
 
     if message.text == "❤️":
-        effect_id = EFFECTS_DICTIONARY["🎉"]
         """Отправка пользователю который ответил на лайк"""
-        link = generate_user_link(id=another_user.id, username=another_user.username)
-        text = mt.LIKE_ACCEPT(another_user.language).format(
-            link, html.escape(another_user.profile.name)
-        )
-        try:
-            await bot.send_message(chat_id=user.id, text=text, message_effect_id=effect_id)
-        except:
-            ...
-        """Отправка пользователю которому ответили на лайк"""
-        link = generate_user_link(id=user.id, username=user.username)
-        text = mt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
-        try:
-            await bot.send_message(chat_id=another_user.id, text=text, message_effect_id=effect_id)
-        except:
-            ...
+        await like_accept(session=session, user=user, another_user=another_user, match=match_data)
+        # """Отправка пользователю которому ответили на лайк"""
+        # link = generate_user_link(id=user.id, username=user.username)
+        # text = mt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
+        # try:
+        #     await bot.send_message(chat_id=another_user.id, text=text, message_effect_id=effect_id)
+        # except:
+        #     ...
     elif message.text == "👎":
         pass
+        await Match.update(
+            session=session, id=match_data.id, status=MatchStatus.Rejected, is_active=False
+        )
+
     elif message.text == "💢":
         await message.answer(mt.COMPLAINT, reply_markup=compleint_kb())
         return
@@ -115,8 +169,8 @@ async def _match_response(
             reason=message.text,
         )
     elif message.text == "↩️":
-        await message.answer(mt.SEARCH, reply_markup=match_kb)
-    await Match.delete(session, user.id, another_user.id)
+        await message.answer(mt.SEARCH(user.language), reply_markup=match_kb)
+    # await Match.delete(session, user.id, another_user.id)
 
     ids.pop(0)
     await state.update_data(ids=ids)
@@ -125,9 +179,9 @@ async def _match_response(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
-            await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
+            await message.answer(mt.MESSAGE_TO_YOU(user.language).format(match_data.message))
     else:
-        await message.answer(mt.EMPTY_PROFILE_SEARCH)
+        await message.answer(mt.EMPTY_PROFILE_SEARCH(user.language))
         await start_command(message=message, user=user, state=state)
 
 
@@ -140,3 +194,39 @@ def generate_user_link(id: int, username: str = None) -> str:
     if username:
         return f"https://t.me/{username}"
     return f"tg://user?id={id}"
+
+
+async def like_accept(
+    session: AsyncSession, user: UserModel, another_user: UserModel, match: MatchModel
+):
+    effect_id = EFFECTS_DICTIONARY["🎉"]
+    if match.status == MatchStatus.Accepted:
+        # Если изначальный отправитель получил взимный лайк и зашел в inbox
+        sender = user
+        reciver = another_user
+        await Match.update(session=session, id=match.id, is_active=False)
+
+        link = generate_user_link(id=reciver.id, username=reciver.username)
+        text = mt.LIKE_ACCEPT(sender.language).format(link, html.escape(reciver.profile.name))
+        try:
+            await bot.send_message(
+                chat_id=sender.id, text=text, message_effect_id=effect_id, parse_mode="HTML"
+            )
+        except:
+            ...
+
+    else:
+        # Если изначальный отправитель не этот же человек
+        sender = another_user
+        reciver = user
+        await Match.update(session=session, id=match.id, status=MatchStatus.Accepted)
+        await send_user_like_alert(session, sender)
+
+        link = generate_user_link(id=sender.id, username=sender.username)
+        text = mt.LIKE_ACCEPT(reciver.language).format(link, html.escape(sender.profile.name))
+        try:
+            await bot.send_message(
+                chat_id=reciver.id, text=text, message_effect_id=effect_id, parse_mode="HTML"
+            )
+        except:
+            ...
