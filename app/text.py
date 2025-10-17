@@ -97,21 +97,17 @@ class MessageText:
         return _("✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться ботом.")
 
     # Поиск анкет
-    @property
-    def SEARCH(self):
-        return _("🔍 Выполняется поиск...")
+    def SEARCH(self, language: str = None):
+        return _("🔍 Выполняется поиск...", locale=language)
 
-    @property
-    def ARCHIVE_SEARCH(self):
-        return _("Твоя анкета понравилась {} людям! Давай посмотрим, кто это:")
+    def ARCHIVE_SEARCH(self, language: str = None):
+        return _("Твоя анкета понравилась {} людям! Давай посмотрим, кто это:", locale=language)
 
-    @property
-    def INVALID_PROFILE_SEARCH(self):
-        return _("Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍")
+    def INVALID_PROFILE_SEARCH(self, language: str = None):
+        return _("Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍", locale=language)
 
-    @property
-    def EMPTY_PROFILE_SEARCH(self):
-        return _("Анкеты закончились. Попробуй позже! 😊")
+    def EMPTY_PROFILE_SEARCH(self, language: str = None):
+        return _("Анкеты закончились. Попробуй позже! 😊", locale=language)
 
     # Лайки и сообщения
     def LIKE_PROFILE(self, language: str):
@@ -120,9 +116,8 @@ class MessageText:
             locale=language,
         )
 
-    @property
-    def LIKE_ARCHIVE(self):
-        return _("Пока никто не поставил тебе лайк, но всё ещё впереди!")
+    def LIKE_ARCHIVE(self, language: str = None):
+        return _("Пока никто не поставил тебе лайк, но всё ещё впереди!", locale=language)
 
     def LIKE_ACCEPT(self, language: str):
         return _("Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>", locale=language)
@@ -133,9 +128,8 @@ class MessageText:
             locale=language,
         )
 
-    @property
-    def MESSAGE_TO_YOU(self):
-        return _("Сообщение для тебя:\n{}")
+    def MESSAGE_TO_YOU(self, language: str = None):
+        return _("Сообщение для тебя:\n{}", locale=language)
 
     # Сообщения и рассылка
     @property

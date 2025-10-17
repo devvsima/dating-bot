@@ -15,7 +15,6 @@ from app.states.default import Search
 from app.text import message_text as mt
 from database.models import UserModel
 from database.services import Match, Profile, User
-from database.services.complaint import Compleint
 from database.services.search import search_profiles
 
 
@@ -25,7 +24,7 @@ async def _search_command(
 ) -> None:
     """Бот подбирает анкеты, соответствующие предпочтениям пользователя, и предлагает их"""
 
-    await message.answer(mt.SEARCH, reply_markup=search_kb)
+    await message.answer(mt.SEARCH(user.language), reply_markup=search_kb)
 
     if profile_list := await search_profiles(session, user.profile):
         await state.set_state(Search.search)
@@ -66,7 +65,7 @@ async def _search_profile(
         pass
     elif message.text == "📩":
         await state.set_state(Search.message)
-        await message.answer(mt.MAILING_TO_USER, reply_markup=return_to_menu_kb)
+        await message.answer(mt.MAILING_TO_USER(user.language), reply_markup=return_to_menu_kb)
         return
 
     if message.text == "💢":
@@ -109,7 +108,7 @@ async def _search_profile_mailing_(
     await state.set_state(Search.search)
 
     if message.text == "↩️":
-        await message.answer(mt.CANNCELED_LETTER, reply_markup=search_kb)
+        await message.answer(mt.CANNCELED_LETTER(user.language), reply_markup=search_kb)
         await send_profile_with_dist(user=user, profile=another_user.profile, session=session)
 
         return
@@ -142,7 +141,7 @@ async def next_profile(
         await state.update_data(ids=profile_list)
         await send_profile_with_dist(user=user, profile=profile, session=session)
     else:
-        await message.answer(mt.EMPTY_PROFILE_SEARCH)
+        await message.answer(mt.EMPTY_PROFILE_SEARCH(user.language))
         await start_command(message=message, user=user, state=state)
 
 
@@ -155,6 +154,6 @@ async def like_profile(
     is_create = await Match.create(session, message.from_user.id, another_user.id, mail_text)
 
     if is_create:
-        matchs_count = len(await Match.get_user_matchs(session, message.from_user.id))
+        matchs_count = len(await Match.get_user_matchs(session, another_user.id))
         if matchs_count == 1 or matchs_count % 3 == 0:
             await send_user_like_alert(session, another_user)
