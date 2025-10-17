@@ -76,7 +76,7 @@ async def match_archive(
     await _send_mutual_like_notifications(session, user)
 
     if liker_ids := await Match.get_user_matchs(session, message.from_user.id):
-        text = mt.ARCHIVE_SEARCH(user.language).format(len(liker_ids))
+        text = mt.ARCHIVE_SEARCH.format(len(liker_ids))
         await message.answer(text=text, reply_markup=match_kb)
 
         await state.update_data(ids=liker_ids)
@@ -84,9 +84,9 @@ async def match_archive(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
-            await message.answer(mt.MESSAGE_TO_YOU(user.language).format(match_data.message))
+            await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
-        await message.answer(mt.LIKE_ARCHIVE(user.language))
+        await message.answer(mt.LIKE_ARCHIVE)
         await start_command(message=message, user=user, state=state)
 
 
@@ -101,7 +101,7 @@ async def _match_atchive_callback(
         id=user.id,
         username=callback.from_user.username,
     )  # needs to be redone
-    await callback.message.answer(text=mt.SEARCH(user.language), reply_markup=match_kb)
+    await callback.message.answer(text=mt.SEARCH, reply_markup=match_kb)
     await callback.answer()
 
     # Проверяем и отправляем уведомления о взаимных лайках
@@ -113,13 +113,11 @@ async def _match_atchive_callback(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
-            await callback.message.answer(
-                mt.MESSAGE_TO_YOU(user.language).format(match_data.message)
-            )
+            await callback.message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
         # from app.keyboards.default.base import menu_kb
 
-        await callback.message.answer(mt.LIKE_ARCHIVE(user.language))
+        await callback.message.answer(mt.LIKE_ARCHIVE)
         # await state.clear()
         # await callback.message.answer(
         #     mt.MENU,
@@ -162,8 +160,7 @@ async def _match_response(
             reason=message.text,
         )
     elif message.text == "↩️":
-        await message.answer(mt.SEARCH(user.language), reply_markup=match_kb)
-    # await Match.delete(session, user.id, another_user.id)
+        await message.answer(mt.SEARCH, reply_markup=match_kb)
 
     ids.pop(0)
     await state.update_data(ids=ids)
@@ -172,9 +169,9 @@ async def _match_response(
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
-            await message.answer(mt.MESSAGE_TO_YOU(user.language).format(match_data.message))
+            await message.answer(mt.MESSAGE_TO_YOU.format(match_data.message))
     else:
-        await message.answer(mt.EMPTY_PROFILE_SEARCH(user.language))
+        await message.answer(mt.EMPTY_PROFILE_SEARCH)
         await start_command(message=message, user=user, state=state)
 
 
