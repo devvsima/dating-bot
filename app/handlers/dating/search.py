@@ -108,7 +108,7 @@ async def _search_profile_mailing_(
     await state.set_state(Search.search)
 
     if message.text == "↩️":
-        await message.answer(mt.CANNCELED_LETTER(user.language), reply_markup=search_kb)
+        await message.answer(mt.CANNCELED_LETTER, reply_markup=search_kb)
         await send_profile_with_dist(user=user, profile=another_user.profile, session=session)
 
         return
