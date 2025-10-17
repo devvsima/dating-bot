@@ -20,12 +20,14 @@ def setup_middlewares(dp: Dispatcher) -> None:
     common_router.message.middleware(CommonMiddleware())
     common_router.callback_query.middleware(CommonMiddleware())
     common_router.message.middleware(i18n_middleware)
+    common_router.callback_query.middleware(i18n_middleware)
 
     dating_router.message.middleware(LoggingMiddleware())
     dating_router.callback_query.middleware(LoggingMiddleware())
     dating_router.message.middleware(DatingMiddleware())
     dating_router.callback_query.middleware(DatingMiddleware())
     dating_router.message.middleware(i18n_middleware)
+    dating_router.callback_query.middleware(i18n_middleware)
 
     admin_router.message.middleware(LoggingMiddleware())
     admin_router.callback_query.middleware(LoggingMiddleware())

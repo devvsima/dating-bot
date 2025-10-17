@@ -144,13 +144,6 @@ async def _match_response(
     if message.text == "❤️":
         """Отправка пользователю который ответил на лайк"""
         await like_accept(session=session, user=user, another_user=another_user, match=match_data)
-        # """Отправка пользователю которому ответили на лайк"""
-        # link = generate_user_link(id=user.id, username=user.username)
-        # text = mt.LIKE_ACCEPT_ALERT(user.language).format(link, html.escape(user.profile.name))
-        # try:
-        #     await bot.send_message(chat_id=another_user.id, text=text, message_effect_id=effect_id)
-        # except:
-        #     ...
     elif message.text == "👎":
         pass
         await Match.update(
