@@ -25,8 +25,12 @@ class Match(BaseService):
         """
         existing_match = await session.execute(
             select(MatchModel).where(
-                (MatchModel.sender_id == sender_id)
-                & (MatchModel.receiver_id == receiver_id)
+                or_(
+                    # Прямое направление: sender -> receiver
+                    (MatchModel.sender_id == sender_id) & (MatchModel.receiver_id == receiver_id),
+                    # Обратное направление: receiver -> sender
+                    (MatchModel.sender_id == receiver_id) & (MatchModel.receiver_id == sender_id),
+                )
                 & (MatchModel.is_active == True)
             )
         )
