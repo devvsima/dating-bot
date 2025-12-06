@@ -18,7 +18,7 @@ class DatingMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.status == UserStatus.Banned or user.profile or user.profile.is_active:
+        if user.status == UserStatus.Banned or not user.profile:
             return
 
         data["user"] = user
