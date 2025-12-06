@@ -103,7 +103,7 @@ class User(BaseService):
         await User.update(
             session=session,
             id=id,
-            status=UserStatus.Banned,
+            status=UserStatus.User,
         )
 
         logger.log("DATABASE", f"Пользователь {id} был разблокирован.")
