@@ -15,7 +15,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 
 from data.config import database
-from database.models import MatchModel, ProfileModel, UserModel
+from database.models import UserModel
 from database.models.base import BaseModel
 
 if database.URL.startswith("sqlite"):

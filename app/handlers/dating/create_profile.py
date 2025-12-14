@@ -37,6 +37,8 @@ async def _name(message: types.Message, state: FSMContext):
     kb = RegistrationFormKb.gender()
     await message.answer(text=mt.GENDER, reply_markup=kb)
 
+    kb = RegistrationFormKb.gender()
+    await message.answer(text=mt.GENDER, reply_markup=kb)
 
 # -< Gender >-
 @registration_router.message(StateFilter(ProfileCreate.gender), F.text, filters.IsGender())
