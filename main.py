@@ -11,7 +11,8 @@ from utils.logging import logger
 
 
 async def on_startup() -> None:
-    await set_default_commands()
+    if tgbot.SET_COMMANDS:
+        await set_default_commands()
     logger.log("BOT", "~ Bot startup")
 
 

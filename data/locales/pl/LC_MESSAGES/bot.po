@@ -43,7 +43,7 @@ msgid ""
 "👋\n"
 "Немного информации о боте:\n"
 "Этот бот был создан по аналогии с популярным ботом для знакомств <a "
-"href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
+"href='https://t.me/leomatchbot?start=i_VwRd0'>Leomatchbot</a>\n"
 "Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
 "/dating-bot'>GitHub</a>\n"
 "\n"
@@ -434,4 +434,3 @@ msgstr "Patrzeć"
 
 #~ msgid "Пришли своё фото! 📸"
 #~ msgstr "Wyślij swoje zdjęcie! 📸"
-
