@@ -18,7 +18,25 @@ class DatingMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.status == UserStatus.Banned and user.profile and user.profile.is_active:
+        if user.status == UserStatus.Banned or not user.profile:
+            return
+
+        data["user"] = user
+        return await handler(message, data)
+
+
+class Registration_Middleware(BaseMiddleware):
+    async def __call__(
+        self, handler: Callable, message: Message | CallbackQuery, data: dict
+    ) -> Any:
+        session = data["session"]
+        user, is_create = await User.get_or_create(
+            session,
+            id=message.from_user.id,
+            username=message.from_user.username,
+            language=message.from_user.language_code,
+        )
+        if user.status == UserStatus.Banned:
             return
 
         data["user"] = user

@@ -47,6 +47,7 @@ class TelegramBotSettings:
     BOT_TOKEN: str = env.str("TELEGRAM_BOT_TOKEN", default=None)
     SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
     NEW_USER_ALET_TO_GROUP: bool = env.bool("NEW_USER_ALET_TO_GROUP", default=True)
+    SET_COMMANDS: bool = env.bool("SET_COMMANDS", default=True)
 
     ADMINS: list = env.list("ADMINS", default=None, subcast=int)
     MODERATOR_GROUP_ID: int = env.int("MODERATOR_GROUP_ID", default=None)
