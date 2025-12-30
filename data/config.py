@@ -76,7 +76,7 @@ class SearchSettings:
 
 # -< Path\Dir >-
 IMAGES_DIR: Path = DIR / "images"
-LOGO_DIR = f"{IMAGES_DIR}/logo.png"
+LOGO_DIR = f"{IMAGES_DIR}/new_year_logo.png"
 
 GRAPH_FILE_PATH: Path = IMAGES_DIR / "stats_graph.png"
 
