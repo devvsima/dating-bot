@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Cache-Control"
+            content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <title>Знакомства</title>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <link rel="stylesheet" href="/static/style.css?v=1704300002">
+    </head>
+    <body>
+        <div class="container">
+            <!-- Экран поиска -->
+            <div id="searchScreen" class="screen">
+                <div class="profile-card" id="searchCard">
+                    <div class="loading">Загрузка анкет...</div>
+                </div>
+
+                <!-- Индикаторы фотографий -->
+                <div class="photo-indicators" id="photoIndicators"></div>
+
+                <!-- Кнопки действий -->
+                <div class="action-buttons">
+                    <button class="action-btn dislike-btn"
+                        onclick="dislike()">👎</button>
+                    <button class="action-btn message-btn"
+                        onclick="showMessageModal()">💌</button>
+                    <button class="action-btn like-btn"
+                        onclick="like()">❤️</button>
+                </div>
+
+                <!-- Дополнительная кнопка жалобы -->
+                <div class="complaint-wrapper">
+                    <button class="complaint-btn"
+                        onclick="showComplaintModal()">💢 Пожаловаться</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для сообщения -->
+        <div id="messageModal" class="modal">
+            <div class="modal-content">
+                <h2>💌 Отправить сообщение</h2>
+                <textarea id="messageText" placeholder="Напишите сообщение..."
+                    rows="4"></textarea>
+                <div class="modal-buttons">
+                    <button class="modal-btn cancel-btn"
+                        onclick="closeMessageModal()">Отмена</button>
+                    <button class="modal-btn send-btn"
+                        onclick="sendMessage()">Отправить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для жалобы -->
+        <div id="complaintModal" class="modal">
+            <div class="modal-content">
+                <h2>💢 Пожаловаться</h2>
+                <p>Выберите причину жалобы:</p>
+                <div class="complaint-buttons">
+                    <button class="complaint-reason-btn"
+                        onclick="sendComplaint('🔞')">🔞 18+ контент</button>
+                    <button class="complaint-reason-btn"
+                        onclick="sendComplaint('💰')">💰 Мошенничество</button>
+                    <button class="complaint-reason-btn"
+                        onclick="sendComplaint('🔫')">🔫 Насилие</button>
+                </div>
+                <button class="modal-btn cancel-btn"
+                    onclick="closeComplaintModal()">Отмена</button>
+            </div>
+        </div>
+
+        <script src="/static/app.js?v=1704300002"></script>
+    </body>
+</html>

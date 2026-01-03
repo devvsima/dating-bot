@@ -275,5 +275,9 @@ The reason: {}
     def PHOTO_REQUIRED_FOR_PROFILE(self):
         return _("❌ Для создания профиля необходимо загрузить хотя бы одно фото!")
 
+    @property
+    def RATE_LIMIT_MESSAGE(self):
+        return _("⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару секунд.")
+
 
 message_text = MessageText()

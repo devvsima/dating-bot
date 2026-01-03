@@ -6,7 +6,7 @@ from app.text import message_text as mt
 from data.config import tgbot
 from database.models.profile import ProfileModel
 from database.models.user import UserModel
-from database.services.complaint import Compleint
+from database.services.complaint import Complaint
 from database.services.profile_media import ProfileMedia
 from database.services.search import haversine_distance
 from loader import bot
@@ -74,7 +74,7 @@ async def complaint_to_profile(
     на которого пришла жалоба"""
     if MODERATOR_GROUP_ID:
         try:
-            complaint = await Compleint.create(
+            complaint = await Complaint.create(
                 session=session,
                 sender_id=sender.id,
                 receiver_id=receiver.id,

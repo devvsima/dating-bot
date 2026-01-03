@@ -4,13 +4,13 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .base import BaseModel, StatusMixin
 
 
-class CompleintStatus(StatusMixin):
+class ComplaintStatus(StatusMixin):
     Rejected = 0
     Pending = 1
     Accepted = 2
 
 
-class ProfileCompleintsModel(BaseModel):
+class ProfileComplaintsModel(BaseModel):
     __tablename__ = "profile_complaints"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)

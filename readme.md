@@ -23,7 +23,7 @@
 
 
 <p align="center">
-  <img src="./images/preview.png" alt="screenshot 1" width="1000"/>
+  <img src="./images/new_preview.png" alt="screenshot 1" width="1000"/>
 
 </p>
 
