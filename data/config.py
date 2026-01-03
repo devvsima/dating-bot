@@ -8,6 +8,39 @@ env = Env()
 env.read_env()
 
 
+# -< Telegram bot >-
+class TelegramBotSettings:
+    BOT_TOKEN: str = env.str("TELEGRAM_BOT_TOKEN", default=None)
+    SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
+    SET_COMMANDS: bool = env.bool("SET_COMMANDS", default=True)
+
+    # Throtling
+    RATE_LIMIT: int = env.int("RATE_LIMIT", default=2)
+    TIME_WINDOW: int = env.int("TIME_WINDOW", default=1)
+
+    # Admin
+    ADMINS: list = env.list("ADMINS", default=None, subcast=int)
+    NEW_USER_ALET_TO_GROUP: bool = env.bool("NEW_USER_ALET_TO_GROUP", default=True)
+    MODERATOR_GROUP_ID: int = env.int("MODERATOR_GROUP_ID", default=None)
+    BOT_CHANNEL_URL: str = env.str("BOT_CHANNEL_URL", default=None)
+
+    # Other
+    TIME_ZONE = "UTC"
+    I18N_DOMAIN = "bot"
+
+
+# -< Webapp >-
+class WebAppSettings:
+    HOST: str = env.str("WEBAPP_HOST", default="localhost")
+    PORT: int = env.int("WEBAPP_PORT", default=8080)
+    DOMEN: str = env.str("WEBAPP_DOMEN", default=None)
+
+    URL: str = env.str("WEBAPP_URL", default=None)
+    if not URL:
+        if all((HOST, PORT, DOMEN)):
+            URL = f"https://{DOMEN}/"
+
+
 # -< Database >-
 class DatabaseSettings:
     NAME: str = env.str("DB_NAME", default=None)
@@ -17,13 +50,13 @@ class DatabaseSettings:
     PASS: str = env.str("DB_PASS", default="postgres")
 
     URL: str = env.str("DB_URL", default=f"sqlite+aiosqlite:///{DIR}/database/db.sqlite3")
+    if not URL:
+        if all((NAME, HOST, PORT, USER, PASS)):
+            URL = f"postgresql+asyncpg://{USER}:{PASS}@{HOST}:{PORT}/{NAME}"
 
-    if all((NAME, HOST, PORT, USER, PASS)):
-        URL = f"postgresql+asyncpg://{USER}:{PASS}@{HOST}:{PORT}/{NAME}"
-
-    ECHO = False
-    POOL_SIZE = 5
-    MAX_OVERFLOW = 10
+    ECHO: bool = env.bool("ECHO", default=False)
+    POOL_SIZE: int = env.int("POOL_SIZE", default=12)
+    MAX_OVERFLOW: int = env.int("MAX_OVERFLOW", default=18)
 
 
 # -< Redis >-
@@ -35,27 +68,11 @@ class RedisSettings:
     PASS: int = env.str("REDIS_PASS", default=None)
 
     URL: str = env.str("RD_URL", default=None)
-
-    if all((DB, HOST, PORT)):
-        URL = f"redis://{HOST}:{PORT}/{DB}"
-        if all((USER, PASS)):
-            URL = f"redis://{USER}:{PASS}@{HOST}:{PORT}/{DB}"
-
-
-# -< Telegram bot >-
-class TelegramBotSettings:
-    BOT_TOKEN: str = env.str("TELEGRAM_BOT_TOKEN", default=None)
-    SKIP_UPDATES: bool = env.bool("SKIP_UPDATES", default=False)
-    NEW_USER_ALET_TO_GROUP: bool = env.bool("NEW_USER_ALET_TO_GROUP", default=True)
-    SET_COMMANDS: bool = env.bool("SET_COMMANDS", default=True)
-
-    ADMINS: list = env.list("ADMINS", default=None, subcast=int)
-    MODERATOR_GROUP_ID: int = env.int("MODERATOR_GROUP_ID", default=None)
-    BOT_CHANNEL_URL: str = env.str("BOT_CHANNEL_URL", default=None)
-
-    TIME_ZONE = "UTC"
-
-    I18N_DOMAIN = "bot"
+    if not URL:
+        if all((DB, HOST, PORT)):
+            URL = f"redis://{HOST}:{PORT}/{DB}"
+            if all((USER, PASS)):
+                URL = f"redis://{USER}:{PASS}@{HOST}:{PORT}/{DB}"
 
 
 # -< Search >-
@@ -76,7 +93,7 @@ class SearchSettings:
 
 # -< Path\Dir >-
 IMAGES_DIR: Path = DIR / "images"
-LOGO_DIR = f"{IMAGES_DIR}/new_year_logo.png"
+LOGO_DIR = f"{IMAGES_DIR}/logo.png"
 
 GRAPH_FILE_PATH: Path = IMAGES_DIR / "stats_graph.png"
 
@@ -88,4 +105,5 @@ LOG_FILE_PATH: Path = DIR / "logs" / "logs.log"
 database = DatabaseSettings()
 redis = RedisSettings()
 tgbot = TelegramBotSettings()
+webapp = WebAppSettings()
 search = SearchSettings()

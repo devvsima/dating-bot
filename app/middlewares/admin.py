@@ -3,6 +3,7 @@ from typing import Any, Callable
 from aiogram import BaseMiddleware
 from aiogram.types import Message
 
+from app.text import message_text as mt
 from data.config import tgbot
 from database.services import User
 
@@ -14,4 +15,5 @@ class AdminMiddleware(BaseMiddleware):
             if user.id in tgbot.ADMINS:
                 data["user"] = user
                 return await handler(message, data)
+        await message.answer(mt.UNKNOWN_COMMAND)
         return

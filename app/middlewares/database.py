@@ -10,5 +10,11 @@ class DatabaseMiddleware(BaseMiddleware):
 
     async def __call__(self, handler, event, data) -> Any:
         async with self.session_pool() as session:
-            data["session"] = session
-            return await handler(event, data)
+            try:
+                data["session"] = session
+                return await handler(event, data)
+            except Exception as e:
+                await session.rollback()
+                raise
+            finally:
+                await session.close()

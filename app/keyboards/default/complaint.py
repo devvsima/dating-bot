@@ -3,7 +3,7 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 from loader import _
 
 
-def compleint_kb() -> ReplyKeyboardMarkup:
+def complaint_kb() -> ReplyKeyboardMarkup:
     kb = ReplyKeyboardMarkup(
         resize_keyboard=True,
         one_time_keyboard=True,
