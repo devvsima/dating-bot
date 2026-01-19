@@ -15,5 +15,5 @@ class AdminMiddleware(BaseMiddleware):
             if user.id in tgbot.ADMINS:
                 data["user"] = user
                 return await handler(message, data)
-        await message.answer(mt.UNKNOWN_COMMAND)
+        await message.answer(mt.UNKNOWN_COMMAND(language=user.language))
         return

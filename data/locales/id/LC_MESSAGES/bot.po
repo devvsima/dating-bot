@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-08 17:45+0300\n"
-"PO-Revision-Date: 2025-09-08 17:44+0300\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2026-01-19 00:53+0200\n"
+"PO-Revision-Date: 2026-01-03 20:17+0200\n"
+"Last-Translator: \n"
 "Language: id\n"
 "Language-Team: id <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -42,7 +42,7 @@ msgid ""
 "👋\n"
 "Немного информации о боте:\n"
 "Этот бот был создан по аналогии с популярным ботом для знакомств <a "
-"href='https://t.me/leomatchbot?start=i_VwRd0'>Leomatchbot</a>\n"
+"href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
 "Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
 "/dating-bot'>GitHub</a>\n"
 "\n"
@@ -51,8 +51,10 @@ msgstr ""
 "\n"
 "👋\n"
 "Sedikit informasi tentang bot:\n"
-"Bot ini dibuat berdasarkan bot kencan populer <a href='https://t.me/leomatchbot?start=i_VwRd0'>Leomatchbot</a>\n"
-"Seluruh kode bot terbuka dan tersedia di <a href='https://github.com/devvsima/dating-bot'>GitHub</a>\n"
+"Bot ini dibuat berdasarkan bot kencan populer <a "
+"href='https://t.me/leomatchbot?start=i_VwRd0'>Leomatchbot</a>\n"
+"Seluruh kode bot terbuka dan tersedia di <a "
+"href='https://github.com/devvsima/dating-bot'>GitHub</a>\n"
 "\n"
 "Untuk pertanyaan dan saran, silakan hubungi: @devvsima.\n"
 
@@ -144,24 +146,24 @@ msgid ""
 "ботом."
 msgstr "✅ Profilmu berhasil dipulihkan! Kamu bisa menggunakan bot lagi."
 
-#: app/text.py:102
+#: app/text.py:101
 msgid "🔍 Выполняется поиск..."
 msgstr "🔍 Sedang mencari..."
 
-#: app/text.py:106
+#: app/text.py:105
 #, python-brace-format
 msgid "Твоя анкета понравилась {} людям! Давай посмотрим, кто это:"
 msgstr "Profilmu disukai oleh {} orang! Mari lihat siapa saja:"
 
-#: app/text.py:110
+#: app/text.py:109
 msgid "Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍"
 msgstr "Tidak ada profil yang cocok ditemukan. Coba pilih kota lain. 🌍"
 
-#: app/text.py:114
+#: app/text.py:113
 msgid "Анкеты закончились. Попробуй позже! 😊"
 msgstr "Profil sudah habis. Coba lagi nanti! 😊"
 
-#: app/text.py:119
+#: app/text.py:117
 #, python-brace-format
 msgid ""
 "Твоя анкета получила <b>{}</b> ❤️\n"
@@ -172,24 +174,16 @@ msgstr ""
 "\n"
 "📭 Klik untuk melihat"
 
-#: app/text.py:125
+#: app/text.py:123
 msgid "Пока никто не поставил тебе лайк, но всё ещё впереди!"
 msgstr "Belum ada yang menyukaimu, tapi semuanya masih mungkin!"
 
-#: app/text.py:128
+#: app/text.py:127
 #, python-brace-format
 msgid "Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr "Semoga kalian bersenang-senang ;) <a href='{}'>{}</a>"
 
-#: app/text.py:132
-#, python-brace-format
-msgid ""
-"На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
-"href='{}'>{}</a>"
-msgstr ""
-"Like kamu dibalas, semoga kalian bersenang-senang ;) <a href='{}'>{}</a>"
-
-#: app/text.py:138
+#: app/text.py:139
 #, python-brace-format
 msgid ""
 "Сообщение для тебя:\n"
@@ -354,6 +348,12 @@ msgstr "📸 Kirim foto atau pilih aksi dari menu"
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr "❌ Untuk membuat profil, kamu harus mengunggah minimal satu foto!"
 
+#: app/text.py:280
+msgid ""
+"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару "
+"секунд."
+msgstr "⏳ Anda mengirim pesan terlalu sering. Mohon tunggu beberapa detik."
+
 #: app/keyboards/default/registration_form.py:17
 msgid "Создать анкету"
 msgstr "Buat profil"
@@ -395,3 +395,27 @@ msgstr "📍 Kirim lokasi"
 #: app/keyboards/inline/archive.py:10
 msgid "Посмотреть"
 msgstr "Lihat"
+
+#~ msgid ""
+#~ "На ваш лайк ответили взаимно, надеюсь"
+#~ " вы хорошо проведете время ;) <a "
+#~ "href='{}'>{}</a>"
+#~ msgstr ""
+#~ "Like kamu dibalas, semoga kalian "
+#~ "bersenang-senang ;) <a href='{}'>{}</a>"
+
+#~ msgid "🚀 Открыть WebApp"
+#~ msgstr "🚀 Buka WebApp"
+
+#~ msgid "Start"
+#~ msgstr ""
+
+#~ msgid "Help"
+#~ msgstr ""
+
+#~ msgid "Change language"
+#~ msgstr ""
+
+#~ msgid "Telegram channel"
+#~ msgstr ""
+

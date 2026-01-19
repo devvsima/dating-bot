@@ -7,17 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-08 17:45+0300\n"
-"PO-Revision-Date: 2025-08-15 17:51+0300\n"
+"POT-Creation-Date: 2026-01-19 00:53+0200\n"
+"PO-Revision-Date: 2026-01-19 01:06+0200\n"
 "Last-Translator: \n"
-"Language: pl\n"
 "Language-Team: pl <LL@li.org>\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: Babel 2.17.0\n"
+"X-Generator: Poedit 3.5\n"
 
 #: app/text.py:12
 msgid ""
@@ -43,9 +44,9 @@ msgid ""
 "👋\n"
 "Немного информации о боте:\n"
 "Этот бот был создан по аналогии с популярным ботом для знакомств <a "
-"href='https://t.me/leomatchbot?start=i_VwRd0'>Leomatchbot</a>\n"
-"Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
-"/dating-bot'>GitHub</a>\n"
+"href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
+"Весь код бота открыт и доступен на <a href='https://github.com/devvsima/"
+"dating-bot'>GitHub</a>\n"
 "\n"
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
@@ -54,8 +55,8 @@ msgstr ""
 "Trochę informacji o bocie:  \n"
 "Ten bot został stworzony na wzór popularnego bota randkowego <a "
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Dajwinczyk</a>.  \n"
-"Cały kod bota jest otwarty i dostępny na <a "
-"href='https://github.com/devvsima/dating-bot'>GitHub</a>.  \n"
+"Cały kod bota jest otwarty i dostępny na <a href='https://github.com/"
+"devvsima/dating-bot'>GitHub</a>.  \n"
 "\n"
 "W razie pytań lub sugestii możesz napisać tutaj: @devvsima.\n"
 
@@ -69,9 +70,9 @@ msgid ""
 "✉️ Пригласить друзей"
 msgstr ""
 "\n"
-"wyświetl profile\n"
-"mój profil\n"
-"kto mnie polubił\n"
+"🔍 Przeglądaj profile\n"
+"👤 Mój profil\n"
+"📭 Kto mnie polubił\n"
 "\n"
 "✉️ Zaproś znajomych"
 
@@ -86,15 +87,10 @@ msgid ""
 "↩️ Назад\n"
 msgstr ""
 "\n"
-"🔄 Wypełnij formularz ponownie\n"
-"zmień zdjęcie\n"
+"🔄 Wypełnij ankietę ponownie\n"
+"🖼 Zmień zdjęcie\n"
 "✍️ Zmień opis\n"
-"dezaktywuj profil\n"
-"\n"
-"🔄 Заполнить анкету заново\n"
-"🖼 Изменить фотографию\n"
-"✍️ Изменить описание\n"
-"❌ Отключить анкету\n"
+"❌ Wyłącz ankietę\n"
 "\n"
 "↩️ Wstecz\n"
 
@@ -156,24 +152,24 @@ msgstr ""
 "✅ Twój profil został pomyślnie przywrócony! Teraz możesz ponownie używać "
 "bota."
 
-#: app/text.py:102
+#: app/text.py:101
 msgid "🔍 Выполняется поиск..."
 msgstr "🔍 Wyszukiwanie..."
 
-#: app/text.py:106
+#: app/text.py:105
 #, python-brace-format
 msgid "Твоя анкета понравилась {} людям! Давай посмотрим, кто это:"
 msgstr "Twój profil został polubiony przez {} osób! Zobaczmy, kto to jest:"
 
-#: app/text.py:110
+#: app/text.py:109
 msgid "Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍"
 msgstr "Nie znaleziono odpowiednich profili. Spróbuj wybrać inne miasto. 🌍"
 
-#: app/text.py:114
+#: app/text.py:113
 msgid "Анкеты закончились. Попробуй позже! 😊"
 msgstr "Kwestionariusze zostały wyczerpane. Spróbuj ponownie później! 😊"
 
-#: app/text.py:119
+#: app/text.py:117
 #, python-brace-format
 msgid ""
 "Твоя анкета получила <b>{}</b> ❤️\n"
@@ -184,25 +180,16 @@ msgstr ""
 "\n"
 "📭 Kliknij, aby wyświetlić"
 
-#: app/text.py:125
+#: app/text.py:123
 msgid "Пока никто не поставил тебе лайк, но всё ещё впереди!"
 msgstr "Nikt jeszcze nie dał ci like'a, ale będzie ich jeszcze więcej!"
 
-#: app/text.py:128
+#: app/text.py:127
 #, python-brace-format
 msgid "Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr "Mam nadzieję, że dobrze się bawiliście ;) <a href='{}'>{}</a>"
 
-#: app/text.py:132
-#, python-brace-format
-msgid ""
-"На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
-"href='{}'>{}</a>"
-msgstr ""
-"Twoje polubienie zostało odwzajemnione, mam nadzieję, że dobrze się "
-"bawiłeś ;) <a href='{}'>{}</a>"
-
-#: app/text.py:138
+#: app/text.py:139
 #, python-brace-format
 msgid ""
 "Сообщение для тебя:\n"
@@ -362,7 +349,8 @@ msgid "Все {} фото загружены!"
 msgstr "Wszystkie {} zdjęcia zostały przesłane!"
 
 #: app/text.py:268
-msgid "❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
+msgid ""
+"❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
 msgstr ""
 "❌ Maksymalnie 3 zdjęcia! Naciśnij 'To wszystko, zapisz zdjęcie' aby "
 "zapisać."
@@ -374,6 +362,12 @@ msgstr "📸 Prześlij zdjęcie lub wybierz akcję z menu"
 #: app/text.py:276
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr "❌ Aby utworzyć profil, musisz przesłać co najmniej jedno zdjęcie!"
+
+#: app/text.py:280
+msgid ""
+"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару "
+"секунд."
+msgstr "⏳ Wysyłasz wiadomości zbyt często. Proszę poczekać kilka sekund."
 
 #: app/keyboards/default/registration_form.py:17
 msgid "Создать анкету"
@@ -421,16 +415,24 @@ msgstr "Patrzeć"
 #~ msgstr "Komuś spodobał się Twój profil! Chcesz zobaczyć? 👀"
 
 #~ msgid ""
-#~ "Пользователь <code>{}</code> (@{}) отправил "
-#~ "жалобу на анкету пользователя: <code>{}</code>"
-#~ " (@{})"
+#~ "Пользователь <code>{}</code> (@{}) отправил жалобу на анкету "
+#~ "пользователя: <code>{}</code> (@{})"
 #~ msgstr ""
-#~ "Użytkownik <code>{}</code> (@{}) złożył skargę"
-#~ " dotyczącą profilu użytkownika: <code>{}</code>"
-#~ " (@{})"
+#~ "Użytkownik <code>{}</code> (@{}) złożył skargę dotyczącą profilu "
+#~ "użytkownika: <code>{}</code> (@{})"
 
 #~ msgid "Отменить жалобу"
 #~ msgstr "Anuluj skargę"
 
 #~ msgid "Пришли своё фото! 📸"
 #~ msgstr "Wyślij swoje zdjęcie! 📸"
+
+#~ msgid ""
+#~ "На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
+#~ "href='{}'>{}</a>"
+#~ msgstr ""
+#~ "Twoje polubienie zostało odwzajemnione, mam nadzieję, że dobrze się "
+#~ "bawiłeś ;) <a href='{}'>{}</a>"
+
+#~ msgid "🚀 Открыть WebApp"
+#~ msgstr "🚀 Otwórz aplikację internetową"

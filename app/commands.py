@@ -1,5 +1,6 @@
 from aiogram.types import BotCommand, BotCommandScopeChat, BotCommandScopeDefault
 
+from data.config import tgbot
 from loader import _, bot, i18n
 
 
@@ -8,8 +9,11 @@ def get_default_commands() -> list:
         BotCommand(command="/start", description="Start"),
         BotCommand(command="/help", description="Help"),
         BotCommand(command="/lang", description="Change language"),
-        BotCommand(command="/channel", description="Telegram channel"),
     ]
+    if tgbot.BOT_CHANNEL_URL:
+        commands.append(
+            BotCommand(command="/channel", description="Telegram channel"),
+        )
 
     return commands
 

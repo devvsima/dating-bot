@@ -1,14 +1,14 @@
 # Translations template for bot.
-# Copyright (C) 2025 ORGANIZATION
+# Copyright (C) 2026 ORGANIZATION
 # This file is distributed under the same license as the bot project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-08 17:45+0300\n"
+"POT-Creation-Date: 2026-01-19 00:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,24 +113,24 @@ msgid ""
 "ботом."
 msgstr ""
 
-#: app/text.py:102
+#: app/text.py:101
 msgid "🔍 Выполняется поиск..."
 msgstr ""
 
-#: app/text.py:106
+#: app/text.py:105
 #, python-brace-format
 msgid "Твоя анкета понравилась {} людям! Давай посмотрим, кто это:"
 msgstr ""
 
-#: app/text.py:110
+#: app/text.py:109
 msgid "Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍"
 msgstr ""
 
-#: app/text.py:114
+#: app/text.py:113
 msgid "Анкеты закончились. Попробуй позже! 😊"
 msgstr ""
 
-#: app/text.py:119
+#: app/text.py:117
 #, python-brace-format
 msgid ""
 "Твоя анкета получила <b>{}</b> ❤️\n"
@@ -138,23 +138,16 @@ msgid ""
 "📭 Нажми, чтобы посмотреть"
 msgstr ""
 
-#: app/text.py:125
+#: app/text.py:123
 msgid "Пока никто не поставил тебе лайк, но всё ещё впереди!"
 msgstr ""
 
-#: app/text.py:128
+#: app/text.py:127
 #, python-brace-format
 msgid "Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr ""
 
-#: app/text.py:132
-#, python-brace-format
-msgid ""
-"На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
-"href='{}'>{}</a>"
-msgstr ""
-
-#: app/text.py:138
+#: app/text.py:139
 #, python-brace-format
 msgid ""
 "Сообщение для тебя:\n"
@@ -294,6 +287,12 @@ msgstr ""
 
 #: app/text.py:276
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
+msgstr ""
+
+#: app/text.py:280
+msgid ""
+"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару "
+"секунд."
 msgstr ""
 
 #: app/keyboards/default/registration_form.py:17

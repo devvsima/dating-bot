@@ -5,5 +5,6 @@ from .mailing import admin_router
 from .profile import admin_router
 from .restart import admin_router
 from .stats import admin_router
+from .webapp import admin_router
 
 __all__ = ["admin_router"]

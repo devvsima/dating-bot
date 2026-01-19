@@ -14,7 +14,7 @@ from .admin import AdminMiddleware
 from .common import CommonMiddleware
 from .database import DatabaseMiddleware
 from .dating import DatingMiddleware, Registration_Middleware
-from .log import LoggingMiddleware
+from .logging import LoggingMiddleware
 from .throttling import ThrottlingMiddleware
 from .voide import VoideMiddleware
 

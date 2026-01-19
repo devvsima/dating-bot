@@ -10,7 +10,7 @@ class ComplaintStatus(StatusMixin):
     Accepted = 2
 
 
-class ProfileComplaintsModel(BaseModel):
+class ProfileComplaintModel(BaseModel):
     __tablename__ = "profile_complaints"
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)

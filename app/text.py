@@ -49,9 +49,12 @@ class MessageText:
 ↩️ Назад
 """)
 
-    @property
-    def UNKNOWN_COMMAND(self):
-        return _("Неизвестная команда. Если заблудился, напиши /start.")
+    # @property
+    def UNKNOWN_COMMAND(self, language: str = "en"):
+        return _(
+            "Неизвестная команда. Если заблудился, напиши /start.",
+            locale=language,
+        )
 
     # Создание и редактирование профиля
     @property

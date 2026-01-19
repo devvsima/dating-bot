@@ -1,4 +1,4 @@
-from .complaint import ProfileComplaintsModel
+from .complaint import ProfileComplaintModel
 from .match import MatchModel
 from .profile import ProfileModel
 from .profile_media import ProfileMediaModel

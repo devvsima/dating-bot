@@ -1,7 +1,9 @@
+from aiogram import types
 from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.filters.kb_filter import BlockUserCallback, StatsCallback
+from data.config import webapp
 from loader import _
 
 
@@ -42,5 +44,21 @@ def block_user_ikb(complaint_id: int, user_id: int, username: str) -> InlineKeyb
             ban=False,
         ),
     )
+    builder.button(text="🌐 Посмотреть профиль", url=f"{webapp.URL}admin/user/{user_id}")
+
+    builder.adjust(1)
+    return builder.as_markup()
+
+
+def check_user_profile(user_id: int):
+    builder = InlineKeyboardBuilder()
+
+    builder.button(
+        text="🌐 Посмотреть профиль",
+        web_app=types.WebAppInfo(
+            url=f"{webapp.URL}admin/user/{user_id}",
+        ),
+    )
+
     builder.adjust(1)
     return builder.as_markup()

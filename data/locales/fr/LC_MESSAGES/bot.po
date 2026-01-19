@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-09-08 17:45+0300\n"
-"PO-Revision-Date: 2025-08-15 17:52+0300\n"
+"POT-Creation-Date: 2026-01-19 00:53+0200\n"
+"PO-Revision-Date: 2026-01-03 20:18+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -155,26 +155,26 @@ msgstr ""
 "✅ Votre profil a été restauré avec succès ! Vous pouvez maintenant "
 "utiliser le bot à nouveau."
 
-#: app/text.py:102
+#: app/text.py:101
 msgid "🔍 Выполняется поиск..."
 msgstr "🔍 Recherche..."
 
-#: app/text.py:106
+#: app/text.py:105
 #, python-brace-format
 msgid "Твоя анкета понравилась {} людям! Давай посмотрим, кто это:"
 msgstr "Votre profil a été aimé par {} personnes ! Voyons de qui il s'agit :"
 
-#: app/text.py:110
+#: app/text.py:109
 msgid "Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍"
 msgstr ""
 "Aucun profil correspondant n'a été trouvé. Essayez de choisir une autre "
 "ville. 🌍"
 
-#: app/text.py:114
+#: app/text.py:113
 msgid "Анкеты закончились. Попробуй позже! 😊"
 msgstr "Les questionnaires sont terminés. Réessayez plus tard ! 😊"
 
-#: app/text.py:119
+#: app/text.py:117
 #, python-brace-format
 msgid ""
 "Твоя анкета получила <b>{}</b> ❤️\n"
@@ -185,25 +185,16 @@ msgstr ""
 "\n"
 "📭 Click to view"
 
-#: app/text.py:125
+#: app/text.py:123
 msgid "Пока никто не поставил тебе лайк, но всё ещё впереди!"
 msgstr "Personne ne t'a encore liké, mais tout est encore possible !"
 
-#: app/text.py:128
+#: app/text.py:127
 #, python-brace-format
 msgid "Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr "J'espère que vous passerez un bon moment ;) <a href='{}'>{}</a>"
 
-#: app/text.py:132
-#, python-brace-format
-msgid ""
-"На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
-"href='{}'>{}</a>"
-msgstr ""
-"Votre like a été réciproque, j'espère que vous passerez un bon moment ;) "
-"<a href='{}'>{}</a>"
-
-#: app/text.py:138
+#: app/text.py:139
 #, python-brace-format
 msgid ""
 "Сообщение для тебя:\n"
@@ -375,6 +366,14 @@ msgstr "📸 Envoyez une photo ou choisissez une action dans le menu"
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr "❌ Pour créer un profil, vous devez télécharger au moins une photo !"
 
+#: app/text.py:280
+msgid ""
+"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару "
+"секунд."
+msgstr ""
+"⏳ Vous envoyez des messages trop fréquemment. Veuillez patienter quelques"
+" secondes."
+
 #: app/keyboards/default/registration_form.py:17
 msgid "Создать анкету"
 msgstr "Créer un profil"
@@ -434,4 +433,28 @@ msgstr "Voir"
 
 #~ msgid "Пришли своё фото! 📸"
 #~ msgstr "Envoyez votre photo ! 📸"
+
+#~ msgid ""
+#~ "На ваш лайк ответили взаимно, надеюсь"
+#~ " вы хорошо проведете время ;) <a "
+#~ "href='{}'>{}</a>"
+#~ msgstr ""
+#~ "Votre like a été réciproque, j'espère"
+#~ " que vous passerez un bon moment "
+#~ ";) <a href='{}'>{}</a>"
+
+#~ msgid "🚀 Открыть WebApp"
+#~ msgstr "🚀 Ouvrir l'application Web"
+
+#~ msgid "Start"
+#~ msgstr ""
+
+#~ msgid "Help"
+#~ msgstr ""
+
+#~ msgid "Change language"
+#~ msgstr ""
+
+#~ msgid "Telegram channel"
+#~ msgstr ""
 

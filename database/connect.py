@@ -29,17 +29,18 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
     """
     Контекстный менеджер для получения сессии базы данных
 
+    ВАЖНО: Commit должен вызываться явно в сервисах!
+    Сессия автоматически откатывается при ошибках.
+
     Использование:
         async with get_session() as session:
             # работа с БД
             users = await User.get_all(session)
+            await session.commit()  # Явный commit
     """
     async with async_session() as session:
         try:
             yield session
-            await session.commit()
         except Exception:
             await session.rollback()
             raise
-        finally:
-            await session.close()

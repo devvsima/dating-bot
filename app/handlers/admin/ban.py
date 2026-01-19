@@ -69,13 +69,13 @@ rejected the complaint against user <code>{receiver_id}</code> @{receiver_userna
     await callback.message.edit_text(
         text.format(
             admin_id=callback.from_user.id,
-            admin_username=callback.from_user.username or "unknown",
+            admin_username=callback.from_user.username or "None",
             receiver_id=receiver_id,
-            receiver_username=receiver_username or "unknown",
-            sender_id=complaint.sender_id if complaint else "unknown",
+            receiver_username=receiver_username or "None",
+            sender_id=complaint.sender_id if complaint else "None",
             sender_username=sender_user.username
             if sender_user and sender_user.username
-            else "unknown",
+            else "None",
             reason=complaint.reason if complaint and complaint.reason else "No reason provided",
         ),
         parse_mode="HTML",

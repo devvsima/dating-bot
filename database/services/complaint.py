@@ -1,7 +1,7 @@
 from database.services.base import BaseService
 
-from ..models.complaint import ProfileComplaintsModel
+from ..models.complaint import ProfileComplaintModel
 
 
 class Complaint(BaseService):
-    model = ProfileComplaintsModel
+    model = ProfileComplaintModel
