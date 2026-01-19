@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-03 20:14+0200\n"
+"POT-Creation-Date: 2026-01-19 00:53+0200\n"
 "PO-Revision-Date: 2025-03-04 16:06+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -335,10 +335,6 @@ msgstr ""
 msgid "📍 Отправить местоположение"
 msgstr ""
 
-#: app/keyboards/default/webapp.py:11
-msgid "🚀 Открыть WebApp"
-msgstr ""
-
 #: app/keyboards/inline/archive.py:10
 msgid "Посмотреть"
 msgstr ""
@@ -463,5 +459,20 @@ msgstr ""
 #~ "На ваш лайк ответили взаимно, надеюсь"
 #~ " вы хорошо проведете время ;) <a "
 #~ "href='{}'>{}</a>"
+#~ msgstr ""
+
+#~ msgid "🚀 Открыть WebApp"
+#~ msgstr ""
+
+#~ msgid "Start"
+#~ msgstr ""
+
+#~ msgid "Help"
+#~ msgstr ""
+
+#~ msgid "Change language"
+#~ msgstr ""
+
+#~ msgid "Telegram channel"
 #~ msgstr ""
 

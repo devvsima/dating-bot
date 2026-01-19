@@ -4,6 +4,7 @@ from aiogram.filters.state import StateFilter
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.business.profile_service import send_profile
+from app.keyboards.inline.admin import check_user_profile
 from app.routers import admin_router
 from database.services.profile import Profile
 
@@ -13,9 +14,14 @@ async def _admin_command(
     message: types.Message, command: CommandObject, session: AsyncSession
 ) -> None:
     """Админ панель"""
-    try:
-        profile_id = command.args.lower()
-        profile = await Profile.get(session=session, id=int(profile_id))
-        await send_profile(message.chat.id, profile, session)
-    except:
-        await message.answer("Profile not found")
+    # try:
+    profile_id = command.args.lower()
+    profile = await Profile.get(session=session, id=int(profile_id))
+    await send_profile(message.chat.id, profile, session)
+
+    # Такая логика из за ограничений тг в том чтобы отправлять клавитары с webapp в группы
+    if not message.chat.title:
+        await message.answer(
+            "Для действий с профилем",
+            reply_markup=check_user_profile(profile.id),
+        )

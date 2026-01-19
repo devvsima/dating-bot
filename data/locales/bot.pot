@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-03 20:14+0200\n"
+"POT-Creation-Date: 2026-01-19 00:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -331,10 +331,6 @@ msgstr ""
 
 #: app/keyboards/default/registration_form.py:92
 msgid "📍 Отправить местоположение"
-msgstr ""
-
-#: app/keyboards/default/webapp.py:11
-msgid "🚀 Открыть WebApp"
 msgstr ""
 
 #: app/keyboards/inline/archive.py:10
