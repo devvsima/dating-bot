@@ -2,24 +2,8 @@
 
 IF "%1"=="run" (
     uv run main.py
-) ELSE IF "%1"=="run_all" (
-echo Starting Telegram Bot WebApp...
-echo.
-
-echo [1/2] Starting FastAPI WebApp server...
-start "WebApp Server" cmd /k python api/run.py
-
-timeout /t 3 /nobreak >nul
-
-echo [2/2] Starting Telegram Bot...
-start "Telegram Bot" cmd /k python main.py
-
-echo.
-echo Both services are running!
-echo - Bot: Running in polling mode
-echo.
-echo Press any key to exit...
-pause >nul
+) ELSE IF "%1"=="web" (
+    uv run webapp.py
 ) ELSE IF "%1"=="mapp" (
     uv run alembic upgrade head
 ) ELSE IF "%1"=="mgen" (

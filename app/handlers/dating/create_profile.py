@@ -14,8 +14,6 @@ from database.services import Profile
 from database.services.profile_media import ProfileMedia
 from database.services.user import User
 
-from .profile import profile_command
-
 
 @registration_router.message(StateFilter(None), F.text == "🔄")
 @registration_router.message(StateFilter(None), filters.IsCreate())

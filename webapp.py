@@ -67,4 +67,4 @@ async def admin_user_profile(request: Request, user_id: int):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("run:app", host=webapp.HOST, port=webapp.PORT, reload=True)
+    uvicorn.run("uvrun:app", host=webapp.HOST, port=webapp.PORT, reload=True)

@@ -73,31 +73,32 @@ async def complaint_to_profile(
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
     if MODERATOR_GROUP_ID:
-        # try:
-        complaint = await Complaint.create(
-            session=session,
-            sender_id=sender.id,
-            receiver_id=receiver.id,
-            reason=reason,
-        )
+        try:
+            complaint = await Complaint.create(
+                session=session,
+                sender_id=sender.id,
+                receiver_id=receiver.id,
+                reason=reason,
+            )
 
-        await send_profile(MODERATOR_GROUP_ID, receiver.profile, session)
-        text = mt.REPORT_TO_USER.format(
-            sender.id,
-            sender.username,
-            receiver.id,
-            receiver.username,
-            reason,
-        )
+            await send_profile(MODERATOR_GROUP_ID, receiver.profile, session)
 
-        await bot.send_message(
-            chat_id=MODERATOR_GROUP_ID,
-            text=text,
-            reply_markup=block_user_ikb(
-                complaint_id=complaint.id,
-                user_id=receiver.id,
-                username=receiver.username,
-            ),
-        )
-    # except Exception as e:
-    #     logger.error(f"Сообщение в модераторскую группу не отправленно {e}")
+            text = mt.REPORT_TO_USER.format(
+                sender.id,
+                sender.username,
+                receiver.id,
+                receiver.username,
+                reason,
+            )
+
+            await bot.send_message(
+                chat_id=MODERATOR_GROUP_ID,
+                text=text,
+                reply_markup=block_user_ikb(
+                    complaint_id=complaint.id,
+                    user_id=receiver.id,
+                    username=receiver.username,
+                ),
+            )
+        except:
+            logger.error("Сообщение в модераторскую группу не отправленно")

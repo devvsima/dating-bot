@@ -55,6 +55,7 @@ def setup_middlewares(dp: Dispatcher) -> None:
     admin_router.message.middleware(i18n_middleware)
 
     voide_router.message.middleware(LoggingMiddleware())
+    voide_router.message.middleware(ThrottlingMiddleware())
     voide_router.callback_query.middleware(ThrottlingMiddleware())
     voide_router.message.middleware(VoideMiddleware())
 
