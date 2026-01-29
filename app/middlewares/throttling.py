@@ -8,6 +8,8 @@ from aiogram.types import CallbackQuery, Message
 
 from app.text import message_text as mt
 from data.config import tgbot
+from database.models.user import UserModel
+from database.services.user import User
 
 rate_limit: int = tgbot.RATE_LIMIT
 time_window: int = tgbot.TIME_WINDOW
@@ -59,7 +61,9 @@ class ThrottlingMiddleware(BaseMiddleware):
         event: Message | CallbackQuery,
         data: dict[str, Any],
     ) -> Any:
+        session = data["session"]
         user_id = event.from_user.id
+        user = await User.get_by_id(session=session, id=user_id)
         now = datetime.now()
 
         # Периодическая очистка неактивных пользователей
@@ -80,7 +84,7 @@ class ThrottlingMiddleware(BaseMiddleware):
             if wait_time > 0:
                 # Отправляем предупреждение
                 if isinstance(event, Message):
-                    await event.answer(mt.RATE_LIMIT_MESSAGE)
+                    await event.answer(mt.RATE_LIMIT_MESSAGE(language=user.language))
 
                 # Ждем и затем обрабатываем запрос
                 await asyncio.sleep(wait_time)
@@ -94,5 +98,4 @@ class ThrottlingMiddleware(BaseMiddleware):
         # Добавляем текущий запрос
         requests.append(now)
 
-        # Продолжаем обработку
         return await handler(event, data)

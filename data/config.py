@@ -15,7 +15,7 @@ class TelegramBotSettings:
     SET_COMMANDS: bool = env.bool("SET_COMMANDS", default=True)
 
     # Throtling
-    RATE_LIMIT: int = env.int("RATE_LIMIT", default=2)
+    RATE_LIMIT: int = env.int("RATE_LIMIT", default=3)
     TIME_WINDOW: int = env.int("TIME_WINDOW", default=1)
 
     # Admin

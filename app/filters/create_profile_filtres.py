@@ -116,7 +116,7 @@ class IsPhoto(Filter):
 
 class IsName(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(len(message.text) < 70)
+        return bool(len(message.text) < 70 and len(message.text) > 3)
 
 
 class IsAge(Filter):
@@ -137,7 +137,7 @@ class IsCity(Filter):
             city = get_city_name(latitude=latitude, longitude=longitude)
             is_shared_location = True
         if message.text:
-            if message.text.isdigit() and len(message.text) <= 1:
+            if message.text.isdigit() or len(message.text) <= 3:
                 return False
             if message.text in LEAVE_PREVIOUS_OPTIONS:
                 pass

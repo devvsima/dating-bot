@@ -27,7 +27,7 @@ async def _incorrect_photo(message: types.Message):
 @dating_router.message(StateFilter(ProfileCreate.name))
 async def _incorrect_name(message: types.Message):
     """Ошибка фильтра имени"""
-    await message.answer(mt.INVALID_LONG_RESPONSE)
+    await message.answer(mt.INVALID_NAME)
 
 
 @dating_router.message(StateFilter(ProfileCreate.age))
@@ -45,4 +45,4 @@ async def _incorrect_city(message: types.Message):
 @dating_router.message(StateFilter(ProfileCreate.description, ProfileEdit.description))
 async def _incorrect_description(message: types.Message):
     """Ошибка фильтра описания"""
-    await message.answer(mt.INVALID_LONG_RESPONSE)
+    await message.answer(mt.INVALID_DESCIPTION)

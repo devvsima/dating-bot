@@ -46,12 +46,12 @@ class CommonMiddleware(BaseMiddleware):
                 pass
             await new_user_alert_to_group(user=user, code=code)
 
-            if user.profile and not user.profile.is_active:
-                await Profile.update(
-                    session=session,
-                    id=user.id,
-                    is_active=True,
-                )
+        if user.profile and not user.profile.is_active:
+            await Profile.update(
+                session=session,
+                id=user.id,
+                is_active=True,
+            )
 
         data["user"] = user
         return await handler(message, data)

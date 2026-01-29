@@ -44,7 +44,7 @@ def block_user_ikb(complaint_id: int, user_id: int, username: str) -> InlineKeyb
             ban=False,
         ),
     )
-    builder.button(text="🌐 Посмотреть профиль", url=f"{webapp.URL}admin/user/{user_id}")
+    # builder.button(text="🌐 Посмотреть профиль", url=f"{webapp.URL}admin/user/{user_id}")
 
     builder.adjust(1)
     return builder.as_markup()

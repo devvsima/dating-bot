@@ -18,7 +18,7 @@ class DatingMiddleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.status == UserStatus.Banned or not user.profile:
+        if user.status == UserStatus.Banned or not user.profile or not user.profile.is_active:
             return
 
         data["user"] = user
@@ -36,7 +36,7 @@ class Registration_Middleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.status == UserStatus.Banned:
+        if user.status == UserStatus.Banned or not user.profile.is_active:
             return
 
         data["user"] = user
