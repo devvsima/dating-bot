@@ -17,9 +17,12 @@ async def get_api_info(request: Request):
     """
     routes_info = []
 
+    # Список системных маршрутов FastAPI для исключения
+    excluded_paths = ["/", "/openapi.json", "/docs", "/docs/oauth2-redirect", "/redoc"]
+
     for route in request.app.routes:
         if hasattr(route, "methods") and hasattr(route, "path"):
-            if route.path in ["/openapi.json", "/"]:
+            if route.path in excluded_paths:
                 continue
 
             route_info = {

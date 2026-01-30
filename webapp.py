@@ -46,19 +46,7 @@ app.add_middleware(
     access_token=webapp.ACCESS_TOKEN,
 )
 
-# Подключаем API роутеры
 app.include_router(api_router)
-
-
-# @app.get("/")
-# async def root():
-#     """Корневой endpoint - информация об API"""
-#     return {
-#         "name": "Dating Bot API",
-#         "version": "1.0.0",
-#         "status": "running",
-#         "description": "Protected API with Telegram WebApp signature validation",
-#     }
 
 
 if __name__ == "__main__":
