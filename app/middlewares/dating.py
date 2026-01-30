@@ -38,7 +38,7 @@ class Registration_Middleware(BaseMiddleware):
             username=message.from_user.username,
             language=message.from_user.language_code,
         )
-        if user.status == UserStatus.Banned or not user.profile.is_active:
+        if user.status == UserStatus.Banned:
             return
 
         data["user"] = user
