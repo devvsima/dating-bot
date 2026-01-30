@@ -32,14 +32,24 @@ fetch("https://your-api.com/api/profile/123456", {
 
 ## 🚀 Запуск на сервере
 
-### Вариант 1: Uvicorn (простой)
+### Вариант 1: Uvicorn (простой, рекомендуется)
 
 ```bash
-# Установите зависимости
+# Установите зависимости (выберите один вариант)
+
+# Если используете pip:
 pip install uvicorn[standard]
 
-# Запустите сервер
+# Если используете uv:
+uv pip install uvicorn[standard]
+
+# Запустите сервер (выберите один вариант)
+
+# Прямой запуск:
 uvicorn webapp:app --host 0.0.0.0 --port 8080 --workers 4
+
+# Через uv (если установили через uv):
+uv run uvicorn webapp:app --host 0.0.0.0 --port 8080 --workers 4
 ```
 
 Или используйте готовый скрипт:
@@ -52,11 +62,19 @@ chmod +x start_api.sh
 ### Вариант 2: Gunicorn + Uvicorn workers (рекомендуется для production)
 
 ```bash
-# Установите зависимости
+# Установите зависимости (выберите один вариант)
+
+# Если используете pip:
 pip install gunicorn uvicorn[standard]
+
+# Если используете uv:
+uv pip install gunicorn uvicorn[standard]
 
 # Запустите с конфигурацией
 gunicorn -c gunicorn_config.py webapp:app
+
+# Или через uv (если установили через uv):
+uv run gunicorn -c gunicorn_config.py webapp:app
 ```
 
 ### Вариант 3: Systemd service (автозапуск)
@@ -141,12 +159,58 @@ WEBAPP_PORT=8080
 WEBAPP_DOMEN=your-api-domain.com
 WEBAPP_URL=https://your-api-domain.com
 
+# API Access Token для тестирования (опционально)
+# Генерируйте случайную строку: openssl rand -hex 32
+API_ACCESS_TOKEN=your_secret_access_token_for_testing
+
 # Database
 DB_NAME=your_db
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
 DB_PASS=your_password
+```
+
+## 🔑 Два способа аутентификации
+
+API поддерживает два типа авторизации:
+
+### 1. Telegram WebApp (для production)
+```javascript
+const tg = window.Telegram.WebApp;
+
+fetch('https://your-api.com/api/profile/123456', {
+    headers: {
+        'Authorization': `tma ${tg.initData}`
+    }
+})
+```
+
+### 2. Bearer Token (для тестирования)
+```bash
+# Сгенерируйте токен
+openssl rand -hex 32
+
+# Добавьте в .env
+API_ACCESS_TOKEN=ваш_токен
+
+# Используйте в запросах
+curl http://localhost:8080/api/profile/123456 \
+  -H "Authorization: Bearer ваш_токен"
+```
+
+Пример с Postman/Insomnia:
+```
+Authorization: Bearer ваш_токен
+```
+
+Пример с JavaScript:
+```javascript
+fetch('https://your-api.com/api/profile/123456', {
+    headers: {
+        'Authorization': 'Bearer ваш_токен'
+    }
+})
 ```
 
 ## 🧪 Тестирование API
@@ -221,7 +285,8 @@ gunicorn -c gunicorn_config.py webapp:app --check-config
 
 ### 401 Unauthorized
 
-- Проверьте что фронтенд отправляет `Authorization: tma <initData>`
+- **Telegram WebApp:** Проверьте что фронтенд отправляет `Authorization: tma <initData>`
+- **Bearer Token:** Проверьте что токен в заголовке совпадает с `API_ACCESS_TOKEN` в `.env`
 - Убедитесь что `TELEGRAM_BOT_TOKEN` в `.env` совпадает с токеном бота
 
 ## 📞 Дополнительная информация

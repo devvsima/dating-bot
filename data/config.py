@@ -34,6 +34,9 @@ class WebAppSettings:
     HOST: str = env.str("WEBAPP_HOST", default="localhost")
     PORT: int = env.int("WEBAPP_PORT", default=8080)
     DOMEN: str = env.str("WEBAPP_DOMEN", default=None)
+    
+    # API Access Token для тестирования (без Telegram WebApp)
+    ACCESS_TOKEN: str = env.str("API_ACCESS_TOKEN", default=None)
 
     URL: str = env.str("WEBAPP_URL", default=None)
     if not URL:

@@ -16,13 +16,15 @@ class TelegramWebAppMiddleware(BaseHTTPMiddleware):
     """
     Middleware для проверки подлинности запросов от Telegram WebApp.
 
-    Проверяет подпись initData, которую передает Telegram WebApp,
-    чтобы убедиться что запрос действительно от Telegram.
+    Поддерживает два типа аутентификации:
+    1. Authorization: tma <initData> - проверка подписи Telegram WebApp
+    2. Authorization: Bearer <access_token> - токен доступа для тестирования
     """
 
-    def __init__(self, app, bot_token: str):
+    def __init__(self, app, bot_token: str, access_token: str | None = None):
         super().__init__(app)
         self.bot_token = bot_token
+        self.access_token = access_token
 
     async def dispatch(self, request: Request, call_next):
         # Пропускаем OPTIONS запросы (для CORS)
@@ -33,23 +35,36 @@ class TelegramWebAppMiddleware(BaseHTTPMiddleware):
         if request.url.path in ["/", "/docs", "/redoc", "/openapi.json"]:
             return await call_next(request)
 
-        # Получаем Authorization заголовок с initData
+        # Получаем Authorization заголовок
         auth_header = request.headers.get("Authorization")
 
-        if not auth_header or not auth_header.startswith("tma "):
+        if not auth_header:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Missing or invalid authorization header. Use 'Authorization: tma <initData>'",
+                detail="Missing authorization header. Use 'Authorization: tma <initData>' or 'Authorization: Bearer <token>'",
             )
 
-        # Извлекаем initData (убираем префикс "tma ")
-        init_data = auth_header[4:]
-
-        # Проверяем подпись
-        if not self._validate_init_data(init_data):
+        # Проверяем тип аутентификации
+        if auth_header.startswith("Bearer "):
+            # Токен доступа для тестирования
+            token = auth_header[7:]
+            if not self.access_token or token != self.access_token:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid access token",
+                )
+        elif auth_header.startswith("tma "):
+            # Telegram WebApp подпись
+            init_data = auth_header[4:]
+            if not self._validate_init_data(init_data):
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid Telegram WebApp signature",
+                )
+        else:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid Telegram WebApp signature",
+                detail="Invalid authorization header format. Use 'Authorization: tma <initData>' or 'Authorization: Bearer <token>'",
             )
 
         # Продолжаем обработку запроса

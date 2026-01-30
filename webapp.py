@@ -40,7 +40,11 @@ app.add_middleware(
 )
 
 # Подключаем middleware для проверки Telegram WebApp подписи
-app.add_middleware(TelegramWebAppMiddleware, bot_token=tgbot.BOT_TOKEN)
+app.add_middleware(
+    TelegramWebAppMiddleware,
+    bot_token=tgbot.BOT_TOKEN,
+    access_token=webapp.ACCESS_TOKEN,
+)
 
 # Подключаем API роутеры
 app.include_router(api_router)
