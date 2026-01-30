@@ -176,17 +176,19 @@ DB_PASS=your_password
 API поддерживает два типа авторизации:
 
 ### 1. Telegram WebApp (для production)
+
 ```javascript
 const tg = window.Telegram.WebApp;
 
-fetch('https://your-api.com/api/profile/123456', {
-    headers: {
-        'Authorization': `tma ${tg.initData}`
-    }
-})
+fetch("https://your-api.com/api/profile/123456", {
+  headers: {
+    Authorization: `tma ${tg.initData}`,
+  },
+});
 ```
 
 ### 2. Bearer Token (для тестирования)
+
 ```bash
 # Сгенерируйте токен
 openssl rand -hex 32
@@ -200,17 +202,19 @@ curl http://localhost:8080/api/profile/123456 \
 ```
 
 Пример с Postman/Insomnia:
+
 ```
 Authorization: Bearer ваш_токен
 ```
 
 Пример с JavaScript:
+
 ```javascript
-fetch('https://your-api.com/api/profile/123456', {
-    headers: {
-        'Authorization': 'Bearer ваш_токен'
-    }
-})
+fetch("https://your-api.com/api/profile/123456", {
+  headers: {
+    Authorization: "Bearer ваш_токен",
+  },
+});
 ```
 
 ## 🧪 Тестирование API
