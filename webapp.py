@@ -23,8 +23,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Dating Bot API",
-    description="Protected API for Telegram Dating Bot WebApp",
+    title="Michalangelo Api",
+    description="API for Michalangelo WebApp",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -39,7 +39,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Подключаем middleware для проверки Telegram WebApp подписи
+
 app.add_middleware(
     TelegramWebAppMiddleware,
     bot_token=tgbot.BOT_TOKEN,
@@ -50,15 +50,15 @@ app.add_middleware(
 app.include_router(api_router)
 
 
-@app.get("/")
-async def root():
-    """Корневой endpoint - информация об API"""
-    return {
-        "name": "Dating Bot API",
-        "version": "1.0.0",
-        "status": "running",
-        "description": "Protected API with Telegram WebApp signature validation",
-    }
+# @app.get("/")
+# async def root():
+#     """Корневой endpoint - информация об API"""
+#     return {
+#         "name": "Dating Bot API",
+#         "version": "1.0.0",
+#         "status": "running",
+#         "description": "Protected API with Telegram WebApp signature validation",
+#     }
 
 
 if __name__ == "__main__":

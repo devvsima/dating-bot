@@ -51,9 +51,9 @@ class SearchProfileResponse(BaseModel):
 
 
 class SearchResponse(BaseModel):
-    """Ответ со списком анкет"""
+    """Ответ со списком анкет или ID"""
 
-    profiles: list[SearchProfileResponse]
+    profiles: list[int] | list[SearchProfileResponse]
     total: int
 
 
