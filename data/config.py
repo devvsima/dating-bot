@@ -24,16 +24,31 @@ class TelegramBotSettings:
     MODERATOR_GROUP_ID: int = env.int("MODERATOR_GROUP_ID", default=None)
     BOT_CHANNEL_URL: str = env.str("BOT_CHANNEL_URL", default=None)
 
+    # Webhook
+    WEBHOOK_HOST: str = env.str("WEBHOOK_HOST", default=None)
+    WEBHOOK_PORT: int = env.int("WEBHOOK_PORT", default=None)
+    WEBHOOK_URL: str = env.str("WEBHOOK_URL", default=None)
+    WEBHOOK_SECRET: str = env.str("WEBHOOK_SECRET", default=None)
+
+    WEBHOOK_PATH: str = env.str("WEBHOOK_PATH", default=f"/webhook/{BOT_TOKEN}")
+
+    IS_WEBHOOK = False
+    if all((WEBHOOK_HOST, WEBHOOK_PORT, WEBHOOK_URL, WEBHOOK_SECRET, WEBHOOK_PATH)):
+        IS_WEBHOOK = True
+
     # Other
     TIME_ZONE = "UTC"
     I18N_DOMAIN = "bot"
 
 
-# -< Webapp >-
+# -< Webрр >-
 class WebAppSettings:
     HOST: str = env.str("WEBAPP_HOST", default="localhost")
     PORT: int = env.int("WEBAPP_PORT", default=8080)
     DOMEN: str = env.str("WEBAPP_DOMEN", default=None)
+
+    # API Access Token для тестирования (без Telegram WebApp)
+    ACCESS_TOKEN: str = env.str("API_ACCESS_TOKEN", default=None)
 
     URL: str = env.str("WEBAPP_URL", default=None)
     if not URL:

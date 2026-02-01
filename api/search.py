@@ -2,7 +2,9 @@
 API endpoints для поиска анкет
 """
 
-from fastapi import APIRouter, HTTPException
+from typing import Optional
+
+from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 
@@ -18,32 +20,42 @@ router = APIRouter()
 
 
 @router.get("/search/{user_id}", response_model=SearchResponse)
-async def get_search_profiles(user_id: int):
+async def get_search_profiles(
+    user_id: int,
+    include_profile: bool = Query(
+        default=False, description="Включать ли полные данные профилей (иначе только ID)"
+    ),
+):
     """
     Получение списка анкет для поиска
 
     Args:
         user_id: ID пользователя Telegram
+        include_profile: Если False - возвращает только ID профилей, если True - полные данные
 
     Returns:
-        JSON со списком подходящих анкет
+        JSON со списком ID профилей или полных данных профилей
+
+    Examples:
+        GET /api/search/123456                        # Только ID
+        GET /api/search/123456?include_profile=true   # Полные данные
     """
     async with get_session() as session:
-        # Получаем пользователя с профилем
         user = await User.get_with_profile(session=session, id=user_id)
 
         if not user or not user.profile:
             raise HTTPException(status_code=404, detail="Профиль не найден")
 
-        # Получаем список ID анкет для поиска
         profile_ids = await search_profiles(session, user.profile)
 
         if not profile_ids:
             return SearchResponse(profiles=[], total=0)
 
-        # Загружаем полные данные профилей
+        if not include_profile:
+            return SearchResponse(profiles=profile_ids, total=len(profile_ids))
+
         profiles_data = []
-        for profile_id in profile_ids[:50]:  # Ограничиваем 50 анкетами
+        for profile_id in profile_ids:
             result = await session.execute(
                 select(ProfileModel)
                 .options(joinedload(ProfileModel.user))
@@ -52,7 +64,6 @@ async def get_search_profiles(user_id: int):
             profile = result.scalar_one_or_none()
 
             if profile:
-                # Получаем все фото профиля
                 photos = []
                 media_items = await ProfileMedia.get_profile_photos(
                     session=session, profile_id=profile.id
