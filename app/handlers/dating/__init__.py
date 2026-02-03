@@ -9,4 +9,4 @@ from .disable_profile import dating_router
 from .form_errors import registration_router
 
 
-__all__ = ["dating_router"]
+__all__ = ["dating_router", "registration_router"]
