@@ -70,15 +70,7 @@ async def _city(
     is_shared_location: bool | None,
     user: UserModel,
 ):
-    print("Работаем теперь тут")
     if use_previous:
-        # if not user.profile:
-        #     # Нет предыдущего профиля - просим указать город
-        #     kb = RegistrationFormKb.city(user)
-        #     await message.answer(text=mt.CITY_ERROR, reply_markup=kb)
-        #     return
-
-        # Берем данные из предыдущего профиля
         city = user.profile.city
         latitude = user.profile.latitude
         longitude = user.profile.longitude
@@ -204,3 +196,24 @@ async def _description(
 
     await message.answer(mt.PROFILE_CREATED)
     await menu(chat_id=user.id)
+
+
+# -< OLD >-
+
+# 1. -< Gender >-
+# 2. -< Find gender >-
+# 3. -< Photo >-
+# 4. -< Name >-
+# 5. -< Age >-
+# 6. -< City >-
+# 7. -< Description >-
+
+# -< NEW >-
+
+# 1. -< Name >-
+# 2. -< Gender >-
+# 3. -< Find gender >-
+# 4. -< City >-
+# 5. -< Age >-
+# 6. -< Photo >-
+# 7. -< Description >-

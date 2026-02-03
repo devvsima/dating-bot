@@ -51,7 +51,7 @@ LEAVE_PREVIOUS_OPTIONS = (
     "Laisser le précédent",  # Французский
     "Dejar el anterior",  # Испанский
     "Pozostaw poprzednie",  # Польский
-    "Biarkan yang sebelumnya",  # Индонезийский (исправлено с "Biarkan sebelumnya")
+    "Biarkan yang sebelumnya",  # Индонезийский
 )
 
 SKIP_OPTIONS = (
@@ -82,24 +82,28 @@ SAVE_PHOTO_OPTIONS = (
     "C'est tout, gardez la photo",  # Французский
     "Eso es todo, guardar foto",  # Испанский
     "To wszystko, zachowaj zdjęcie",  # Польский
-    "Selesai, simpan foto",  # Индонезийский (исправлено с "Sudah, simpan foto")
+    "Selesai, simpan foto",  # Індонезійський
 )
 
 
 class IsCreate(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(message.text in START_COMMAND_OPTIONS)
+        return bool(message.text and message.text in START_COMMAND_OPTIONS)
 
 
 class IsGender(Filter):
     async def __call__(self, message: Message) -> dict | bool:
+        if not message.text:
+            return False
         if message.text in GENDER_MAP:
             return {"gender": GENDER_MAP[message.text]}
-        return
+        return False
 
 
 class IsFindGender(Filter):
     async def __call__(self, message: Message) -> dict | bool:
+        if not message.text:
+            return False
         if message.text in FIND_GENDER_MAP:
             return {"find_gender": FIND_GENDER_MAP[message.text]}
         return False
@@ -109,24 +113,27 @@ class IsPhoto(Filter):
     async def __call__(self, message: Message) -> bool:
         return bool(
             message.photo
-            or message.text in LEAVE_PREVIOUS_OPTIONS
-            or message.text in SAVE_PHOTO_OPTIONS
+            or (message.text and message.text in LEAVE_PREVIOUS_OPTIONS)
+            or (message.text and message.text in SAVE_PHOTO_OPTIONS)
         )
 
 
 class IsName(Filter):
     async def __call__(self, message: Message) -> bool:
+        if not message.text:
+            return False
         return bool(len(message.text) < 70 and len(message.text) > 3)
 
 
 class IsAge(Filter):
     async def __call__(self, message: Message) -> bool:
+        if not message.text:
+            return False
         return bool(message.text.isdigit() and int(message.text) < 100 and int(message.text) > 6)
 
 
 class IsCity(Filter):
     async def __call__(self, message: Message) -> bool | dict:
-        print("Работаем тут")
         # Случай 1: Пользователь хочет оставить предыдущий город
         if message.text and message.text in LEAVE_PREVIOUS_OPTIONS:
             return {
@@ -152,11 +159,9 @@ class IsCity(Filter):
 
         # Случай 3: Пользователь ввел название города текстом
         if message.text:
-            # Валидация: не цифры и длина больше 3 символов
             if message.text.isdigit() or len(message.text) <= 3:
                 return False
 
-            # Получаем координаты по названию города
             if coordinates := get_coordinates(message.text):
                 return {
                     "use_previous": False,
@@ -175,9 +180,9 @@ class IsCity(Filter):
 
 class IsDescription(Filter):
     async def __call__(self, message: Message) -> bool:
-        return bool(
-            len(message.text) < 900 or message.text in SKIP_OPTIONS,
-        )
+        if not message.text:
+            return False
+        return len(message.text) < 900 or message.text in SKIP_OPTIONS
 
 
 class IsMessageToUser(Filter):

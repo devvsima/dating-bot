@@ -11,6 +11,7 @@ from app.routers import common_router
 from app.text import message_text as mt
 from database.models import UserModel
 from database.services import User
+from loader import i18n
 
 
 @common_router.message(StateFilter("*"), Command("language"))
@@ -35,8 +36,8 @@ async def _change_lang(
         id=user.id,
         language=language,
     )
-    await callback.message.edit_text(mt.DONE_CHANGE_LANG(update_user.language))
 
-    # > Нужно реализовать отправку на актуальном языке меню <
-    # user = await User.get_with_profile(session, callback.from_user.id)
-    # await start_command(callback.message, update_user, state)
+    i18n.current_locale = language
+
+    await callback.message.edit_text(mt.DONE_CHANGE_LANG(update_user.language))
+    await start_command(callback.message, update_user, state)
