@@ -125,36 +125,52 @@ class IsAge(Filter):
 
 
 class IsCity(Filter):
-    async def __call__(self, message: Message) -> bool:
-        latitude: float = None
-        longitude: float = None
-        city: str = None
-        is_shared_location: bool = None
+    async def __call__(self, message: Message) -> bool | dict:
+        print("Работаем тут")
+        # Случай 1: Пользователь хочет оставить предыдущий город
+        if message.text and message.text in LEAVE_PREVIOUS_OPTIONS:
+            return {
+                "use_previous": True,
+                "latitude": None,
+                "longitude": None,
+                "city": None,
+                "is_shared_location": None,
+            }
 
+        # Случай 2: Пользователь отправил геолокацию
         if message.location:
             latitude = message.location.latitude
             longitude = message.location.longitude
             city = get_city_name(latitude=latitude, longitude=longitude)
-            is_shared_location = True
+            return {
+                "use_previous": False,
+                "latitude": latitude,
+                "longitude": longitude,
+                "city": city,
+                "is_shared_location": True,
+            }
+
+        # Случай 3: Пользователь ввел название города текстом
         if message.text:
+            # Валидация: не цифры и длина больше 3 символов
             if message.text.isdigit() or len(message.text) <= 3:
                 return False
-            if message.text in LEAVE_PREVIOUS_OPTIONS:
-                pass
-            elif coordinates := get_coordinates(message.text):
-                latitude = coordinates[0]
-                longitude = coordinates[1]
-                city = message.text
-                is_shared_location = False
-            else:
-                return False
 
-        return {
-            "latitude": latitude,
-            "longitude": longitude,
-            "city": city,
-            "is_shared_location": is_shared_location,
-        }
+            # Получаем координаты по названию города
+            if coordinates := get_coordinates(message.text):
+                return {
+                    "use_previous": False,
+                    "latitude": coordinates[0],
+                    "longitude": coordinates[1],
+                    "city": message.text,
+                    "is_shared_location": False,
+                }
+
+            # Город не найден
+            return False
+
+        # Ничего не подошло
+        return False
 
 
 class IsDescription(Filter):
