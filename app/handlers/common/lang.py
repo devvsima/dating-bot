@@ -30,13 +30,13 @@ async def _change_lang(
 ) -> None:
     """Обрабатывает выбранный пользователем язык, и устанавливает его"""
     language = callback_data.lang
-    await User.update(
+    update_user = await User.update(
         session=session,
         id=user.id,
         language=language,
     )
-    await callback.message.edit_text(mt.DONE_CHANGE_LANG(language))
+    await callback.message.edit_text(mt.DONE_CHANGE_LANG(update_user.language))
 
     # > Нужно реализовать отправку на актуальном языке меню <
     # user = await User.get_with_profile(session, callback.from_user.id)
-    # await start_command(callback.message, user, state)
+    # await start_command(callback.message, update_user, state)

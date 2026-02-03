@@ -53,6 +53,12 @@ async def _search_profile(
     """
     data = await state.get_data()
     profile_list = data.get("ids", [])
+
+    if not profile_list:
+        await message.answer(mt.EMPTY_PROFILE_SEARCH)
+        await start_command(message=message, user=user, state=state)
+        return
+
     another_user = await User.get_with_profile(session, profile_list[0])
 
     if message.text == "❤️":
@@ -81,6 +87,12 @@ async def _search_profile_Complaint(
     """Пользователь может отправить жалобу на анкету, если она содержит нежелательный контент."""
     data = await state.get_data()
     profile_list = data.get("ids", [])
+
+    if not profile_list:
+        await message.answer(mt.EMPTY_PROFILE_SEARCH)
+        await start_command(message=message, user=user, state=state)
+        return
+
     another_user = await User.get_with_profile(session, profile_list[0])
 
     if message.text in ("🔞", "💰", "🔫"):
@@ -104,6 +116,13 @@ async def _search_profile_mailing_(
     """Ловит сообщение которые пользователь отправляет в ответ на анкету"""
     data = await state.get_data()
     profile_list = data.get("ids", [])
+
+    if not profile_list:
+        await state.set_state(Search.search)
+        await message.answer(mt.EMPTY_PROFILE_SEARCH)
+        await start_command(message=message, user=user, state=state)
+        return
+
     another_user = await User.get_with_profile(session, profile_list[0])
     await state.set_state(Search.search)
 
