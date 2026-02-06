@@ -13,7 +13,7 @@ WebApp команды которые тестируются,
 
 
 @admin_router.message(StateFilter(None), Command("webapp"))
-async def webapp_menu(message: types.Message) -> None:
+async def _webapp_command(message: types.Message) -> None:
     """Открыть WebApp"""
     builder = InlineKeyboardBuilder()
     builder.button(text="🌐 Открыть приложение", web_app=types.WebAppInfo(url=webapp.URL))
@@ -25,7 +25,7 @@ async def webapp_menu(message: types.Message) -> None:
 
 
 @admin_router.message(F.web_app_data)
-async def handle_webapp_data(message: types.Message):
+async def _webapp_data(message: types.Message):
     """Обработка данных от WebApp"""
     data = message.web_app_data.data
 
