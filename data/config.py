@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from aiogram.types import FSInputFile
 from environs import Env
 
 DIR = Path(__file__).absolute().parent.parent
@@ -108,7 +109,10 @@ class SearchSettings:
 
 # -< Path\Dir >-
 IMAGES_DIR: Path = DIR / "images"
-LOGO_DIR = f"{IMAGES_DIR}/logo.png"
+
+LOGO_FILE_ID: str = env.str("LOGO_FILE_ID", default=f"None")
+LOGO_DIR = f"{IMAGES_DIR}/send_logo.png"
+LOGO = LOGO_FILE_ID if LOGO_FILE_ID else FSInputFile(LOGO_DIR)
 
 GRAPH_FILE_PATH: Path = IMAGES_DIR / "stats_graph.png"
 

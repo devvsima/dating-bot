@@ -14,7 +14,7 @@ from database.services.user import User
 
 @admin_router.message(StateFilter(None), Command("ban"))
 @admin_router.message(StateFilter(None), Command("unban"))
-async def ban_unban_users_command(
+async def _ban_unban_users_command(
     message: types.Message, command: CommandObject, session: AsyncSession
 ) -> None:
     """Блокирует или разблокирует пользователей, принимает список id через ','"""

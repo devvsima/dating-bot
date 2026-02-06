@@ -7,7 +7,7 @@ from app.business.menu_service import menu
 from app.keyboards.default.registration_form import create_profile_kb
 from app.routers import common_router
 from app.text import message_text as mt
-from data.config import LOGO_DIR
+from data.config import LOGO
 from database.models import UserModel
 
 
@@ -24,9 +24,8 @@ async def start_command(message: types.Message, user: UserModel, state: FSMConte
     if user.profile:
         await menu(user.id)
     else:
-        photo = types.FSInputFile(LOGO_DIR)
         await message.answer_photo(
-            photo=photo,
+            photo=LOGO,
             caption=mt.WELCOME,
             reply_markup=create_profile_kb(),
         )

@@ -24,7 +24,7 @@ async def _edit_profile_description_command(
 
 
 @registration_router.message(StateFilter(ProfileEdit.description))
-async def _update_photo(
+async def _update_description(
     message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Обновляет описание профиля"""
