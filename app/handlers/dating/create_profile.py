@@ -4,6 +4,7 @@ from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import app.filters.create_profile_filtres as filters
+from app.business.create_profile_service import get_correct_description
 from app.business.menu_service import menu
 from app.keyboards.default.registration_form import RegistrationFormKb
 from app.routers import registration_router
@@ -12,7 +13,6 @@ from app.text import message_text as mt
 from database.models.user import UserModel
 from database.services import Profile
 from database.services.profile_media import ProfileMedia
-from database.services.user import User
 
 
 @registration_router.message(StateFilter(None), F.text == "🔄")
@@ -170,15 +170,9 @@ async def _description(
 ):
     data = await state.get_data()
     photos = data.get("photos", [])
-    if message.text in filters.SKIP_OPTIONS:
-        description = ""
-    elif message.text in filters.LEAVE_PREVIOUS_OPTIONS and user.profile:
-        description = user.profile.description
-    else:
-        description = message.text
 
     await state.clear()
-
+    description = get_correct_description(message=message, user=user)
     await Profile.create_or_update(
         session=session,
         id=message.from_user.id,
@@ -197,23 +191,22 @@ async def _description(
     await message.answer(mt.PROFILE_CREATED)
     await menu(chat_id=user.id)
 
+    # -< OLD >-
 
-# -< OLD >-
+    # 1. -< Gender >-
+    # 2. -< Find gender >-
+    # 3. -< Photo >-
+    # 4. -< Name >-
+    # 5. -< Age >-
+    # 6. -< City >-
+    # 7. -< Description >-
 
-# 1. -< Gender >-
-# 2. -< Find gender >-
-# 3. -< Photo >-
-# 4. -< Name >-
-# 5. -< Age >-
-# 6. -< City >-
-# 7. -< Description >-
+    # -< NEW >-
 
-# -< NEW >-
-
-# 1. -< Name >-
-# 2. -< Gender >-
-# 3. -< Find gender >-
-# 4. -< City >-
-# 5. -< Age >-
-# 6. -< Photo >-
-# 7. -< Description >-
+    # 1. -< Name >-
+    # 2. -< Gender >-
+    # 3. -< Find gender >-
+    # 4. -< City >-
+    # 5. -< Age >-
+    # 6. -< Photo >-
+    # 7. -< Description >-

@@ -3,6 +3,7 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.business.create_profile_service import get_correct_description
 from app.handlers.dating.profile import profile_command
 from app.keyboards.default.registration_form import RegistrationFormKb
 from app.routers import registration_router
@@ -28,10 +29,11 @@ async def _update_description(
     message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Обновляет описание профиля"""
+    description = get_correct_description(message=message, user=user)
     await Profile.update(
         session=session,
         id=user.id,
-        description=message.text,
+        description=description,
     )
     await state.clear()
     await profile_command(message=message, user=user, session=session)
