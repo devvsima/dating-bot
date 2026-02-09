@@ -6,7 +6,7 @@ from app.keyboards.default.base import start_kb
 from app.routers import dating_router
 from app.text import message_text as mt
 from database.models import UserModel
-from database.services import Profile
+from database.queries import Profile
 
 
 @dating_router.message(StateFilter(None), F.text == "❌")

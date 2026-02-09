@@ -3,13 +3,13 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.keyboards.inline.admin import block_user_ikb
 from app.text import message_text as mt
-from data.config import tgbot
+from core.config import tgbot
+from core.loader import bot
 from database.models.profile import ProfileModel
 from database.models.user import UserModel
-from database.services.complaint import Complaint
-from database.services.profile_media import ProfileMedia
-from database.services.search import haversine_distance
-from loader import bot
+from database.queries.complaint import Complaint
+from database.queries.profile_media import ProfileMedia
+from database.queries.search import haversine_distance
 from utils.logging import logger
 
 MODERATOR_GROUP_ID = tgbot.MODERATOR_GROUP_ID

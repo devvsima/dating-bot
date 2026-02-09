@@ -5,7 +5,7 @@ import time
 from sqlalchemy import and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from data.config import search
+from core.config import search
 from database.models.profile import ProfileModel
 from utils.logging import logger
 

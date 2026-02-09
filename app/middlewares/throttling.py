@@ -7,9 +7,9 @@ from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
 from app.text import message_text as mt
-from data.config import tgbot
+from core.config import tgbot
 from database.models.user import UserModel
-from database.services.user import User
+from database.queries.user import User
 
 rate_limit: int = tgbot.RATE_LIMIT
 time_window: int = tgbot.TIME_WINDOW

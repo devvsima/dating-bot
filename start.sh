@@ -14,13 +14,13 @@ case "$1" in
         uv run alembic revision --autogenerate
         ;;
     lcoll)
-        uv run pybabel extract --input-dirs=. -o data/locales/bot.pot --project=bot
+        uv run pybabel extract --input-dirs=. -o locales/bot.pot --project=bot
         ;;
     lupd)
-        uv run pybabel update -i data/locales/bot.pot -d data/locales -D bot
+        uv run pybabel update -i locales/bot.pot -d locales -D bot
         ;;
     lcom)
-        uv run pybabel compile -d data/locales -D bot --statistics
+        uv run pybabel compile -d locales -D bot --statistics
         ;;
     *)
         echo "Unknown command: $1"

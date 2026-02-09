@@ -9,12 +9,11 @@ from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 
 from api.models import SearchProfileResponse, SearchResponse
-from database.connect import get_session
+from database.engine import get_session
 from database.models.profile import ProfileModel
-from database.services.profile_media import ProfileMedia
-from database.services.search import search_profiles
-from database.services.user import User
-from utils.telegram_requests import get_photo_url_by_file_id
+from database.queries.profile_media import ProfileMedia
+from database.queries.search import search_profiles
+from database.queries.user import User
 
 router = APIRouter()
 
@@ -69,7 +68,7 @@ async def get_search_profiles(
                     session=session, profile_id=profile.id
                 )
                 for item in media_items:
-                    photos.append(get_photo_url_by_file_id(item.media))
+                    photos.append(f"/api/photo/{item.media}")
 
                 profiles_data.append(
                     SearchProfileResponse(

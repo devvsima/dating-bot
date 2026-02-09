@@ -3,12 +3,12 @@ from typing import Any, Callable
 from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
-from app.business.alert_service import new_user_alert_to_group
+from app.services.alert_service import new_user_alert_to_group
 from app.constans import REFERAL_SOURCES
 from database.models.user import UserStatus
-from database.services import User
-from database.services.profile import Profile
-from database.services.referal import Referal
+from database.queries import User
+from database.queries.profile import Profile
+from database.queries.referal import Referal
 from utils.base62 import decode_base62
 
 

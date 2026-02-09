@@ -3,8 +3,8 @@ from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.filters.kb_filter import BlockUserCallback, StatsCallback
-from data.config import webapp
-from loader import _
+from core.config import webapp
+from core.loader import _
 
 
 def stats_ikb(current_type: str = "User") -> InlineKeyboardMarkup:

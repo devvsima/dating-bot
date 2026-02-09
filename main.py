@@ -5,10 +5,10 @@ from aiohttp import web
 from app.commands import set_default_commands
 from app.handlers import setup_handlers
 from app.middlewares import setup_middlewares
-from data.config import tgbot
-from loader import bot, dp
+from core.config import tgbot
+from core.loader import bot, dp
+from core.webhook import run_polling, run_webhook
 from utils.logging import logger
-from webhook import run_polling, run_webhook
 
 
 async def on_startup() -> None:

@@ -4,7 +4,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from database.services.base import BaseService
+from database.queries.base import BaseService
 from utils.logging import logger
 
 from ..models.profile_media import ProfileMediaModel

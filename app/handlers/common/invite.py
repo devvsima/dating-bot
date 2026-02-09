@@ -7,8 +7,8 @@ from app.keyboards.default.base import return_to_menu_kb
 from app.routers import common_router
 from app.text import message_text as mt
 from database.models import UserModel
-from database.services.referal import Referal
-from loader import bot
+from database.queries.referal import Referal
+from core.loader import bot
 from utils.base62 import encode_base62
 
 

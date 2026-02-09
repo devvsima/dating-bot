@@ -2,7 +2,7 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models.referal import ReferalModel
-from database.services.base import BaseService
+from database.queries.base import BaseService
 
 
 class Referal(BaseService):

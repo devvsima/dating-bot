@@ -4,7 +4,7 @@ from aiogram.filters.state import StateFilter
 from aiogram.types import FSInputFile
 
 from app.routers import admin_router
-from data.config import LOG_FILE_PATH
+from core.config import LOG_FILE_PATH
 
 
 @admin_router.message(StateFilter(None), Command("log"))

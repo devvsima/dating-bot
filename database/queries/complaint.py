@@ -1,4 +1,4 @@
-from database.services.base import BaseService
+from database.queries.base import BaseService
 
 from ..models.complaint import ProfileComplaintModel
 

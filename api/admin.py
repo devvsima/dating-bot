@@ -5,10 +5,10 @@ API endpoints для администраторов
 from fastapi import APIRouter, HTTPException, Request
 
 from api.models import ProfileResponse
-from data.config import tgbot
-from database.connect import get_session
-from database.services.profile_media import ProfileMedia
-from database.services.user import User
+from core.config import tgbot
+from database.engine import get_session
+from database.queries.profile_media import ProfileMedia
+from database.queries.user import User
 from utils.telegram_requests import get_photo_url_by_file_id
 
 router = APIRouter()

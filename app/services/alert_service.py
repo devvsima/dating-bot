@@ -1,7 +1,7 @@
 from app.constans import REFERAL_SOURCES
-from data.config import tgbot
+from core.config import tgbot
+from core.loader import bot
 from database.models.user import UserModel
-from loader import bot
 from utils.logging import logger
 
 IS_ALERT = tgbot.NEW_USER_ALET_TO_GROUP

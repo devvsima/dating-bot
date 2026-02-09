@@ -3,7 +3,7 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from database.models.profile import ProfileModel
 from database.models.user import UserModel
-from loader import _
+from core.loader import _
 
 from .base import del_kb
 from .kb_generator import simple_kb_generator as kb_gen

@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from database.services.base import BaseService
+from database.queries.base import BaseService
 from utils.logging import logger
 
 from ..models.user import UserModel, UserStatus

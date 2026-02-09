@@ -6,10 +6,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.handlers.dating.profile import profile_command
 from app.keyboards.default.registration_form import RegistrationFormKb
 from app.routers import registration_router
+from app.services.create_profile_service import get_correct_description
 from app.states.default import ProfileEdit
 from app.text import message_text as mt
 from database.models import UserModel
-from database.services import Profile
+from database.queries import Profile
 
 
 @registration_router.message(StateFilter(None), F.text == "✍️")
@@ -28,10 +29,11 @@ async def _update_description(
     message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
 ) -> None:
     """Обновляет описание профиля"""
+    description = get_correct_description(message=message, user=user)
     await Profile.update(
         session=session,
         id=user.id,
-        description=message.text,
+        description=description,
     )
     await state.clear()
     await profile_command(message=message, user=user, session=session)

@@ -11,7 +11,7 @@ from app.states.default import ProfileEdit
 from app.text import message_text as mt
 from database.models import UserModel
 from database.models.profile_media import MediaTypes
-from database.services.profile_media import ProfileMedia
+from database.queries.profile_media import ProfileMedia
 
 
 @registration_router.message(StateFilter(None), F.text == "🖼")

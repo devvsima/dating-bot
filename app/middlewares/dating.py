@@ -4,7 +4,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
 from database.models.user import UserStatus
-from database.services import User
+from database.queries import User
 
 
 class DatingMiddleware(BaseMiddleware):

@@ -2,10 +2,10 @@ from aiogram import F, types
 from aiogram.filters.state import StateFilter
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.business.menu_service import menu
-from app.business.profile_service import send_profile
 from app.keyboards.default.base import profile_kb
 from app.routers import dating_router
+from app.services.menu_service import menu
+from app.services.profile_service import send_profile
 from app.text import message_text as mt
 from database.models import UserModel
 

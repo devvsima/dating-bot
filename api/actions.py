@@ -5,10 +5,10 @@ API endpoints для действий пользователя (лайки, ди
 from fastapi import APIRouter, HTTPException
 
 from api.models import ActionResponse, ComplaintRequest, LikeRequest
-from database.connect import get_session
-from database.services.complaint import Complaint
-from database.services.match import Match
-from database.services.user import User
+from database.engine import get_session
+from database.queries.complaint import Complaint
+from database.queries.match import Match
+from database.queries.user import User
 from utils.logging import logger
 
 router = APIRouter()

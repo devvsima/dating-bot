@@ -4,7 +4,7 @@ from aiogram.filters.state import StateFilter
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from app.routers import admin_router
-from data.config import webapp
+from core.config import webapp
 
 """
 WebApp команды которые тестируются,

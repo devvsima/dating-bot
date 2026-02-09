@@ -1,8 +1,8 @@
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.services.base import BaseService
-from database.services.profile_media import ProfileMedia
+from database.queries.base import BaseService
+from database.queries.profile_media import ProfileMedia
 from utils.logging import logger
 
 from ..models.profile import ProfileModel

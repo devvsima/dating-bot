@@ -2,7 +2,7 @@ from logging import getLogger
 
 from loguru import logger
 
-from data.config import LOG_FILE_PATH
+from core.config import LOG_FILE_PATH
 
 FORMAT = "[{time}] [{level}] [{file.name}:{line}]  {message}"
 ROTATION = "1 month"

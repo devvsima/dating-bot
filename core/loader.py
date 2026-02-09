@@ -3,7 +3,7 @@ from aiogram.client.bot import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.utils.i18n import I18n
 
-from data.config import LOCALES_DIR, redis, tgbot
+from core.config import LOCALES_DIR, redis, tgbot
 from utils.logging import logger
 
 # -< FSM Storage>-

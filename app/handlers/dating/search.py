@@ -4,18 +4,18 @@ from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import app.filters.create_profile_filtres as filters
-from app.business.dating_service import send_user_like_alert
-from app.business.menu_service import menu
-from app.business.profile_service import complaint_to_profile, send_profile_with_dist
 from app.handlers.common.start import start_command
 from app.keyboards.default.base import return_to_menu_kb, search_kb
 from app.keyboards.default.complaint import complaint_kb
 from app.routers import dating_router
+from app.services.dating_service import send_user_like_alert
+from app.services.menu_service import menu
+from app.services.profile_service import complaint_to_profile, send_profile_with_dist
 from app.states.default import Search
 from app.text import message_text as mt
 from database.models import UserModel
-from database.services import Match, Profile, User
-from database.services.search import search_profiles
+from database.queries import Match, Profile, User
+from database.queries.search import search_profiles
 
 
 @dating_router.message(StateFilter(None), F.text == "🔍")

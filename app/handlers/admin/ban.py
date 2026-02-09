@@ -8,8 +8,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.filters.kb_filter import BlockUserCallback
 from app.routers import admin_router
 from database.models.complaint import ComplaintStatus
-from database.services.complaint import Complaint
-from database.services.user import User
+from database.queries.complaint import Complaint
+from database.queries.user import User
 
 
 @admin_router.message(StateFilter(None), Command("ban"))

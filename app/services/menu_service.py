@@ -1,6 +1,6 @@
 from app.keyboards.default.base import menu_kb
 from app.text import message_text as mt
-from loader import bot
+from core.loader import bot
 
 
 async def menu(chat_id: int) -> None:

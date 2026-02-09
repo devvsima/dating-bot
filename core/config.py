@@ -116,7 +116,7 @@ LOGO = LOGO_FILE_ID if LOGO_FILE_ID else FSInputFile(LOGO_DIR)
 
 GRAPH_FILE_PATH: Path = IMAGES_DIR / "stats_graph.png"
 
-LOCALES_DIR: Path = DIR / "data" / "locales"
+LOCALES_DIR: Path = DIR / "locales"
 
 LOG_FILE_PATH: Path = DIR / "logs" / "logs.log"
 

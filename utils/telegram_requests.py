@@ -1,6 +1,6 @@
 import requests
 
-from data.config import tgbot
+from core.config import tgbot
 
 BOT_TOKEN = tgbot.BOT_TOKEN
 

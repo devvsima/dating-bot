@@ -1,7 +1,7 @@
 from sqlalchemy import case, insert, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.services.base import BaseService
+from database.queries.base import BaseService
 from utils.logging import logger
 
 from ..models.match import MatchModel, MatchStatus

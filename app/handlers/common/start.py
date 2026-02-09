@@ -3,11 +3,11 @@ from aiogram.filters import Command, CommandStart
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
-from app.business.menu_service import menu
 from app.keyboards.default.registration_form import create_profile_kb
 from app.routers import common_router
+from app.services.menu_service import menu
 from app.text import message_text as mt
-from data.config import LOGO
+from core.config import LOGO
 from database.models import UserModel
 
 

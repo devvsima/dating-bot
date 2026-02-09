@@ -5,7 +5,7 @@ from aiogram.methods import DeleteWebhook
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 from aiohttp import web
 
-from data.config import tgbot
+from core.config import tgbot
 from utils.logging import logger
 
 

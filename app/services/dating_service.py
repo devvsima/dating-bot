@@ -1,12 +1,12 @@
-from aiogram.exceptions import TelegramBadRequest, TelegramForbiddenError
+from aiogram.exceptions import TelegramForbiddenError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.keyboards.inline.archive import check_archive_ikb
 from app.text import message_text as mt
+from core.loader import bot
 from database.models.user import UserModel
-from database.services.match import Match
-from database.services.profile import Profile
-from loader import bot
+from database.queries.match import Match
+from database.queries.profile import Profile
 from utils.logging import logger
 
 
