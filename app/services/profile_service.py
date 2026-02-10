@@ -2,20 +2,19 @@ from aiogram.types import InputMediaPhoto
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.keyboards.inline.admin import block_user_ikb
+from app.services.search_service import SearchService
 from app.text import message_text as mt
 from core.config import tgbot
 from core.loader import bot
-from database.models.profile import ProfileModel
-from database.models.user import UserModel
-from database.queries.complaint import Complaint
-from database.queries.profile_media import ProfileMedia
-from database.queries.search import haversine_distance
+from database.models import ProfileComplaint, ProfileMedia
+from database.models.profile import Profile
+from database.models.user import User
 from utils.logging import logger
 
 MODERATOR_GROUP_ID = tgbot.MODERATOR_GROUP_ID
 
 
-async def send_profile(chat_id: int, profile: ProfileModel, session: AsyncSession) -> None:
+async def send_profile(chat_id: int, profile: Profile, session: AsyncSession) -> None:
     """Отправляет пользователю переданный в функцию профиль"""
     media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
 
@@ -37,14 +36,12 @@ async def send_profile(chat_id: int, profile: ProfileModel, session: AsyncSessio
         await bot.send_message(chat_id=chat_id, text=text)
 
 
-async def send_profile_with_dist(
-    user: UserModel, profile: ProfileModel, session: AsyncSession
-) -> None:
+async def send_profile_with_dist(user: User, profile: Profile, session: AsyncSession) -> None:
     """Отправляет профиль пользователя с расстоянием до него в киломтерах"""
     media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
 
     if user.profile.is_shared_location and profile.is_shared_location:
-        distance = haversine_distance(
+        distance = SearchService.haversine_distance(
             user.profile.latitude, user.profile.longitude, profile.latitude, profile.longitude
         )
         city = f"📍 {round(distance, 2)} km"
@@ -68,13 +65,13 @@ async def send_profile_with_dist(
 
 
 async def complaint_to_profile(
-    session: AsyncSession, sender: UserModel, receiver: UserModel, reason: str
+    session: AsyncSession, sender: User, receiver: User, reason: str
 ) -> None:
     """Отправляет в группу модераторов анкету пользователя
     на которого пришла жалоба"""
     if MODERATOR_GROUP_ID:
         try:
-            complaint = await Complaint.create(
+            complaint = await ProfileComplaint.create(
                 session=session,
                 sender_id=sender.id,
                 receiver_id=receiver.id,

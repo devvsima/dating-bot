@@ -4,13 +4,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.keyboards.inline.archive import check_archive_ikb
 from app.text import message_text as mt
 from core.loader import bot
-from database.models.user import UserModel
-from database.queries.match import Match
-from database.queries.profile import Profile
+from database.models import Match, Profile
+from database.models.user import User
 from utils.logging import logger
 
 
-async def send_user_like_alert(session: AsyncSession, user: UserModel):
+async def send_user_like_alert(session: AsyncSession, user: User):
     matchs = await Match.get_user_matchs(session, user.id)
     try:
         await bot.send_message(

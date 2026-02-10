@@ -6,8 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.filters.kb_filter import StatsCallback
 from app.keyboards.inline.admin import stats_ikb
 from app.routers import admin_router
+from app.services.stats_service import StatsService
 from core.config import GRAPH_FILE_PATH
-from database.queries.stats import Stats
 from utils.graphs import StatsGraph
 
 stats_graph = StatsGraph()
@@ -46,9 +46,9 @@ async def _stats_command(message: types.Message, session: AsyncSession) -> None:
     """Отправляет администратору меню статистики"""
     await message.answer("Stats sending...")
 
-    data = await Stats.get_registration_data(session)
+    data = await StatsService.get_registration_data(session)
     stats_graph.create_user_registration_graph(data)
-    users_stats = await Stats.user_stats(session)
+    users_stats = await StatsService.user_stats(session)
 
     text = USER_STATS.format(
         users_stats["count"],
@@ -67,9 +67,9 @@ async def _stats_callback(
 ) -> None:
     """Отправляет администратору график и статистику"""
     if callback_data.type == "User":
-        data = await Stats.get_registration_data(session)
+        data = await StatsService.get_registration_data(session)
         stats_graph.create_user_registration_graph(data)
-        users_stats = await Stats.user_stats(session)
+        users_stats = await StatsService.user_stats(session)
 
         text = USER_STATS.format(
             users_stats["count"],
@@ -79,11 +79,11 @@ async def _stats_callback(
         )
 
     elif callback_data.type == "Profile":
-        gender_data = await Stats.get_gender_data(session)
+        gender_data = await StatsService.get_gender_data(session)
 
         stats_graph.create_gender_pie_chart(gender_data)
-        match_stats = await Stats.match_stats(session)
-        profile_stats = await Stats.profile_stats(session)
+        match_stats = await StatsService.match_stats(session)
+        profile_stats = await StatsService.profile_stats(session)
         text = PROFILE_STATS.format(
             profile_stats["count"],
             profile_stats["inactive_profile"],
@@ -95,7 +95,7 @@ async def _stats_callback(
         )
 
     elif callback_data.type == "Referral":
-        referral_stats = await Stats.referral_stats(session)
+        referral_stats = await StatsService.referral_stats(session)
         stats_graph.create_referral_sources_chart(referral_stats["sources"])
 
         # Форматируем список источников

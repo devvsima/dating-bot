@@ -1,9 +1,8 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-from database.models.profile import ProfileModel
-from database.models.user import UserModel
 from core.loader import _
+from database.models import Profile, User
 
 from .base import del_kb
 from .kb_generator import simple_kb_generator as kb_gen
@@ -47,7 +46,7 @@ class RegistrationFormKb:
         return kb
 
     @staticmethod
-    def photo(user: UserModel) -> ReplyKeyboardMarkup:
+    def photo(user: User) -> ReplyKeyboardMarkup:
         return RegistrationFormKb.leave_previous(user.profile)
 
     @staticmethod
@@ -58,7 +57,7 @@ class RegistrationFormKb:
         return builder.as_markup(resize_keyboard=True)
 
     @staticmethod
-    def age(user: UserModel) -> ReplyKeyboardMarkup:
+    def age(user: User) -> ReplyKeyboardMarkup:
         try:
             kb = kb_gen([str(user.profile.age)])
         except:
@@ -66,7 +65,7 @@ class RegistrationFormKb:
         return kb
 
     @staticmethod
-    def name(user: UserModel) -> ReplyKeyboardMarkup:
+    def name(user: User) -> ReplyKeyboardMarkup:
         try:
             kb = kb_gen([user.profile.name])
         except:
@@ -74,7 +73,7 @@ class RegistrationFormKb:
         return kb
 
     @staticmethod
-    def description(user: UserModel) -> ReplyKeyboardMarkup:
+    def description(user: User) -> ReplyKeyboardMarkup:
         builder = ReplyKeyboardBuilder()
         if user.profile and user.profile.description:
             builder.button(text=_("Оставить предыдущее"))
@@ -84,7 +83,7 @@ class RegistrationFormKb:
         return builder.as_markup(resize_keyboard=True)
 
     @staticmethod
-    def city(user: UserModel | None):
+    def city(user: User | None):
         builder = ReplyKeyboardBuilder()
         if user.profile and user.profile.city != "📍":
             builder.button(text=_("Оставить предыдущее"))
@@ -96,7 +95,7 @@ class RegistrationFormKb:
         return builder.as_markup(resize_keyboard=True)
 
     @staticmethod
-    def leave_previous(profile: ProfileModel) -> ReplyKeyboardMarkup:
+    def leave_previous(profile: Profile) -> ReplyKeyboardMarkup:
         if profile:
             kb = ReplyKeyboardMarkup(
                 resize_keyboard=True,

@@ -2,18 +2,15 @@
 API endpoints для поиска анкет
 """
 
-from typing import Optional
-
 from fastapi import APIRouter, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 
 from api.models import SearchProfileResponse, SearchResponse
+from app.services.search_service import SearchService
 from database.engine import get_session
-from database.models.profile import ProfileModel
-from database.queries.profile_media import ProfileMedia
-from database.queries.search import search_profiles
-from database.queries.user import User
+from database.models import ProfileMedia, User
+from database.models.profile import Profile
 
 router = APIRouter()
 
@@ -45,7 +42,7 @@ async def get_search_profiles(
         if not user or not user.profile:
             raise HTTPException(status_code=404, detail="Профиль не найден")
 
-        profile_ids = await search_profiles(session, user.profile)
+        profile_ids = await SearchService.search_profiles(session, user.profile)
 
         if not profile_ids:
             return SearchResponse(profiles=[], total=0)
@@ -56,9 +53,7 @@ async def get_search_profiles(
         profiles_data = []
         for profile_id in profile_ids:
             result = await session.execute(
-                select(ProfileModel)
-                .options(joinedload(ProfileModel.user))
-                .where(ProfileModel.id == profile_id)
+                select(Profile).options(joinedload(Profile.user)).where(Profile.id == profile_id)
             )
             profile = result.scalar_one_or_none()
 

@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-29 12:58+0200\n"
+"POT-Creation-Date: 2026-02-10 16:02+0200\n"
 "PO-Revision-Date: 2026-01-29 13:00+0200\n"
 "Last-Translator: \n"
-"Language-Team: id <LL@li.org>\n"
 "Language: id\n"
+"Language-Team: id <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.17.0\n"
-"X-Generator: Poedit 3.5\n"
 
 #: app/text.py:11
 msgid ""
@@ -44,18 +43,18 @@ msgid ""
 "Немного информации о боте:\n"
 "Этот бот был создан по аналогии с популярным ботом для знакомств <a "
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
-"Весь код бота открыт и доступен на <a href='https://github.com/devvsima/dating-"
-"bot'>GitHub</a>\n"
+"Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
+"/dating-bot'>GitHub</a>\n"
 "\n"
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
 "\n"
 "👋\n"
 "Sedikit informasi tentang bot:\n"
-"Bot ini dibuat berdasarkan bot kencan populer <a href='https://t.me/leomatchbot?"
-"start=i_VwRd0'>Leomatchbot</a>\n"
-"Seluruh kode bot terbuka dan tersedia di <a href='https://github.com/devvsima/"
-"dating-bot'>GitHub</a>\n"
+"Bot ini dibuat berdasarkan bot kencan populer <a "
+"href='https://t.me/leomatchbot?start=i_VwRd0'>Leomatchbot</a>\n"
+"Seluruh kode bot terbuka dan tersedia di <a "
+"href='https://github.com/devvsima/dating-bot'>GitHub</a>\n"
 "\n"
 "Untuk pertanyaan dan saran, silakan hubungi: @devvsima.\n"
 
@@ -127,7 +126,8 @@ msgstr "Ceritakan sedikit tentang dirimu — ini membantu orang lain mengenalmu!
 
 #: app/text.py:89
 msgid ""
-"Отлично! Твой профиль готов — теперь можешь искать интересных для себя людей 💬"
+"Отлично! Твой профиль готов — теперь можешь искать интересных для себя "
+"людей 💬"
 msgstr "Profilmu sudah siap — sekarang kamu bisa mencari orang menarik 💬"
 
 #: app/text.py:93
@@ -142,7 +142,8 @@ msgstr ""
 
 #: app/text.py:99
 msgid ""
-"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться ботом."
+"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
+"ботом."
 msgstr "✅ Profilmu berhasil dipulihkan! Kamu bisa menggunakan bot lagi."
 
 #: app/text.py:103
@@ -215,7 +216,8 @@ msgstr "Baik, tidak akan mengirim apa pun."
 
 #: app/text.py:164
 msgid ""
-"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝"
+"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
+"правильно. 📝"
 msgstr "Jawaban tidak valid. Silakan pilih di keyboard atau tulis dengan benar. 📝"
 
 #: app/text.py:168
@@ -224,10 +226,11 @@ msgstr "Melebihi batas karakter. Silakan perpendek pesanmu. ✂️"
 
 #: app/text.py:172
 msgid ""
-"Некорректное имя. Имя должно содержать минимум 2 буквы и максимум 70 символов. ✍️"
+"Некорректное имя. Имя должно содержать минимум 2 буквы и максимум 70 "
+"символов. ✍️"
 msgstr ""
-"Nama tidak valid. Nama harus terdiri dari minimal 2 huruf dan maksimal 70 "
-"karakter. ✍️"
+"Nama tidak valid. Nama harus terdiri dari minimal 2 huruf dan maksimal 70"
+" karakter. ✍️"
 
 #: app/text.py:176
 msgid "Такой город не найден 😔"
@@ -235,8 +238,8 @@ msgstr "Kota seperti itu tidak ditemukan 😔"
 
 #: app/text.py:181
 msgid ""
-"Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном "
-"формате. 🖼️"
+"Неверный формат фотографии! Пожалуйста, загрузите изображение в "
+"правильном формате. 🖼️"
 msgstr "Format foto salah! Silakan unggah gambar dengan format yang benar. 🖼️"
 
 #: app/text.py:186
@@ -315,7 +318,8 @@ msgstr "Kamu belum mengunggah foto. Silakan coba lagi."
 msgid "❌ Ошибка при сохранении фото. Попробуйте еще раз."
 msgstr "❌ Gagal menyimpan foto. Silakan coba lagi."
 
-#: app/keyboards/default/registration_form.py:56 app/text.py:250 app/text.py:260
+#: app/keyboards/default/registration_form.py:55 app/text.py:250
+#: app/text.py:260
 msgid "Это все, сохранить фото"
 msgstr "Selesai, simpan foto"
 
@@ -354,44 +358,45 @@ msgstr "❌ Untuk membuat profil, kamu harus mengunggah minimal satu foto!"
 
 #: app/text.py:285
 msgid ""
-"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару секунд."
+"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару "
+"секунд."
 msgstr "⏳ Anda mengirim pesan terlalu sering. Mohon tunggu beberapa detik."
 
-#: app/keyboards/default/registration_form.py:17
+#: app/keyboards/default/registration_form.py:16
 msgid "Создать анкету"
 msgstr "Buat profil"
 
-#: app/keyboards/default/registration_form.py:30
+#: app/keyboards/default/registration_form.py:29
 msgid "Парень"
 msgstr "Laki-laki"
 
-#: app/keyboards/default/registration_form.py:30
+#: app/keyboards/default/registration_form.py:29
 msgid "Девушка"
 msgstr "Perempuan"
 
-#: app/keyboards/default/registration_form.py:41
+#: app/keyboards/default/registration_form.py:40
 msgid "Парней"
 msgstr "Laki-laki"
 
-#: app/keyboards/default/registration_form.py:42
+#: app/keyboards/default/registration_form.py:41
 msgid "Девушек"
 msgstr "Perempuan"
 
-#: app/keyboards/default/registration_form.py:43
+#: app/keyboards/default/registration_form.py:42
 msgid "Всех"
 msgstr "Semua"
 
-#: app/keyboards/default/registration_form.py:80
-#: app/keyboards/default/registration_form.py:90
-#: app/keyboards/default/registration_form.py:105
+#: app/keyboards/default/registration_form.py:79
+#: app/keyboards/default/registration_form.py:89
+#: app/keyboards/default/registration_form.py:104
 msgid "Оставить предыдущее"
 msgstr "Biarkan yang sebelumnya"
 
-#: app/keyboards/default/registration_form.py:81
+#: app/keyboards/default/registration_form.py:80
 msgid "Пропустить"
 msgstr "Lewati"
 
-#: app/keyboards/default/registration_form.py:92
+#: app/keyboards/default/registration_form.py:91
 msgid "📍 Отправить местоположение"
 msgstr "📍 Kirim lokasi"
 
@@ -400,10 +405,13 @@ msgid "Посмотреть"
 msgstr "Lihat"
 
 #~ msgid ""
-#~ "На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
+#~ "На ваш лайк ответили взаимно, надеюсь"
+#~ " вы хорошо проведете время ;) <a "
 #~ "href='{}'>{}</a>"
 #~ msgstr ""
-#~ "Like kamu dibalas, semoga kalian bersenang-senang ;) <a href='{}'>{}</a>"
+#~ "Like kamu dibalas, semoga kalian "
+#~ "bersenang-senang ;) <a href='{}'>{}</a>"
 
 #~ msgid "🚀 Открыть WebApp"
 #~ msgstr "🚀 Buka WebApp"
+

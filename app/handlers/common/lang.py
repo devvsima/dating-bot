@@ -9,8 +9,7 @@ from app.keyboards.inline.lang import LangCallback, lang_ikb
 from app.routers import common_router
 from app.text import message_text as mt
 from core.loader import i18n
-from database.models import UserModel
-from database.queries import User
+from database.models import User
 
 
 @common_router.message(StateFilter("*"), Command("language"))
@@ -24,7 +23,7 @@ async def _lang(message: types.Message) -> None:
 async def _change_lang(
     callback: types.CallbackQuery,
     callback_data: LangCallback,
-    user: UserModel,
+    user: User,
     state: FSMContext,
     session: AsyncSession,
 ) -> None:

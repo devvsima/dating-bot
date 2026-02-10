@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-01-29 12:58+0200\n"
+"POT-Creation-Date: 2026-02-10 16:02+0200\n"
 "PO-Revision-Date: 2026-01-29 13:00+0200\n"
 "Last-Translator: \n"
-"Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "Generated-By: Babel 2.17.0\n"
-"X-Generator: Poedit 3.5\n"
 
 #: app/text.py:11
 msgid ""
@@ -35,7 +34,8 @@ msgstr ""
 "Bienvenue dans notre bot de rencontres Michi ! 💕\n"
 "Pour commencer, crée ton profil — c'est simple et rapide.\n"
 "\n"
-"Nous te souhaitons de belles rencontres et des rendez-vous intéressants !\n"
+"Nous te souhaitons de belles rencontres et des rendez-vous intéressants !"
+"\n"
 
 #: app/text.py:22
 msgid ""
@@ -44,8 +44,8 @@ msgid ""
 "Немного информации о боте:\n"
 "Этот бот был создан по аналогии с популярным ботом для знакомств <a "
 "href='https://t.me/leomatchbot?start=i_VwRd0'>Дайвинчик</a>\n"
-"Весь код бота открыт и доступен на <a href='https://github.com/devvsima/dating-"
-"bot'>GitHub</a>\n"
+"Весь код бота открыт и доступен на <a href='https://github.com/devvsima"
+"/dating-bot'>GitHub</a>\n"
 "\n"
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
@@ -109,7 +109,8 @@ msgstr "Choisissez qui vous cherchez 💕"
 #: app/text.py:69
 msgid "Загрузи своё фото! Можно отправить до 3 фотографий одновременно 📸"
 msgstr ""
-"Téléchargez votre photo ! Vous pouvez envoyer jusqu'à 3 photos en même temps 📸"
+"Téléchargez votre photo ! Vous pouvez envoyer jusqu'à 3 photos en même "
+"temps 📸"
 
 #: app/text.py:73
 msgid "Как тебя зовут? ✍️"
@@ -129,10 +130,11 @@ msgstr "Parle-nous un peu de toi, ça aidera les autres à mieux te connaître !
 
 #: app/text.py:89
 msgid ""
-"Отлично! Твой профиль готов — теперь можешь искать интересных для себя людей 💬"
+"Отлично! Твой профиль готов — теперь можешь искать интересных для себя "
+"людей 💬"
 msgstr ""
-"Génial ! Votre profil est prêt - vous pouvez maintenant rechercher des personnes "
-"intéressantes 💬"
+"Génial ! Votre profil est prêt - vous pouvez maintenant rechercher des "
+"personnes intéressantes 💬"
 
 #: app/text.py:93
 msgid ""
@@ -147,10 +149,11 @@ msgstr ""
 
 #: app/text.py:99
 msgid ""
-"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться ботом."
+"✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
+"ботом."
 msgstr ""
-"✅ Votre profil a été restauré avec succès ! Vous pouvez maintenant utiliser le "
-"bot à nouveau."
+"✅ Votre profil a été restauré avec succès ! Vous pouvez maintenant "
+"utiliser le bot à nouveau."
 
 #: app/text.py:103
 msgid "🔍 Выполняется поиск..."
@@ -164,7 +167,8 @@ msgstr "Votre profil a été aimé par {} personnes ! Voyons de qui il s'agit :"
 #: app/text.py:111
 msgid "Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍"
 msgstr ""
-"Aucun profil correspondant n'a été trouvé. Essayez de choisir une autre ville. 🌍"
+"Aucun profil correspondant n'a été trouvé. Essayez de choisir une autre "
+"ville. 🌍"
 
 #: app/text.py:115
 msgid "Анкеты закончились. Попробуй позже! 😊"
@@ -223,7 +227,8 @@ msgstr "D'accord, je n'enverrai rien."
 
 #: app/text.py:164
 msgid ""
-"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши правильно. 📝"
+"Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
+"правильно. 📝"
 msgstr ""
 "Réponse incorrecte. Veuillez sélectionner sur votre clavier ou l'écrire "
 "correctement. 📝"
@@ -234,7 +239,8 @@ msgstr "La limite de caractères a été dépassée. Veuillez raccourcir le mess
 
 #: app/text.py:172
 msgid ""
-"Некорректное имя. Имя должно содержать минимум 2 буквы и максимум 70 символов. ✍️"
+"Некорректное имя. Имя должно содержать минимум 2 буквы и максимум 70 "
+"символов. ✍️"
 msgstr ""
 "Nom incorrect. Le nom doit contenir au moins 2 lettres et au maximum 70 "
 "caractères. ✍️"
@@ -245,10 +251,11 @@ msgstr "Cette ville n'a pas été trouvée 😔"
 
 #: app/text.py:181
 msgid ""
-"Неверный формат фотографии! Пожалуйста, загрузите изображение в правильном "
-"формате. 🖼️"
+"Неверный формат фотографии! Пожалуйста, загрузите изображение в "
+"правильном формате. 🖼️"
 msgstr ""
-"Format d'image incorrect ! Veuillez télécharger l'image dans le bon format. 🖼️"
+"Format d'image incorrect ! Veuillez télécharger l'image dans le bon "
+"format. 🖼️"
 
 #: app/text.py:186
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
@@ -326,7 +333,8 @@ msgstr "Vous n'avez pas téléchargé de photos. Réessayez."
 msgid "❌ Ошибка при сохранении фото. Попробуйте еще раз."
 msgstr "❌ Erreur lors de l'enregistrement d'une photo. Réessayez."
 
-#: app/keyboards/default/registration_form.py:56 app/text.py:250 app/text.py:260
+#: app/keyboards/default/registration_form.py:55 app/text.py:250
+#: app/text.py:260
 msgid "Это все, сохранить фото"
 msgstr "C'est tout, gardez la photo"
 
@@ -368,46 +376,47 @@ msgstr "❌ Pour créer un profil, vous devez télécharger au moins une photo !
 
 #: app/text.py:285
 msgid ""
-"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару секунд."
+"⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару "
+"секунд."
 msgstr ""
-"⏳ Vous envoyez des messages trop fréquemment. Veuillez patienter quelques "
-"secondes."
+"⏳ Vous envoyez des messages trop fréquemment. Veuillez patienter quelques"
+" secondes."
 
-#: app/keyboards/default/registration_form.py:17
+#: app/keyboards/default/registration_form.py:16
 msgid "Создать анкету"
 msgstr "Créer un profil"
 
-#: app/keyboards/default/registration_form.py:30
+#: app/keyboards/default/registration_form.py:29
 msgid "Парень"
 msgstr "Garçon"
 
-#: app/keyboards/default/registration_form.py:30
+#: app/keyboards/default/registration_form.py:29
 msgid "Девушка"
 msgstr "Fille"
 
-#: app/keyboards/default/registration_form.py:41
+#: app/keyboards/default/registration_form.py:40
 msgid "Парней"
 msgstr "Garçons"
 
-#: app/keyboards/default/registration_form.py:42
+#: app/keyboards/default/registration_form.py:41
 msgid "Девушек"
 msgstr "Filles"
 
-#: app/keyboards/default/registration_form.py:43
+#: app/keyboards/default/registration_form.py:42
 msgid "Всех"
 msgstr "Tous"
 
-#: app/keyboards/default/registration_form.py:80
-#: app/keyboards/default/registration_form.py:90
-#: app/keyboards/default/registration_form.py:105
+#: app/keyboards/default/registration_form.py:79
+#: app/keyboards/default/registration_form.py:89
+#: app/keyboards/default/registration_form.py:104
 msgid "Оставить предыдущее"
 msgstr "Laisser le précédent"
 
-#: app/keyboards/default/registration_form.py:81
+#: app/keyboards/default/registration_form.py:80
 msgid "Пропустить"
 msgstr "Passer"
 
-#: app/keyboards/default/registration_form.py:92
+#: app/keyboards/default/registration_form.py:91
 msgid "📍 Отправить местоположение"
 msgstr "📍 Envoyer le lieu"
 
@@ -419,11 +428,13 @@ msgstr "Voir"
 #~ msgstr "Quelqu'un a aimé votre profil ! Voulez-vous le voir? 👀"
 
 #~ msgid ""
-#~ "Пользователь <code>{}</code> (@{}) отправил жалобу на анкету пользователя: "
-#~ "<code>{}</code> (@{})"
+#~ "Пользователь <code>{}</code> (@{}) отправил "
+#~ "жалобу на анкету пользователя: <code>{}</code>"
+#~ " (@{})"
 #~ msgstr ""
-#~ "L'utilisateur <code>{}</code> (@{}) a envoyé une plainte concernant le profil "
-#~ "de l'utilisateur: <code>{}</code> (@{})"
+#~ "L'utilisateur <code>{}</code> (@{}) a envoyé"
+#~ " une plainte concernant le profil de"
+#~ " l'utilisateur: <code>{}</code> (@{})"
 
 #~ msgid "Отменить жалобу"
 #~ msgstr "Annulation de la plainte"
@@ -432,11 +443,14 @@ msgstr "Voir"
 #~ msgstr "Envoyez votre photo ! 📸"
 
 #~ msgid ""
-#~ "На ваш лайк ответили взаимно, надеюсь вы хорошо проведете время ;) <a "
+#~ "На ваш лайк ответили взаимно, надеюсь"
+#~ " вы хорошо проведете время ;) <a "
 #~ "href='{}'>{}</a>"
 #~ msgstr ""
-#~ "Votre like a été réciproque, j'espère que vous passerez un bon moment ;) <a "
-#~ "href='{}'>{}</a>"
+#~ "Votre like a été réciproque, j'espère"
+#~ " que vous passerez un bon moment "
+#~ ";) <a href='{}'>{}</a>"
 
 #~ msgid "🚀 Открыть WebApp"
 #~ msgstr "🚀 Ouvrir l'application Web"
+

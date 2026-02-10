@@ -7,9 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.filters.kb_filter import BlockUserCallback
 from app.routers import admin_router
+from database.models import ProfileComplaint, User
 from database.models.complaint import ComplaintStatus
-from database.queries.complaint import Complaint
-from database.queries.user import User
 
 
 @admin_router.message(StateFilter(None), Command("ban"))
@@ -47,23 +46,27 @@ async def _complaint_user_callback(
     receiver_username = callback_data.receiver_username
 
     # Получаем информацию о жалобе, включая отправителя
-    complaint = await Complaint.get_by_id(session=session, id=complaint_id)
+    complaint = await ProfileComplaint.get_by_id(session=session, id=complaint_id)
     sender_user = (
         await User.get_by_id(session=session, id=complaint.sender_id) if complaint else None
     )
 
     if callback_data.ban:
         await User.ban(session=session, id=receiver_id)
-        await Complaint.update(session=session, id=complaint_id, status=ComplaintStatus.Accepted)
+        await ProfileComplaint.update(
+            session=session, id=complaint_id, status=ComplaintStatus.Accepted
+        )
         text = "⛔️ Administrator <code>{admin_id}</code> @{admin_username} \
 accepted a request to block user <code>{receiver_id}</code> @{receiver_username}\n\n\
-📋 Complaint from: <code>{sender_id}</code> @{sender_username}\n\
+📋 ProfileComplaint from: <code>{sender_id}</code> @{sender_username}\n\
 📝 Reason: {reason}"
     else:
-        await Complaint.update(session=session, id=complaint_id, status=ComplaintStatus.Rejected)
+        await ProfileComplaint.update(
+            session=session, id=complaint_id, status=ComplaintStatus.Rejected
+        )
         text = "❌ Administrator <code>{admin_id}</code> @{admin_username} \
 rejected the complaint against user <code>{receiver_id}</code> @{receiver_username}\n\n\
-📋 Complaint from: <code>{sender_id}</code> @{sender_username}\n\
+📋 ProfileComplaint from: <code>{sender_id}</code> @{sender_username}\n\
 📝 Reason: {reason}"
 
     await callback.message.edit_text(

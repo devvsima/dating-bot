@@ -6,9 +6,7 @@ from fastapi import APIRouter, HTTPException
 
 from api.models import ActionResponse, ComplaintRequest, LikeRequest
 from database.engine import get_session
-from database.queries.complaint import Complaint
-from database.queries.match import Match
-from database.queries.user import User
+from database.models import Match, ProfileComplaint, User
 from utils.logging import logger
 
 router = APIRouter()
@@ -75,7 +73,7 @@ async def complaint_profile(request: ComplaintRequest):
     """
     async with get_session() as session:
         # Создаем жалобу
-        await Complaint.create(
+        await ProfileComplaint.create(
             session=session,
             sender_id=request.user_id,
             profile_id=request.target_id,

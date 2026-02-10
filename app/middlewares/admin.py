@@ -5,7 +5,7 @@ from aiogram.types import Message
 
 from app.text import message_text as mt
 from core.config import tgbot
-from database.queries import User
+from database.models import User
 
 
 class AdminMiddleware(BaseMiddleware):

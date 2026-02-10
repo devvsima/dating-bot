@@ -11,26 +11,25 @@ from app.routers import dating_router
 from app.services.dating_service import send_user_like_alert
 from app.services.menu_service import menu
 from app.services.profile_service import complaint_to_profile, send_profile_with_dist
+from app.services.search_service import SearchService
 from app.states.default import Search
 from app.text import message_text as mt
-from database.models import UserModel
-from database.queries import Match, Profile, User
-from database.queries.search import search_profiles
+from database.models import Match, Profile, User
 
 
 @dating_router.message(StateFilter(None), F.text == "🔍")
 async def _search_command(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """Бот подбирает анкеты, соответствующие предпочтениям пользователя, и предлагает их"""
 
     await message.answer(mt.SEARCH, reply_markup=search_kb)
 
-    if profile_list := await search_profiles(session, user.profile):
+    if profile_list := await SearchService.search_profiles(session, user.profile):
         await state.set_state(Search.search)
         await state.update_data(ids=profile_list)
 
-        another_profile = await Profile.get(session, profile_list[0])
+        another_profile = await Profile.get_by_id(session, profile_list[0])
         await send_profile_with_dist(user=user, profile=another_profile, session=session)
 
     else:
@@ -43,7 +42,7 @@ async def _search_command(
     F.text.in_(("❤️", "👎", "💢", "📩")),
 )
 async def _search_profile(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """
     Пользователь может взаимодействовать с анкетами, предложенными ботом,
@@ -82,7 +81,7 @@ async def _search_profile(
 
 @dating_router.message(StateFilter(Search.search), F.text.in_(("🔞", "💰", "🔫", "↩️")))
 async def _search_profile_Complaint(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """Пользователь может отправить жалобу на анкету, если она содержит нежелательный контент."""
     data = await state.get_data()
@@ -111,7 +110,7 @@ async def _search_profile_Complaint(
 
 @dating_router.message(StateFilter(Search.message), F.text, filters.IsMessageToUser())
 async def _search_profile_mailing_(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """Ловит сообщение которые пользователь отправляет в ответ на анкету"""
     data = await state.get_data()
@@ -150,8 +149,8 @@ async def _search_profile_mailing_error(message: types.Message) -> None:
 async def next_profile(
     session: AsyncSession,
     message: types.Message,
-    profile_list: UserModel,
-    user: UserModel,
+    profile_list: User,
+    user: User,
     state: FSMContext,
 ):
     profile_list.pop(0)
@@ -167,7 +166,7 @@ async def next_profile(
 async def like_profile(
     session: AsyncSession,
     message: types.Message,
-    another_user: UserModel,
+    another_user: User,
     mail_text: str | None = None,
 ):
     is_create = await Match.create(session, message.from_user.id, another_user.id, mail_text)

@@ -10,14 +10,13 @@ from app.services.create_profile_service import get_correct_description
 from app.services.menu_service import menu
 from app.states.default import ProfileCreate
 from app.text import message_text as mt
-from database.models.user import UserModel
-from database.queries import Profile
-from database.queries.profile_media import ProfileMedia
+from database.models import Profile, ProfileMedia
+from database.models.user import User
 
 
 @registration_router.message(StateFilter(None), F.text == "🔄")
 @registration_router.message(StateFilter(None), filters.IsCreate())
-async def _create_profile_command(message: types.Message, state: FSMContext, user: UserModel):
+async def _create_profile_command(message: types.Message, state: FSMContext, user: User):
     """Запускает процесс создания профиля пользователя.
     Также используется для пересоздания анкеты"""
     await state.set_state(ProfileCreate.name)
@@ -48,9 +47,7 @@ async def _gender(message: types.Message, state: FSMContext, gender: str):
 
 # -< Find gender >-
 @registration_router.message(StateFilter(ProfileCreate.find_gender), F.text, filters.IsFindGender())
-async def _find_gender(
-    message: types.Message, state: FSMContext, find_gender: str, user: UserModel
-):
+async def _find_gender(message: types.Message, state: FSMContext, find_gender: str, user: User):
     await state.set_state(ProfileCreate.city)
     await state.update_data(find_gender=find_gender)
 
@@ -68,7 +65,7 @@ async def _city(
     longitude: float | None,
     city: str | None,
     is_shared_location: bool | None,
-    user: UserModel,
+    user: User,
 ):
     if use_previous:
         city = user.profile.city
@@ -91,7 +88,7 @@ async def _city(
 
 # -< Age >-
 @registration_router.message(StateFilter(ProfileCreate.age), F.text, filters.IsAge())
-async def _age(message: types.Message, state: FSMContext, user: UserModel):
+async def _age(message: types.Message, state: FSMContext, user: User):
     await state.set_state(ProfileCreate.photo)
     await state.update_data(age=message.text)
 
@@ -102,7 +99,7 @@ async def _age(message: types.Message, state: FSMContext, user: UserModel):
 
 # -< Photo >-
 @registration_router.message(StateFilter(ProfileCreate.photo), filters.IsPhoto())
-async def _photo(message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession):
+async def _photo(message: types.Message, state: FSMContext, user: User, session: AsyncSession):
     data = await state.get_data()
     photos = data.get("photos", [])
 
@@ -166,7 +163,7 @@ async def _photo(message: types.Message, state: FSMContext, user: UserModel, ses
     StateFilter(ProfileCreate.description), F.text, filters.IsDescription()
 )
 async def _description(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ):
     data = await state.get_data()
     photos = data.get("photos", [])

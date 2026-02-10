@@ -7,11 +7,11 @@ from app.routers import dating_router
 from app.services.menu_service import menu
 from app.services.profile_service import send_profile
 from app.text import message_text as mt
-from database.models import UserModel
+from database.models import User
 
 
 @dating_router.message(StateFilter(None), F.text == "👤")
-async def profile_command(message: types.Message, user: UserModel, session: AsyncSession) -> None:
+async def profile_command(message: types.Message, user: User, session: AsyncSession) -> None:
     """Отправляет профиль пользователя"""
 
     # Проверяем, есть ли у пользователя профиль

@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.keyboards.inline.admin import check_user_profile
 from app.routers import admin_router
 from app.services.profile_service import send_profile
-from database.queries.profile import Profile
+from database.models import Profile
 
 
 @admin_router.message(StateFilter(None), Command("profile"))

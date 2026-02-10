@@ -8,13 +8,13 @@ from app.routers import common_router
 from app.services.menu_service import menu
 from app.text import message_text as mt
 from core.config import LOGO
-from database.models import UserModel
+from database.models import User
 
 
 @common_router.message(StateFilter("*"), F.text == "💤")
 @common_router.message(StateFilter("*"), Command("cancel"))
 @common_router.message(StateFilter("*"), CommandStart())
-async def start_command(message: types.Message, user: UserModel, state: FSMContext) -> None:
+async def start_command(message: types.Message, user: User, state: FSMContext) -> None:
     """
     Команда /start запускает бота и возвращает пользователя в начальное меню.
     Сброс состояния помогает, если пользователь запутался — всегда можно начать сначала.

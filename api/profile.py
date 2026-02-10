@@ -6,8 +6,7 @@ from fastapi import APIRouter, HTTPException
 
 from api.models import ProfileResponse
 from database.engine import get_session
-from database.queries.profile_media import ProfileMedia
-from database.queries.user import User
+from database.models import ProfileMedia, User
 
 router = APIRouter()
 

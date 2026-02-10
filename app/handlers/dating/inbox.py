@@ -16,12 +16,11 @@ from app.services.profile_service import complaint_to_profile, send_profile_with
 from app.states.default import LikeResponse
 from app.text import message_text as mt
 from core.loader import bot
-from database.models import UserModel
-from database.models.match import MatchModel, MatchStatus
-from database.queries import Match, Profile, User
+from database.models import Match, Profile, User
+from database.models.match import Match, MatchStatus
 
 
-async def _send_mutual_like_notifications(session: AsyncSession, user: UserModel) -> None:
+async def _send_mutual_like_notifications(session: AsyncSession, user: User) -> None:
     """
     Отправляет уведомления о взаимных лайках для матчей со статусом Accepted,
     которые исходят от пользователя
@@ -30,10 +29,10 @@ async def _send_mutual_like_notifications(session: AsyncSession, user: UserModel
 
     # Найти все матчи со статусом Accepted, где пользователь является отправителем
     result = await session.execute(
-        select(MatchModel)
-        .where(MatchModel.sender_id == user.id)
-        .where(MatchModel.status == MatchStatus.Accepted)
-        .where(MatchModel.is_active == True)
+        select(Match)
+        .where(Match.sender_id == user.id)
+        .where(Match.status == MatchStatus.Accepted)
+        .where(Match.is_active == True)
     )
     accepted_matches = result.scalars().all()
     for match in accepted_matches:
@@ -62,7 +61,7 @@ async def _send_mutual_like_notifications(session: AsyncSession, user: UserModel
 
 @dating_router.message(StateFilter(None), F.text == "📭")
 async def match_archive(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """Архив лайков анкеты пользовтеля"""
     await state.set_state(LikeResponse.response)
@@ -92,7 +91,7 @@ async def match_archive(
 
 @dating_router.callback_query(StateFilter("*"), F.data == "archive")
 async def _match_atchive_callback(
-    callback: types.CallbackQuery, state: FSMContext, user: UserModel, session: AsyncSession
+    callback: types.CallbackQuery, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """Архив лайков анкеты пользовтеля"""
     await state.set_state(LikeResponse.response)
@@ -130,7 +129,7 @@ async def _match_atchive_callback(
     StateFilter(LikeResponse.response), F.text.in_(("❤️", "👎", "💢", "↩️", "🔞", "💰", "🔫"))
 )
 async def _match_response(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """'Свайпы' людей которые лайкнули анкету пользователя"""
     data = await state.get_data()
@@ -186,9 +185,7 @@ def generate_user_link(id: int, username: str = None) -> str:
     return f"tg://user?id={id}"
 
 
-async def like_accept(
-    session: AsyncSession, user: UserModel, another_user: UserModel, match: MatchModel
-):
+async def like_accept(session: AsyncSession, user: User, another_user: User, match: Match):
     effect_id = EFFECTS_DICTIONARY["🎉"]
     if match.status == MatchStatus.Accepted:
         # Если изначальный отправитель получил взимный лайк и зашел в inbox

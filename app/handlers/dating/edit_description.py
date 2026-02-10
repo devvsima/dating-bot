@@ -9,13 +9,12 @@ from app.routers import registration_router
 from app.services.create_profile_service import get_correct_description
 from app.states.default import ProfileEdit
 from app.text import message_text as mt
-from database.models import UserModel
-from database.queries import Profile
+from database.models import Profile, User
 
 
 @registration_router.message(StateFilter(None), F.text == "✍️")
 async def _edit_profile_description_command(
-    message: types.Message, state: FSMContext, user: UserModel
+    message: types.Message, state: FSMContext, user: User
 ) -> None:
     """Редактирует описание пользователя"""
     await state.set_state(ProfileEdit.description)
@@ -26,7 +25,7 @@ async def _edit_profile_description_command(
 
 @registration_router.message(StateFilter(ProfileEdit.description))
 async def _update_description(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """Обновляет описание профиля"""
     description = get_correct_description(message=message, user=user)

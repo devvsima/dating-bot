@@ -9,8 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.routers import admin_router
 from app.states.admin import Mailing
-from database.queries.profile import Profile
-from database.queries.user import User
+from database.models import Profile, User
 from utils.logging import logger
 
 
