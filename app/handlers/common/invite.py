@@ -7,14 +7,12 @@ from app.keyboards.default.base import return_to_menu_kb
 from app.routers import common_router
 from app.text import message_text as mt
 from core.loader import bot
-from database.models import Referal, UserModel
+from database.models import Referal, User
 from utils.base62 import encode_base62
 
 
 @common_router.message(StateFilter(None), F.text == "✉️")
-async def _invite_link_command(
-    message: types.Message, user: UserModel, session: AsyncSession
-) -> None:
+async def _invite_link_command(message: types.Message, user: User, session: AsyncSession) -> None:
     """Отправляет персональную реферальную ссылку для приглашения друзей.
     Ссылка создается на основе пользовательского id и кодировки base62"""
     user_code: str = encode_base62(message.from_user.id)
