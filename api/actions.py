@@ -5,10 +5,8 @@ API endpoints для действий пользователя (лайки, ди
 from fastapi import APIRouter, HTTPException
 
 from api.models import ActionResponse, ComplaintRequest, LikeRequest
-from database.connect import get_session
-from database.services.complaint import Complaint
-from database.services.match import Match
-from database.services.user import User
+from database.engine import get_session
+from database.models import Match, ProfileComplaint, User
 from utils.logging import logger
 
 router = APIRouter()
@@ -75,7 +73,7 @@ async def complaint_profile(request: ComplaintRequest):
     """
     async with get_session() as session:
         # Создаем жалобу
-        await Complaint.create(
+        await ProfileComplaint.create(
             session=session,
             sender_id=request.user_id,
             profile_id=request.target_id,

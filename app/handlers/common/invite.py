@@ -6,22 +6,23 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.keyboards.default.base import return_to_menu_kb
 from app.routers import common_router
 from app.text import message_text as mt
-from database.models import UserModel
-from database.services.referal import Referal
-from loader import bot
+from core.loader import bot
+from database.models import Referal, User
 from utils.base62 import encode_base62
 
 
 @common_router.message(StateFilter(None), F.text == "✉️")
-async def _invite_link_command(
-    message: types.Message, user: UserModel, session: AsyncSession
-) -> None:
+async def _invite_link_command(message: types.Message, user: User, session: AsyncSession) -> None:
     """Отправляет персональную реферальную ссылку для приглашения друзей.
     Ссылка создается на основе пользовательского id и кодировки base62"""
     user_code: str = encode_base62(message.from_user.id)
     url = await create_start_link(bot, f"usr_{user_code}")
     invites_count = await Referal.get_invites_count(session, user.id)
 
+    text = mt.INVITE_FRIENDS.format(invites_count, url)
     await message.answer(
-        mt.INVITE_FRIENDS.format(invites_count, url), reply_markup=return_to_menu_kb
+        text=text,
+        reply_markup=return_to_menu_kb,
+        # Нужно реализовать отправку приглашений через контакты
+        # reply_markup=referal_ikb(url=url),
     )

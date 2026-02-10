@@ -4,14 +4,12 @@ from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.business.menu_service import menu
 from app.handlers.common.start import start_command
 from app.keyboards.inline.lang import LangCallback, lang_ikb
 from app.routers import common_router
 from app.text import message_text as mt
-from database.models import UserModel
-from database.services import User
-from loader import i18n
+from core.loader import i18n
+from database.models import User
 
 
 @common_router.message(StateFilter("*"), Command("language"))
@@ -25,7 +23,7 @@ async def _lang(message: types.Message) -> None:
 async def _change_lang(
     callback: types.CallbackQuery,
     callback_data: LangCallback,
-    user: UserModel,
+    user: User,
     state: FSMContext,
     session: AsyncSession,
 ) -> None:

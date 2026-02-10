@@ -8,7 +8,7 @@ from app.routers import (
     registration_router,
     voide_router,
 )
-from database.connect import async_session
+from database.engine import async_session
 
 from .admin import AdminMiddleware
 from .common import CommonMiddleware

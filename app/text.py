@@ -1,4 +1,4 @@
-from loader import _
+from core.loader import _
 
 """
 Текста много и он может повторятся, потому вынес его в отдельный файл.

@@ -9,11 +9,11 @@ IF "%1"=="run" (
 ) ELSE IF "%1"=="mgen" (
     uv run alembic revision --autogenerate
 ) ELSE IF "%1"=="lcoll" (
-    uv run pybabel extract --input-dirs=. -o data/locales/bot.pot --project=bot
+    uv run python -m babel.messages.frontend extract -F locales/babel.cfg -o locales/bot.pot .
 ) ELSE IF "%1"=="lupd" (
-    uv run pybabel update -i data/locales/bot.pot -d data/locales -D bot
+    uv run python -m babel.messages.frontend update -i locales/bot.pot -d locales -D bot
 ) ELSE IF "%1"=="lcom" (
-    uv run pybabel compile -d data/locales -D bot --statistics
+    uv run python -m babel.messages.frontend compile -d locales -D bot --statistics
 ) ELSE (
     echo !Unknown command
     echo "Available commands: run, api, mapply, mgen, lcollect, lupdate, lcompile"

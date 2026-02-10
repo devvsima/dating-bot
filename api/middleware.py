@@ -9,8 +9,6 @@ from urllib.parse import parse_qsl
 from fastapi import HTTPException, Request, status
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from data.config import tgbot
-
 
 class TelegramWebAppMiddleware(BaseHTTPMiddleware):
     """

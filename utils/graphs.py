@@ -7,7 +7,7 @@ import pandas as pd
 import seaborn as sns
 from matplotlib.patches import Circle
 
-from data.config import GRAPH_FILE_PATH
+from core.config import GRAPH_FILE_PATH
 
 
 class StatsGraph:

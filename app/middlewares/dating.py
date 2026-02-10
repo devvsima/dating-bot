@@ -3,8 +3,7 @@ from typing import Any, Callable
 from aiogram import BaseMiddleware
 from aiogram.types import CallbackQuery, Message
 
-from database.models.user import UserStatus
-from database.services import User
+from database.models.user import User, UserStatus
 
 
 class DatingMiddleware(BaseMiddleware):

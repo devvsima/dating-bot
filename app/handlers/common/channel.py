@@ -4,7 +4,7 @@ from aiogram.filters.state import StateFilter
 
 from app.routers import common_router
 from app.text import message_text as mt
-from data.config import tgbot
+from core.config import tgbot
 
 
 @common_router.message(StateFilter("*"), Command("channel"))

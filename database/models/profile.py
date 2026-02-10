@@ -1,12 +1,15 @@
 from typing import List
 
-from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Integer, String
+from sqlalchemy import BigInteger, CheckConstraint, ForeignKey, Integer, String, delete, select
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from utils.logging import logger
 
 from .base import BaseModel
 
 
-class ProfileModel(BaseModel):
+class Profile(BaseModel):
     __tablename__ = "profiles"
 
     id: Mapped[int] = mapped_column(
@@ -24,8 +27,8 @@ class ProfileModel(BaseModel):
     is_shared_location: Mapped[bool] = mapped_column(server_default="False", nullable=False)
     is_active: Mapped[bool] = mapped_column(server_default="True", nullable=False)
 
-    user: Mapped["UserModel"] = relationship("UserModel", back_populates="profile")  # type: ignore
-    profile_media: Mapped[List["ProfileMediaModel"]] = relationship(  # type: ignore
+    user: Mapped["User"] = relationship("User", back_populates="profile")  # type: ignore
+    profile_media: Mapped[List["ProfileMedia"]] = relationship(  # type: ignore
         back_populates="profile", cascade="all, delete-orphan"
     )
 
@@ -33,3 +36,95 @@ class ProfileModel(BaseModel):
         CheckConstraint("gender IN ('male', 'female')", name="gender_check"),
         CheckConstraint("find_gender IN ('male', 'female', 'all')", name="find_gender_check"),
     )
+
+    @staticmethod
+    async def get_profile(session: AsyncSession, id: int):
+        """Возвращает профиль пользователя"""
+        return await session.get(Profile, id)
+
+    @staticmethod
+    async def delete_profile(session: AsyncSession, id: int):
+        """Удаляет профиль пользователя"""
+        stmt = delete(Profile).where(Profile.id == id)
+        await session.execute(stmt)
+        await session.commit()
+        logger.log("DATABASE", f"{id}: удалил профиль")
+
+    @classmethod
+    async def create_or_update(cls, session: AsyncSession, **kwargs):
+        """Создает профиль пользователя, если профиль есть - обновляет его"""
+        from .profile_media import ProfileMedia
+
+        profile_id = kwargs.pop("id")  # Извлекаем id профиля
+        photo_url = kwargs.pop(
+            "photo", None
+        )  # Извлекаем photo, если есть (для обратной совместимости)
+        photos = kwargs.pop("photos", None)  # Извлекаем список фото
+
+        obj = await cls.get_by_id(session, profile_id)
+        is_new = False
+
+        if obj:
+            # Обновляем существующий профиль
+            for key, value in kwargs.items():
+                setattr(obj, key, value)
+            await session.commit()
+        else:
+            # Создаем новый профиль
+            obj = await cls.create_profile(session, id=profile_id, **kwargs)
+            is_new = True
+            logger.log("DATABASE", f"{profile_id}: создал анкету")
+
+        # Обрабатываем фото
+        if photos:
+            # Удаляем все старые фото профиля
+            await ProfileMedia.delete_profile_photos(session, profile_id)
+
+            # Добавляем новые фото
+            for i, photo_file_id in enumerate(photos, 1):
+                await ProfileMedia.add_media(
+                    session=session,
+                    profile_id=profile_id,
+                    media_url=photo_file_id,
+                    media_type="photo",
+                    order=i,
+                )
+        elif photo_url:
+            # Обратная совместимость - если передано одно фото
+            await ProfileMedia.delete_profile_photos(session, profile_id)
+
+            await ProfileMedia.add_media(
+                session=session,
+                profile_id=profile_id,
+                media_url=photo_url,
+                media_type="photo",
+                order=1,
+            )
+        else:
+            logger.log("DATABASE", "Error to creating profile")
+        return obj, is_new
+
+    @classmethod
+    async def get_by_id(cls, session: AsyncSession, id: int):
+        """Получает профиль по ID"""
+        result = await session.execute(select(cls).where(cls.id == id))
+        return result.scalar_one_or_none()
+
+    @classmethod
+    async def create_profile(cls, session: AsyncSession, **kwargs):
+        """Создает новый профиль"""
+        instance = cls(**kwargs)
+        session.add(instance)
+        await session.commit()
+        return instance
+
+    @classmethod
+    async def update_profile(cls, session: AsyncSession, id: int, **kwargs):
+        """Обновляет профиль по ID"""
+        instance = await cls.get_by_id(session, id)
+        if not instance:
+            return None
+        for key, value in kwargs.items():
+            setattr(instance, key, value)
+        await session.commit()
+        return instance

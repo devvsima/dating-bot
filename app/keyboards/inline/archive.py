@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from loader import _
+from core.loader import _
 
 
 def check_archive_ikb(language: str) -> InlineKeyboardMarkup:

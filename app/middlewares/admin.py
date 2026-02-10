@@ -4,8 +4,8 @@ from aiogram import BaseMiddleware
 from aiogram.types import Message
 
 from app.text import message_text as mt
-from data.config import tgbot
-from database.services import User
+from core.config import tgbot
+from database.models import User
 
 
 class AdminMiddleware(BaseMiddleware):

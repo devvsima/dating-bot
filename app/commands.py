@@ -1,7 +1,7 @@
 from aiogram.types import BotCommand, BotCommandScopeChat, BotCommandScopeDefault
 
-from data.config import tgbot
-from loader import _, bot, i18n
+from core.config import tgbot
+from core.loader import _, bot, i18n
 
 
 def get_default_commands() -> list:

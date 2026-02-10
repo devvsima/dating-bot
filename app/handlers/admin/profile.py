@@ -3,10 +3,10 @@ from aiogram.filters import Command, CommandObject
 from aiogram.filters.state import StateFilter
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.business.profile_service import send_profile
 from app.keyboards.inline.admin import check_user_profile
 from app.routers import admin_router
-from database.services.profile import Profile
+from app.services.profile_service import send_profile
+from database.models import Profile
 
 
 @admin_router.message(StateFilter(None), Command("profile"))

@@ -5,10 +5,8 @@ API endpoints для работы с профилями пользователе
 from fastapi import APIRouter, HTTPException
 
 from api.models import ProfileResponse
-from database.connect import get_session
-from database.services.profile_media import ProfileMedia
-from database.services.user import User
-from utils.telegram_requests import get_photo_url_by_file_id
+from database.engine import get_session
+from database.models import ProfileMedia, User
 
 router = APIRouter()
 
@@ -37,7 +35,7 @@ async def get_profile(user_id: int):
             session=session, profile_id=user.profile.id
         )
         for item in media_items:
-            photos.append(get_photo_url_by_file_id(item.media))
+            photos.append(f"/api/photo/{item.media}")
 
         # Возвращаем данные профиля
         return ProfileResponse(

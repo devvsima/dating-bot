@@ -181,28 +181,28 @@ The bot has localization for 6 languages: en, ru, uk, fr, pl, es
 - Collecting all the texts from the project
 
 ```bash
-pybabel extract --input-dirs=. -o data/locales/bot.pot --project=bot
+pybabel extract --input-dirs=. -o locales/bot.pot --project=bot
 ```
 
 - Create files with translations into different languages
 
 ```bash
-pybabel init -i data/locales/bot.pot -d data/locales -D bot -l en
-pybabel init -i data/locales/bot.pot -d data/locales -D bot -l ru
-pybabel init -i data/locales/bot.pot -d data/locales -D bot -l uk
-pybabel init -i data/locales/bot.pot -d data/locales -D bot -l fr
-pybabel init -i data/locales/bot.pot -d data/locales -D bot -l pl
-pybabel init -i data/locales/bot.pot -d data/locales -D bot -l es
+pybabel init -i locales/bot.pot -d locales -D bot -l en
+pybabel init -i locales/bot.pot -d locales -D bot -l ru
+pybabel init -i locales/bot.pot -d locales -D bot -l uk
+pybabel init -i locales/bot.pot -d locales -D bot -l fr
+pybabel init -i locales/bot.pot -d locales -D bot -l pl
+pybabel init -i locales/bot.pot -d locales -D bot -l es
 ```
 
 - Once all the texts are translated, you need to compile all the translations
 
 ```bash
-pybabel compile -d data/locales -D bot --statistics
+pybabel compile -d locales -D bot --statistics
 ```
 
 ```bash
-pybabel update -i data/locales/bot.pot -d data/locales -D bot
+pybabel update -i locales/bot.pot -d locales -D bot
 ```
 
 ## Startup

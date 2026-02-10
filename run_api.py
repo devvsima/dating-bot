@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api import api_router
 from api.middleware import TelegramWebAppMiddleware
-from data.config import tgbot, webapp
+from core.config import tgbot, webapp
 from utils.logging import logger
 
 

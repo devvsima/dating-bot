@@ -7,6 +7,7 @@ from fastapi import APIRouter
 from .actions import router as actions_router
 from .admin import router as admin_router
 from .home import router as home_router
+from .media import router as media_router
 from .profile import router as profile_router
 from .search import router as search_router
 
@@ -19,5 +20,6 @@ api_router.include_router(profile_router, tags=["profile"])
 api_router.include_router(search_router, tags=["search"])
 api_router.include_router(actions_router, tags=["actions"])
 api_router.include_router(admin_router, tags=["admin"])
+api_router.include_router(media_router, tags=["media"])
 
 __all__ = ["api_router"]

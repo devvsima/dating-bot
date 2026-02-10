@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, ReplyKeyboardRemove
 
-from loader import _
+from core.loader import _
 
 from .kb_generator import simple_kb_generator as kb_gen
 

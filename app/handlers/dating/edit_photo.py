@@ -9,14 +9,13 @@ from app.keyboards.default.registration_form import RegistrationFormKb
 from app.routers import registration_router
 from app.states.default import ProfileEdit
 from app.text import message_text as mt
-from database.models import UserModel
+from database.models import ProfileMedia, User
 from database.models.profile_media import MediaTypes
-from database.services.profile_media import ProfileMedia
 
 
 @registration_router.message(StateFilter(None), F.text == "🖼")
 async def _edit_profile_photo_command(
-    message: types.Message, state: FSMContext, user: UserModel
+    message: types.Message, state: FSMContext, user: User
 ) -> None:
     """Редактирует фотографию пользователя"""
     await state.set_state(ProfileEdit.photo)
@@ -33,7 +32,7 @@ async def _edit_profile_photo_command(
 
 @registration_router.message(StateFilter(ProfileEdit.photo), filters.IsPhoto())
 async def _update_photo(
-    message: types.Message, state: FSMContext, user: UserModel, session: AsyncSession
+    message: types.Message, state: FSMContext, user: User, session: AsyncSession
 ) -> None:
     """Обрабатывает загрузку фотографий"""
     data = await state.get_data()
