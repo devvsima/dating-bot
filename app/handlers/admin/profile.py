@@ -15,7 +15,7 @@ async def _profile_command(
 ) -> None:
     """Админ панель"""
     profile_id = command.args.lower()
-    profile = await Profile.get(session=session, id=int(profile_id))
+    profile = await Profile.get_by_id(session=session, id=int(profile_id))
     await send_profile(message.chat.id, profile, session)
 
     # Такая логика из за ограничений тг в том чтобы отправлять клавитары с webapp в группы

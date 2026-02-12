@@ -155,7 +155,7 @@ async def next_profile(
 ):
     profile_list.pop(0)
     if profile_list:
-        profile = await Profile.get(session, profile_list[0])
+        profile = await Profile.get_by_id(session, profile_list[0])
         await state.update_data(ids=profile_list)
         await send_profile_with_dist(user=user, profile=profile, session=session)
     else:

@@ -37,19 +37,6 @@ class Profile(BaseModel):
         CheckConstraint("find_gender IN ('male', 'female', 'all')", name="find_gender_check"),
     )
 
-    @staticmethod
-    async def get_profile(session: AsyncSession, id: int):
-        """Возвращает профиль пользователя"""
-        return await session.get(Profile, id)
-
-    @staticmethod
-    async def delete_profile(session: AsyncSession, id: int):
-        """Удаляет профиль пользователя"""
-        stmt = delete(Profile).where(Profile.id == id)
-        await session.execute(stmt)
-        await session.commit()
-        logger.log("DATABASE", f"{id}: удалил профиль")
-
     @classmethod
     async def create_or_update(cls, session: AsyncSession, **kwargs):
         """Создает профиль пользователя, если профиль есть - обновляет его"""
@@ -103,28 +90,3 @@ class Profile(BaseModel):
         else:
             logger.log("DATABASE", "Error to creating profile")
         return obj, is_new
-
-    @classmethod
-    async def get_by_id(cls, session: AsyncSession, id: int):
-        """Получает профиль по ID"""
-        result = await session.execute(select(cls).where(cls.id == id))
-        return result.scalar_one_or_none()
-
-    @classmethod
-    async def create_profile(cls, session: AsyncSession, **kwargs):
-        """Создает новый профиль"""
-        instance = cls(**kwargs)
-        session.add(instance)
-        await session.commit()
-        return instance
-
-    @classmethod
-    async def update_profile(cls, session: AsyncSession, id: int, **kwargs):
-        """Обновляет профиль по ID"""
-        instance = await cls.get_by_id(session, id)
-        if not instance:
-            return None
-        for key, value in kwargs.items():
-            setattr(instance, key, value)
-        await session.commit()
-        return instance

@@ -10,14 +10,20 @@ from core.loader import _
 def stats_ikb(current_type: str = "User") -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
-    # Добавляем кнопки для всех типов статистики
-    stats_types = [("👤 Users", "User"), ("📂 Profiles", "Profile"), ("📊 Referrals", "Referral")]
+    stats_types = [
+        ("Users", "User", "5222479682733116859"),  # 👤
+        ("Profiles", "Profile", "5220024327239410094"),  # 📂
+        ("Referrals", "Referral", "5220139711535816607"),  # 📊
+    ]
 
-    for text, callback_type in stats_types:
-        # Добавляем эмодзи активности для текущего типа
+    for text, callback_type, emoji_id in stats_types:
         if callback_type == current_type:
-            text = f"🔹 {text}"
-        builder.button(text=text, callback_data=StatsCallback(type=callback_type))
+            text = f"> {text} <"
+        builder.button(
+            text=text,
+            icon_custom_emoji_id=emoji_id,
+            callback_data=StatsCallback(type=callback_type),
+        )
 
     builder.adjust(2)
     return builder.as_markup()
@@ -25,8 +31,10 @@ def stats_ikb(current_type: str = "User") -> InlineKeyboardMarkup:
 
 def block_user_ikb(complaint_id: int, user_id: int, username: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
+    emoji_id = "5219958846168012596"
     builder.button(
-        text="☠️ Block user {}".format(username),
+        text="Block user: {}".format(username),
+        icon_custom_emoji_id=emoji_id,
         callback_data=BlockUserCallback(
             complaint_id=complaint_id,
             receiver_id=user_id,

@@ -79,7 +79,7 @@ async def match_archive(
         await message.answer(text=text, reply_markup=match_kb)
 
         await state.update_data(ids=liker_ids)
-        profile = await Profile.get(session, liker_ids[0])
+        profile = await Profile.get_by_id(session, liker_ids[0])
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
@@ -108,7 +108,7 @@ async def _match_atchive_callback(
 
     if liker_ids := await Match.get_user_matchs(session, callback.from_user.id):
         await state.update_data(ids=liker_ids)
-        profile = await Profile.get(session, liker_ids[0])
+        profile = await Profile.get_by_id(session, liker_ids[0])
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
@@ -164,7 +164,7 @@ async def _match_response(
     ids.pop(0)
     await state.update_data(ids=ids)
     if ids:
-        profile = await Profile.get(session, ids[0])
+        profile = await Profile.get_by_id(session, ids[0])
         match_data = await Match.get(session, user.id, profile.id)
         await send_profile_with_dist(user=user, profile=profile, session=session)
         if match_data and match_data.message:
