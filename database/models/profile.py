@@ -58,7 +58,7 @@ class Profile(BaseModel):
             await session.commit()
         else:
             # Создаем новый профиль
-            obj = await cls.create_profile(session, id=profile_id, **kwargs)
+            obj = await cls.create(session, id=profile_id, **kwargs)
             is_new = True
             logger.log("DATABASE", f"{profile_id}: создал анкету")
 
