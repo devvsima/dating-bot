@@ -169,7 +169,7 @@ async def like_profile(
     another_user: User,
     mail_text: str | None = None,
 ):
-    is_create = await Match.create(session, message.from_user.id, another_user.id, mail_text)
+    is_create = await Match.create_match(session, message.from_user.id, another_user.id, mail_text)
 
     if is_create:
         matchs_count = len(await Match.get_user_matchs(session, another_user.id))

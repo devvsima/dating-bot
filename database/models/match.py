@@ -119,7 +119,7 @@ class Match(BaseModel):
                     (Match.sender_id == user_id) & (Match.receiver_id == other_user_id),
                 )
             )
-            .order_by(Match.created_at.desc())
+            .order_by(Match.create_at.desc())
             .limit(1)
         )
         return result.scalar_one_or_none()
