@@ -104,7 +104,7 @@ class Match(BaseModel):
         return [row[0] for row in result.fetchall()]
 
     @staticmethod
-    async def get_match(session: AsyncSession, user_id: int, other_user_id: int):
+    async def get(session: AsyncSession, user_id: int, other_user_id: int):
         """
         Возвращает Match между двумя пользователями в любом направлении.
         Ищет как где user_id отправитель, так и где получатель.
@@ -125,7 +125,7 @@ class Match(BaseModel):
         return result.scalar_one_or_none()
 
     @staticmethod
-    async def delete_match(session: AsyncSession, receiver_id: int, sender_id: int) -> None:
+    async def delete(session: AsyncSession, receiver_id: int, sender_id: int) -> None:
         """Удаляет лайк из БД"""
         await session.execute(
             Match.__table__.delete().where(
@@ -149,6 +149,8 @@ class Match(BaseModel):
         """
         Деактивирует все записи, где пользователь лайкнул кого-то (устанавливает is_active = False).
         """
+        from sqlalchemy import update
+
         await session.execute(
             update(Match).where(Match.sender_id == sender_id).values(is_active=False)
         )
