@@ -32,7 +32,7 @@ async def like_profile(request: LikeRequest):
             raise HTTPException(status_code=404, detail="Пользователь не найден")
 
         # Создаем лайк
-        is_created = await Match.create(
+        is_created = await Match.create_match(
             session=session,
             sender_id=request.user_id,
             receiver_id=request.target_id,

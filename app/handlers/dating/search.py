@@ -155,7 +155,7 @@ async def next_profile(
 ):
     profile_list.pop(0)
     if profile_list:
-        profile = await Profile.get(session, profile_list[0])
+        profile = await Profile.get_by_id(session, profile_list[0])
         await state.update_data(ids=profile_list)
         await send_profile_with_dist(user=user, profile=profile, session=session)
     else:
@@ -169,7 +169,7 @@ async def like_profile(
     another_user: User,
     mail_text: str | None = None,
 ):
-    is_create = await Match.create(session, message.from_user.id, another_user.id, mail_text)
+    is_create = await Match.create_match(session, message.from_user.id, another_user.id, mail_text)
 
     if is_create:
         matchs_count = len(await Match.get_user_matchs(session, another_user.id))
