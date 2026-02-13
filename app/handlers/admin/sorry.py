@@ -116,15 +116,15 @@ async def _sorry_command(message: types.Message, session: AsyncSession) -> None:
                 chat_id=user.id, text=apology_text, reply_markup=start_kb
             )
             sent_count += 1
-            logger.log("SORRY", f"Sent apology to user {user.id}")
+            logger.log("MAILING", f"Sent apology to user {user.id}")
         except TelegramForbiddenError:
             # Бот заблокирован пользователем
             blocked_count += 1
-            logger.log("SORRY", f"User {user.id} blocked bot")
+            logger.log("MAILING", f"User {user.id} blocked bot")
         except (TelegramBadRequest, TelegramAPIError) as e:
             # Другие ошибки (пользователь удален, чат не найден и т.д.)
             failed_count += 1
-            logger.log("SORRY", f"Failed to send to user {user.id}: {e}")
+            logger.log("MAILING", f"Failed to send to user {user.id}: {e}")
 
         # Пауза после каждой пачки для соблюдения лимитов API
         if i % batch_size == 0:
