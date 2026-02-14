@@ -81,13 +81,13 @@ class User(BaseModel):
             return
 
         if user.profile:
-            await Profile.update_profile(
+            await Profile.update(
                 session,
                 id=id,
                 is_active=False,
             )
 
-        await User.update_user(
+        await User.update(
             session=session,
             id=id,
             status=UserStatus.Banned,
@@ -114,13 +114,13 @@ class User(BaseModel):
             return
 
         if user.profile:
-            await Profile.update_profile(
+            await Profile.update(
                 session,
                 id=id,
                 is_active=True,
             )
 
-        await User.update_user(
+        await User.update(
             session=session,
             id=id,
             status=UserStatus.User,
