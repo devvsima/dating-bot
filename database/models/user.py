@@ -81,7 +81,7 @@ class User(BaseModel):
             return
 
         if user.profile:
-            await Profile.update_profile(
+            await Profile.update(
                 session,
                 id=id,
                 is_active=False,
@@ -114,7 +114,7 @@ class User(BaseModel):
             return
 
         if user.profile:
-            await Profile.update_profile(
+            await Profile.update(
                 session,
                 id=id,
                 is_active=True,
