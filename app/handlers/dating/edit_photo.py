@@ -51,7 +51,7 @@ async def _update_photo(
             return
 
         try:
-            await ProfileMedia.delete_profile_photos(session, user.id)
+            await ProfileMedia.delete_profile_media(session, user.id)
             for i, photo_file_id in enumerate(photos, 1):
                 await ProfileMedia.add_media(
                     session=session,
@@ -96,7 +96,7 @@ async def _update_photo(
         else:
             # Загружены все 3 фото - автоматически сохраняем
             try:
-                await ProfileMedia.delete_profile_photos(session, user.id)
+                await ProfileMedia.delete_profile_media(session, user.id)
                 for i, photo_file_id in enumerate(photos, 1):
                     await ProfileMedia.add_media(
                         session=session,

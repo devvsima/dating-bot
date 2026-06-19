@@ -7,7 +7,7 @@ from app.keyboards.default.registration_form import create_profile_kb
 from app.routers import common_router
 from app.services.menu_service import menu
 from app.text import message_text as mt
-from core.config import LOGO
+from core.config import get_logo
 from database.models import User
 
 
@@ -25,7 +25,7 @@ async def start_command(message: types.Message, user: User, state: FSMContext) -
         await menu(user.id)
     else:
         await message.answer_photo(
-            photo=LOGO,
+            photo=get_logo(),
             caption=mt.WELCOME,
             reply_markup=create_profile_kb(),
         )

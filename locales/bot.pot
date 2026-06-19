@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-10 16:04+0200\n"
+"POT-Creation-Date: 2026-06-19 18:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: app/text.py:11
+#: app/text.py:12
 msgid ""
 "\n"
 "Привет! 👋\n"
@@ -28,7 +28,7 @@ msgid ""
 "Желаем тебе приятных знакомств и интересных встреч!\n"
 msgstr ""
 
-#: app/text.py:22
+#: app/text.py:23
 msgid ""
 "\n"
 "👋\n"
@@ -41,7 +41,7 @@ msgid ""
 "По вопросам и предложениям можно писать сюда: @devvsima.\n"
 msgstr ""
 
-#: app/text.py:33
+#: app/text.py:34
 msgid ""
 "\n"
 "🔍 Смотреть анкеты\n"
@@ -51,7 +51,7 @@ msgid ""
 "✉️ Пригласить друзей"
 msgstr ""
 
-#: app/text.py:42
+#: app/text.py:43
 msgid ""
 "\n"
 "🔄 Заполнить анкету заново\n"
@@ -62,75 +62,75 @@ msgid ""
 "↩️ Назад\n"
 msgstr ""
 
-#: app/text.py:54
+#: app/text.py:55
 msgid "Неизвестная команда. Если заблудился, напиши /start."
 msgstr ""
 
-#: app/text.py:61
+#: app/text.py:62
 msgid "Укажи, свой пол: 👤"
 msgstr ""
 
-#: app/text.py:65
+#: app/text.py:66
 msgid "Выбери, кого ты ищешь: 💕"
 msgstr ""
 
-#: app/text.py:69
+#: app/text.py:70
 msgid "Загрузи своё фото! Можно отправить до 3 фотографий одновременно 📸"
 msgstr ""
 
-#: app/text.py:73
+#: app/text.py:74
 msgid "Как тебя зовут? ✍️"
 msgstr ""
 
-#: app/text.py:77
+#: app/text.py:78
 msgid "Сколько тебе лет? 🎂"
 msgstr ""
 
-#: app/text.py:81
+#: app/text.py:82
 msgid "Укажи свой город: 🏙️"
 msgstr ""
 
-#: app/text.py:85
+#: app/text.py:86
 msgid "Расскажи немного о себе — это поможет другим узнать тебя лучше! 📝"
 msgstr ""
 
-#: app/text.py:89
+#: app/text.py:90
 msgid ""
 "Отлично! Твой профиль готов — теперь можешь искать интересных для себя "
 "людей 💬"
 msgstr ""
 
-#: app/text.py:93
+#: app/text.py:94
 msgid ""
 "\n"
 "❌ Твоя анкета отключена, некоторые функции теперь недоступны.\n"
 "💬 Чтобы снова активировать анкету, отправь команду /start."
 msgstr ""
 
-#: app/text.py:99
+#: app/text.py:100
 msgid ""
 "✅ Твоя анкета успешно восстановлена! Теперь ты снова можешь пользоваться "
 "ботом."
 msgstr ""
 
-#: app/text.py:103
+#: app/text.py:104
 msgid "🔍 Выполняется поиск..."
 msgstr ""
 
-#: app/text.py:107
+#: app/text.py:108
 #, python-brace-format
 msgid "Твоя анкета понравилась {} людям! Давай посмотрим, кто это:"
 msgstr ""
 
-#: app/text.py:111
+#: app/text.py:112
 msgid "Подходящих анкет не найдено. Попробуй выбрать другой город. 🌍"
 msgstr ""
 
-#: app/text.py:115
+#: app/text.py:116
 msgid "Анкеты закончились. Попробуй позже! 😊"
 msgstr ""
 
-#: app/text.py:119
+#: app/text.py:120
 #, python-brace-format
 msgid ""
 "Твоя анкета получила <b>{}</b> ❤️\n"
@@ -138,72 +138,72 @@ msgid ""
 "📭 Нажми, чтобы посмотреть"
 msgstr ""
 
-#: app/text.py:125
+#: app/text.py:126
 msgid "Пока никто не поставил тебе лайк, но всё ещё впереди!"
 msgstr ""
 
-#: app/text.py:129
+#: app/text.py:130
 #, python-brace-format
 msgid "Надеюсь вы хорошо проведете время ;) <a href='{}'>{}</a>"
 msgstr ""
 
-#: app/text.py:141
+#: app/text.py:142
 #, python-brace-format
 msgid ""
 "Сообщение для тебя:\n"
 "{}"
 msgstr ""
 
-#: app/text.py:146
+#: app/text.py:147
 msgid ""
 "Можешь написать пользователю, до 250 символов. ✉️\n"
 "\n"
 "Если не хочешь писать, нажми на кнопку ниже."
 msgstr ""
 
-#: app/text.py:151
+#: app/text.py:152
 msgid "Отправил сообщение, ждем ответа."
 msgstr ""
 
-#: app/text.py:155
+#: app/text.py:156
 msgid "Не корректное сообщение. Пожалуйста, напиши до 250 символов."
 msgstr ""
 
-#: app/text.py:159
+#: app/text.py:160
 msgid "Хорошо, ничего не буду отправлять."
 msgstr ""
 
-#: app/text.py:164
+#: app/text.py:165
 msgid ""
 "Некорректный ответ. Пожалуйста, выбери на клавиатуре или напиши "
 "правильно. 📝"
 msgstr ""
 
-#: app/text.py:168
+#: app/text.py:169
 msgid "Превышен лимит символов. Пожалуйста, сократи сообщение. ✂️"
 msgstr ""
 
-#: app/text.py:172
+#: app/text.py:173
 msgid ""
 "Некорректное имя. Имя должно содержать минимум 2 буквы и максимум 70 "
 "символов. ✍️"
 msgstr ""
 
-#: app/text.py:176
+#: app/text.py:177
 msgid "Такой город не найден 😔"
 msgstr ""
 
-#: app/text.py:181
+#: app/text.py:182
 msgid ""
 "Неверный формат фотографии! Пожалуйста, загрузите изображение в "
 "правильном формате. 🖼️"
 msgstr ""
 
-#: app/text.py:186
+#: app/text.py:187
 msgid "Неверный формат, возраст нужно указывать цифрами. 🔢"
 msgstr ""
 
-#: app/text.py:191
+#: app/text.py:192
 #, python-brace-format
 msgid ""
 "Приглашай друзей и получай бонусы!\n"
@@ -214,22 +214,22 @@ msgid ""
 "<code>{}</code>"
 msgstr ""
 
-#: app/text.py:196
+#: app/text.py:197
 #, python-brace-format
 msgid ""
 "Наш канал:\n"
 "{}"
 msgstr ""
 
-#: app/text.py:201
+#: app/text.py:202
 msgid "Выбери язык бота, на который хочешь переключиться: 🌐"
 msgstr ""
 
-#: app/text.py:204
+#: app/text.py:205
 msgid "Язык бота изменён! ✅"
 msgstr ""
 
-#: app/text.py:209
+#: app/text.py:210
 msgid ""
 "\n"
 "Укажи причину жалобы:\n"
@@ -240,32 +240,32 @@ msgid ""
 "↩️ Назад\n"
 msgstr ""
 
-#: app/text.py:229
+#: app/text.py:230
 msgid "✅ Жалоба успешно отправлена на рассмотрение!"
 msgstr ""
 
-#: app/text.py:234
+#: app/text.py:235
 msgid "Загрузи новые фото! Можно отправить до 3 фотографий 📸"
 msgstr ""
 
-#: app/text.py:238
+#: app/text.py:239
 msgid "Фотографии остались без изменений"
 msgstr ""
 
-#: app/text.py:242
+#: app/text.py:243
 msgid "Вы не загрузили ни одного фото. Попробуйте еще раз."
 msgstr ""
 
-#: app/text.py:246
+#: app/text.py:247
 msgid "❌ Ошибка при сохранении фото. Попробуйте еще раз."
 msgstr ""
 
-#: app/keyboards/default/registration_form.py:55 app/text.py:250
-#: app/text.py:260
+#: app/keyboards/default/registration_form.py:55 app/text.py:251
+#: app/text.py:261
 msgid "Это все, сохранить фото"
 msgstr ""
 
-#: app/text.py:255
+#: app/text.py:256
 #, python-brace-format
 msgid ""
 "📸 Фото {current}/{total} загружено!\n"
@@ -273,32 +273,36 @@ msgid ""
 "Можете загрузить еще {remaining} фото или нажать '{finish_button}'"
 msgstr ""
 
-#: app/text.py:266
+#: app/text.py:267
 #, python-brace-format
 msgid "Сохранено {} фото!"
 msgstr ""
 
-#: app/text.py:269
+#: app/text.py:270
 #, python-brace-format
 msgid "Все {} фото загружены!"
 msgstr ""
 
-#: app/text.py:273
+#: app/text.py:274
 msgid "❌ Максимум 3 фото! Нажмите 'Это все, сохранить фото' для сохранения."
 msgstr ""
 
-#: app/text.py:277
+#: app/text.py:278
 msgid "📸 Отправьте фотографию или выберите действие из меню"
 msgstr ""
 
-#: app/text.py:281
+#: app/text.py:282
 msgid "❌ Для создания профиля необходимо загрузить хотя бы одно фото!"
 msgstr ""
 
-#: app/text.py:285
+#: app/text.py:286
 msgid ""
 "⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару "
 "секунд."
+msgstr ""
+
+#: app/text.py:292
+msgid "Поддержка проекта"
 msgstr ""
 
 #: app/keyboards/default/registration_form.py:16
@@ -341,5 +345,17 @@ msgstr ""
 
 #: app/keyboards/inline/archive.py:10
 msgid "Посмотреть"
+msgstr ""
+
+#: app/keyboards/inline/help.py:12
+msgid "Написать разработчику"
+msgstr ""
+
+#: app/keyboards/inline/help.py:17
+msgid "Официальный канал"
+msgstr ""
+
+#: app/keyboards/inline/help.py:23
+msgid "Поддержать проект"
 msgstr ""
 

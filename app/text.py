@@ -1,3 +1,4 @@
+from core.config import SUPPORT_COST
 from core.loader import _
 
 """
@@ -285,6 +286,14 @@ The reason: {}
             "⏳ Вы отправляете сообщения слишком часто. Пожалуйста, подождите пару секунд.",
             locale=language,
         )
+
+    @property
+    def PAYMENT_TITEL(self):
+        return _("Поддержка проекта")
+
+    @property
+    def PAYMENT_DESCRIPTION(self):
+        return _(f"Поддержи проект на {SUPPORT_COST} звёзд и помоги ему развиваться дальше ✨")
 
 
 message_text = MessageText()

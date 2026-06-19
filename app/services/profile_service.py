@@ -16,7 +16,7 @@ MODERATOR_GROUP_ID = tgbot.MODERATOR_GROUP_ID
 
 async def send_profile(chat_id: int, profile: Profile, session: AsyncSession) -> None:
     """Отправляет пользователю переданный в функцию профиль"""
-    media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
+    media_items = await ProfileMedia.get_profile_media(session=session, profile_id=profile.id)
 
     city = "📍 " + profile.city if profile.is_shared_location else profile.city
     text = f"{profile.name}, {profile.age}, {city}\n{profile.description}"

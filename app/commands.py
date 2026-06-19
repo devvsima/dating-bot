@@ -7,7 +7,7 @@ from core.loader import _, bot, i18n
 def get_default_commands() -> list:
     commands = [
         BotCommand(command="/start", description="Start"),
-        BotCommand(command="/help", description="Help"),
+        BotCommand(command="/info", description="Help and Info"),
         BotCommand(command="/lang", description="Change language"),
     ]
     if tgbot.BOT_CHANNEL_URL:

@@ -23,6 +23,24 @@ class StatsGraph:
     ) -> None:
         """Создает график новых пользователей за последние N дней"""
         df = pd.DataFrame(data)
+        if df.empty or "timestamp" not in df.columns:
+            plt.figure(figsize=(12, 6))
+            plt.text(
+                0.5,
+                0.5,
+                "No registrations in the selected period",
+                ha="center",
+                va="center",
+                transform=plt.gca().transAxes,
+                fontsize=16,
+            )
+            plt.title(f"User arrivals in the last {days} days", fontsize=16, fontweight="bold")
+            plt.axis("off")
+            plt.tight_layout()
+            plt.savefig(path)
+            plt.close()
+            return
+
         df["timestamp"] = pd.to_datetime(df["timestamp"])
         df["date"] = df["timestamp"].dt.date
 

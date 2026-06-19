@@ -65,7 +65,7 @@ class Profile(BaseModel):
         # Обрабатываем фото
         if photos:
             # Удаляем все старые фото профиля
-            await ProfileMedia.delete_profile_photos(session, profile_id)
+            await ProfileMedia.delete_profile_media(session, profile_id)
 
             # Добавляем новые фото
             for i, photo_file_id in enumerate(photos, 1):
@@ -78,7 +78,7 @@ class Profile(BaseModel):
                 )
         elif photo_url:
             # Обратная совместимость - если передано одно фото
-            await ProfileMedia.delete_profile_photos(session, profile_id)
+            await ProfileMedia.delete_profile_media(session, profile_id)
 
             await ProfileMedia.add_media(
                 session=session,

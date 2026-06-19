@@ -32,11 +32,6 @@ class ProfileMedia(BaseModel):
     __table_args__ = (CheckConstraint("media_type IN ('photo', 'video')", name="media_type_check"),)
 
     @staticmethod
-    async def get_by_id(session: AsyncSession, id: int) -> Optional["ProfileMedia"]:
-        """Возвращает медиа по ID"""
-        return await session.get(ProfileMedia, id)
-
-    @staticmethod
     async def get_profile_media(
         session: AsyncSession, profile_id: int, media_type: Optional[str] = None
     ) -> List["ProfileMedia"]:
@@ -50,16 +45,6 @@ class ProfileMedia(BaseModel):
 
         result = await session.execute(stmt)
         return result.scalars().all()
-
-    @staticmethod
-    async def get_profile_photos(session: AsyncSession, profile_id: int) -> List["ProfileMedia"]:
-        """Возвращает все фотографии профиля, отсортированные по порядку"""
-        return await ProfileMedia.get_profile_media(session, profile_id, "photo")
-
-    @staticmethod
-    async def get_profile_videos(session: AsyncSession, profile_id: int) -> List["ProfileMedia"]:
-        """Возвращает все видео профиля, отсортированные по порядку"""
-        return await ProfileMedia.get_profile_media(session, profile_id, "video")
 
     @staticmethod
     async def get_first_photo(session: AsyncSession, profile_id: int) -> Optional["ProfileMedia"]:
@@ -76,44 +61,12 @@ class ProfileMedia(BaseModel):
         return result.scalar_one_or_none()
 
     @staticmethod
-    async def delete_by_id(session: AsyncSession, id: int):
-        """Удаляет медиа по ID"""
-        stmt = delete(ProfileMedia).where(ProfileMedia.id == id)
-        await session.execute(stmt)
-        await session.commit()
-        logger.log("DATABASE", f"Удалил медиа с ID: {id}")
-
-    @staticmethod
     async def delete_profile_media(session: AsyncSession, profile_id: int):
         """Удаляет все медиа профиля"""
         stmt = delete(ProfileMedia).where(ProfileMedia.profile_id == profile_id)
         result = await session.execute(stmt)
         await session.commit()
         logger.log("DATABASE", f"Удалил {result.rowcount} медиа для профиля {profile_id}")
-
-    @staticmethod
-    async def delete_profile_photos(session: AsyncSession, profile_id: int):
-        """Удаляет все фотографии профиля"""
-        stmt = (
-            delete(ProfileMedia)
-            .where(ProfileMedia.profile_id == profile_id)
-            .where(ProfileMedia.media_type == "photo")
-        )
-        result = await session.execute(stmt)
-        await session.commit()
-        logger.log("DATABASE", f"Удалил {result.rowcount} фото для профиля {profile_id}")
-
-    @staticmethod
-    async def delete_profile_videos(session: AsyncSession, profile_id: int):
-        """Удаляет все видео профиля"""
-        stmt = (
-            delete(ProfileMedia)
-            .where(ProfileMedia.profile_id == profile_id)
-            .where(ProfileMedia.media_type == "video")
-        )
-        result = await session.execute(stmt)
-        await session.commit()
-        logger.log("DATABASE", f"Удалил {result.rowcount} видео для профиля {profile_id}")
 
     @classmethod
     async def add_media(
