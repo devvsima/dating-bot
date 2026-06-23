@@ -22,28 +22,6 @@ services:
       - dating_network
     command: python main.py
 
-  # FastAPI WebApp API
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: dating_api
-    env_file:
-      - .env
-    ports:
-      - "${WEBAPP_PORT:-8080}:8080"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    restart: unless-stopped
-    volumes:
-      - ./logs:/app/logs
-    networks:
-      - dating_network
-    command: python run_api.py
-
   # PostgreSQL Database
   postgres:
     image: postgres:16-alpine

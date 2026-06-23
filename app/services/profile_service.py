@@ -38,7 +38,7 @@ async def send_profile(chat_id: int, profile: Profile, session: AsyncSession) ->
 
 async def send_profile_with_dist(user: User, profile: Profile, session: AsyncSession) -> None:
     """Отправляет профиль пользователя с расстоянием до него в киломтерах"""
-    media_items = await ProfileMedia.get_profile_photos(session=session, profile_id=profile.id)
+    media_items = await ProfileMedia.get_profile_media(session=session, profile_id=profile.id)
 
     if user.profile.is_shared_location and profile.is_shared_location:
         distance = SearchService.haversine_distance(

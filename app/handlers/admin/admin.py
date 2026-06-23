@@ -21,7 +21,6 @@ async def _admin_command(message: types.Message) -> None:
 /logs - Send logs
 /mailing - Mailing to all users
 /profile - Check user profile
-/webapp - Webapp test
 /restart - Update and restart bot
 """
     await message.answer(

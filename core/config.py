@@ -41,21 +41,6 @@ class TelegramBotSettings:
     I18N_DOMAIN = "bot"
 
 
-# -< Webрр >-
-class WebAppSettings:
-    HOST: str = env.str("WEBAPP_HOST", default="localhost")
-    PORT: int = env.int("WEBAPP_PORT", default=8080)
-    DOMEN: str = env.str("WEBAPP_DOMEN", default=None)
-
-    # API Access Token для тестирования (без Telegram WebApp)
-    ACCESS_TOKEN: str = env.str("API_ACCESS_TOKEN", default=None)
-
-    URL: str = env.str("WEBAPP_URL", default=None)
-    if not URL:
-        if all((HOST, PORT, DOMEN)):
-            URL = f"https://{DOMEN}/"
-
-
 # -< Database >-
 class DatabaseSettings:
     NAME: str = env.str("DB_NAME", default=None)
@@ -134,5 +119,4 @@ LOG_FILE_PATH: Path = DIR / "logs" / "logs.log"
 database = DatabaseSettings()
 redis = RedisSettings()
 tgbot = TelegramBotSettings()
-webapp = WebAppSettings()
 search = SearchSettings()

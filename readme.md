@@ -34,7 +34,6 @@
 - [Settings](#settings)
   - [Bot](#bot)
   - [Search](#search)
-  - [Webapp](#webapp)
   - [Database](#database)
   - [Migrations](#migrations)
   - [Redis](#redis)
@@ -108,15 +107,6 @@ Configuring user profile search
 | AGE_RANGE_MULTIPLIER        | Age search multiplier (the older the person, the greater the age range) | 0.20                         |
 | MIN_AGE_RANGE               | Minimum age difference                                                  | 2                            |
 | MAX_AGE_RANGE               | Maximum age difference                                                  | 15                           |
-
-### Webapp
-
-| <center>**Name**</center> | <center>**Description**</center>                                 | <center>**Example**</center>                                         |
-| ------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
-| WEBAPP_HOST               | Website host                                                     | localhost                                                            |
-| WEBAPP_PORT               | Website port                                                     | 8080                                                                 |
-| WEBAPP_DOMEN              | Website domain                                                   | [michalangelo.com](https://devvsima.github.io/michalangelo-landing/) |
-| WEBAPP_URL                | (Optional) Direct link, if specified, will be used as a priority | https://devvsima.github.io/michalangelo-landing/                     |
 
 ### Database
 

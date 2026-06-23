@@ -4,9 +4,6 @@ case "$1" in
     run)
         uv run main.py
         ;;
-    api)
-        uv run uvicorn run_api:app --host 0.0.0.0 --port 8080 --workers 4 --log-level info
-        ;;
     mapp)
         uv run alembic upgrade head
         ;;
@@ -24,6 +21,6 @@ case "$1" in
         ;;
     *)
         echo "Unknown command: $1"
-        echo "Available commands: run, api, mapply, mgen, lcollect, lupdate, lcompile"
+        echo "Available commands: run, mapply, mgen, lcollect, lupdate, lcompile"
         ;;
 esac

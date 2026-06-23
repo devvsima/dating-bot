@@ -105,7 +105,7 @@ async def _photo(message: types.Message, state: FSMContext, user: User, session:
 
     if message.text in filters.LEAVE_PREVIOUS_OPTIONS:
         # Получаем существующие фото из профиля пользователя
-        existing_photos = await ProfileMedia.get_profile_photos(session, user.id)
+        existing_photos = await ProfileMedia.get_profile_media(session, user.id)
         if existing_photos:
             photos = [photo.media for photo in existing_photos]
             await state.update_data(photos=photos)
